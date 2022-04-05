@@ -1,16 +1,10 @@
 # The Simulation Framework {#chap:simulation-framework}
 
-<!-- global knitr options -->
-
-```{r include=FALSE, eval=TRUE, child = '_options.Rmd'}
-knitr::opts_chunk$set(size='small')
-```
-
-
 ```{r, echo=TRUE,results='hide', message=FALSE}
 library(fInstrument)
 library(empfin)
 library(DynamicSimulation)
+library(kableExtra)
 ```
 
 The simulation framework has two main components:

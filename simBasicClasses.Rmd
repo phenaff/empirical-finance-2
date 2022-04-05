@@ -1,11 +1,5 @@
 # Basic Components {#chap:BasicComponents}
 
-<!-- global knitr options -->
-
-```{r include=FALSE, eval=TRUE, child = '_options.Rmd'}
-knitr::opts_chunk$set(size='small')
-```
-
 ```{r label=load-packages,echo=TRUE,results='hide', message=FALSE}
 library(fOptions)
 library(fExoticOptions)

@@ -21,7 +21,7 @@ if (knitr:::is_latex_output()) {
   knitr::opts_chunk$set(dpi = 300)
 }
 if (knitr:::is_html_output()) {
-  knitr::include_graphics('img/social_image.png', dpi = NA)
+  knitr::include_graphics('frontCover.pdf', dpi = NA)
 }
 
 library(tufte)
@@ -57,7 +57,6 @@ The emphasis of this text is empirical. We present models, and verify their rele
 Last but not least, a particular attention is given to model estimation, in order to measure the tradeoff between model complexity and the challenges of a robust calibration.
 
 This course would not be possible without the \RR{} statistical program and without the Rmetrics packages. We extend our deep appreciation to the \RR{} community and to Diethelm Wuertz and the Rmetrics team.
-
 
 This book is open access (free as in free beer). It's also [open source](https://github.com/phenaff/empirical-finance-2): feel free to clone and submit additions.
 You can download a [PDF copy](http://jonathanweisberg.org/vip/_main.pdf) 

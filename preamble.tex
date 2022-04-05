@@ -1,6 +1,33 @@
-%\usepackage{MinionPro}
-%\usepackage{fontspec}
-%\newfontfamily\DejaSans{DejaVu Sans}
+% Preamble from Rmetrics
+
+\usepackage{booktabs}
+\usepackage{amsthm}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+% binomial trees
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usetikzlibrary{external}
+\usepgfplotslibrary{external}
+
+% R and other languages
+
+\newcommand{\RR}{\textsf{R}}
+\newcommand{\Rmetrics}{Rmetrics}
+
+\newcommand{\Rfun}[1]{\texttt{#1()}\index{R~functions@\RR~functions!#1}}
+\newcommand{\class}[1]{\texttt{#1}\index{R~classes@\RR~classes!#1}}
+\newcommand{\pkg}[1]{\texttt{#1}\index{R~packages@\RR~packages!#1}}
+\newcommand{\dataset}[1]{\texttt{#1}\index{R~data@\RR~data!#1}}
+\newcommand{\code}[1]{\texttt{#1}\index{#1}}
+
+% Preamble from VIP
 
 \newcommand{\given}{\mid}
 \renewcommand{\neg}{\mathbin{\sim}}
