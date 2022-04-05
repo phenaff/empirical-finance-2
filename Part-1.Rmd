@@ -1,0 +1,37 @@
+# (PART\*) Computational Framework {-} 
+
+This first part is dedicated to the description of the experimental
+environment used in this book.
+
+As mentioned earlier, our approach is data-driven and empirical. It is
+thus appropriate to start this text with a description of the sources of
+data that we will use, and how to fetch publicly available financial
+data from the Internet.
+
+In the following chapters, we will make repeated use of the Rmetrics
+pricing libraries, and often compare different models applied to the
+same data. To facilitate this comparison, the Rmetrics pricing libraries
+have been wrapped in a object-oriented framework, which hides most of
+the implementation details, and allows us to focus on the key features
+of the financial instruments and models. The framework uses the S4
+object model [@Genolini2008] of the R language, and is described in
+Chapter \@ref(chap:BasicComponents).
+
+Simulation is our tool of choice to explore the features of pricing
+models and test their robustness. To that end, we have developped a
+framework that facilitates the definition and testing of simple risk
+management strategies. The core of this simulation framework is the \class{DataProvider}
+class, which is presented in Chapter \@ref(chap:simulation-framework).
+
+In addition to the packages found on CRAN, data sets and code used in the
+text have been gathered into three packages:
+
+
+empfin
+: contains all the data sets and several utility functions for simple bond pricing and the manipulation of dates,
+
+fInstrument
+: provides the \class{fInstrument} class, that wraps the Rmetrics pricing library and the \class{DataProvider} class, that acts as a container for market data,
+
+DynamicSimulation
+: contains tools needed to perform dynamic simulations, such as scenario generators and delta hedging simulators.

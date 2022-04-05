@@ -1,0 +1,7 @@
+output_dir: empfin/docs
+delete_merged_file: true
+
+rmd_files: ["index.Rmd",
+"Part-1.Rmd",
+"simBasicClasses.Rmd",
+"simSimulationFramework.Rmd"]

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="3 Solutions to Selected Exercises | Odds &amp; Ends" />
+<meta property="og:type" content="book" />
+
+<meta property="og:image" content="/img/social_image.png" />
+<meta property="og:description" content="An open access textbook for introductory philosophy courses on probability and inductive logic." />
+<meta name="github-repo" content="jweisber/vip" />
+
+<meta name="author" content="Jonathan Weisberg" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="An open access textbook for introductory philosophy courses on probability and inductive logic.">
+
+<title>3 Solutions to Selected Exercises | Odds &amp; Ends</title>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@jweisber" />
+<meta name="twitter:creator" content="@jweisber" />
+<meta name="twitter:title" content="3 Solutions to Selected Exercises | Odds &amp; Ends" />
+<meta name="twitter:description" content="An open access textbook for introductory philosophy courses on probability and inductive logic." />
+<meta name="twitter:image" content="img/social_image.png" />
+
+
+<!--
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["output/HTML-CSS"],
+  "HTML-CSS": {
+    availableFonts: ["Gyre-Pagella"],
+    preferredFont: "Gyre-Pagella",
+    webFont: "Gyre-Pagella",
+    imageFont: "Gyre-Pagella"
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      extensions: ["color.js"]
+    }
+  });
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="toc.css" type="text/css" />
+<link rel="stylesheet" href="custom.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+<div style="display: none;">
+$$
+  \newcommand{\given}{\mid}
+  \renewcommand{\neg}{\mathbin{\sim}}
+  \renewcommand{\wedge}{\mathbin{\&}}
+  \newcommand{\p}{Pr}
+  \newcommand{\degr}{^{\circ}}
+  \newcommand{\E}{E}
+  \newcommand{\EU}{EU}
+  \newcommand{\u}{U}
+  \newcommand{\pr}{Pr}
+  \newcommand{\po}{Pr^*}
+  \definecolor{bookred}{RGB}{228,6,19}
+  \definecolor{bookblue}{RGB}{0,92,169}
+  \definecolor{bookpurple}{RGB}{114,49,94} 
+$$
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface">Preface</a></li>
+<li class="part"><span><b>Part I</b></span></li>
+<li><a href="the-monty-hall-problem.html#the-monty-hall-problem"><span class="toc-section-number">1</span> The Monty Hall Problem</a>
+<ul>
+<li><a href="the-monty-hall-problem.html#diagramming-the-solution"><span class="toc-section-number">1.1</span> Diagramming the Solution</a></li>
+<li><a href="the-monty-hall-problem.html#lessons"><span class="toc-section-number">1.2</span> Lessons Learned</a></li>
+<li><a href="the-monty-hall-problem.html#exercises">Exercises</a></li>
+</ul></li>
+<li><a href="the-problem-of-induction.html#the-problem-of-induction"><span class="toc-section-number">2</span> The Problem of Induction</a>
+<ul>
+<li><a href="the-problem-of-induction.html#the-dilemma">The Dilemma</a></li>
+<li><a href="the-problem-of-induction.html#the-problem-of-induction-vs.-the-grue-paradox">The Problem of Induction vs. the Grue Paradox</a></li>
+<li><a href="the-problem-of-induction.html#probability-theory-to-the-rescue">Probability Theory to the Rescue?</a></li>
+<li><a href="the-problem-of-induction.html#exercises-1">Exercises</a></li>
+</ul></li>
+<li><a href="solutions-to-selected-exercises.html#solutions-to-selected-exercises"><span class="toc-section-number">3</span> Solutions to Selected Exercises</a>
+<ul>
+<li><a href="solutions-to-selected-exercises.html#chapter-1">Chapter 1</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-2">Chapter 2</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-3">Chapter 3</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-4">Chapter 4</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-5">Chapter 5</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-6">Chapter 6</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-7">Chapter 7</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-8">Chapter 8</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-9">Chapter 9</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-11">Chapter 11</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-12">Chapter 12</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-13">Chapter 13</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-14">Chapter 14</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-16">Chapter 16</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-17">Chapter 17</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-18">Chapter 18</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-19">Chapter 19</a></li>
+<li><a href="solutions-to-selected-exercises.html#chapter-20">Chapter 20</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="solutions-to-selected-exercises" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Solutions to Selected Exercises</h1>
+<div class="epigraph">
+<p>
+To understand God’s thoughts we must study statistics, for these are
+the measure of His purpose.<br />
+—attributed to Florence Nightingale
+</p>
+</div>
+<div id="chapter-1" class="section level2 unnumbered">
+<h2>Chapter 1</h2>
+<p>
+<em>Exercise 3.</em> Prisoner A is incorrect. His chances of survival are still only <span class="math inline">\(1/3\)</span>. To see why, we can use the same tree as we did for the Monty Hall problem, and just change the labels on the leaves from “Monty Opens X” to “Guard Names X.”</p>
+<p>
+<em>Exercise 5.</em> Option (a): <span class="math inline">\(5/8\)</span>.</p>
+</div>
+<div id="chapter-2" class="section level2 unnumbered">
+<h2>Chapter 2</h2>
+<p>
+<em>Exercise 1.</em> (a) Invalid, (b) Valid, (c) Valid, (d) Valid, (e) Invalid, (f) Valid.</p>
+<p>
+<em>Exercise 2.</em> (a) Compatible, (b) Compatible, (c) Mutually Exclusive.</p>
+<p>
+<em>Exercise 3.</em> False.</p>
+<p>
+<em>Exercise 5.</em> Yes, it is possible.</p>
+</div>
+<div id="chapter-3" class="section level2 unnumbered">
+<h2>Chapter 3</h2>
+<p>
+<em>Exercise 1.</em> (a) <span class="math inline">\(\neg A\)</span>, (b) <span class="math inline">\(A \wedge B\)</span>, (c) <span class="math inline">\(A \wedge \neg B\)</span>, (d) <span class="math inline">\(\neg A \wedge \neg B\)</span>.</p>
+<p>
+<em>Exercise 2a.</em> These are mutually exclusive: there’s only one row where <span class="math inline">\(A \wedge B\)</span> is true, and <span class="math inline">\(A \wedge \neg B\)</span> is false in that row.</p>
+<p>
+<em>Exercise 3b.</em> These are logically equivalent: their final columns are identical, T T F F.</p>
+<p>
+<em>Exercise 4.</em> The column for <span class="math inline">\(B \wedge C\)</span> is T F F F T F F F. The column for <span class="math inline">\(A \vee (B \wedge C)\)</span> is T T T T T F F F.</p>
+</div>
+<div id="chapter-4" class="section level2 unnumbered">
+<h2>Chapter 4</h2>
+<p>
+<em>Exercise 1.</em> (a) Independent, (b) Not Independent, (c) Independent, (d) Not Independent.</p>
+<p>
+<em>Exercise 2.</em> Option (d): All of the above.</p>
+<p>
+<em>Exercise 3.</em> Option (e): None of the above.</p>
+<p>
+<em>Exercise 4.</em> (a) Not a gambler’s fallacy, (b) Gambler’s fallacy.</p>
+</div>
+<div id="chapter-5" class="section level2 unnumbered">
+<h2>Chapter 5</h2>
+<p>
+<em>Exercise 1.</em> This is a contradiction so its probability is <span class="math inline">\(0\)</span>.</p>
+<p>
+<em>Exercise 4.</em> (a) <span class="math inline">\(8/15\)</span>, (b) <span class="math inline">\(8/15\)</span>, (c) No.</p>
+<p>
+<em>Exercise 5.</em> (a) <span class="math inline">\(0\)</span>, (b) <span class="math inline">\(1/6\)</span>, (c) No.</p>
+<p>
+<em>Exercise 7.</em> (a) Yes, (b) No, (c) No.</p>
+<p>
+<em>Exercise 8.</em> <span class="math inline">\(1/6\)</span>.</p>
+</div>
+<div id="chapter-6" class="section level2 unnumbered">
+<h2>Chapter 6</h2>
+<p>
+<em>Exercise 2.</em> (a) <span class="math inline">\(1/2\)</span>, (b) <span class="math inline">\(2/7\)</span>.</p>
+<p>
+<em>Exercise 5.</em> (a) <span class="math inline">\(9/70\)</span>, (b) <span class="math inline">\(9/140\)</span>, (c) <span class="math inline">\(1/30\)</span>, (d) <span class="math inline">\(1/60\)</span>, (e) <span class="math inline">\(17/210\)</span>, (f) <span class="math inline">\(27/34\)</span>.</p>
+<p>
+<em>Exercise 6.</em> <span class="math inline">\(1/9\)</span>.</p>
+</div>
+<div id="chapter-7" class="section level2 unnumbered">
+<h2>Chapter 7</h2>
+<p>
+<em>Exercise 1.</em> (a) <span class="math inline">\(3/13\)</span>, (b) <span class="math inline">\(10/13\)</span>, (c) <span class="math inline">\(4/13\)</span>, (d) <span class="math inline">\(4/13\)</span>, (e) <span class="math inline">\(10/13\)</span></p>
+<p>
+<em>Exercise 4.</em> <span class="math inline">\(17/32\)</span></p>
+<p>
+<em>Exercise 6.</em> Yes:
+<span class="math display">\[
+  \begin{aligned}
+    \p(A)
+    &amp; = \p((A \wedge B) \vee (A \wedge C) \vee (A \wedge D))            &amp; \text{by Equivalence}\\
+    &amp; = \p(A \wedge B) + \p(A \wedge C) + \p(A \wedge D)                &amp; \text{by Addition}\\
+    &amp; = \p(A \given B)\p(B) + \p(A \given C)\p(C) + \p(A \given D)\p(D) &amp; \text{by General Multiplication}.
+  \end{aligned}
+  \]</span></p>
+<p>
+<em>Exercise 8.</em> (a) <span class="math inline">\(1/13\)</span>, (b) <span class="math inline">\(4/51\)</span>, (c) <span class="math inline">\(4/663\)</span>, (d) <span class="math inline">\(4/663\)</span>, (e) <span class="math inline">\(8/663\)</span>, (f) <span class="math inline">\(1/221\)</span></p>
+<p>
+<em>Exercise 25.</em> First observe that <span class="math inline">\(A \wedge (A \vee B)\)</span> is equivalent to <span class="math inline">\(A\)</span>. This can be verified by a truth table or Euler diagram. We then reason as follows:
+<span class="math display">\[
+  \begin{aligned}
+    \p(A \given A \vee B)
+      &amp; = \frac{\p(A \wedge (A \vee B))}{\p(A \vee B)}  &amp; \text{by definition}\\
+      &amp; = \frac{\p(A)}{\p(A \vee B)}                    &amp; \text{by Equivalence}\\
+      &amp; = \frac{\p(A)}{\p(A) + \p(B)}                   &amp; \text{by Addition.}
+  \end{aligned}
+  \]</span></p>
+</div>
+<div id="chapter-8" class="section level2 unnumbered">
+<h2>Chapter 8</h2>
+<p>
+<em>Exercise 1.</em> <span class="math inline">\(1/4\)</span></p>
+<p>
+<em>Exercise 3.</em> <span class="math inline">\(2/3\)</span></p>
+<p>
+<em>Exercise 5.</em> <span class="math inline">\(9/11\)</span></p>
+<p>
+<em>Exercise 7.</em> The full formula is:
+<span class="math display">\[
+    \p(X \given B)
+      = \frac{\p(X)\p(B \given X)}{\p(X)\p(B \given X) + \p(Y)\p(B \given Y) + \p(Z)\p(B \given Z)}.
+  \]</span>
+To derive this formula, start with the short form of Bayes’ theorem for <span class="math inline">\(\p(X \given B)\)</span>. Then apply the version of LTP from Exercise 7.6 to the denominator, <span class="math inline">\(\p(B)\)</span>.</p>
+<p>
+<em>Exercise 8.</em> <span class="math inline">\(1/57\)</span></p>
+<p>
+<em>Exercise 11.</em> <span class="math inline">\(1/4\)</span></p>
+</div>
+<div id="chapter-9" class="section level2 unnumbered">
+<h2>Chapter 9</h2>
+<p>
+<em>Exercise 1.</em> (a) <span class="math inline">\(1/6\)</span>, (b) <span class="math inline">\(1/2\)</span>, (c) <span class="math inline">\(1/2\)</span>.</p>
+<p>
+<em>Exercise 2.</em> <span class="math inline">\(81/85\)</span>.</p>
+<p>
+<em>Exercise 5.</em>
+<span class="math display">\[
+  \begin{aligned}
+    \p(A \given B \wedge C)
+      &amp;= \frac{\p(A \wedge (B \wedge C))}{\p(B \wedge C)} &amp; \text{ by definition}\\
+      &amp;= \frac{\p(A \wedge (C \wedge B))}{\p(C \wedge B)} &amp; \text{ by Equivalence}\\
+      &amp;= \p(A \given C \wedge B)                          &amp; \text{ by definition.}
+  \end{aligned}
+  \]</span></p>
+<p>
+<em>Exercise 7.</em> First note that <span class="math inline">\(\p(C) = \p((A \wedge C) \vee \p(\neg A \wedge C))\)</span> by Equivalence, and thus by Addition we have <span class="math inline">\(\p(\neg A \wedge C) = \p(C) - \p(A \wedge C)\)</span>. We then reason as follows:
+<span class="math display">\[
+  \begin{aligned}
+    \p(\neg A \given C)
+      &amp;= \frac{\p(\neg A \wedge C)}{\p(C)}                  &amp; \text{ by definition}\\
+      &amp;= \frac{\p(C) - \p(A \wedge C)}{\p(C)}               &amp; \text{ by above}\\
+      &amp;= \frac{\p(C)}{\p(C)} - \frac{\p(A \wedge C)}{\p(C)} &amp; \text{ by algebra}\\
+      &amp;= 1 - \frac{\p(A \wedge C)}{\p(C)}                   &amp; \text{ by algebra}\\
+      &amp;= 1 - \p(A \given C)                                 &amp; \text{ by definition.}
+  \end{aligned}
+  \]</span></p>
+</div>
+<div id="chapter-11" class="section level2 unnumbered">
+<h2>Chapter 11</h2>
+<p>
+<em>Exercise 2.</em> <span class="math inline">\(-\$80\)</span>.</p>
+<p>
+<em>Exercise 4.</em> <span class="math inline">\(-\$0.79\)</span>.</p>
+<p>
+<em>Exercise 9.</em> (a) <span class="math inline">\(\$460\)</span> million, (b) <span class="math inline">\(\$580\)</span> million, (c) <span class="math inline">\(\$220\)</span> million, (d) no, they won’t conduct the study because it would be a waste of <span class="math inline">\(\$5,000\)</span>. (The EMV of enacting the tax will be positive regardless of the study’s findings. So doing the study won’t help them make their decision.)</p>
+<p>
+<em>Exercise 11.</em> (a) <span class="math inline">\(-\$60\)</span>, (b) <span class="math inline">\(-\$52\)</span>.</p>
+<p>
+<em>Exercise 16.</em> <span class="math inline">\(x = 888\)</span>.</p>
+<p>
+<em>Exercise 22.</em> Suppose that <span class="math inline">\(E(A) = \$x\)</span>. Let the possible payoffs of <span class="math inline">\(A\)</span> be <span class="math inline">\(x_1, \ldots, x_n\)</span>. Then:
+<span class="math display">\[
+  \begin{aligned}
+    E(\text{Pay $\$x$ for $A$})
+      &amp;= \p(\$x_1) \cdot (\$x_1 - \$x) + \ldots + \p(\$x_n) \cdot (\$x_n - \$x)\\
+      &amp;= \left[\p(\$x_1) \cdot \$ x_1 - \p(\$x_1) \cdot \$x \right] + \ldots + \left[\p(\$x_n) \cdot \$x_n - \p(\$x_n) \cdot \$x \right]\\
+      &amp;= E(A) - \left[\p(\$x_1) \cdot \$ x + \ldots + \p(\$x_n) \cdot \$x \right]\\
+      &amp;= E(A) - \$x \left[\p(\$x_1) + \ldots + \p(\$x_n) \right]\\
+      &amp;= E(A) - \$x \\
+      &amp;= 0.
+  \end{aligned}
+  \]</span></p>
+</div>
+<div id="chapter-12" class="section level2 unnumbered">
+<h2>Chapter 12</h2>
+<p>
+<em>Exercise 2.</em> (d)</p>
+<p>
+<em>Exercise 3.</em> <span class="math inline">\(3/5\)</span></p>
+<p>
+<em>Exercise 5.</em> (a) <span class="math inline">\(3/5\)</span>, (b) <span class="math inline">\(2/3\)</span>.</p>
+<p>
+<em>Exercise 8.</em> (a) <span class="math inline">\(103/2\)</span>, (b) <span class="math inline">\(490/9\)</span>, (c) <span class="math inline">\(45/49\)</span>.</p>
+<p>
+<em>Exercise 10.</em> Suppose action <span class="math inline">\(A\)</span> has only two possible consequences, <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span>, such that <span class="math inline">\(\p(C_1) = \p(C_2)\)</span> and <span class="math inline">\(U(C_1) = -U(C_2)\)</span>. Since <span class="math inline">\(\p(C_1) = \p(C_2) = 1/2\)</span>, we have:
+<span class="math display">\[
+    \begin{aligned}
+      EU(A)
+        &amp;= \p(C_1) U(C_1) + \p(C_2) U(C_2) \\
+        &amp;= \frac{1}{2} U(C_1) + \frac{1}{2} U(C_2) \\
+        &amp;= -\frac{1}{2} U(C_2) + \frac{1}{2} U(C_2) \\
+        &amp;= 0.
+    \end{aligned}
+  \]</span></p>
+</div>
+<div id="chapter-13" class="section level2 unnumbered">
+<h2>Chapter 13</h2>
+<p>
+<em>Exercise 1.</em> (d)</p>
+<p>
+<em>Exercise 2.</em> (a)</p>
+<p>
+<em>Exercise 3.</em> (b)</p>
+<p>
+<em>Exercise 5.</em> (c)</p>
+<p>
+<em>Exercise 6.</em> (c)</p>
+<p>
+<em>Exercise 8.</em> (d)</p>
+</div>
+<div id="chapter-14" class="section level2 unnumbered">
+<h2>Chapter 14</h2>
+<p>
+<em>Exercise 1.</em> (d)</p>
+<p>
+<em>Exercise 2.</em> (b)</p>
+<p>
+<em>Exercise 5.</em> <span class="math inline">\(f(y) = e^y\)</span>. If we plug <span class="math inline">\(e^y\)</span> into <span class="math inline">\(\log(x)\)</span> we get <span class="math inline">\(y\)</span> back: <span class="math inline">\(\log(e^y) = y\)</span>.</p>
+<p>
+<em>Exercise 8.</em> (b)</p>
+<p>
+<em>Exercise 9.</em> (c)</p>
+</div>
+<div id="chapter-16" class="section level2 unnumbered">
+<h2>Chapter 16</h2>
+<p>
+<em>Exercise 1.</em> a) <span class="math inline">\(7/10\)</span>, b) <span class="math inline">\(4/5\)</span>, c) <span class="math inline">\(2/3\)</span>.</p>
+<p>
+<em>Exercise 3.</em> (a) <span class="math inline">\(5/6\)</span>, (b) <span class="math inline">\(1/3\)</span>, (c) <span class="math inline">\(2/5\)</span></p>
+<p>
+<em>Exercise 4.</em> (a) <span class="math inline">\(1/2\)</span>, (b) <span class="math inline">\(1/3\)</span>, (c) <span class="math inline">\(2/3\)</span>, (d) <span class="math inline">\(2/9\)</span></p>
+</div>
+<div id="chapter-17" class="section level2 unnumbered">
+<h2>Chapter 17</h2>
+<p>
+<em>Exercise 1.</em> We make the following deals with Ronnie.</p>
+<ul>
+<li>He pays us <span class="math inline">\(\$.40\)</span>; we pay him <span class="math inline">\(\$1\)</span> if <span class="math inline">\(A\)</span> is true.</li>
+<li>He pays us <span class="math inline">\(\$.70\)</span>; we pay him <span class="math inline">\(\$1\)</span> if <span class="math inline">\(A\)</span> is false.</li>
+</ul>
+<p>Each of these deals is fair according to Ronnie because the betting rates match his personal probabilities. For example, the expected value of the first bet is 0:
+<span class="math display">\[ (\$1 - \$.40) \p(A) - \$.40 (1 - \p(A)) = (\$.60)(4/10) - \$.40(6/10) = 0. \]</span>
+But Ronnie must pay us $1.10 for these bets, and he will only get $1 in return. Whether <span class="math inline">\(A\)</span> is true or false, only one of the bets will pay off for Ronnie. So his net “gain” will be <span class="math inline">\(\$1 - \$1.10 = -\$.10\)</span>.</p>
+<p>
+<em>Exercise 2.</em> We make the following deals with Marco.</p>
+<ul>
+<li>We pay him <span class="math inline">\(\$0.30\)</span>; he pays us <span class="math inline">\(\$1\)</span> if <span class="math inline">\(X\)</span> is true.</li>
+<li>We pay him <span class="math inline">\(\$0.20\)</span>; he pays us <span class="math inline">\(\$1\)</span> if <span class="math inline">\(Y\)</span> is true.</li>
+<li>He pays us <span class="math inline">\(\$0.60\)</span>; we pay him <span class="math inline">\(\$1\)</span> if <span class="math inline">\(X \vee Y\)</span> is true.</li>
+</ul>
+<p>The explanation is similar to 17.1: each bet is fair according to Marco’s personal probabilities, as can be checked by doing the expected value calculations which come out to <span class="math inline">\(0\)</span> for each one. But he pays us <span class="math inline">\(\$.10\)</span> more up front than we pay him, and he can’t possibly win it back. If he wins the third bet, we win one or both of the first two bets.</p>
+<p>
+<em>Exercise 8.</em> We make the following deals with Piz.</p>
+<ul>
+<li>We pay him <span class="math inline">\(\$1/4\)</span>; he pays us <span class="math inline">\(\$1\)</span> if Pia is a basketball player.</li>
+<li>He pays us <span class="math inline">\(\$1/3\)</span>; we pay him <span class="math inline">\(\$1\)</span> if Pia is a good basketball player.</li>
+</ul>
+<p>Again the deals are fair given his personal probabilities. And again he pays us more up front than we pay him, money which he can’t win back. If he wins the second bet, we win the first.</p>
+</div>
+<div id="chapter-18" class="section level2 unnumbered">
+<h2>Chapter 18</h2>
+<p>
+<em>Exercise 1.</em> (a) <span class="math inline">\(7/10\)</span>, (b) <span class="math inline">\(3/10\)</span>, (c) same answers as before, (d) different answers: <span class="math inline">\(217/300\)</span> and <span class="math inline">\(11/36\)</span>.</p>
+<p>
+<em>Exercise 2.</em> a) <span class="math inline">\(1/2\)</span>, b) <span class="math inline">\(5/8\)</span>, c) yes, different answers here: <span class="math inline">\(2/3\)</span> and <span class="math inline">\(21/32\)</span>, d) different again: <span class="math inline">\(49/62\)</span> and <span class="math inline">\(713/992\)</span>.</p>
+<p>
+<em>Exercise 6.</em> a) <span class="math inline">\(2/3\)</span>, b) <span class="math inline">\(2/1\)</span>, c) <span class="math inline">\(1/2\)</span>, d) different: <span class="math inline">\(1/3\)</span> now</p>
+</div>
+<div id="chapter-19" class="section level2 unnumbered">
+<h2>Chapter 19</h2>
+<p>
+<em>Exercise 1.</em>
+(a) <span class="math inline">\(\mu = 20, \sigma = 4\)</span>,
+(b) a bell curve centered at <span class="math inline">\(20\)</span> and reaching <span class="math inline">\(y \approx 0\)</span> around <span class="math inline">\(x \approx 8\)</span>,
+(c) <span class="math inline">\(a = 16, b = 24\)</span>,
+(d) <span class="math inline">\(a = 12, b = 28\)</span>,
+(e) <span class="math inline">\(a = 8, b = 32\)</span>,
+(f) <span class="math inline">\(7\)</span> or fewer,
+(g) <span class="math inline">\(33\)</span> or more,
+(h) answers will vary.</p>
+<p>
+<em>Exercise 3.</em>
+(a) <span class="math inline">\(\mu = 144, \sigma = 6\)</span>,
+(b) <span class="math inline">\(132, 156\)</span>,
+(c) <span class="math inline">\(126, 162\)</span>,
+(d) not significant at either level,
+(e) false (more accurately, not enough information is given to draw a conclusion either way).</p>
+<p>
+<em>Exercise 8.</em>
+(a) <span class="math inline">\(\mu = 10, \sigma = 3\)</span>,
+(b) no,
+(c) false,
+(d) false.</p>
+<p>
+<em>Exercise 9.</em>
+(a) <span class="math inline">\(\mu = 80, \sigma = 4\)</span>,
+(b) yes,
+(c) if the null hypothesis is true, and we repeated the experiment over and over, we would get a result this far from the mean less than <span class="math inline">\(1\%\)</span> of the time.</p>
+<p>
+<em>Exercise 11.</em> If the null hypothesis is true, the probability of getting a result this “extreme” (i.e. as improbable as this one, or even less probable) is below <span class="math inline">\(.05\)</span>.</p>
+</div>
+<div id="chapter-20" class="section level2 unnumbered">
+<h2>Chapter 20</h2>
+<p>
+<em>Exercise 1.</em> (a) and (b)</p>
+<p>
+<em>Exercise 2.</em> (a) <span class="math inline">\(25\)</span>, (b) <span class="math inline">\(400\)</span>, (c) <span class="math inline">\(16/17\)</span> or about <span class="math inline">\(94\%\)</span>.</p>
+<p>
+<em>Exercise 3.</em> (a) 225, (b) <span class="math inline">\(675/676\)</span> or about <span class="math inline">\(99.9\%\)</span>.</p>
+<p>
+<em>Exercise 5.</em> (a) <span class="math inline">\(\mu = 5, \sigma = 2\)</span>, (b) yes, (c) <span class="math inline">\(\mu = 5/2, \sigma = 3/2\)</span>, (d) yes.</p>
+
+</div>
+</div>
+<p style="text-align: center;">
+<a href="the-problem-of-induction.html"><button class="btn btn-default">Previous</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

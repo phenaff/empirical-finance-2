@@ -1,0 +1,188 @@
+# The Simulation Framework {#chap:simulation-framework}
+
+<!-- global knitr options -->
+
+```{r include=FALSE, eval=TRUE, child = '_options.Rmd'}
+knitr::opts_chunk$set(size='small')
+```
+
+
+```{r, echo=TRUE,results='hide', message=FALSE}
+library(fInstrument)
+library(empfin)
+library(DynamicSimulation)
+```
+
+The simulation framework has two main components:
+
+1.  A simulator, which can generate paths for the variables of interest
+    (price of a asset, implied volatility, term structure of interest
+    rate, etc.), according to a model that relates the variables to
+    stochastic risk factors.
+
+2.  A framework for expressing trading strategies, and in particular
+    dynamic hedging policies.
+
+This is again best explained by an example, and we describe next the use
+of this framework for running a delta-hedging experiment. The main
+elements of the design are discussed afterwards.
+
+## Scenario Simulator
+
+Assume that you want to simulate 500 price paths over a period of one
+year, with 100 time steps. The price process will be log-normal with
+annual volatility of $30\%$, starting from an initial value of $\$100$.
+
+```{r, label=sim-1, echo=T, warning=FALSE}
+  dtStart <- myDate('01jan2010')
+  dtEnd <- myDate('01jan2011')
+  nbSteps <- 100; nbPaths <- 500
+```
+
+Next, define the sequence of simulation dates and the volatility of the simulated log-normal process:
+
+```{r, echo=T, warning=FALSE}
+  dtSim <- seq(dtStart, dtEnd, length.out=nbSteps+1)
+  sigma <- .3
+```
+
+Use a sobol sequence as random number generator, with antithetic variates, standardized to unit variance:
+
+```{r, echo=T, warning=FALSE}
+  tSpot <- pathSimulator(dtSim = dtSim, nbPaths=nbPaths,
+      innovations.gen=sobolInnovations, path.gen=logNormal,
+      path.param = list(mu=0, sigma=sigma), S0=100, antithetic = F,
+      standardization = TRUE, trace = FALSE)
+  print(head(tSpot[,1:2]))
+```
+
+The output of the path simulator is a \class{timeSeries}. A plot of the first few paths is
+displayed in figure \@ref(fig:price-plot). The function can generate simulated
+values acording to various statistical processes; this is documented in
+the vignette of the package.
+
+```{r, label=price-plot, fig.cap="Simulated price paths under a log-normal diffusion process", fig.margin=TRUE, fig.height=4}
+  plot(tSpot[,1:50], plot.type='single', ylab='Price', format="%b %d")
+```
+
+## A Delta Hedging Experiment
+
+Having generated some scenarios for the stock price, let’s now simulate
+the dynamic hedging of a European call option written on this stock,
+using the Black-Scholes pricing model, with the implied volatility and
+interest rate held constant.
+
+Fist, we define the instrument to be hedged:
+
+```{r, label=delta-hedge-0, echo=T}
+  dtExpiry <- dtEnd
+
+  underlying <- 'IBM'; K<-100
+
+  a <- fInstrumentFactory("vanilla", quantity=1,
+                    params=list(cp='c', strike=K,
+                      dtExpiry=dtExpiry,
+                      underlying=underlying,
+                      discountRef='USD.LIBOR', trace=FALSE))
+```
+
+Next, we define the market data that will be held constant during the
+simulation, and insert it in a \class{DataProvider}:
+
+```{r, delta-hedge-2, echo=T, tidy=TRUE}
+  base.env <- DataProvider()
+  setData(base.env, underlying, 'Price', dtStart, 100)
+  setData(base.env, underlying, 'DivYield', dtStart, .02)
+  setData(base.env, underlying, 'ATMVol', dtStart, sigma)
+  setData(base.env, underlying, 'discountRef', dtStart, 'USD.LIBOR')
+  setData(base.env, 'USD.LIBOR', 'Yield', dtStart, .02)
+```
+
+At this stage, we can price the asset as of the start date of the
+simulation:
+
+```{r, label=value, echo=T}
+  p <- getValue(a, 'Price', dtStart, base.env)
+```
+
+which gives a value of $p = `r round(p,2) `$.
+
+Next, define the simulation parameters: we want to simulate a dynamic
+hedging policy over 500 paths, and 100 time steps per path:
+
+We use a child \class{DataProvider} to store the simulated paths. Data not found in the child \class{DataProvider}
+will be searched for (and found) in the parent \code{base.env}.
+
+```{r, delta-hedge-3, echo=T}
+  sce.env <- DataProvider(parent=base.env)
+  setData(sce.env, underlying, 'Price', time(tSpot), as.matrix(tSpot))
+```
+
+We can now run the delta-hedge strategy along each path:
+
+```{r, delta-hedge-4, echo=T}
+  assets = list(a)
+  res <- deltaHedge(assets, sce.env,
+                    params=list(dtSim=time(tSpot),
+                    transaction.cost=0),trace=FALSE)
+```
+
+The result is a data structure that contains the residual wealth
+(hedging error) per scenario and time step. The distribution of hedging
+error at expiry is shown in Figure \@ref(fig:delta-hedge-41).
+
+```{r, label=delta-hedge-41, fig.height=5, fig.cap='Distribution of residual wealth at expiry: delta hedge of a 1 year call option', fig.margin=TRUE}
+  hist(tail(res$wealth,1), 50, xlab="Residual wealth at expiry", main='')
+```
+
+To better illustrate the hedging policy, let’s run a toy example with
+few time steps. The function \Rfun{deltaHedge} produces a detailed log of the hedging
+policy, which is presented in Table \@ref(tab:delta-hedge-few-samples). For each time step,
+the table show:
+
+-   The stock price,
+
+-   the option delta,
+
+-   the option value,
+
+-   the value of the replicating portfolio and the short bond position in that portfolio.
+
+```{r, echo=T}
+  dtSim <- time(tSpot)[seq(1, dim(tSpot)[1], 10)]
+  res <- deltaHedge(assets, sce.env,
+                    params=list(dtSim=dtSim,
+                    transaction.cost=0),trace=FALSE)
+  sim.table <- makeTable(1, res)
+```
+
+```{r, label=delta-hedge-few-samples, echo=FALSE}
+  kable(sim.table, "latex", booktabs=T, 
+        caption="Simulated value of a call option and its hedge portfolio over time")
+```
+
+### Design Considerations
+
+Two design features are worth mentioning.
+
+The generation of the scenarios is independent from the expression of
+the dynamic trading strategies. Remember that every data element stored
+in a \class{DataProvider} is a \class{timeSeries}. Since all the calculations on \class{fInstrument} are vectorized, there is no
+difference between performing a calculation on a scalar, or performing a
+simulation on multiple scenarios.
+
+The second aspect is the use of parent/child relationships among
+\class{DataProvider} objects. All the market data that is held constant in the simulation is
+stored in the parent \class{DataProvider}. The data that changes from simulation to
+simulation is stored in the child \class{DataProvider}, and this is the object that is
+passed to the simulator. When a piece of data is requested from the
+child \class{DataProvider}, the following logic is applied:
+
+1.  First look for the data in the current \class{DataProvider} (the object passed as
+    argument to the simulator)
+
+2.  if not found, look for the data in the parent \class{DataProvider}.
+
+3.  and so forth: the logic is recursive.
+
+This behavior is inherited from the built-in \class{environment}.
