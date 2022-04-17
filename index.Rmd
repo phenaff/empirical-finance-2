@@ -1,12 +1,13 @@
 ---
 title: "Topics in Empirical Finance"
-subtitle: "with R and Rmetrics"
 author: "Patrick Hénaff"
-description: "An open access textbook on empirical finance"
-cover-image: "img/frontCover.pdf"
+subtitle: with R and Rmetrics
+output: pdf_document
+cover-image: img/frontCover.pdf
 github-repo: phenaff/empirical-finance-2
 classoption: justified
 site: bookdown::bookdown_site
+description: An open access textbook on empirical finance
 ---
 
 # Preface {-}
@@ -14,24 +15,23 @@ site: bookdown::bookdown_site
 ```{r setup, echo=FALSE, include=FALSE, cache=FALSE}
 knitr::opts_chunk$set(
   cache = TRUE,
-  dev.args = list(bg = "transparent")
+  dev.args = list(bg = "transparent"),
+  tidy=TRUE,
+  tidy.opts=list(width.cutoff=50)
 )
 if (knitr:::is_latex_output()) {
   options(knitr.table.format = 'pandoc')
   knitr::opts_chunk$set(dpi = 300)
 }
 if (knitr:::is_html_output()) {
-  knitr::include_graphics('frontCover.pdf', dpi = NA)
+  knitr::include_graphics('img/frontCover.pdf', dpi = NA)
 }
 
 library(tufte)
 library(dplyr)
 library(ggplot2)
-library(ggforce)
 library(png)
 library(grid)
-library(ggraph)
-library(igraph)
 
 theme_set(theme_minimal(base_size = 18))
 # update_geom_defaults("text", list(size = 7))
@@ -43,8 +43,7 @@ bookpurple <- rgb(114, 49, 94, maxColorValue = 255)
 bookgreen <- rgb(26, 179, 22, maxColorValue = 255)
 ```
 
-`r newthought("This")`
-textbook is about empirical finance, and focusses on the pricing and risk management of financial assets: bonds, futures contracts, and other derivative securities.
+`r newthought("This")` textbook is about empirical finance, and focusses on the pricing and risk management of financial assets: bonds, futures contracts, and other derivative securities.
 
 The emphasis of this text is empirical. We present models, and verify their relevance by testing them of real data. We emphasize:
 
@@ -59,4 +58,4 @@ Last but not least, a particular attention is given to model estimation, in orde
 This course would not be possible without the \RR{} statistical program and without the Rmetrics packages. We extend our deep appreciation to the \RR{} community and to Diethelm Wuertz and the Rmetrics team.
 
 This book is open access (free as in free beer). It's also [open source](https://github.com/phenaff/empirical-finance-2): feel free to clone and submit additions.
-You can download a [PDF copy](http://jonathanweisberg.org/vip/_main.pdf) 
+You can download a [PDF copy](https://github.com/phenaff/empirical-finance-2/docs/empiricalfin.pdf)

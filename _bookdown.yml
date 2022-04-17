@@ -1,4 +1,5 @@
-output_dir: empfin/docs
+book_filename: "empiricalfin.Rmd"
+output_dir: docs
 delete_merged_file: true
 
 rmd_files: ["index.Rmd",

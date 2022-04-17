@@ -35,12 +35,13 @@ Consider a portfolio made of two options, a vanilla European call and a binary (
 
 Starting with the Rmetrics functions, you first compute the price and delta of the European call:
 
-```{r ic-0}
+```{r ic-0, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
 p <- vector(mode='numeric', length=2)
 d <- vector(mode='numeric', length=2)
 ```
 
-```{r ic-1}
+```{r ic-1, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
+p <- vector(mode='numeric', length=2)
 cp <- 'c'; Spot <- 100; Strike <- 100; Ttm <- 1
 int.rate <- .02; div.yield <- .02; sigma <- .3
 p[1] <- GBSOption(TypeFlag=cp, S=Spot, X=Strike, Time=Ttm, r=int.rate, b=int.rate-div.yield, 
@@ -53,7 +54,8 @@ d[1] <- GBSGreeks(Selection="delta", TypeFlag=cp, S=Spot, X=Strike, Time=Ttm, r=
 Perform the same calculation for the binary option. The delta is computed 
 by finite difference.
 
-```{r ic-2}
+```{r ic-2, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
+p <- vector(mode='numeric', length=2)
 K <- 1
 p[2] <- CashOrNothingOption(TypeFlag=cp, S=Spot, X=Strike, K=K, Time=Ttm, r=int.rate, 
                             b=int.rate-div.yield,
@@ -67,7 +69,8 @@ d[2] <- diff(dh)/(2*h)
 
 Finally, sum both vectors to get the portfolio NPV and delta.
 
-```{r, ic-3}
+```{r ic-3, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
+p <- vector(mode='numeric', length=2)
 print(paste('Price:', round(sum(p),2), 'Delta:', round(sum(d),3)))
 ```
 
