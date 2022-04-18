@@ -1,14 +1,22 @@
 ---
 title: "Topics in Empirical Finance"
 author: "Patrick Hénaff"
-subtitle: with R and Rmetrics
-output: pdf_document
+subtitle: "with R and Rmetrics"
+output:
+  html_document:
+    df_print: paged
 cover-image: img/frontCover.pdf
 github-repo: phenaff/empirical-finance-2
 classoption: justified
 site: bookdown::bookdown_site
-description: An open access textbook on empirical finance
+description: "An open access textbook on empirical finance" 
+bibliography: ../library.bib
+biblio-style: apalike
+link-citations: true
 ---
+<!--
+csl: ../apa.csl
+-->
 
 # Preface {-}
 

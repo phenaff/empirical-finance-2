@@ -10,6 +10,10 @@
 }
 \makeatother
 
+% Index
+\usepackage{makeidx}
+\makeindex
+
 % binomial trees
 \usepackage{pgfplots}
 \usepackage{tikz}
@@ -23,7 +27,8 @@
 \newcommand{\Rmetrics}{Rmetrics}
 
 \newcommand{\Rfun}[1]{\texttt{#1()}\index{R~functions@\RR~functions!#1}}
-\newcommand{\class}[1]{\texttt{#1}\index{R~classes@\RR~classes!#1}}
+\newcommand{\class}[1]{\texttt{#1}}
+%\newcommand{\class}[1]{\texttt{#1}\index{R~classes@\RR~classes!#1}}
 \newcommand{\pkg}[1]{\texttt{#1}\index{R~packages@\RR~packages!#1}}
 \newcommand{\dataset}[1]{\texttt{#1}\index{R~data@\RR~data!#1}}
 \newcommand{\code}[1]{\texttt{#1}\index{#1}}

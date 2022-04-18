@@ -1,4 +1,4 @@
-# Basic Components {#chap:BasicComponents}
+# Basic Components {#basic-components}
 
 ```{r label=load-packages,echo=TRUE,results='hide', message=FALSE}
 library(fOptions)
@@ -188,12 +188,11 @@ We first  describe the representation of market data, then the algorithm for sea
 
 ### The Model for Market Data
 
-The model for market data is strongly inspired by @Fowler1996. To summarize, a piece of market data is modeled as an observed phenomenon on a financial instrument. Therefore, every market data item is identified by three attributes:
-\begin{enumerate}
-  \item the financial instrument being observed (e.g. a stock)
-    \item the observed phenomenon (e.g. the implied volatility, or the price)
-      \item the observation date
-        \end{enumerate}
+The model for market data is strongly inspired by M. Folwer [-@Fowler1996]. To summarize, a piece of market data is modeled as an observed phenomenon on a financial instrument. Therefore, every market data item is identified by three attributes:
+
+-   the financial instrument being observed (e.g. a stock)
+-   item the observed phenomenon (e.g. the implied volatility, or the price)
+-   the observation date
 
 In order to optimize storage, the data is stored in a hash table. The first two attributes are combined to created the key, and the data for all observation dates is stored as a time series, with one column for actual data, and many additional columns when performing a simulation.
 

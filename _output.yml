@@ -16,5 +16,6 @@ bookdown::pdf_book:
   keep_tex: yes
   includes:
     in_header: preamble.tex
+    after_body: after_body.tex
 #  latex_engine: xelatex
 # compile from the command line with: Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book')"

@@ -15,13 +15,13 @@ have been wrapped in a object-oriented framework, which hides most of
 the implementation details, and allows us to focus on the key features
 of the financial instruments and models. The framework uses the S4
 object model [@Genolini2008] of the R language, and is described in
-Chapter \@ref(chap:BasicComponents).
+Chapter \@ref(basic-components).
 
 Simulation is our tool of choice to explore the features of pricing
 models and test their robustness. To that end, we have developped a
 framework that facilitates the definition and testing of simple risk
 management strategies. The core of this simulation framework is the \class{DataProvider}
-class, which is presented in Chapter \@ref(chap:simulation-framework).
+class, which is presented in Chapter \@ref(sim-framework).
 
 In addition to the packages found on CRAN, data sets and code used in the
 text have been gathered into three packages:

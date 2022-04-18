@@ -43,6 +43,34 @@
 
 % citations
 
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+% For Pandoc 2.8 to 2.11
+\newenvironment{cslreferences}%
+  {}%
+  {\par}
+% For pandoc 2.11+ using new --citeproc
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 % pandoc syntax highlighting
 \usepackage{color}
@@ -127,6 +155,10 @@
 }
 \makeatother
 
+% Index
+\usepackage{makeidx}
+\makeindex
+
 % binomial trees
 \usepackage{pgfplots}
 \usepackage{tikz}
@@ -140,7 +172,8 @@
 \newcommand{\Rmetrics}{Rmetrics}
 
 \newcommand{\Rfun}[1]{\texttt{#1()}\index{R~functions@\RR~functions!#1}}
-\newcommand{\class}[1]{\texttt{#1}\index{R~classes@\RR~classes!#1}}
+\newcommand{\class}[1]{\texttt{#1}}
+%\newcommand{\class}[1]{\texttt{#1}\index{R~classes@\RR~classes!#1}}
 \newcommand{\pkg}[1]{\texttt{#1}\index{R~packages@\RR~packages!#1}}
 \newcommand{\dataset}[1]{\texttt{#1}\index{R~data@\RR~data!#1}}
 \newcommand{\code}[1]{\texttt{#1}\index{#1}}
@@ -306,14 +339,14 @@ same data. To facilitate this comparison, the Rmetrics pricing libraries
 have been wrapped in a object-oriented framework, which hides most of
 the implementation details, and allows us to focus on the key features
 of the financial instruments and models. The framework uses the S4
-object model {[}@Genolini2008{]} of the R language, and is described in
-Chapter \ref{chap:BasicComponents}.
+object model (\protect\hyperlink{ref-Genolini2008}{\textbf{Genolini2008?}}) of the R language, and is described in
+Chapter \ref{basic-components}.
 
 Simulation is our tool of choice to explore the features of pricing
 models and test their robustness. To that end, we have developped a
 framework that facilitates the definition and testing of simple risk
 management strategies. The core of this simulation framework is the \class{DataProvider}
-class, which is presented in Chapter \ref{chap:simulation-framework}.
+class, which is presented in Chapter \ref{sim-framework}.
 
 In addition to the packages found on CRAN, data sets and code used in the
 text have been gathered into three packages:
@@ -328,8 +361,8 @@ provides the \class{fInstrument} class, that wraps the Rmetrics pricing library 
 contains tools needed to perform dynamic simulations, such as scenario generators and delta hedging simulators.
 \end{description}
 
-\hypertarget{chap:BasicComponents}{%
-\chapter{Basic Components}\label{chap:BasicComponents}}
+\hypertarget{basic-components}{%
+\chapter{Basic Components}\label{basic-components}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -581,13 +614,17 @@ We first describe the representation of market data, then the algorithm for sear
 \hypertarget{the-model-for-market-data}{%
 \subsection{The Model for Market Data}\label{the-model-for-market-data}}
 
-The model for market data is strongly inspired by @Fowler1996. To summarize, a piece of market data is modeled as an observed phenomenon on a financial instrument. Therefore, every market data item is identified by three attributes:
+The model for market data is strongly inspired by M. Folwer (\protect\hyperlink{ref-Fowler1996}{1996}). To summarize, a piece of market data is modeled as an observed phenomenon on a financial instrument. Therefore, every market data item is identified by three attributes:
 
-\begin{enumerate}
-  \item the financial instrument being observed (e.g. a stock)
-    \item the observed phenomenon (e.g. the implied volatility, or the price)
-      \item the observation date
-        \end{enumerate}
+\begin{itemize}
+\tightlist
+\item
+  the financial instrument being observed (e.g.~a stock)
+\item
+  item the observed phenomenon (e.g.~the implied volatility, or the price)
+\item
+  the observation date
+\end{itemize}
 
 In order to optimize storage, the data is stored in a hash table. The first two attributes are combined to created the key, and the data for all observation dates is stored as a time series, with one column for actual data, and many additional columns when performing a simulation.
 
@@ -658,8 +695,8 @@ and compute the NPV of the derivative for each scenario. The relationship betwee
 \includegraphics{empiricalfin_files/figure-latex/sce-plot-1} \caption[Call Price as a function of spot value]{Call Price as a function of spot value. Strike: 100, maturity: 1 Year}\label{fig:sce-plot}
 \end{marginfigure}
 
-\hypertarget{chap:simulation-framework}{%
-\chapter{The Simulation Framework}\label{chap:simulation-framework}}
+\hypertarget{sim-framework}{%
+\chapter{The Simulation Framework}\label{sim-framework}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -923,6 +960,17 @@ child \class{DataProvider}, the following logic is applied:
 
 This behavior is inherited from the built-in \class{environment}.
 
+\hypertarget{references}{%
+\chapter{References}\label{references}}
 
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-Fowler1996}{}}%
+Fowler, Martin. 1996. \emph{{Analysis Patterns: Reusable Object Models}}. Addison-Wesley.
+
+\end{CSLReferences}
+
+
+\printindex
 
 \end{document}
