@@ -1,0 +1,107 @@
+# The Vasicek Model
+
+```{r, setup-vasicek,echo=TRUE,results='hide'}
+  library(fBasics)
+  library(empfin)
+```
+
+The Vasicek model is interesting on two counts: it is the first
+equilibrium model of the short rate, and it provides a simple
+relationship between the dynamic of the short rate and the
+term-structure of zero-coupon rates. It’s limitation is that it cannot
+exactly fit the observed zero-coupon curve. An extension provided by
+Hull and White, however, provides that feature.
+
+## Derivatives with Non Traded Underlying Asset
+
+
+Consider a non traded risk factor $x$ governed by the diffusion:
+
+$$dx = m dt + \sigma dz$$
+
+Consider next two derivatives whose price dynamic is function of the non
+traded risk factor:
+
+$$\frac{d P_i}{P_i} = \mu_i(x, t) dt + \sigma_i(x, t) dz, i = 1, \ldots, 2
+\label{eq:nta}$$
+
+Consider the portfolio made of $\sigma_2 P_2$ units of asset 1 and
+$\sigma_1 P_1$ units of asset 2. Its total change in value is:
+
+$$\begin{aligned}
+\Delta \Pi &=& \sigma_2 P_2 \Delta P_1 + \sigma_1 P_1 \Delta P_2 \\
+&=& (\sigma_2 P_2) (\mu_1 P_1 \Delta t + \sigma_1 P_1  \Delta z) + (P_1 + \sigma_1 P_1) (\mu_2 P_2 \Delta t + \sigma_2 P_2  \Delta z) \\
+&=& (\mu_1 \sigma_2 P_1 P_2 - \mu_2 \sigma_1 P_1 P_2) \Delta t
+\end{aligned}$$
+
+Being riskless, the portfolio must earn the riskless rate:
+
+$$\Delta \Pi = r \Pi \Delta t$$
+
+After some algebra, one gets:
+
+$$\frac{\mu_1 - r}{\sigma_1} = \frac{\mu_2 - r}{\sigma_2}$$
+
+Since this is true for two arbitrary securities, it must be true for any
+security, and therefore,
+
+$$\frac{\mu_i - r}{\sigma_i} = \lambda$$
+
+The constant $\lambda$ is called the price of risk. With this
+established, we now go back to derivative security $P$, function of $x$.
+Recall that $x$ is governd by the dynamic:
+
+$$dx = m dt + \sigma_x dz$$
+
+Apply Ito’s Lemma to $P$:
+
+$$dP = \left( \frac{\partial P}{\partial t} + m \frac{\partial P}{\partial x} + \frac{1}{2} \sigma_x^2 \frac{\partial^2 P}{\partial x^2} \right) dt + \frac{\partial P}{\partial x} \sigma_x dz
+\label{eq:nta-ito}$$
+
+Matching terms in @ref(eq:nta) and @ref(eq:nta-ito) we get:
+
+$$\begin{aligned}
+    P\mu &=& \frac{\partial P}{\partial t} + m \frac{\partial P}{\partial x} + \frac{1}{2} \sigma_x^2 \frac{\partial^2 P}{\partial x^2} \\
+    \sigma_P P &=& \frac{\partial P}{\partial x} \sigma_x
+  \end{aligned}$$
+
+Now use the price of risk equation:
+
+$$\mu - r = \lambda \sigma_P$$
+
+multiply both sides by $P$ and substitute the terms $\mu P$ and
+$\sigma_P P$ to get:
+
+$$\frac{\partial P}{\partial t} + m \frac{\partial P}{\partial x} + \frac{1}{2} \sigma_x^2 \frac{\partial^2 P}{\partial x^2} - rP = \lambda \sigma_x \frac{\partial P}{\partial x}$$
+
+Rearrange terms to get the familiar PDE:
+
+$$\frac{\partial P}{\partial t} + (m-\lambda \sigma_x) \frac{\partial P}{\partial x} + \frac{1}{2} \sigma_x^2 \frac{\partial^2 P}{\partial x^2} = rP$$
+
+This equation is similar to the Black-Scholes PDE for underlying asset
+that pay a dividend. Set $q = r - (m-\lambda \sigma_x)$ and the equation
+becomes:
+
+$$\frac{\partial P}{\partial t} + (r-q) \frac{\partial P}{\partial x} + \frac{1}{2} \sigma_x^2 \frac{\partial^2 P}{\partial x^2} = rP$$
+
+In order to price a derivative for which the underlying asset is a
+non-traded instrument, one needs to know the price of risk corresponding
+to this risk factor.
+
+## The Market Price of Interest Rate Risk
+
+We expect the interest rate market price of risk to be negative.
+
+The forward rate is greater that the expected future spot rate.
+
+Economic interpretation: Liquidity preference. Everything else being
+equal:
+
+1.  Investors prefer liquid, short term investments
+
+2.  Borrowers prefer fixed rate, long term financing.
+
+Banks provide intermediation between the two classes of agents. By
+lending at a forward rate that is greater than the expected spot rate,
+they provide an incentive for borrowers to borrow at a shorter term, and
+for investors to accept long term comitments.

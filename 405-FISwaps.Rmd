@@ -1,0 +1,80 @@
+# Libor Swaps
+
+```{r, init-LiborSwaps,echo=TRUE,results='hide'}
+  library(fBasics)
+  library(empfin)
+```
+
+An interest rate swap is a contract to exchange the cash flows of a fixed-coupon bond for the cash flows of a floating rate note of identical maturity. The present value of this contract is therefore the difference between the PV of the fixed leg and the PV of the floating leg.
+
+The pricing formulae use the following notations:
+
+$PV_x$
+
+:   PV of the fixed leg
+
+$PV_l$
+
+:   PV of the floating leg
+
+$r_i$
+
+:   zero-coupon rate for maturity $t_i$
+
+$Q$
+
+:   nominal amount
+
+$c$
+
+:   periodic fixed coupon
+
+$k$
+
+:   next floating coupon
+
+$t_i$
+
+:   payment dates, $i=1, \ldots, n$
+
+## IR Swap Pricing
+
+The pricing formulae use the following notations:
+
+$PV_x$
+
+:   PV of the fixed leg
+
+$PV_l$
+
+:   PV of the floating leg
+
+$r_i$
+
+:   zero-coupon rate for maturity $t_i$
+
+$Q$
+
+:   nominal amount
+
+$c$
+
+:   periodic fixed coupon
+
+$k$
+
+:   next floating coupon
+
+$t_i$
+
+:   payment dates, $i=1, \ldots, n$
+
+The PV of the fixed leg is:
+
+$$PV_x = \sum_{i=1}^n c e^{-r_it_i} + Q e^{-r_nt_n}$$
+
+Since the PV of a floating rate note is par at each reset date, the PV of the floating leg is:
+
+$$PV_l = k e^{-r_1t^*_1} + Q e^{-r_1t^*_1}$$
+
+At inception, both legs must have equal value.

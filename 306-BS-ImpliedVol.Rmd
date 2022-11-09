@@ -1,0 +1,337 @@
+# The implied volatility
+
+```{r, label=iv-setup, echo=FALSE, results='hide'}
+  library(fOptions)
+  library(oce)
+  library(empfin)
+  data(LiborRates)
+  data(cl_opt_042109)
+```
+
+Listed options are quoted in price. Implied volatility is the volatility
+that recovers that quoted price, using the Black-Scholes model.
+Computing implied volatility amounts to inverting the BS formula, given
+an option price. This chapter discusses the issues involved in such
+calculation, and how to represent the result.
+
+Market Data
+-----------
+
+Option settlement prices are published every day by exchanges.
+Figure \[fig:iv-data\] shows a sample of the data file published every
+day by the NYMEX.
+
+### Option data: Settlement prices of options on the Feb09 futures contract
+
+``` {fontsize="\tiny"}
+                NEW YORK MERCANTILE EXCHANGE
+          NYMEX OPTIONS CONTRACT LISTING FOR 12/29/2008
+
+                           TODAY'S  PREVIOUS  ESTIMATED   
+--------CONTRACT--------    SETTLE    SETTLE     VOLUME   
+LC    02 09    P   30.00       .53       .85          0    
+LC    02 09    P   35.00      1.58      2.28          0    
+LC    02 09    P   37.50      2.44      3.45          0    
+LC    02 09    C   40.00      3.65      2.61         10    
+LC    02 09    P   40.00      3.63      4.90          0    
+LC    02 09    P   42.00      4.78      6.23          0    
+LC    02 09    C   42.50      2.61      1.80          0    
+LC    02 09    C   43.00      2.43      1.66          0    
+LC    02 09    P   43.00      5.41      6.95        100    
+```
+
+NEW YORK MERCANTILE EXCHANGE NYMEX OPTIONS CONTRACT LISTING FOR
+12/29/2008
+
+TODAY’S PREVIOUS ESTIMATED ——–CONTRACT——– SETTLE SETTLE VOLUME LC 02 09
+P 30.00 .53 .85 0 LC 02 09 P 35.00 1.58 2.28 0 LC 02 09 P 37.50 2.44
+3.45 0 LC 02 09 C 40.00 3.65 2.61 10 LC 02 09 P 40.00 3.63 4.90 0 LC 02
+09 P 42.00 4.78 6.23 0 LC 02 09 C 42.50 2.61 1.80 0 LC 02 09 C 43.00
+2.43 1.66 0 LC 02 09 P 43.00 5.41 6.95 100
+
+Notice that settlement prices are provided even for options that have
+not been traded today. Providing a price for all strikes and maturities
+is necessary in order to compute margin calls on open positions. The
+exchange uses an interpolation method for estimating these settlement
+prices in the absence of actual transactions.
+
+Calculation of implied volatility
+---------------------------------
+
+Given an observed price $C^*$, compute the volatility $\sigma$ such
+that:
+
+$$\begin{aligned}
+ C^* & = & C(S, K, T, r, \sigma) \\
+ & = & C(\sigma)\end{aligned}$$
+
+Observe that there is a change in convexity in $f(\sigma)$:
+
+$$\frac{\partial C}{\partial \sigma} = S n(d_1) \sqrt{T}$$
+
+$$\frac{\partial^2 C}{\partial \sigma^2} = S\sqrt{T} n(d_1) \frac{1}{\sigma} \left[  \frac{1}{\sigma^2 T} \ln(\frac{F}{K})^2-\frac{1}{4} \sigma^2 T \right]$$
+
+with $F = Se^{rT}$.
+
+Thus, $C(\sigma)$ is convex on the interval
+$(0, \sqrt{\frac{2|\ln(F/K)|}{T}}]$, and concave otherwise.
+
+### Newton’s method
+
+Let $C^*$ be the price of a call option. We look for the volatility
+$\sigma^*$ such that $$C^* = C(S, K, T, r, \sigma^*)$$
+
+To ensure convergence of Newton’s method, one must carefully choose the
+initial point.
+
+Let $f$ be defined on the interval $[a,b]$ and assume that:
+
+1.  $f(x^*) = 0$ for some $x^* \in [a, b]$
+
+2.  $f'(x) > 0$
+
+3.  $f''(x) \geq 0$
+
+Then Newton’s method converges monotonically from $x_0 = b$. If
+
+1.  $f(x^*) = 0$ for some $x^* \in [a, b]$
+
+2.  $f'(x) > 0$
+
+3.  $f''(x) \leq 0$
+
+Then Newton’s method converges monotonically from $x_0 = a$.
+
+We prove the first assertion. For all $x_n \in [a, b]$,
+$$f(x^*) = f(x_n) + (x^* - x_n) \frac{\partial f}{\partial x} + K$$ with
+$K > 0$. Therefore, $$x^* < x_n - \frac{\partial f}{\partial x}$$
+
+or,
+
+$$x^* <= x_{n+1} < x_n$$
+
+Newton’s method generates a monotonic sequence that must converge to
+$x^*$.
+
+Consider now Newton’s method started at
+$$\sigma_0 = \sqrt{\frac{2|\ln(F/K)|}{T}}$$
+
+If $f(\sigma_0)>0$, we are in case I of the above theorem, and Newton’s
+method generates a decreasing sequence that converges to $\sigma^*$. If
+$f(\sigma_0)<0$ we are in case II, and Newton’s method also converges.
+The algorithm is as follows:
+
+### Implied Volatility by Newton’s Method
+
+The following algorithm generates a monotonic series $(\sigma_n)$:
+
+1.  Set $\sigma_0 = \sqrt{\frac{2|\ln(F/K)|}{T}}$
+
+2.  While $|C(\sigma_n) - C^*| > \epsilon$:
+
+    1.  Let
+        $$\sigma_{n+1} = \sigma_n + \frac{C^*-C(\sigma_n)}{\frac{\partial C}{\partial \sigma}}$$
+
+    2.  $n \leftarrow n+1$
+
+The algorithm is implemented as follows:
+
+```{r, label=ImpliedVolNewton, echo=T}
+  ImpliedVolNewton <- function(p, TypeFlag, S, X, Time, r, b, tol, maxiter=50) {
+    F <- S * exp((r-b)*T)
+    s <- sqrt(2*log(F/X)/T)
+    not_converged <- T
+    vega <- GBSGreeks(Selection="vega", TypeFlag, S, X, Time, r, b, s)
+    i <- 1
+    while(not_converged & (i<maxiter)) {
+      err <- (p-GBSOption(TypeFlag, S, X, Time, r, b, s)@price)
+      s <- s + err/vega
+      not_converged <- (abs(err/vega) > tol)
+      i <- i+1
+    }
+  s
+  }
+```
+
+A timing test demonstrate the advantage of choosing the initial point
+described above:
+
+```{r, label=iv-timing-test-1, echo=T}
+  TypeFlag <- 'c'
+  S <- 100
+  X <- 100
+  Time <- 1
+  r <- .03
+  b <- .01
+  sigma <- .314
+  tol <- 1e-6
+
+  p <- GBSOption(TypeFlag, S, X, Time, r, b, sigma)@price
+```
+
+We perform 100 replications of the same calculation.
+
+```{r, label=iv-timing-test-2, echo=T}
+  t1 <- function(n=100) {
+  for (i in 1:n) {
+  si <- GBSVolatility(p, TypeFlag, S, X, Time, r, b, tol=tol, maxiter=50)
+  }}
+
+  t2 <- function(n=100) {
+  for (i in 1:n) {
+  si <- ImpliedVolNewton(p, TypeFlag, S, X, Time, r, b, tol) }}
+```
+
+Statistics for the default implied volatility calculation are:
+
+```{r, label=iv-timing-test-3, echo=T}
+  system.time(t1(100))
+```
+
+and with Newton’s method and the initial point computed as above:
+
+```{r, label=iv-timing-test-4, echo=T}
+  system.time(t2(100))
+```
+
+### Secant Method
+
+For deep in the money or out of the money options, where vega is very
+small, a solution method that does not require a derivative may be
+prefered. The secant method starts with a bracking interval around the
+solution, and progressively shrinks it. The algorithm is as follows:
+
+It implementation is straight-forward:
+
+```{r, label=iv-secant-1, echo=T}
+  ImpliedVolSecant <- function(p, TypeFlag, S, X, Time, r, b, tol, sBounds, maxiter=100) {
+  sMin <- min(sBounds)
+  sMax <- max(sBounds)
+  pMin <- GBSOption(TypeFlag, S, X, Time, r, b, sMin)@price
+  pMax <- GBSOption(TypeFlag, S, X, Time, r, b, sMax)@price
+   
+  not_converged <- abs(pMin-pMax) > tol
+  i <- 1
+
+  while(not_converged & (i<maxiter)) {
+    sStar <- (sMin + sMax)/2
+    pStar <- GBSOption(TypeFlag, S, X, Time, r, b, sStar)@price
+    if(pStar < p) {
+      pMin <- pStar;
+      sMin <- sStar
+    } else {
+      pMax <- pStar;
+      sMax <- sStar
+    }
+
+    not_converged <- (abs(pMin-pMax) > tol)
+    i <- i+1
+  }
+
+  (sMin+sMax)/2
+  }   
+
+  t3 <- function(n=100) {
+  for (i in 1:n) {
+  si <- ImpliedVolSecant(p, TypeFlag, S, X, Time, r, b, tol, c(.1, 1))
+  }
+  si
+  }
+```
+
+A timing test shows the value of this algorithm for a deep our of the
+money call:
+
+```{r, label=iv-secant-2, echo=T}
+  S <- 100
+  X <- 20
+  sigma <- .514
+  p <- GBSOption(TypeFlag, S, X, Time, r, b, sigma)@price
+  n <- 100
+
+  system.time(t1(n))
+  system.time(t2(n))
+  system.time(t3(n))
+```
+
+### Jaeckel’s method
+
+Peter Jackel ([@Jackel2006]) proposes a variant of the above method to
+regularize Newton’s method.
+
+Given an option price $p$, we must solve for $\sigma$
+
+$$p = \delta \theta \left[ F \Phi \left(\theta \left[ \frac{\ln(F/K)}{\sigma} + \frac{\sigma}{2} \right] \right) - K \Phi \left(\theta \left[ \frac{\ln(F/K)}{\sigma} - \frac{\sigma}{2} \right] \right) \right]$$
+
+where:
+
+$\delta$
+
+:   discount factor
+
+$\theta$
+
+:   1 for call, -1 for put
+
+$F$
+
+:   Forward price: $S e^{(r-d)T}$
+
+$\sigma$
+
+:   $\sigma \sqrt{T}$
+
+Set:
+
+$$\begin{aligned}
+    x & = &\ln(F/K) \\
+    b & = & \frac{p}{\delta \sqrt{FK}}\end{aligned}$$
+
+The Black-Scholes equation becomes:
+
+$$b = \theta \left[ e^{x/2} \Phi \left(\theta \left[ \frac{x}{\sigma} + \frac{\sigma}{2} \right] \right) - e^{-x/2} \Phi \left(\theta \left[ \frac{x}{\sigma} - \frac{\sigma}{2} \right] \right) \right]$$
+
+### Normalized Call price as a function of $\sigma$
+
+![image](Graphics/iv-1.pdf){width=".7\textwidth"}
+
+![image](Graphics/iv-1.pdf)
+
+As in the previous section, the normalized price function changes
+convexity at $\sigma_c = \sqrt{|x|}$
+
+Jackel further defines $$f(\sigma) = \left\{
+        \begin{array}{rr}
+            \ln(\frac{b-i}{\overline{b}-i}) & \mbox{if} \overline{b} < b_c \\
+            b-\overline{b} & \mbox{otherwise}
+        \end{array}
+    \right.$$
+
+with:
+
+$b_c$
+
+:   $b(x, \sigma_c, \theta)$
+
+$i$
+
+:   normalized intrinsic value:
+    $1_{\theta x>0} \theta \left( e^{x/2} - e^{-x/2}\right)$
+
+$\overline{b}$
+
+:   target normalized price
+
+The function $f(\sigma)$ is now monotonously concave, and the implied
+volatility problem amounts to solving: $$f(\sigma) = 0$$
+
+### Transformed objective function
+
+![image](Graphics/iv-2.pdf){width=".7\textwidth"}
+
+![image](Graphics/iv-2.pdf)
+
+### Impact of Dividends
+
+For indices: watch for dividends impact, compute implied dividend rate
+from C/P parity, then compute implied vol.

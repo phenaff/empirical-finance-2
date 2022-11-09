@@ -1,0 +1,56 @@
+# Trinomial Models {#sec:trinomial}
+
+A natural extension of the binomial model is a trinomial model, that is,
+a model with three possible future states at each time step and current
+state.
+
+
+## The Trinomial Tree
+
+The stock price at time $t$ is $S_t$. From $t$ to $t+\Delta t$, the
+stock may move up to $S_u$ with probability $p_u$, down to $S_d$ with
+probability $p_d$, or move to a middle state $S_m$ with probability
+$1-p_u-p_d$. The probabilities and future states must satisfy the
+following constraints:
+
+1.  The expected value of the stock at $t+\Delta t$ must be the forward
+    price:
+    $$p_u S_u + p_d S_d + (1-p_u-p_d) S_m = F = S e^{(r-\delta)\Delta t}$$
+
+2.  Variance:
+    $$p_u (S_u-F)^2 + p_d(S_d-F)^2 +(1-p_u-p_d)(S_m-F)^2 = S^2\sigma^2\Delta t$$
+
+The first method for constructing trinomial trees is simply to combine
+two steps of any binomial tree.
+
+Recall that a CRR binomial tree is defined by:
+
+$$\begin{aligned}
+    u &=& e^{\sigma \sqrt{\Delta t}} \\
+    d &=& e^{-\sigma \sqrt{\Delta t}} \\
+    p &=& \frac{e^{rt} - e^{-\sigma \sqrt{\Delta t}}}{e^{\sigma \sqrt{\Delta t}} - e^{-\sigma \sqrt{\Delta t}}}\end{aligned}$$
+
+Combining two steps at a time, we obtain a trinomial tree with
+
+$$\begin{aligned}
+    S_u &=& S e^{\sigma \sqrt{2 \Delta t}} \\
+    S_m & = & S \\
+    S_d &=& S e^{-\sigma \sqrt{2 \Delta t}} \\
+    p_u &=& \left( \frac{e^{r \Delta t} - e^{-\sigma \sqrt{\Delta t}}}{e^{\sigma \sqrt{\Delta t}} - e^{-\sigma \sqrt{\Delta t}}} \right)^2 \\
+    p_d &=& (1-\sqrt{p_u})^2\end{aligned}$$
+
+To every binomial tree corresponds a trinomial tree, obtained by
+aggregating two steps.
+
+
+Another geometry can be defined by setting the middle node to 
+$S$ (~\cite{Hull1997} p. 360):
+
+\begin{eqnarray*}
+    S_m &=& S  \\
+    S_u &=& S_m e^{\sigma \sqrt{3 \Delta t}} \\
+    S_d &=& S_m e^{-\sigma \sqrt{3 \Delta t}} \\
+    p_u &=& -\sqrt{\frac{\Delta t}{12 \sigma^2}} \left(r-\frac{\sigma^2}{2} \right) + \frac{1}{6} \\
+    p_d &=&  \sqrt{\frac{\Delta t}{12 \sigma^2}} \left(r-\frac{\sigma^2}{2} \right) + \frac{1}{6}
+\end{eqnarray*}
+

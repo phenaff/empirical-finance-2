@@ -1,0 +1,165 @@
+# Dynamic Hedging with the Black-Scholes Model
+
+In this section, we investigate the effectiveness of various hedging
+strategies in the Black-Scholes framework. Indeed, the ultimate measure
+of risk is the quality of the dynamic replicating strategy, and the
+distribution of the residual wealth after expiry of the option.
+Throughout this section, we place ourselves in the situation of a
+financial institution that sell a derivative and dynamically hedges the
+risk.
+
+Self-Financing Replicating Portfolio
+------------------------------------
+
+Consider the self-financing replicating portfolio defined by:
+
+$$V_t = \delta_t S_t + B_t$$
+
+The auto-financing condition defines the dynamic of the bank account
+
+$$e^{r(t_i - t_{i-1})} B_{t_{i-1}} + \delta_{t_{i-1}} S_{t_i} =
+B_{t_i} + \delta_{t_i} S_{t_i}$$
+
+$$V_{t_i} - V_{t_{i-1}} =
+ (e^{r(t_i - t_{i-1})} -1) (V_{t_{i-1}} - \delta_{t_{i-1}} S_{t_{i-1}}) +
+\delta_{t_{i-1}} (S_{t_i} - S_{t_{i-1}})$$
+
+As $t_i-t_{i-1} = \Delta t \rightarrow 0$,
+
+$$dV_t = (V_t - \delta_t S_t) r dt + \delta_t dS_t$$
+
+Hedging Error due to Discrete Hedging
+-------------------------------------
+
+We first consider the risk related to discreet hedging.
+
+The dynamic of the replicating portfolio, $V_t$ rebalanced at times
+$t_i, i= 1, \ldots, N$. For $t \in [t_i, t_{i+1})$ is:
+
+$$dV_t = \frac{\partial C(t_i, S_{t_i})}{\partial S} dS_t$$
+
+The dynamic of the option price is:
+
+$$dC_t = \frac{\partial C(t, S_{t})}{\partial S} dS_t$$
+
+The hedging error process $\epsilon_t = C_t - V_t$ is therefore:
+
+$$d\epsilon_t = \left(\frac{\partial C(t, S_{t})}{\partial S} - \frac{\partial C(t_i, S_{t_i})}{\partial S} \right) dS_t$$
+
+It can be shown that:
+
+$$\varinjlim_{h \rightarrow 0} E^Q \left[ \frac{\epsilon_T^2}{\Delta t} \right] = E^Q \left[ \frac{1}{2} \int_0^T \left( \frac{\partial^2 C(S_t,t)}{\partial S_t^2} \right)^2 S^4_t \sigma^4 dt\right]$$
+
+It can also be shown that the process $\epsilon_t$ converges in
+distribution to a process that has the following expression:
+
+$$\frac{\epsilon_t}{\sqrt{\Delta t}} \rightarrow \frac{1}{\sqrt{2}} \int_0^t \frac{\partial^2 C(S_u, u)}{\partial S^2} \sigma^2 S^2_u dZ_u$$
+
+This expression highlights the following points:
+
+1.  The variance is inversely related to the hedging frequency
+
+2.  The variance is directly related to the magnitude of $\Gamma$
+
+Error due to Unknown Volatility
+-------------------------------
+
+To simplify the notation, assume now that hedging is done continuously,
+but that the volatility of the underlying asset is unknown. The dynamic
+of the underlying asset is:
+
+$$dS_t = \mu dt + \sigma_t dW_t$$
+
+The derivative is priced with an estimated volatility $\Sigma$.
+
+The dynamic of the hedge portfolio is:
+
+$$dV_t = \frac{\partial C_t^\Sigma}{\partial S_t} dS_t$$
+
+By Itô’s lemma:
+
+$$dC(S_t, t) = \left( \frac{\partial C}{\partial t} + \frac{1}{2} \frac{\partial^2 C}{\partial S^2} \sigma_t^2 S_t^2 \right) dt + \frac{\partial C}{\partial S} dS_t$$
+
+The price of the derivative verifies the Black-Scholes EDP:
+
+$$\frac{\partial C}{\partial t} + \frac{1}{2} \Sigma^2 S_t^2 \frac{\partial^2 C}{\partial S^2} = 0$$
+
+this yields,
+
+$$d \epsilon_t = dV_t - dC_t = \frac{1}{2} \left[ \Sigma^2 - \sigma_t^2 \right] \frac{\partial^2 C}{\partial S^2} S^2 dt$$
+
+and the hedging error at expiry is thus,
+
+$$\epsilon_T = \frac{1}{2} \int_0^T \left[ \Sigma^2 - \sigma_t^2 \right] \frac{\partial^2 C}{\partial S^2} S^2 dt$$
+
+We identify three components in the above formulae:
+
+1.  the nature of the option, characterized by its gamma.
+
+2.  the behavior of the market, characterized by $\sigma_t$,
+
+3.  the model calibration, summarized here by the Black-Scholes
+    volatility $\Sigma$
+
+If the gamma keeps a constant sign, we can compute the fair value of the
+Black-Scholes volatility that sets the expected hedging error to 0 is
+
+$$\sigma_{BS}^2 = \frac{E\int_0^T \Gamma S^2 \frac{\Delta S}{S}^2}{E\int_0^T \Gamma_{BS} S^2 dt}$$
+
+Going back to our study of various exotic options, we can now determine
+in which case the basic Black-Scholes model is adapted or not:
+
+  Payoff               Is BS Adapted
+  -------------------- ---------------
+  Vanilla              Yes
+  European Binary      No
+  Up and Out Barrier   No
+  Asian                Yes
+
+  : Fitness of the Black-Scholes Model
+
+Second-Order Hedging
+--------------------
+
+In the previous section, we have determined that hedging error is
+determined by three factors:
+
+1.  the hedging frequency
+
+2.  the magnitude of the option gamma
+
+3.  the difference between $\Sigma$ (the BS volatility used for pricing
+    and hedging) and the volatility that is actually experienced,
+    $\sigma_t$.
+
+In this section, we investigate strategies for controlling the risk
+associated with the magnitude of the gamma.
+
+### Gamma Smoothing
+
+The idea is to use a static hedge in order to reduce the gamma of the
+position that is hedged dynamically.
+
+At $t=0$, sell the option at price $C(S_0, T, \Sigma)$, buy a quantity
+$\gamma_0$ of another option $G$ to smooth the gamma of the position:
+
+The dynamic delta hedge is then applied to the portfolio:
+
+$$-C_t + \gamma_0 G_t$$
+
+Example: partial static hedge of digital option.
+
+### Dynamic Delta-Gamma hedge
+
+Most of the time, a static gamma smoothing is not available, so the
+gamma smoothing strategy must be executed dynamically: At each time $t$,
+construct a replicating portfolio:
+$$V_t = \gamma_t G_t + \delta_t S_t + \alpha_t B_t$$
+
+with:
+
+$$\begin{aligned}
+\gamma_t &=& \frac{\partial^2 C_t}{\partial S^2} / \frac{\partial^2 G_t}{\partial S^2} \\
+\delta_t &=& \frac{\partial C_t}{\partial S} - \gamma_t \frac{\partial G_t}{\partial S}\end{aligned}$$
+
+Illustration: Residual risk of delta hedge vs. delta-gamma hedge.

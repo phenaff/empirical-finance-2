@@ -1,0 +1,399 @@
+# Simple Interest Rate Derivatives
+
+```{r, IRD,echo=FALSE,results='hide'}
+  library(timeDate)
+  library(empfin)
+```
+
+In this chapter we cover the pricing of simple interest rate
+derivatives:
+
+-   Forward rate agreements (FRA)
+
+-   Euro-Currency Futures
+
+-   Short-term (T-Bill) Futures
+
+## Spot and Forward Interest Rates
+
+Definition:
+
+Spot rate
+
+:   The interest rate for an investment starting today, paid back at a
+    future time $T$.
+
+Forward rate
+
+:   The interest rate that applies to an investment to be made in the
+    future.
+
+Forward rates can be infered from spot rates. Let
+
+$B(t,T)$
+
+:   Discount factor from $T$ to $t$
+
+$r_{t,T}$
+
+:   Continuously compounded rate from $t$ to $T$.
+
+We have:
+
+$$B(t,T) = e^{-r_{t,T}(T-t)}$$
+
+A simplified calculation of forward rates from zero-coupon rates can be
+performed using the equations:
+
+$$\begin{aligned}
+  B(t_1, t_2) &=& \frac{B(0, t_2)}{B(0, t_1)} \\
+  r_{t_1, t_2} &=& -\frac{\ln(B(t_1, t_2)}{t_2-t_1}\end{aligned}$$
+
+The calculation is illustrated by the following example.
+Table \[tab:zc-1\] provides a sample term-structure of zero-coupon
+rates.
+
+   Year   Spot Rate
+  ------ -----------
+    1       10.0
+    2       10.5
+    3       10.8
+    4       11.0
+    5       11.1
+
+Using these spot rates (continuously compounded), we can compute the
+1-year forward rates with the following script:
+
+```{r, label=ZC-1, echo=TRUE}
+  sr <- c(10.0, 10.5, 10.8, 11.0, 11.1)/100
+  t <- seq(1,5)
+  B <- exp(-sr*t)
+  fr <- c(sr[1], -log(B[2:5]/B[1:4]))
+```
+
+The resulting forward rate curve is shown in figure \[fig:zc-2\].
+
+```{r, label=ZC-2, echo=F, results='hide'}
+  plot(t, fr, type='l', xlab='Time (year)', ylab='Rate', lwd=2, col='blue')
+  lines(t, sr, type='l', lwd=2, col='green')
+  legend('bottomright', c("Forward", "Spot"),lty=c(1,1), col=c('blue', 'green'))
+```
+
+```{r, label=fig-zc-2,echo=FALSE, fig.width=6, fig.height=6}
+  <<ZC-2>>
+```
+
+The basic interest rate derivatives provide a vehicule for locking a
+short term interest rate a some point in the future. There are many such
+vehicules:
+
+1.  FRA: Forward rate agreement (OTC)
+
+2.  T-Bill Futures: Futures on a US 90-day Treasury Bill
+
+3.  Euro-currency Futures: Futures on an 3-month interest rate (LIFFE,
+    EUREX)
+
+In addition, Government Bond Futures, to be considered in the next
+chapter, provide a vehicule for locking a long term future yield.
+
+![image](Graphics/IR-Futures.pdf)
+
+\[fig:zc-2\]
+
+## Forward Rate Agreement (FRA)
+
+Define $r_{t_0, t_1, t_2}$ the interest rate between $t_1$ and $t_2$,
+observed at $t_0$.
+
+An OTC contract where at time $t_0$:
+
+1.  Buyer to pay fixed rate $r_{t_0, t_1, t_2} = r_f$
+
+2.  Seller to pay variable rate $r_{t_1, t_1, t_2} = r_l $
+
+
+Cash settlement (buyer’s perspective) at $t_1$ is present value of
+difference between fixed rate and rate observed at $t=t_1$:
+
+$$100 \left[e^{r_l(t_2-t_1)} - e^{r_f(t_2-t_1)} \right] e^{-r_{t_1, t_1, t_2}(t_2-t_1)}$$
+
+
+
+Value at time $t_0$ (from buyer’s perspective):
+
+$$100 \left[e^{r_l(t_2-t_1)} - e^{r_f(t_2-t_1)} \right] e^{-r_{t_0, t_0, t_2}(t_2-t_0)}$$
+
+Value is zero if
+
+$$r_f = \frac{r_{t_0, t_2} t_2 - r_{t_0, t_1} t_1}{t_2 - t_1}$$
+
+Recall that the forward rate $r_{t, t_1, t_2}$ is defined by
+
+$$r_{t, t_1, t_2} (t_2-t_1) + r_{t, t_1}(t_1-t) = r_{t, t_2}(t_2-t)$$
+
+Thus, the present value of the FRA can be computed by assuming that the
+current forward rate will be realized.
+
+
+As an example, assume today is 1Apr2010, and a firm needs to borrow:
+
+1.  100 M €
+
+2.  from 1dec2010 to 1dec2011
+
+Hedge:
+
+1.  Buy a “9x12” FRA.
+
+2.  $r_f = 3\%$ for 12 months, start in 9 months.
+
+Table \[tab:FRA\] summarizes the outcomes under two rate scenarios at
+horizon. In all cases, the effective borrowing rate is $3\%$.
+
+                                     Case 1                          Case 2
+  ---------------------- ------------------------------- -------------------------------
+          $r_f$                        .02                             .04
+        Settlement        $100 \frac{2\%- 3\%}{1.02} =$   $100 \frac{4\%- 3\%}{1.04} =$
+      PV of Interest                 - 1.96                           -3.84
+      FRA Settlement                  -.98                             .96
+   PV of Effective Rate               -2.94                           -2.88
+      Effective Rate        $\frac{2.94}{1.02} = 3.0$      $\frac{-2.88}{1.04} = 3.0$
+
+
+## T-Bill Futures
+
+
+A futures contract on a short rate instrument.
+
+1.  Underlying asset: 90-days TB
+
+2.  Notional amount: USD 1 million
+
+Price of underlying T-Bill:
+
+$$V_t = 100 e^{-r_{t_0, t_2} (t_2 - t)}$$
+
+Futures price:
+
+$$F_t = V_t e^{r_{t_0, t_1}(t_1-t_0)}$$
+
+or,
+
+$$F_t = 100 e^{-r_{t_0, t_1, t_2} (t_2-t_1)}$$
+
+### Arbitrage
+
+Simplified example, all rates continuously compounded.
+
+1.  45-day T-Bill rate is 10%
+
+2.  135-day T-Bill rate is 10.5%
+
+3.  implied rate from T-Bill Futures: 10.6%
+
+Arbitrage:
+
+1.  Sell Futures contract
+
+2.  Borrow fund for 45 days at 10%
+
+3.  Invest for 135 days at 10.5%
+
+### Quotes
+
+
+Quotation in yield:
+
+$$F_t = 100 - \mbox{TB yield}$$
+
+Cash price calculation: $$100 - \frac{90}{360} \mbox{TB Yield}$$
+
+Price of Futures converges towards price of underlying T-Bill.
+
+
+Buy a TB futures quoted 96.83. (Buy forward the underlying T-Bill at a
+yield of
+
+$$y_t = (100 - 96.83) = 3.17\%$$
+
+Delivery price:
+
+$$1,000,000 (100 - 3.17 \frac{90}{360}) = 992,075$$
+
+
+P&L at maturity: difference between delivery price and current T-Bill
+price. if yield is now 4%:
+
+T-Bill price:
+
+$$1,000,000 (100 - 4.00 \frac{90}{360}) = 990,000$$
+
+P&L = -2075.
+
+## Euro-Currency Futures
+
+Euro-currency Futures are Futures contracts on rates, not on price as
+the T-Bill contract. The price converges to underlying interest rate.
+
+Three-month Euribor contracts are quoted on EUREX.
+
+1.  1 million € notional
+
+2.  Cash settlement, one day after Final Settlement Day
+
+3.  Price $F_t$ = 100 - 3-month Euribor rate
+
+The EuroDollar Futures contract quoted on the CME has similar features.
+
+Invoice amount (Euribor)
+
+$$10,000 (100-\frac{1}{4}(100- F_t))$$
+
+
+Eurodollar Rate Versus Forward Rate
+-----------------------------------
+
+We next provide a simple method for calculating the spread between the
+Eurodollar rate and the forward rate. This spread is a direct
+consequence of the impact of discounting mentioned earlier.
+
+The PV of a forward swap that receives fixed is:
+
+$$PV = (r_f-r_l) \frac{n}{360} B(0, T)$$
+
+With:
+
+$r_f$
+
+:   Fixed rate
+
+$r_l$
+
+:   Floating rate
+
+$n$
+
+:   tenor in days
+
+$B(0,T)$
+
+:   discount factor from the swap payment date to today.
+
+The change in PV resulting from a change $\Delta r_l$ in the floating
+rate and $\Delta B(0,T)$ in the discount factor is
+
+$$\Delta PV = - \Delta r_l \frac{n}{360} (B(0, T) + \Delta B(0, T))$$
+
+The corresponding change in value of a Eurodollar contract is
+
+$$\frac{90}{360} \Delta r_l$$
+
+The quantity of Eurodollar futures needed to hedge against changes in
+$r_l$ is $$H = - \frac{n}{90} B(0, T)$$
+
+To eliminate a riskless profit, the swap position hedged with eurodollar
+contracts must have a zero expected profit:
+
+$$E \left[\Delta r_l (B(0,T) + \Delta B(0,T)) \right] = e \left[ B(0,T) (\Delta r_l + s) \right]$$
+
+Solve for the spread $s$:
+
+$$E\left[s\right] = E\left[\Delta r_l \frac{\Delta B(0, T)}{B(0,T)} \right]$$
+
+Finally,
+
+$$E\left[s\right] = \sigma(r_l) \sigma(\frac{\Delta B(0, T)}{B(0,T)}) <r_l, \frac{\Delta B(0, T)}{B(0,T)}>$$
+
+This adjustment applies to each quarter. The cumulative adjustment can
+be significant for long-dated forward rate.
+
+## Convexity Adjustment
+
+Calculation of expected forward rate. In a risk-neutral world, the
+expected price of a bond is its forward price. But the expected rate is
+not the forward rate, because of the non-linear relationship between
+rate and prices.
+
+Define:
+
+$y_t$
+
+:   Forward bond yield observed at time $t$ for forward contract with
+    maturity $T$
+
+$B_T(y_T)$
+
+:   Bond price at time $T$, function of its yield
+
+$\sigma_T$
+
+:   Volatility of forward bond yield
+
+A Taylor expansion of $B_T(y_T)$ around $y_0$ gives:
+
+$$B_T(y_T) = B_T(y_0) + (y_T-y_0)G'(y_0) + \frac{1}{2} (y_T-y_0)^2 G''(y_0)$$
+
+Let $E_T()$ be the forward risk-neutral expectation. Applied to both
+sides, we get:
+
+$$E[B_T(y_T)] = B_T(y_0) + E(y_T-y_0) G'(y_0) + \frac{1}{2} E[(y_T-y_0)^2] G''(y_0)$$
+
+By definition of the expectation,
+
+$$E[B_T(y_T)] = B_T(y_0)$$
+
+Thus:
+
+$$E(y_T-y_0) G'(y_0) + \frac{1}{2} E[(y_T-y_0)^2] G''(y_0) = 0$$
+
+We use the approximation
+
+$$E[(y_T-y_0)^2] = \sigma_T^2 y_0^2 T$$
+
+and obtain after after some algebra:
+
+$$E(y_T) = y_0 - \frac{1}{2}  \sigma_T^2 y_0^2 T \frac{G''(y_0)}{G'(y_0)}$$
+
+### Special Case of Natural Time Lag
+
+Consider an interest rate derivative where the payoff depends on a
+$\tau$-period rate, and where the same duration $\tau$ occurs between
+the observation of the rate and the occurence of the payoff. In such
+case, $\tau$ is named a “natural time lag”. This is the case for many
+vanilla interest derivatives such as LIBOR swaps. In this case, the need
+for a convexity adjustment vanishes, as illustrated by the following
+example:
+
+Let $R_T$ be the interest rate, maturity $T+\tau$ observed at time $T$.
+It determines a cash flow $R\tau$ also to be paid at time $T+\tau$. The
+present value of this cash flow at time $T$ is:
+
+$$\frac{T\tau}{1+R\tau} = 1-\frac{1}{1+R\tau}$$
+
+Let $F$ be the forward rate between $T$ and $T+\tau$ and $B_T$ the
+corresponding forward bond price. By definition of the forward rate:
+
+$$B_T = \frac{1}{1+F\tau}$$
+
+By definition of the risk neutral forward risk measure:
+
+$$B_T = E[\frac{1}{1+R\tau}]$$
+
+Thus:
+
+$$E[\frac{1}{1+R\tau}] = \frac{1}{1+F\tau}$$
+
+Finally,
+
+$$\begin{aligned}
+E[\frac{R\tau}{1+R\tau}] &=& 1-\frac{1}{1+F\tau} \\
+&=& \frac{F\tau}{1+F\tau}\end{aligned}$$
+
+Thus, instruments that feature a “natural time lag”, such as LIBOR swaps
+and FRA can be priced assuming that the expected futures rate is the
+forward rate.
+
+### Convexity Adjustment Examples
+
+To Do...

@@ -1,9 +1,3 @@
 book_filename: "empiricalfin.Rmd"
 output_dir: docs
 delete_merged_file: true
-
-rmd_files: ["index.Rmd",
-"Part-1.Rmd",
-"simBasicClasses.Rmd",
-"simSimulationFramework.Rmd",
-"references.Rmd"]

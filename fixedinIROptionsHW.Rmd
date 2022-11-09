@@ -1,0 +1,252 @@
+# The Model of Hull & White
+
+```{r, init-HullWhite,echo=TRUE,results='hide'}
+  library(fBasics)
+```
+
+Hull & White have developed a trinomial model for the short rate, that
+can be exactly calibrated to the zero-coupon curve. The short rate
+process is an Ornstein-Uhlenbeck (OU) mean reverting process, and we
+start this section by a short review of the properties of this process.
+
+## Moments of $x_t$ under a OU Process
+
+To construct a Hull & White model of the short rate, we need to compute
+the moments of a OU process:
+
+$$dx_t = \theta(\mu-x_t) dt + \sigma dW_T$$
+
+To compute $E(x_t)$, consider the function
+
+$$f(x, t) = x e^{\theta t}$$
+
+Apply Ito’s Lemma:
+
+$$\begin{aligned}
+df &=& (\theta x_t e^{\theta t} + \theta(\mu-x_t) e^{\theta t}) dt + \sigma e^{\theta t} dW \\
+  &=& \theta \mu e^{\theta t} dt + \sigma e^{\theta t} dW
+\end{aligned}$$
+
+Integrate:
+
+$$\begin{aligned}
+x_t e^{\theta t} &=& x_0 + \theta \mu \int_0^t e^{\theta u} du + \sigma \int_0^t e^{\theta u} dW_u \\
+&=& x_0 + \mu (e^{\theta t} - 1) +\sigma \int_0^t e^{\theta u} dW_u \\
+x_t &=& x_0 e^{-\theta t} + \mu (1-e^{-\theta t}) +\sigma \int_0^t e^{-\theta (t-u)} dW_u
+\end{aligned}$$
+
+Thus,
+
+$$E(x_t) = x_0 e^{-\theta t} + \mu (1-e^{-\theta t})
+\label{eq:mean-ou}$$
+
+The variance of $x_t$ is now easily computed:
+
+$$\begin{aligned}
+V(x_t) &=& E\left[ (x_t - E(x_t))^2 \right] \\
+&=& E \left[ \sigma^2 \left( \int_0^t e^{-\theta(t-u)} dW_u \right)^2 \right] \\
+&=& \sigma^2 e^{-2\theta t} E \left[  \left( \int_0^t e^{\theta u} dW_u \right)^2 \right] \\
+&=& \sigma^2 e^{-2\theta t} \int_0^t e^{2\theta u} du
+\end{aligned}$$
+
+Finally,
+
+$$V(x_t) = \frac{\sigma^2}{2 \theta} (1-e^{-2 \theta t})
+\label{eq:var-ou}$$
+
+## The Hull & White Trinomial Model
+
+The Hull & White model defines an OU process for the short rate:
+
+$$d r_t = (\theta(t) - a r_t) dt + \sigma dz_t$$
+
+This is an generalization of Vasicek’s model, which defined the
+following process for the short rate:
+
+$$d r_t = a(b - r_t) dt + \sigma dz_t$$
+
+Using results from Vasicek’s, one could compute an analytical expression
+for $\theta(t)$ such that the process is consistent with observed
+zero-coupon yields. Rather than doing that, however, we will construct a
+discretized representation of the process with a trinomial tree, and
+calibrate the parameters of that tree so that the discretized model
+reprices exactly the zero-coupons.
+
+The tree is constructed in two steps:
+
+1.  A trinomial tree is constructed for the process
+    $$d r^*_t = -a r^*_t dt + \sigma dz_t$$
+
+2.  At each time step, the process is shifted to reprice the zero-coupon
+    of that maturity: $$r_t = r^*_t + \alpha_t$$
+
+Each step is now described.
+
+### Step 1
+
+The trinomial tree has time increments $\Delta t$. Nodes are evenly
+spaced with an increment $\Delta r = \sigma \sqrt{3 \Delta t}$. Node
+$(i,j)$ corresponds to time step $i \Delta t$ and rate level
+$j \Delta r$.
+
+From \[eq:mean-ou\] and \[eq:var-ou\],
+
+$$\begin{aligned}
+  E(\Delta r^*) &=& r^*_t (e^{-a \Delta t}-1) \nonumber \\
+  &=& -a r^* \Delta t \nonumber \\
+  V(\Delta r^*) &=& \frac{\sigma^2}{2a} (1-e^{-2a \Delta t}) \nonumber \\
+  &=& \sigma^2 \Delta t
+\end{aligned}$$
+
+Starting at node $(i,j)$, with rate $r^*_t = j \Delta r$, the rate can
+move to three values at step
+$(i+1): r^*_t + \Delta r, r^*_t, r^*_t - \Delta r$. We now compute the
+transition probabilities by matching the first two moments.
+
+$$\begin{aligned}
+  E(\Delta r^*) &=& p_u \Delta r - p_d \Delta r \\
+&=& -ar^* \Delta t \\
+&=& -a j \Delta r \Delta t \\
+V(\Delta r^*) &=& p_u \Delta r^2 + p_d \Delta r^2 - E(\Delta r)^2 \\
+&=& \sigma^2 \Delta t
+\end{aligned}$$
+
+After some algebra, one obtains the following system of linear
+equations:
+
+$$\begin{aligned}
+    p_u + p_d &=& \frac{1}{3} + a^2 j^2 \Delta t^2 \\
+    p_u + p_d &=& \frac{1}{3} + a^2 j^2 \Delta t^2-aj \Delta t
+  \end{aligned}$$
+
+Finally,
+
+$$\begin{aligned}
+    p_u &=& \frac{1}{6} + \frac{a^2 j^2 \Delta t^2 - aj \Delta t}{2} \\
+    p_u &=& \frac{1}{6} + \frac{a^2 j^2 \Delta t^2 + aj \Delta t}{2} \\
+    p_m &=& 1-p_u - p_d
+  \end{aligned}$$
+
+This calculation is illustrated below:
+
+```{r, label=HW-1, echo=T}
+  a <- .1; dt <- 1; s <- .01
+
+  pu <- function(j) {
+    (1/6) + (a^2 * j^2 * dt^2 - a*j*dt)/2}
+
+  pd <- function(j) {
+    (1/6) + (a^2 * j^2 * dt^2 + a*j*dt)/2}
+
+  pm <- function(j) {
+    1-pu(j) - pd(j)}
+
+
+  j <- 0
+  print(paste('pu: ', pu(j), ' pm: ', pm(j), ' pd: ', pd(j)))
+```
+
+Sadly, the same calculation at node $(9,-9)$ yields unfortunate results:
+
+```{r, label=HW-2, echo=T}
+  j <- -9
+  print(paste('pu: ', pu(j), ' pm: ', pm(j), ' pd: ', pd(j)))
+```
+
+At this node, we need to change the branching pattern to ensure positive
+probabilities. We compute now the transition probabilities when the
+future states of $r^*$ are $r^*+2\Delta r, r^*+ \Delta r, r^*$. The
+moment-matching equations become:
+
+$$\begin{aligned}
+  E(\Delta r^*) &=& p_u 2\Delta r + p_m \Delta r \\
+&=& -a j \Delta r \Delta t \\
+V(\Delta r^*) &=& p_u (2 \Delta )r^2 + p_m \Delta r^2 - E(\Delta r)^2 \\
+&=& \sigma^2 \Delta t
+\end{aligned}$$
+
+After some algebra, one gets:
+
+$$\begin{aligned}
+    p_u &=& \frac{1}{6} + \frac{a^2 j^2 \Delta t^2 + aj \Delta t}{2} \\
+    p_m &=& 1 - p_u - p_d \\
+    p_d &=& \frac{7}{6} + \frac{a^2 j^2 \Delta t^2 - 3aj \Delta t}{2}
+  \end{aligned}$$
+
+And we verify that the probabilities are now good:
+
+```{r, label=HW-3, echo=T}
+  pu2 <- function(j) {
+    (1/6) + (a^2 * j^2 * dt^2 + a*j*dt)/2}
+
+  pd2 <- function(j) {
+    (7/6) + (a^2 * j^2 * dt^2 + 3*a*j*dt)/2}
+
+  pm2 <- function(j) {
+    1-pu2(j) - pd2(j)}
+
+  j <- -9
+  print(paste('pu: ', pu2(j), ' pm: ', pm2(j), ' pd: ', pd2(j)))
+```
+
+As a rule, the geometry at each node can be adapted to ensure positive
+probabilities.
+
+### Step 2
+
+In the next step, we transform the $r^*$ process into the actual process
+for the short rate by adding a constant $\alpha_i$ to all nodes at time
+step $i\Delta t$. The calculation of constants $\alpha_i$ is performed
+recursively, one time step at a time. We assume that zero-coupon rates
+are known for each maturity $i \Delta t$. The corresponding zero-coupon
+prices are:
+
+$$P(0, i \Delta t) = e^{-R(0, i \Delta t) i \Delta t}$$
+
+The short rate at the root of the tree, $r_{0,0}$ is by definition
+$R(0, \Delta t)$, therefore:
+
+$$\alpha_0 = R(0, \Delta t)$$
+
+Let $Q_{i,j}$ be the price at time 0 of the Arrow-Debreu security for
+state $(i,j)$. We now write the price of a zero-coupon maturing at
+$2 \Delta t$.
+
+$$P(0,2 \Delta t) = Q_{1,1} e^{-(\alpha_1 +\Delta r) \Delta t} +
+Q_{1,0} e^{-\alpha_1 \Delta t} +
+Q_{1,-1} e^{-(\alpha_1 -\Delta r) \Delta t}$$
+
+which yields:
+
+$$\alpha_1 = \frac{1}{\Delta t} \ln \left[ \frac{Q_{1,1} e^{-\Delta r \Delta t} +
+Q_{1,0} +
+Q_{1,-1} e^{\Delta r \Delta t}}{P(0, 2 \Delta t)} \right]$$
+
+The generic iteration at step $i$ is:
+
+1.  Solve for $\alpha_i$:
+    $$P(0, (m+1) \Delta t) = \sum_{j=-m}^m Q_{m,j} e^{-(\alpha_m + j \Delta r) \Delta t}$$
+
+2.  Compute the state prices for time step $m$:
+    $$Q_{m+1, j} = \sum_k Q_{m,k} p_{k,j} e^{-(\alpha_m + k \Delta r) \Delta t}$$
+
+
+## Generalization
+
+The Hull & White model can be generalized to richer short rate
+processes. For any short rate process of the form
+
+$$df(r_t) = (\theta(t) - a f(r_t)) dt + \sigma dz_t$$
+
+where $f()$ is invertible, define $x = f(r)$ to get:
+
+$$dx_t = (\theta(t) - a x_t) dt + \sigma dz_t$$
+
+Stage 1 above can be applied to the process $dx_t$. Stage 2 is slightly
+modified: let $g(x) = f^{-1}(x)$. The equation to be solved for
+$\alpha_i$ is now:
+
+$$P(0, (m+1) \Delta t) = \sum_{j=-m}^m Q_{m,j} e^{-g(\alpha_m + j \Delta x) \Delta t}$$
+
+Setting $f(x) = \ln(x)$ is particularly interesting, because in does not
+allow negative interest rates.

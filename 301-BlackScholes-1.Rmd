@@ -1,0 +1,80 @@
+# Pricing with Black-Scholes
+
+Solving the Pricing Equation
+----------------------------
+
+Recall from the previous section that under the risk-neutral
+probability, the discounted value is a martingale:
+
+$$S_0 = e^{-rT} E^Q(S_T)$$
+
+where $S_T$ is a log-normal variable that follows the process:
+
+$$S_T = S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}Y}$$
+
+with $Y ~ N(0,1)$. The value of any derivative is the discounted
+expected payoff. For a call option, we have:
+
+$$\begin{aligned}
+    c(S, 0) &=& e^{-rT} E^Q [ \left( S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}Y}-K \right)^+ ] \\
+    &=& \frac{e^{-rT}}{\sqrt{2\pi}} \int_{-\infty}^{\infty} \left( S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}Y}-K \right)^+ e^{-x^2/2} dx\end{aligned}$$
+
+Now compute the bounds of integration:
+
+$$\begin{aligned}
+    & & S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}x} \geq K \\
+    & <=> & e^{\sigma \sqrt{T} x} \geq \frac{K}{S_0} e^{-(r-\frac{\sigma^2}{2})T} \\
+    & <=> & x \geq \frac{1}{\sigma \sqrt{T}} \left( \ln(\frac{K}{S_0}) -(r-\frac{\sigma^2}{2})T \right)\end{aligned}$$
+
+Let
+
+$$T_1 = \frac{1}{\sigma \sqrt{T}} \left( \ln(\frac{K}{S_0}) -(r-\frac{\sigma^2}{2})T \right)$$
+
+$$\begin{aligned}
+    c(S, 0) &=&  \frac{e^{-rT}}{\sqrt{2\pi}} \int_{T_1}^{\infty} \left( S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}x}-K \right) e^{-x^2/2} dx \\
+    &=& \frac{e^{-rT}}{\sqrt{2\pi}} \int_{T_1}^{\infty} S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}x} e^{-x^2/2} dx - K  \frac{e^{-rT}}{\sqrt{2\pi}} \int_{T_1}^{\infty}  e^{-x^2/2} dx \\
+    &=& A - B\end{aligned}$$
+
+$$B = K e^{-rT} (1-N(T_1))$$
+
+Apply the change of variable $y = x-\sigma \sqrt{T}$ to get
+
+$$\begin{aligned}
+    A &=&  \frac{e^{-rT}}{\sqrt{2\pi}} \int_{T_1-\sigma \sqrt{T}}^{\infty} S_0 e^{-y^2/2} dy \\
+      &=& S_0 (1-N(T_1 - \sigma \sqrt{T}))\end{aligned}$$
+
+where $N(x)$ is the cumulative normal distribution. Using the identity
+$N(x)+N(-x)=1$, one gets the Black-Scholes formula in its standard form.
+
+$$c(S,0) = S_0N(d_1) - Ke^{-rT}N(d_2) \,$$
+
+where
+
+$$\begin{aligned}
+    d_1 &=& \frac{\ln(S/K) + (r + \sigma^2/2)T}{\sigma\sqrt{T}} \\
+    d_2 &=& d_1 - \sigma\sqrt{T}.\end{aligned}$$
+
+The value of the put can be obtained from the call-put parity
+relationships.
+
+Relationships Among Greeks
+--------------------------
+
+See standard text for derivation of greeks. Recall the Black-Scholes
+pricing equation:
+
+$$\frac{\partial f}{\partial t} + rS 
+    \frac{\partial f}{\partial S} + 
+    \frac{1}{2} \sigma^2 S^2 
+    \frac{\partial^2 f}{\partial S^2} = rf$$
+
+This is true of any derivative, and in particular of a delta hedged
+portfolio. Set:
+
+$$\begin{aligned}
+    \Theta &=& \frac{\partial f}{\partial t} \\
+    \Gamma &=& \frac{\partial^2 f}{\partial S^2}\end{aligned}$$
+
+then,
+
+$$\Theta + \frac{1}{2} \sigma^2 S^2 \Gamma = rf$$

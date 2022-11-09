@@ -1,0 +1,386 @@
+# Price and Greeks in the Black-Scholes Model
+
+```{r, label=load-BS-Study,echo=FALSE,results='hide'}
+  library(fOptions)
+  library(fExoticOptions)
+  library(fAsianOptions)
+  library(fInstrument)
+  library(DynamicSimulation)
+  library(empfin)
+```
+
+In this chapter, we consider the price and risk indicators of several
+types of options. We are particularly interested in the higher order
+risk indicators, such as the Gamma. We will see later that this
+indicator has a major impact on our ability to dynamically hedge such
+instruments.
+
+Solving the Pricing Equation
+----------------------------
+
+A fairly rigorous derivation of the Black-Scholes equation can be
+obtained without using the tools of stochastic calculus. Recall from the
+previous section that under the risk-neutral probability, the discounted
+value is a martingale:
+
+$$S_0 = e^{-rT} E^Q(S_T)$$
+
+where $S_T$ is a log-normal variable that follows the process:
+
+$$S_T = S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}Y}$$
+
+with $Y ~ N(0,1)$. The value of any derivative is the discounted
+expected payoff. For a call option, we have:
+
+$$\begin{aligned}
+    c(S, 0) &=& e^{-rT} E^Q [ \left( S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}Y}-K \right)^+ ] \\
+    &=& \frac{e^{-rT}}{\sqrt{2\pi}} \int_{-\infty}^{\infty} \left( S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}Y}-K \right)^+ e^{-x^2/2} dx\end{aligned}$$
+
+Now compute the bounds of integration:
+
+$$\begin{aligned}
+    & & S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}x} \geq K \\
+    & <=> & e^{\sigma \sqrt{T} x} \geq \frac{K}{S_0} e^{-(r-\frac{\sigma^2}{2})T} \\
+    & <=> & x \geq \frac{1}{\sigma \sqrt{T}} \left( \ln(\frac{K}{S_0}) -(r-\frac{\sigma^2}{2})T \right)\end{aligned}$$
+
+Let
+
+$$T_1 = \frac{1}{\sigma \sqrt{T}} \left( \ln(\frac{K}{S_0}) -(r-\frac{\sigma^2}{2})T \right)$$
+
+$$\begin{aligned}
+    c(S, 0) &=&  \frac{e^{-rT}}{\sqrt{2\pi}} \int_{T_1}^{\infty} \left( S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}x}-K \right) e^{-x^2/2} dx \\
+    &=& \frac{e^{-rT}}{\sqrt{2\pi}} \int_{T_1}^{\infty} S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}x} e^{-x^2/2} dx - K  \frac{e^{-rT}}{\sqrt{2\pi}} \int_{T_1}^{\infty}  e^{-x^2/2} dx \\
+    &=& A - B\end{aligned}$$
+
+$$B = K e^{-rT} (1-N(T_1))$$
+
+Apply the change of variable $y = x-\sigma \sqrt{T}$ to get
+
+$$\begin{aligned}
+    A &=&  \frac{e^{-rT}}{\sqrt{2\pi}} \int_{T_1-\sigma \sqrt{T}}^{\infty} S_0 e^{-y^2/2} dy \\
+      &=& S_0 (1-N(T_1 - \sigma \sqrt{T}))\end{aligned}$$
+
+where $N(x)$ is the cumulative normal distribution. Using the identity
+$N(x)+N(-x)=1$, one gets the Black-Scholes formula in its standard form.
+
+$$C_{\mbox{BS}}(S,0) = S_0N(d_1) - Ke^{-rT}N(d_2) \,
+\label{eq:bs-call}$$
+
+with
+
+$$\begin{aligned}
+    d_1 &=& \frac{\ln(S/K) + (r + \sigma^2/2)T}{\sigma\sqrt{T}} \\
+    d_2 &=& d_1 - \sigma\sqrt{T}.\end{aligned}$$
+
+The value of the put can be obtained from the call-put parity
+relationships.
+
+In the following discussion about the management of market risk of
+option portfolios, we use three risk indicators, also known as greeks:
+
+-   Delta, which is the derivative of price with respect to the price of
+    the underlying asset,
+
+-   Gamma, which is the second derivative of price with respect to spot,
+    and
+
+-   Vega, which is the derivative of price with respect to the
+    volatility.
+
+See, for example Hull \[[@Hull1997]\] for a detailed discussion of these
+risk indicators.
+
+An Option Dashboard
+-------------------
+
+We start the chapter by constructing a “dashboard” which illustrates the
+properties of various types of European options. These displays are
+inspired by similar figures developped by D. Eddelbuettel
+\[[@Eddelbuettela]\] for the RQuantLib project. The class provides a
+generic way of writing such function.
+
+The dashboard has four panels, which display the price, delta, gamma and
+vega of the option under consideration. Each panel has a family of
+curves varying in color from yellow to green to blue. This family of
+curves pictures the evolution of the price and of the greeks for varying
+levels of volatility. The yellow curves corresponding to a high
+volatility conditions, and at the other end, the blue line corresponding
+to low volatility conditions.
+
+```{r, label=OptionDashBoard, echo=TRUE, results='hide'}
+  OptionDashBoard <- function(inst, base.env, dtCalc, und.seq, vol.seq) {
+    sce <- t(as.matrix(und.seq))
+    underlying <- inst@params$underlying
+    setData(base.env, underlying, 'Price', dtCalc, sce)
+
+  p <- matrix(nrow=length(und.seq), ncol=length(vol.seq))
+  d <- matrix(nrow=length(und.seq), ncol=length(vol.seq))
+  g <- matrix(nrow=length(und.seq), ncol=length(vol.seq))
+  v <- matrix(nrow=length(und.seq), ncol=length(vol.seq))
+
+  for(i in seq_along(vol.seq)) {
+    setData(base.env, underlying, 'ATMVol', dtCalc, vol.seq[i])
+    p[,i] <- getValue(inst, 'Price', dtCalc, base.env)
+    d[,i] <- getValue(inst, 'Delta', dtCalc, base.env)
+    g[,i] <- getValue(inst, 'Gamma', dtCalc, base.env)
+    v[,i] <- getValue(inst, 'Vega', dtCalc, base.env)
+  }
+
+  old.par <- par(no.readonly = TRUE)
+  par(mfrow=c(2,2),oma=c(5,0,0,0),mar=c(2,2,2,1))
+
+  # Price
+  plot(und.seq, p[,1], type='n',
+       main="Price", xlab="", ylab="")
+  topocol <- topo.colors(length(vol.seq))
+  for (i in 2:length(vol.seq))
+    lines(und.seq, p[,i], col=topocol[i])
+
+  # Delta
+  plot(und.seq, d[,1],type='n',
+       main="Delta", xlab="", ylab="")
+
+  for (i in 2:length(vol.seq))
+    lines(und.seq, d[,i], col=topocol[i])
+
+  # Gamma
+  plot(und.seq, g[,1],type='n',
+       main="Gamma", xlab="", ylab="")
+  for (i in 2:length(vol.seq))
+    lines(und.seq, g[,i], col=topocol[i])
+
+  # Vega
+  plot(und.seq, v[,1],type='n',
+       main="Vega", xlab="", ylab="")
+  for (i in 2:length(vol.seq))
+    lines(und.seq, v[,i], col=topocol[i])
+
+  mtext(text=paste(inst@desc, "\nrate: 0.03",
+          "Underlying from", und.seq[1],"to", und.seq[length(und.seq)],
+          "Volatility  from",vol.seq[1], "to",vol.seq[length(vol.seq)]),
+        side=1,font=1,outer=TRUE,line=3)
+  par(old.par)
+  }
+```
+
+### Vanilla Option
+
+European calls and puts are called “vanilla” in the banking industry,
+presumably due to their simple structures. The payoff of a vanilla
+option (call) is:
+
+$$(S_T-K)^+$$ and its value (call) is given by:
+$$e^{-rT} \left(F_T N(d_1)-K N(d_2)\right)$$
+
+where $F_T$ is the forward value of the underlying asset at $T$.
+
+For at-the-money options, a simple approximation to the Black-Scholes
+price is: $$V = e^{-rT} F_T \frac{\sigma\sqrt{T}}{\sqrt{2\pi}}$$
+
+The formula above makes use of the approximation:
+
+$$N(x) \approx \frac{1}{2} + \frac{x}{\sqrt{2\pi}} + O(x^2)$$
+
+The evolution of price and greeks as a function of the underlying asset
+and volatility is shown in figure \[fig:eu-call\]. The graph is obtained
+with the following script:
+
+```{r, label=Vanilla, echo=TRUE}
+  dtExpiry <- myDate('01jan2011')
+  underlying <- 'IBM'; Strike <- 100; K<-1
+
+  b <- fInstrumentFactory("vanilla", quantity=1,
+                    params=list(cp='c', strike=Strike,
+                    dtExpiry=dtExpiry,
+                    underlying=underlying,
+                    discountRef='USD.LIBOR', trace=FALSE))
+
+  # define two vectors for the underlying and the volatility
+  # all other market data is fixed
+  und.seq <- seq(40, 160, by=5)
+  vol.seq <- seq(0.1, 0.9, by=0.1)
+
+  base.env <- DataProvider()
+  dtCalc <- myDate('01jan2010')
+  setData(base.env, underlying, 'DivYield', dtCalc, .02)
+  setData(base.env, 'USD.LIBOR', 'Yield', dtCalc, .02)
+
+  OptionDashBoard(b, base.env, dtCalc, und.seq, vol.seq)
+```
+
+```{r, label=fig-Vanilla-2,echo=FALSE, fig.width=5, fig.height=5}
+  <<Vanilla>>
+```
+
+Several observations are worth mentioning:
+
+-   In high volatility conditions, the delta is almost linear, but takes
+    on more pronounced a “S” shape as volatility decrease.
+
+-   The gamma is always positive, reflecting the uniformly convex shape
+    of the premium function.
+
+-   The vega is also always positive: an increase in volatility always
+    results in an increase in premium.
+
+We will see shortly that these last two features have important
+implications for risk management.
+
+### Binary Option
+
+A binary option pays a fixed amount if the underlying asset is in the
+money at expiry.
+
+The payoff is: $$1_{S_T>K}$$
+
+Recall that $N(d_2)$ is the risk-neutral probability that $S_T>K$ at
+expiry. The value of a binary call is therefore:
+
+$$e^{-rT} N(d_2)$$
+
+Alternatively, observe that a binary option struck at $K$ can be
+replicated by a very tight call spread:
+$$C_{\mbox{B}}(K) = \lim_{h \rightarrow 0} \frac{C_{\mbox{V}} (K-h) - C_{\mbox{V}} (K-h)}{h}$$
+
+where $C_{\mbox{B}}(K)$ is the price of a binary call struk at $K$and
+$C_{\mbox{V}}(K)$ the price of a vanilla call. The value of a binary
+call is the negative of the derivative of a vanilla call price with
+respect to strike.
+
+$$\begin{aligned}
+C_{\mbox{B}}(K) &=& -\frac{\partial C_{\mbox{V}} (K)}{\partial K} \\
+&=& e^{-rT} N(d_2)\end{aligned}$$
+
+Recall that the derivative of a vanilla call price with respect to spot
+is $N(d_1)$, therefore, the shape of the binary price function is
+similar to the shape of the delta of a European option, and the shape of
+the delta of a binary call is similar to the shape of the gamma of a
+vanilla option.
+
+As a consequence, the gamma of a binary option changes sign, and so does
+the vega. Options with gamma that changes sign are costly to hedge, as
+simulations will demonstrate in section.
+
+The dashboard in Figure \[fig:eu-bin-call\] is generated with the
+following script:
+
+```{r, label=Binary, echo=TRUE}
+  dtExpiry <- myDate('01jan2011')
+  underlying <- 'IBM'; Strike <- 100; K<-1
+
+  bi <- fInstrumentFactory("binary", quantity=1,
+                   params=list(cp='c', strike=Strike,
+                   dtExpiry=dtExpiry,
+                   underlying=underlying,
+                   discountRef='USD.LIBOR', trace=FALSE))
+
+  # define two vectors for the underlying and the volatility
+  # all other market data is fixed
+  und.seq <- seq(40,160,by=5)
+  vol.seq <- seq(0.1,0.9,by=0.1)
+
+  base.env <- DataProvider()
+  dtCalc <- myDate('01jan2010')
+  setData(base.env, underlying, 'DivYield', dtCalc, .02)
+  setData(base.env, 'USD.LIBOR', 'Yield', dtCalc, .02)
+
+  OptionDashBoard(bi, base.env, dtCalc, und.seq, vol.seq)
+```
+
+```{r, echo=FALSE, fig.width=6, fig.height=6}
+  <<Binary>>
+```
+
+### Barrier Option
+
+There is a large variety of barrier options. Haug \[[@Haug2006]\]
+provides a long list of pricing formulae for standard and complex
+barrier payoffs. As an illustration we consider here the “up and out”
+call, which is a regular European call that is canceled if the
+underlying asset breaches an upper barrier before expiry.
+
+Payoff:
+
+$$(S_T-K)^+1_{\max_t S_t < B}$$
+
+This instruments introduces a new twist in the option landscape, since
+this call option can have a negative delta. As for binary options, the
+gamma can switch sign, and finally, observe the magnitude of the vega:
+the maximum value, in absolute term, is twice as large as for european
+options of comparable strike and maturity.
+
+The dashboard in Figure \[fig:eu-ba-call\] is generated with the
+following script:
+
+```{r, label=Barrier, echo=TRUE}
+  dtExpiry <- myDate('01jan2011')
+  underlying <- 'IBM'; Strike <- 100; barrier <- 160
+
+  ba <- fInstrumentFactory("standardbarrier", quantity=1,
+                   params=list(cp='cuo', strike=Strike,
+                   barrier=barrier, rebate=0, dtExpiry=dtExpiry,
+                   underlying=underlying,
+                   discountRef='USD.LIBOR', trace=FALSE))
+
+  # define two vectors for the underlying and the volatility
+  # all other market data is fixed
+  und.seq <- seq(40,160,by=5)
+  vol.seq <- seq(0.1,0.9,by=0.1)
+
+  base.env <- DataProvider()
+  dtCalc <- myDate('01jan2010')
+  setData(base.env, underlying, 'DivYield', dtCalc, .02)
+  setData(base.env, 'USD.LIBOR', 'Yield', dtCalc, .02)
+
+  OptionDashBoard(ba, base.env, dtCalc, und.seq, vol.seq)
+```
+
+```{r, echo=FALSE, fig.width=6, fig.height=6}
+  <<Barrier>>
+```
+
+### Asian Option
+
+An asian option is an option on the average value of the underlying
+asset, computed over a period of time prior to expiry. This type is very
+popular in commodities markets, because it captures the price risk on a
+market participant that produces or consumes the asset at a steady rate
+over time.
+
+In spite of its apparent complexity, asian options are in fact fairly
+easy to manage. One can think of an Asian option as a regular European
+option, with an underlying asset that is the average value. The value of
+an asian call is lower than the value of a comparable european vanilla
+call, since the volatility of an average is lower than the volatility of
+the price at expiry. For the same reason, the vega of an Asian option is
+about half of the vega of its European conterpart.
+
+The dashboard in Figure \[fig:eu-as-call\] is generated with the
+following script:
+
+```{r, label=Asian, echo=TRUE}
+  dtExpiry <- myDate('01jan2011')
+  underlying <- 'IBM'; Strike <- 100
+
+  ba <- fInstrumentFactory("asian", quantity=1,
+                   params=list(cp='c', strike=Strike,
+                   dtExpiry=dtExpiry, dtStart=dtCalc, dtEnd=dtExpiry, 
+                   underlying=underlying,
+                   discountRef='USD.LIBOR', trace=FALSE))
+
+  # define two vectors for the underlying and the volatility
+  # all other market data is fixed
+  und.seq <- seq(40,160,by=5)
+  vol.seq <- seq(0.1,0.9,by=0.1)
+
+  base.env <- DataProvider()
+  dtCalc <- myDate('01jan2010')
+  setData(base.env, underlying, 'DivYield', dtCalc, .02)
+  setData(base.env, 'USD.LIBOR', 'Yield', dtCalc, .02)
+
+  OptionDashBoard(ba, base.env, dtCalc, und.seq, vol.seq)
+```
+
+```{r, od-Asian-N,echo=FALSE, fig.width=6, fig.height=6}
+  <<Asian>>
+```

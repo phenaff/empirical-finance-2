@@ -1,0 +1,261 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Bond Futures
+
+```{r, IRFutures,echo=FALSE,results='hide'}
+  library(empfin)
+```
+
+The Euro-Bund Futures contract is an agreement to buy at a fixed price,
+at a future date, a "notional bond", with a 6% coupon at a 10 year
+maturity.
+
+## Forward Price
+
+The forward price is a "clean price". Let:
+
+$P_t^d$
+
+:   Dirty price
+
+$P_t^c$
+
+:   Clean price
+
+$AI_t$
+
+:   Accrued interest
+
+To compute the forward clean price at time $T$:
+
+1.  No coupon payments between now and $T$:
+    $$P_t^c = P_0^d e^{r_{0, T} T} - AI_T$$
+
+2.  There is a coupon payment before $T$:
+
+    1.  Compute $I$: present value of next coupon
+
+    2.  Forward clean price:
+        $$P_T^d = (P_0^d - I) e^{r_{0, T} T} - AI_T$$
+
+<!-- -->
+
+```{r, label=bond-1, echo=TRUE}
+  b1 <- Bond(id='b1', dtIssue=myDate('01jan2000'), dtMaturity=myDate('15dec2018'),
+             couponRate=.05, nominal=100, frequency='a')
+
+  # price on coupon date
+  dtSettlement <- myDate('17dec2010')
+  p <- BondYield2Price(b1, dtSettlement, .05)
+  ai <- BondAC(b1, dtSettlement)
+  print(paste('DtSettlement:', dtSettlement, ' Dirty: ', round(p,2), ' AI: ' , round(ai,2),
+              ' Clean: ' , round(p-ai,2)))
+
+  # price in middle of coupon period
+  dtSettlement <- myDate('17jun2010')
+  p <- BondYield2Price(b1, dtSettlement, .05)
+  ai <- BondAC(b1, dtSettlement)
+  print(paste('DtSettlement:', dtSettlement, ' Dirty: ', round(p,2), ' AI: ' , round(ai,2),
+              ' Clean: ' , round(p-ai,2)))
+```
+
+## Delivery against the Futures contract
+
+A short position on a Futures contract is settled by delivering a
+certain quantity of one of the eligible bonds in exchange for the
+payment of the delivery price. The quantity is defined by a conversion
+factor to account for differences in maturity and coupon.
+
+Table $$tab:bund-1$$ shows the eligible bunds for delivery against the
+June 2010 Euro-bund contract. Data is as of 25-mar-2010:
+
+| Bund | Coupon | Maturity | Factor ($k_i$) | Yield |
+|:-----|:-------|:---------|:---------------|------:|
+| 374  | 3.75   | 4/1/2019 | 0.852328       |  3.00 |
+| 382  | 3.50   | 4/7/2019 | 0.828936       |  3.05 |
+| 390  | 3.25   | 4/1/2020 | 0.803710       |  3.10 |
+
+The actual delivery cost, also called invoice amount is:
+
+$$IP_T = P_T^c  \times CF + AI_T$$
+
+where $CF$ is the conversion factor specific to each bond.
+
+The mechanism is illustrated by the following example. On 25-Mar-2010,
+the June Euro Bund contract trades at 123.24 on Eurex
+(www.eurexchange.com). Delivery to take place on 10-Jun-2010.
+
+For Bund 374, the accrued interest on 10-Jun-2010 is approximately:
+
+```{r, Bund374}
+  ai = 3.00 * as.numeric(myDate('10jun2010')-myDate('04Jan2010'))/365
+  ai
+```
+
+On 25-Mar-2010, you sell one Euro-Bund Futures at 123.24. On delivery
+day, 10-Jun-2010, you decide to use Bund 374 to settle your short
+position. You receive the delivery price:
+
+```{r, DeliveryPrice}
+  Ft <- 123.24
+  k <- .852328
+  DelPrice <- Ft * k + ai
+  DelPrice
+```
+
+We can compute the cost of delivering Bund 374 under various yield
+scenarios on 10Jun2010.
+
+## The Conversion Factor
+
+The conversion factor is determined so that, for a flat yield curve at
+$6\%$ and a Futures trading at par (100), all bonds are equivalent, as
+far as delivery cost is concerned. This can be easily verified: Table []
+compares the delivery price to the value of the delivered security for
+each eligible bond.
+
+## Determination of the Cheapest to Deliver
+
+When the yield curve is not flat at the notional rate ($6\%$ for the
+Euro-Bund), all bonds are no longer equivalent with respect to delivery
+cost, and the seller will obviously determine the cheapest to deliver.
+This is simply done by computing the cost associated with using each
+bond for delivery.
+
+With data from 25Mar2010, the results are as follows:
+
+$$Insert table$$
+
+which shows that delivering bund 374 is the cheapest way to settle a
+short position.
+
+It can be shown that when yields are below the notional yield, the
+cheapest to deliver is the bond with the lowest duration. The inverse
+holds true when yields are above the par yield.
+
+## Implied Repo Rate
+
+An alternate and more accurate method for determining the cheapest to
+deliver is to compute the implied repo rate for each bond. The CTD bond
+is the one that maximizes the total return of an arbitrageur that sells
+the Futures, buys and hold a deliverable bond, and uses that bond to
+settle his short Futures position. The bond with the highest IRR is the
+cheapest to deliver.
+
+Let:
+
+$P^d_t$
+
+:   Purchase price of bond at time $t$
+
+$F_t$
+
+:   Futures price
+
+$c$
+
+:   Conversion factor
+
+$ai_t$
+
+:   Accrued interest at time $t$
+
+$P^i_T$
+
+:   Invoice price, i.e. $F_t fc + ai_T$
+
+The implied repo rate is the return from holding the bond to expiry of
+the futures contract. The price of the Futures is linked to the IRR by
+the following relation:
+
+$$F_t c + ai_T =  P^d_t \left( 1+ IRR \frac{n_1}{n_2} \right)
+    \label{eq:irr}$$
+
+Table [] shows the calculation for each deliverable bond, and confirms
+that Bund 374 is the cheapest to deliver.
+
+## The Delivery Option
+
+The seller has the option to choose the cheapest to deliver. The
+approximate theoretical value of the futures is
+
+$$F_t = \frac{P^C_T}{fc}$$
+
+Figure [] shows the theoretical price of the Futures for 2 deliverable
+bonds, as a function of the yield at settlement. The Futures price must
+ensure that all deliverable bonds have a positive basis (otherwise,
+there would be a riskless arbitrage). We see from figure [] that this
+requirement creates a pattern in the choice of CTD. When yield is above
+the notional coupon, the long maturity bond is the CTD. The inverse
+holds true when yield is below the notional coupon.
+
+## IR sensitivity of Bund Futures
+
+From equation $$eq:irr$$, one can observe that the Futures price $F_t$
+is a function of the short rate (). To correctly measure the IR
+sensitivity of a IR Futures, one needs to consider the replicating
+portfolio of a cash-carry trade:
+
+1.  Today:
+
+    1.  Borrow at the IRR from now until settlement of the Futures
+
+    2.  Buy the CTD
+
+2.  At delivery:
+
+    1.  Deliver the CTD
+
+    2.  Receive the Invoice amount
+
+    3.  Pay the short term loan
+
+## Cash-Carry Arbitrage
+
+1.  Today:
+
+    1.  Borrow at the IRR from now until settlement of the Futures
+
+    2.  Buy the CTD
+
+2.  At delivery:
+
+    1.  Deliver the CTD
+
+    2.  Receive the Invoice amount
+
+    3.  Pay the short term loan
+
+This identifies two sensitivities:
+
+1.  Sensitivity to yield of CTD
+    $$\frac{\partial F}{\partial y} = \frac{1}{c} \frac{\partial P^d_t}{\partial y} \left( 1+ IRR \frac{n_1}{n_2} \right)$$
+
+2.  Sensitivity to IRR from today to settlement.
+    $$\frac{\partial F}{\partial IRR} = \frac{P^d_t}{c} \frac{n_1}{n_2}$$
+
+## Hedging a Bond with a Euro-Bund Contract
+
+How to construct a hedge for a bond, using Euro-Bund contracts and
+EURIBOR contracts is best explained through an example:
+
+You want to hedge 100 million of notional amount of a 15-year to
+maturity Bund ($B_1$) with the June Euro-Bund contract. You first
+compute the PV01 of your asset and get:
+
+Next, you determine the sensitivity of the Bund futures, assuming that
+Bund 374 will be the CTD, and get:
+
+1.  PV01 / bond yield:
+
+2.  PV01 / IRR:
+
+To match the PV01 with respect to bond yield, you must sell:
+
+rounded to $x$ Euro-bund June 2010 futures. This creates an exposure to
+the 3-month rate (IRR from 25mar2010 to 10Jun2010), which is hedged by y
+million of q x w FRA.
