@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # Data Sources {#ch:data-sources}
 
 ```{r, echo=TRUE, message=FALSE, results='hide', prompt=TRUE, size='tiny'}
@@ -211,8 +206,8 @@ observations and 11 columns, with deposit rates of maturities 1, 3, and
 Executing this function on January 9, 2019 yields the following result.
 
 ```{r, eval=FALSE, echo=TRUE}
-  > dtStart <- myDate('01Jan2010')
-  > dtEnd <- myDate('01Jan2011')
+  > dtStart <- dmy('01Jan2010')
+  > dtEnd <- dmy('01Jan2011')
   > ts = getLiborRates(dtStart, dtEnd)
   > head(ts[,c('Swap1Y', 'Swap10Y', 'Swap30Y')])
   GMT

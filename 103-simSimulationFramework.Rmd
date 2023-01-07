@@ -28,8 +28,8 @@ year, with 100 time steps. The price process will be log-normal with
 annual volatility of $30\%$, starting from an initial value of $\$100$.
 
 ```{r, label=sim-1, echo=T, warning=FALSE}
-  dtStart <- myDate('01jan2010')
-  dtEnd <- myDate('01jan2011')
+  dtStart <- dmy('01jan2010')
+  dtEnd <- dmy('01jan2011')
   nbSteps <- 100; nbPaths <- 500
 ```
 
@@ -45,7 +45,7 @@ Use a sobol sequence as random number generator, with antithetic variates, stand
 ```{r, echo=T, warning=FALSE}
   tSpot <- pathSimulator(dtSim = dtSim, nbPaths=nbPaths,
       innovations.gen=sobolInnovations, path.gen=logNormal,
-      path.param = list(mu=0, sigma=sigma), S0=100, antithetic = F,
+      path.param = list(mu=0, sigma=sigma), S0=100, antithetic = FALSE,
       standardization = TRUE, trace = FALSE)
   print(head(tSpot[,1:2]))
 ```

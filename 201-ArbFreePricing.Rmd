@@ -39,24 +39,24 @@ probability $p_i$ to the occurence of state $i$. The interest rate is 0.
 We next define 3 securities; each one pays a certain pattern of cashflow
 according to the future state, as pictured in figure \[fig:3states\].
 
-\[grow’=right,sibling distance=1cm\] child [node [0]{}]{} child [node
-[3]{}]{} child [node [1]{}]{};
+```{tikz, ThreeStates, fig.cap="Cashflows from 3 securities", 
+fig.align="center"}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\begin{tikzpicture}
 
-\[grow’=right,sibling distance=1cm\] child [node [1]{}]{} child [node
-[2]{}]{} child [node [1]{}]{};
+\node{$S_1$}[grow' =right,sibling distance=1cm] child {node {0}} child {node
+{3}} child {node {1}};
 
-\[grow’=right,sibling distance=1cm\] child [node [1]{}]{} child [node
-[0]{}]{} child [node [2]{}]{};
+\node{$S_2$}[grow'=right,sibling distance=1cm] child {node {1}} child {node
+{2}} child {node {1}};
 
-\[grow’=right,sibling distance=1cm\] child [node [0]{}]{} child [node
-[3]{}]{} child [node [1]{}]{};
+\node{$S_3$}[grow'=right,sibling distance=1cm] child {node {1}} child {node
+{0}} child {node {2}};
 
-\[grow’=right,sibling distance=1cm\] child [node [1]{}]{} child [node
-[2]{}]{} child [node [1]{}]{};
-
-\[grow’=right,sibling distance=1cm\] child [node [1]{}]{} child [node
-[0]{}]{} child [node [2]{}]{};
-
+\end{tikzpicture}
+```
 Assume that prices at time $t=0$ are: $S_1 = 1.3$, $S_2 = 1.25$,
 $S_3 = 1.3$. The price of these securities is determined by several
 factors:

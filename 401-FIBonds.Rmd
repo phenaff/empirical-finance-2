@@ -359,10 +359,10 @@ The plots are obtained as follows, using the function of package :
 
 ```{r, label=CleanDirty, results='hide', warning=FALSE, message=FALSE}
   # define a bond
-  b375 <- Bond('375', myDate('01jan2000'), myDate('04jan2019'), 0.0375, 100, 'a')
-  b300 <- Bond('300', myDate('01jan2000'), myDate('04jan2019'), 0.0300, 100, 'a')
-  dtToday <- myDate('25mar2010')
-  dt <- timeSequence(dtToday, myDate('04jan2019'), by='day')
+  b375 <- Bond('375', dmy('01jan2000'), dmy('04jan2019'), 0.0375, 100, 'a')
+  b300 <- Bond('300', dmy('01jan2000'), dmy('04jan2019'), 0.0300, 100, 'a')
+  dtToday <- dmy('25mar2010')
+  dt <- timeSequence(dtToday, dmy('04jan2019'), by='day')
   dt <- dt[seq(1, length(dt),by=4)]
 
   # compute series of clean price, accrued interest and present value

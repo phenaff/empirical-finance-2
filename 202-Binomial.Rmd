@@ -1,5 +1,4 @@
 # Risk-Neutral Pricing in a Binomial Framework {#binomial}
-============================================
 
 ```{r, label=discmodBinomial-setup, echo=FALSE, results='hide'}
   library(fOptions)

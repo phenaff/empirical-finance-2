@@ -78,7 +78,7 @@ With the \class{fInstrument} class, the calculation steps are quite different.
 
 You first create a vanilla instrument with the \code{fInstrumentFactory} function:
 ```{r ic-4}
-dtExpiry <- myDate('01jan2011')
+dtExpiry <- dmy('01jan2011')
 underlying <- 'IBM'; Strike <- 100; K<-1
 
 b <- fInstrumentFactory("vanilla", quantity=1,
@@ -100,7 +100,7 @@ v <- fInstrumentFactory("binary", quantity=1,
 Insert the relevant market data into a \class{DataProvider} (this will be explained in the next section):
 ```{r ic-6}
 base.env <- DataProvider()
-dtCalc <- myDate('01jan2010')
+dtCalc <- dmy('01jan2010')
 setData(base.env, underlying, 'Price', dtCalc, 100)
 setData(base.env, underlying, 'DivYield', dtCalc, div.yield)
 setData(base.env, underlying, 'ATMVol', dtCalc, sigma)
@@ -204,7 +204,7 @@ This is useful when performing a scenario analysis where only a few variables ar
 
 Let's define a vanilla option:
 ```{r, tidy=TRUE}
-dtExpiry <- myDate('01jan2011'); underlying <- 'IBM'; K<-100
+dtExpiry <- dmy('01jan2011'); underlying <- 'IBM'; K<-100
 a <- fInstrumentFactory("vanilla", quantity=1,params=list(cp='c', strike=K,
                   dtExpiry=dtExpiry,
 underlying=underlying,discountRef='USD.LIBOR', trace=FALSE))
@@ -213,7 +213,7 @@ underlying=underlying,discountRef='USD.LIBOR', trace=FALSE))
 and populate a DataProvider with the necessary market data:
 ```{r, tidy=TRUE}
 base.env <- DataProvider()
-dtCalc <- myDate('01jan2010')
+dtCalc <- dmy('01jan2010')
 
 setData(base.env, underlying, 'Price', dtCalc, 100)
 setData(base.env, underlying, 'DivYield', dtCalc, .02)

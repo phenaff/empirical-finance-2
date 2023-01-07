@@ -126,6 +126,8 @@ to low volatility conditions.
     v[,i] <- getValue(inst, 'Vega', dtCalc, base.env)
   }
 
+  p
+  
   old.par <- par(no.readonly = TRUE)
   par(mfrow=c(2,2),oma=c(5,0,0,0),mar=c(2,2,2,1))
 
@@ -186,7 +188,7 @@ and volatility is shown in figure \[fig:eu-call\]. The graph is obtained
 with the following script:
 
 ```{r, label=Vanilla, echo=TRUE}
-  dtExpiry <- myDate('01jan2011')
+  dtExpiry <- dmy('01jan2011')
   underlying <- 'IBM'; Strike <- 100; K<-1
 
   b <- fInstrumentFactory("vanilla", quantity=1,
@@ -201,7 +203,7 @@ with the following script:
   vol.seq <- seq(0.1, 0.9, by=0.1)
 
   base.env <- DataProvider()
-  dtCalc <- myDate('01jan2010')
+  dtCalc <- dmy('01jan2010')
   setData(base.env, underlying, 'DivYield', dtCalc, .02)
   setData(base.env, 'USD.LIBOR', 'Yield', dtCalc, .02)
 
@@ -265,7 +267,7 @@ The dashboard in Figure \[fig:eu-bin-call\] is generated with the
 following script:
 
 ```{r, label=Binary, echo=TRUE}
-  dtExpiry <- myDate('01jan2011')
+  dtExpiry <- dmy('01jan2011')
   underlying <- 'IBM'; Strike <- 100; K<-1
 
   bi <- fInstrumentFactory("binary", quantity=1,
@@ -280,7 +282,7 @@ following script:
   vol.seq <- seq(0.1,0.9,by=0.1)
 
   base.env <- DataProvider()
-  dtCalc <- myDate('01jan2010')
+  dtCalc <- dmy('01jan2010')
   setData(base.env, underlying, 'DivYield', dtCalc, .02)
   setData(base.env, 'USD.LIBOR', 'Yield', dtCalc, .02)
 
@@ -313,7 +315,7 @@ The dashboard in Figure \[fig:eu-ba-call\] is generated with the
 following script:
 
 ```{r, label=Barrier, echo=TRUE}
-  dtExpiry <- myDate('01jan2011')
+  dtExpiry <- dmy('01jan2011')
   underlying <- 'IBM'; Strike <- 100; barrier <- 160
 
   ba <- fInstrumentFactory("standardbarrier", quantity=1,
@@ -328,7 +330,7 @@ following script:
   vol.seq <- seq(0.1,0.9,by=0.1)
 
   base.env <- DataProvider()
-  dtCalc <- myDate('01jan2010')
+  dtCalc <- dmy('01jan2010')
   setData(base.env, underlying, 'DivYield', dtCalc, .02)
   setData(base.env, 'USD.LIBOR', 'Yield', dtCalc, .02)
 
@@ -359,7 +361,7 @@ The dashboard in Figure \[fig:eu-as-call\] is generated with the
 following script:
 
 ```{r, label=Asian, echo=TRUE}
-  dtExpiry <- myDate('01jan2011')
+  dtExpiry <- dmy('01jan2011')
   underlying <- 'IBM'; Strike <- 100
 
   ba <- fInstrumentFactory("asian", quantity=1,
@@ -374,7 +376,7 @@ following script:
   vol.seq <- seq(0.1,0.9,by=0.1)
 
   base.env <- DataProvider()
-  dtCalc <- myDate('01jan2010')
+  dtCalc <- dmy('01jan2010')
   setData(base.env, underlying, 'DivYield', dtCalc, .02)
   setData(base.env, 'USD.LIBOR', 'Yield', dtCalc, .02)
 
