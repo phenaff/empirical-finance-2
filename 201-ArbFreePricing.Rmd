@@ -131,20 +131,20 @@ securities are computed by:
 The replicating portfolios and prices of the 3 A-D assets are summarized
 in table \[tab:state-rep\].
 
-```{r, results='asis',echo=F,fig=F}
+```{r, results='asis',echo=FALSE,fig=FALSE}
   z <- as.matrix(cbind(W1, W2, W3, rbind(a1, a2, a3)))
   colnames(z) <- c('W1', 'W2', 'W3', 'Price')
   xres<-xtable(z, digits=2)
 ```
 
-```{r, results='asis',echo=F,fig=F}
+```{r, results='asis',echo=FALSE,fig=FALSE}
   print.xb(xres, include.colnames=T)
 ```
 
 \[tab:state-rep\]
 
 
-```{r, results='asis',echo=F,fig=F}
+```{r, results='asis',echo=FALSE,fig=FALSE}
   print.xb(xres, include.colnames=T)
 ```
 

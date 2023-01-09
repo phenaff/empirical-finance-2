@@ -1,6 +1,7 @@
 book_filename: "empiricalfin.Rmd"
 output_dir: docs
 delete_merged_file: true
+new_session: true
 rmd_files: [
   "index.Rmd",
   "100-CompFramework.Rmd",
@@ -25,5 +26,10 @@ rmd_files: [
 "402-FIZeroCoupon.Rmd",
 "403-FIBasicIR.Rmd",
 "404-FIBondFutures.Rmd",
-"405-FISwaps.Rmd"
+"405-FISwaps.Rmd",
+"410-fixedinRiskManagement.Rmd",
+"510-fixedinIROptionsVasicek.Rmd",
+"520-fixedinIROptionsHW.Rmd",
+"600-GabillonTermStructure.Rmd"
+# "700-prihedgeEmpiricalDensity.Rmd"
   ]

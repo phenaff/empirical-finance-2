@@ -9,6 +9,8 @@ editor_options:
 ```{r, init-ZeroCoupon,echo=TRUE,results='hide'}
   library(fBasics)
   library(empfin)
+  library(tufte)
+
   data(LiborRates)
 
   library(YieldCurve)
@@ -17,7 +19,7 @@ editor_options:
   data(LiborRates, package='empfin')
 ```
 
-The relationship between yield and maturity is called the "term
+`r newthought("The relationship")` between yield and maturity is called the "term
 structure of interest rate". Since there are many ways to measure yield,
 there are also many types of term structures. The term structure of
 interest rate is important because, everything else being equal,

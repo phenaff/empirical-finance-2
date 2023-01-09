@@ -35,12 +35,12 @@ Consider a portfolio made of two options, a vanilla European call and a binary (
 
 Starting with the Rmetrics functions, you first compute the price and delta of the European call:
 
-```{r ic-0, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
+```{r 102-ic-0, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
 p <- vector(mode='numeric', length=2)
 d <- vector(mode='numeric', length=2)
 ```
 
-```{r ic-1, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
+```{r 102-ic-1, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
 p <- vector(mode='numeric', length=2)
 cp <- 'c'; Spot <- 100; Strike <- 100; Ttm <- 1
 int.rate <- .02; div.yield <- .02; sigma <- .3
@@ -54,7 +54,7 @@ d[1] <- GBSGreeks(Selection="delta", TypeFlag=cp, S=Spot, X=Strike, Time=Ttm, r=
 Perform the same calculation for the binary option. The delta is computed 
 by finite difference.
 
-```{r ic-2, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
+```{r 102-ic-2, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
 p <- vector(mode='numeric', length=2)
 K <- 1
 p[2] <- CashOrNothingOption(TypeFlag=cp, S=Spot, X=Strike, K=K, Time=Ttm, r=int.rate, 
@@ -69,7 +69,7 @@ d[2] <- diff(dh)/(2*h)
 
 Finally, sum both vectors to get the portfolio NPV and delta.
 
-```{r ic-3, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
+```{r 102-ic-3, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
 p <- vector(mode='numeric', length=2)
 print(paste('Price:', round(sum(p),2), 'Delta:', round(sum(d),3)))
 ```
@@ -77,8 +77,8 @@ print(paste('Price:', round(sum(p),2), 'Delta:', round(sum(d),3)))
 With the \class{fInstrument} class, the calculation steps are quite different.
 
 You first create a vanilla instrument with the \code{fInstrumentFactory} function:
-```{r ic-4}
-dtExpiry <- dmy('01jan2011')
+```{r 102-ic-4}
+dtExpiry <- myDate('01jan2011')
 underlying <- 'IBM'; Strike <- 100; K<-1
 
 b <- fInstrumentFactory("vanilla", quantity=1,
@@ -89,7 +89,7 @@ b <- fInstrumentFactory("vanilla", quantity=1,
 ```
 
 Next, use again the \code{fInstrumentfactory} to create the binary option:
-```{r ic-5}
+```{r 102-ic-5}
 v <- fInstrumentFactory("binary", quantity=1,
                   params=list(cp='c', strike=Strike,
                   dtExpiry=dtExpiry, K=K,
@@ -98,9 +98,9 @@ v <- fInstrumentFactory("binary", quantity=1,
 ```
 
 Insert the relevant market data into a \class{DataProvider} (this will be explained in the next section):
-```{r ic-6}
+```{r 102-ic-6}
 base.env <- DataProvider()
-dtCalc <- dmy('01jan2010')
+dtCalc <- myDate('01jan2010')
 setData(base.env, underlying, 'Price', dtCalc, 100)
 setData(base.env, underlying, 'DivYield', dtCalc, div.yield)
 setData(base.env, underlying, 'ATMVol', dtCalc, sigma)
@@ -108,12 +108,12 @@ setData(base.env, 'USD.LIBOR', 'Yield', dtCalc, int.rate)
 ```
 
 Construct a portfolio, as a list of \class{fInstrument} objects:
-```{r ic-7}
+```{r 102-ic-7}
 portfolio = c(v, b)
 ``` 
 
 and finally compute the price and delta of the portfolio:
-```{r, ic-8}
+```{r, 102-ic-8}
 price <- sum(sapply(portfolio, function(a) getValue(a, 'Price', dtCalc, base.env)))
 delta <- sum(sapply(portfolio, function(a) getValue(a, 'Delta', dtCalc, base.env)))
 print(paste('Price:', round(price,2), 'Delta:', round(delta,3)))
@@ -131,7 +131,7 @@ method, which takes as argument:
 
 The \code{fInstrumentFactory} method is simply a switch that delegates the 
 object instantiation the the concrete subclasses of \class{fInstrument}. The following code fragment is extracted from the file \code{fInstrument.r} in package \pkg{fInstrument}:
-```{r eval=FALSE, echo=TRUE}
+```{r 102-ic-9, eval=FALSE, echo=TRUE}
 fInstrumentFactory <- function(type, quantity, params){
 switch(toupper(type),
 VANILLA = Vanilla(quantity, params),
@@ -150,7 +150,7 @@ There is only one method defined on \class{fInstrument} objects. This method is 
         \end{itemize}
 
 Again, this method simply delegates to the concrete classes the requested calculation:
-```{r eval=FALSE, echo=TRUE}
+```{r 102-ic-10, eval=FALSE, echo=TRUE}
   setMethod(f="getValue", signature=signature("fInstrument"),
    definition=function(object, selection, dtCalc, env=NULL){
    res <- NULL
@@ -165,7 +165,7 @@ Again, this method simply delegates to the concrete classes the requested calcul
 
 As an illustration, the price calculation for vanilla options is implemented as follows in
 \code{Vanilla.r}:
-```{r, eval=FALSE, echo=TRUE}
+```{r 102-ic-11, eval=FALSE, echo=TRUE}
 getP <- function(dtCalc, env) {
 Spot <- getData(env, Underlying, 'Price', dtCalc)
   s <- getData(env, Underlying, 'ATMVol', dtCalc)
@@ -203,17 +203,17 @@ The \class{DataProvider} inherits from the built-in \code{environment} class. In
 This is useful when performing a scenario analysis where only a few variables are modified: The data held constant is stored in the parent scenario, and the modified data is stored in the child scenario which is passed as argument. This scheme is illustrated by the following example.
 
 Let's define a vanilla option:
-```{r, tidy=TRUE}
-dtExpiry <- dmy('01jan2011'); underlying <- 'IBM'; K<-100
+```{r 102-ic-12, tidy=TRUE}
+dtExpiry <- myDate('01jan2011'); underlying <- 'IBM'; K<-100
 a <- fInstrumentFactory("vanilla", quantity=1,params=list(cp='c', strike=K,
                   dtExpiry=dtExpiry,
 underlying=underlying,discountRef='USD.LIBOR', trace=FALSE))
 ```
 
 and populate a DataProvider with the necessary market data:
-```{r, tidy=TRUE}
+```{r 102-ic-13, tidy=TRUE}
 base.env <- DataProvider()
-dtCalc <- dmy('01jan2010')
+dtCalc <- myDate('01jan2010')
 
 setData(base.env, underlying, 'Price', dtCalc, 100)
 setData(base.env, underlying, 'DivYield', dtCalc, .02)
@@ -222,20 +222,20 @@ setData(base.env, 'USD.LIBOR', 'Yield', dtCalc, .02)
 ```
 
 The NPV of the derivative is obtained by:
-```{r, collapse=TRUE, comment=NA}
+```{r 102-ic-14, collapse=TRUE, comment=NA}
 getValue(a, 'Price', dtCalc, base.env)
 ```
 
 Next, we investigate the relationship between the underlying price and the value of the derivative, by inserting a set of scenarios for the underlying asset price in a child \class{DataProvider}:
 
-```{r}
+```{r 102-ic-15}
 sce <- t(as.matrix(seq(80, 120, length.out=30)))
 sce.env <- DataProvider(parent=base.env)
 setData(sce.env, underlying, 'Price', dtCalc, sce)
 ```
 
 and compute the NPV of the derivative for each scenario. The relationship between the underlying price and the value of the call is illustrated in figure \@ref(fig:sce-plot).
-```{r sce-plot, fig.cap="Call Price as a function of spot value. Strike: 100, maturity: 1 Year", fig.scap="Call Price as a function of spot value", out.extra='', fig.margin=TRUE, fig.height=3}
+```{r 102-sce-plot, fig.cap="Call Price as a function of spot value. Strike: 100, maturity: 1 Year", fig.scap="Call Price as a function of spot value", out.extra='', fig.margin=TRUE, fig.height=3}
 p <- getValue(a, 'Price', dtCalc, sce.env)
 plot(sce, p,type='l', lwd=3, xlab='Spot', ylab='Price', bty='n', col='red')
 ```

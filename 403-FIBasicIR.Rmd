@@ -3,9 +3,10 @@
 ```{r, IRD,echo=FALSE,results='hide'}
   library(timeDate)
   library(empfin)
+  library(tufte)
 ```
 
-In this chapter we cover the pricing of simple interest rate
+`r newthought("In")` this chapter we cover the pricing of simple interest rate
 derivatives:
 
 -   Forward rate agreements (FRA)

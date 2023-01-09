@@ -28,8 +28,8 @@ year, with 100 time steps. The price process will be log-normal with
 annual volatility of $30\%$, starting from an initial value of $\$100$.
 
 ```{r, label=sim-1, echo=T, warning=FALSE}
-  dtStart <- dmy('01jan2010')
-  dtEnd <- dmy('01jan2011')
+  dtStart <- myDate('01jan2010')
+  dtEnd <- myDate('01jan2011')
   nbSteps <- 100; nbPaths <- 500
 ```
 

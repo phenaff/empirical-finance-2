@@ -1,6 +1,11 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Data Sources {#ch:data-sources}
 
-```{r, echo=TRUE, message=FALSE, results='hide', prompt=TRUE, size='tiny'}
+```{r, 101-setup, echo=TRUE, message=FALSE, results='hide', prompt=TRUE, size='tiny'}
   library(RCurl)
   library(data.table)
   library(fasttime)
@@ -28,7 +33,7 @@ seasonality, and many other specific features.
 The following function downloads settlement data on commodity options
 and futures traded on the NYMEX.
 
-```{r, eval=FALSE, echo=TRUE}
+```{r, 101-100, eval=FALSE, echo=TRUE}
   getNymexData <- function(type) {
     
   url <- 'ftp://ftp.cmegroup.com/pub/settle/'
@@ -83,9 +88,9 @@ As an illustration, the following script downloads the NYMEX futures
 data and extracts the Crude Oil (WTI) futures settlement prices. Running
 the code on January 9, 2019, yields the following result:
 
-```{r, eval=FALSE, echo=TRUE}
+```{r, 101-110, eval=FALSE, echo=TRUE}
 nymex.futures <- getNymexData('future')
-tmp <- nymex.futures[nymex.futures\$Symbol == 'CL',]
+tmp <- nymex.futures[nymex.futures$Symbol == 'CL',]
 head(tmp[,c('Month', 'Year', 'Contract', 'Settle')])
 
         Month Year Contract Settle
@@ -100,7 +105,7 @@ head(tmp[,c('Month', 'Year', 'Contract', 'Settle')])
 For the record, the same function executed on October 11, 2012, yielded
 the following data set:
 
-```{r, eval=FALSE, echo=TRUE}
+```{r, 101-120, eval=FALSE, echo=TRUE}
 head(tmp[,c('Month', 'Year', 'Contract', 'Settle')])
 
   Month Year Contract Settle
@@ -129,7 +134,7 @@ construct the URL corresponding to each particular data set.
 In the example below, the URL is specific to the H15 table, with all
 available deposit and swap rates included.
 
-```{r, eval=FALSE, echo=TRUE}
+```{r, 101-130, eval=FALSE, echo=TRUE}
   get.frb.url <- function(dtStart, dtEnd) {
 
       # Federal Reserve Board URL
@@ -154,7 +159,7 @@ object, with more explicit names. The resulting time series has daily
 observations and 11 columns, with deposit rates of maturities 1, 3, and
 6 months, and swap rates with maturities ranging from 1 to 30 years.
 
-```{r, eval=FALSE, echo=TRUE}
+```{r, 101-140, eval=FALSE, echo=TRUE}
   getLiborRates <- function(dtStart, dtEnd) {
 
     columns.dic = hash(keys=c("RIFLDIY01_N.B",
@@ -192,7 +197,7 @@ observations and 11 columns, with deposit rates of maturities 1, 3, and
     ncol <- dim(csv)[2]
     indx <- apply(csv, 1, good.row)
     
-    dt <- as.Date(csv\$Time.Period[indx])
+    dt <- as.Date(csv$Time.Period[indx])
     vx <- data.frame(csv[indx,2:ncol])
     for(i in seq(ncol-1)) vx[,i] = as.numeric(vx[,i])
 
@@ -205,9 +210,9 @@ observations and 11 columns, with deposit rates of maturities 1, 3, and
 
 Executing this function on January 9, 2019 yields the following result.
 
-```{r, eval=FALSE, echo=TRUE}
-  > dtStart <- dmy('01Jan2010')
-  > dtEnd <- dmy('01Jan2011')
+```{r, 101-150, eval=FALSE, echo=TRUE}
+  > dtStart <- myDate('01Jan2010')
+  > dtEnd <- myDate('01Jan2011')
   > ts = getLiborRates(dtStart, dtEnd)
   > head(ts[,c('Swap1Y', 'Swap10Y', 'Swap30Y')])
   GMT
@@ -236,7 +241,7 @@ institution’s statistical data warehouse (sdw.ecb.europa.eu). The
 following script read, parse and display the par AAA euro government
 yield curve for a set of dates.
 
-```{r, read-ecb, cache=TRUE}
+```{r, 101-read-ecb, cache=TRUE}
   # read, keep only par yield data
   ecb.file <- fread('./data/ecb-data.csv',
                     select=c('DATA_TYPE_FM',
@@ -266,7 +271,7 @@ yield curve for a set of dates.
   setcolorder(ecb.series, neworder=sort.mat$ix)
 ```
 
-```{r, label=plot-ecb, eval=FALSE, dependson='read-ecb'}
+```{r, 101-plot-ecb, eval=FALSE, dependson='read-ecb'}
   nbObs <- dim(ecb.series)[1]
   indx <- seq(1, nbObs, 200)
 
@@ -285,7 +290,7 @@ yield curve for a set of dates.
   }
 ```
 
-```{r, label=fig-plot-ecb,fig=T, echo=F}
+```{r, 101-fig-plot-ecb,fig=T, echo=F}
   <<plot-ecb>>
 ```
 
@@ -302,11 +307,11 @@ series:
 
 and a good-looking bar chart is obtained by invoking
 
-```{r, label=barchart-ford, eval=FALSE}
+```{r, 101-barchart-ford, eval=FALSE}
   barChart(F)
 ```
 
-```{r, label=fig-bc-ford,fig=T, echo=FALSE}
+```{r, 101-fig-bc-ford,fig=T, echo=FALSE}
   <<barchart-ford>>
 ```
 

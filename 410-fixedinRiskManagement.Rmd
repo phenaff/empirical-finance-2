@@ -1,13 +1,15 @@
-Fixed Income Risk Management
-============================
+# Fixed Income Risk Management
 
-```{r, init-FIRiskManagement,echo=TRUE,results='hide'}
+```{r 410-init-1,echo=TRUE,results='hide'}
   library(linprog)
   library(xtable)
   library(empfin)
 ```
+```{r 410-init-2, echo=FALSE, results='hide'}
+  library(tufte)
+```
 
-In this chapter, we introduce the two broad categories of Fixed Income
+`r newthought("In")` this chapter, we introduce the two broad categories of Fixed Income
 risk management strategies: immunization and dedication. The problem
 being addressed is simple: given a liability stream (anticipated future
 payments, certain or contingent), and given a initial budget, how should
@@ -29,8 +31,7 @@ evacuating interest risk by construction.
 In practice, fund managers often use a mix of both strategies. The two
 strategies are next described and illustrated.
 
-Immunization
-------------
+## Immunization
 
 The method is best described by the following elementary example. A fund
 manager has a certain liability $L_T$ to be paid at time $T$. The
@@ -54,7 +55,7 @@ $$\begin{aligned}
   &=& V_T \left[ T \frac{\sum_i F_i (1+r)^{-T_i}}{V_T} - \frac{\sum_i F_i T_i (1+r)^{T_i}}{V_T} \right](1+r)^{T-1} \end{aligned}$$
 
 In the last expression, we recognize the definition of Duration
-(\[eq:macaulay\]), so that the Variation of $V_T$ is finally:
+(\@ref(eq:macaulay)), so that the Variation of $V_T$ is finally:
 
 $$\frac{\partial V_T}{\partial r} = V_T \left[ T  - D \right](1+r)^{T-1}$$
 
@@ -106,7 +107,7 @@ b = \begin{pmatrix} V_0 \\ T
 This system is solved for $q_A$ and $q_B$ to determine the portfolio
 composition.
 
-```{r, label=fi-rm-1, echo=TRUE}
+```{r 410-fi-rm-1, echo=TRUE}
   r <- 0.05
   T <- 5
   V_0 <- 100 *(1+r)^(-T)
@@ -136,7 +137,7 @@ bond $A$. The wealth at time $T$ is the compounded value of the cash
 flows occurring before $T$, and the discounted value of the cash flows
 occurring after $T$.
 
-```{r, label=fi-rm-2, echo=TRUE}
+```{r 410-fi-rm-2, echo=TRUE}
   FutureValue <- function(coupon, n, yield, T) {
     100*sum(sapply(1:n, function(i) ifelse(i<n, coupon/(1 + yield)^(i-T), (1+coupon)/(1+yield)^(n-T))))
   }
@@ -147,14 +148,14 @@ occurring after $T$.
   Hedge <- q_A*V_A + q_B*V_B
 ```
 
-```{r, label=fig-immunization, echo=FALSE, fig=TRUE}
+```{r 410-fig-immunization, echo=FALSE, fig=TRUE}
   cl <- c('red', 'green')
   plot(r, Hedge, type='l', lwd=3, col=cl[1], xlab='Yield', ylab='Value')
   abline(h=100, lwd=3, col=cl[2])
   legend('top', c('hedge', 'liability'), cex=.8, lwd=2, bty='y', col=cl)
 ```
 
-Figure \[fig:immunization\] plots the value of the investment portfolio
+Figure \@ref(fig:410-fig-immunization) plots the value of the investment portfolio
 under various yield scenarios. We observe that, under the restrictive
 conditions of this experiment, the hedge has always a greater value than
 the liability at horizon $T$. One should keep in mind, however, that
@@ -172,14 +173,14 @@ need to re-invest cash that becomes available too early, or sell cash
 flows that occur too late. This strategy, called Dedication or cash-flow
 matching, is now described.
 
-Dedication
-----------
+## Dedication
 
 Assume that, over the next 5 years, you must pay the amounts
-$L(t), t=1, \ldots, 5$ summarized in Table \[tab:liability\]. In order
+$L(t), t=1, \ldots, 5$ summarized in Table \@ref(tab:410-liability). In order
 to meet this liability, you can invest in a portfolio of 5 bonds
-described in table \[tab:bonds-2\].
+described in table \@ref(tab:410-bonds).
 
+Table: (\#tab:410-liability) Liability per year.
   Year     Liability
   ------ -----------
   1              100
@@ -187,6 +188,8 @@ described in table \[tab:bonds-2\].
   3              150
   4              400
   5              300
+
+Table: (\#tab:410-bonds) Bonds available for dedication
 
    Bond   Maturity   Coupon   Yield
   ------ ---------- -------- -------

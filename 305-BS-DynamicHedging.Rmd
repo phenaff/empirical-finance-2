@@ -219,9 +219,9 @@ of the previous section.
 This calculation is easily performed with the supplied packages:
 
 ```{r, }
-   dtStart <- dmy("01jun2010")
+   dtStart <- myDate("01jun2010")
    dtObs <- dtStart
-   dtExpiry <- dmy("01aug2010")
+   dtExpiry <- myDate("01aug2010")
    underlying <- "IBM"
    K <- 100
    sigma <- 0.3
@@ -538,8 +538,8 @@ To perform the experiment, we first define the data environment: the
 spot price is 100, option maturity will be 1 year.
 
 ```{r, label=data-env, echo=TRUE}
-  dtExpiry <- dmy('01jan2011')
-  dtStart <- dmy('01jan2010')
+  dtExpiry <- myDate('01jan2011')
+  dtStart <- myDate('01jan2010')
   underlying <- 'IBM'
   sigma <- .3
 

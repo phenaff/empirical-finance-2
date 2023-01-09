@@ -1,0 +1,61 @@
+# Deterministic Time-Varying Volatility
+
+```{r, echo=FALSE,results='hide'}
+```
+
+In some markets, the term structure of volatility has a specific
+pattern. Many commodities have a seasonal pattern: Natural gas, for
+example, is in high demand in the winter, but its supply is limited by
+the capacity of the pipeline network, and this increases price
+volatility during the heating season. In this chapter, we present and
+estimate models that are suited to such markets.
+
+## Gabillon’s Model
+
+Dynamics of forward prices
+
+![image](Graphics/wti-fwd-surface){width=".9\textwidth"}
+
+![image](Graphics/wti-fwd-surface)
+
+Let $F(t, T)$ be the value at time $t$ of a futures contract expiring at
+$T$. Assume a two factor model for the dynamic of the futures prices:
+
+$$\label{eq:gabillon}
+\frac{dF(t,T)}{F(t,T)} = B(t,T) \sigma_S dW_S + (1-B(t,T)) \sigma_L dW_L$$
+
+with $$\begin{aligned}
+B(t,T) & = & e^{-\beta (T-t)} \\
+<dW_S, dW_L> & = & \rho\end{aligned}$$
+
+The variance of $\ln(F(t,T))$ is given by:
+
+$$\begin{aligned}
+\text{Var}[\ln(F(t,T)] & = &\sigma_S^2 \int_0^t e^{-2\beta(T-u)} du + \sigma_L^2 \int_0^t (1-e^{-\beta(T-u)})^2 du + \\
+& & 2 \rho \sigma_S \sigma_L \int_0^t e^{-\beta(T-u)} du\end{aligned}$$
+
+Average variance to expiry is:
+
+$$\begin{array}{ll}
+\text{Var}[ln(F(T,T)] & = \frac{\sigma_S^2}{2\beta} (1-e^{-2\beta T}) + \sigma_L^2(T - \frac{2}{\beta} (1-e^{-2\beta T})) + \\
+& \frac{\rho \sigma_L \sigma_S}{\beta} (1 - 2e^{-\beta T} + e^{-2 \beta T}) \\
+& = V(T, \sigma_S, \sigma_L, \rho, \beta)
+\end{array}$$
+
+Hybrid Calibration
+
+![image](Graphics/wti-atm-fit-fixed){width=".7\textwidth"}
+
+Estimate $\rho$ and $\sigma_L$ historically ($\rho = .87$,
+$\sigma_L = .12$), calibrate $\sigma_S$ and $\beta$ to implied ATM
+volatility.
+
+![image](Graphics/wti-atm-fit-fixed) \[fig:rho-fixed\]
+
+Forward Volatility by Contract
+
+$$\begin{aligned}
+\text{Var}[\ln(F(t_1, t_2,T)] & = &\sigma_S^2 \int_{t_1}^{t_2} e^{-2\beta(T-u)} du + \sigma_L^2 \int_{t_1}^{t_2} (1-e^{-\beta(T-u)})^2 du + \\
+& & 2 \rho \sigma_S \sigma_L \int_{t_1}^{t_2} e^{-\beta(T-u)} du\end{aligned}$$
+
+## Deterministic Volatility in a Seasonal Market

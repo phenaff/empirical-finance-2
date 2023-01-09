@@ -1,10 +1,15 @@
 # The Model of Hull & White
 
-```{r, init-HullWhite,echo=TRUE,results='hide'}
+```{r, 520-init-1,echo=TRUE,results='hide'}
   library(fBasics)
 ```
 
-Hull & White have developed a trinomial model for the short rate, that
+```{r 520-init-2,echo=FALSE,results='hide'}
+  library(tufte)
+```
+
+
+`r newthought("Hull and White")` have developed a trinomial model for the short rate, that
 can be exactly calibrated to the zero-coupon curve. The short rate
 process is an Ornstein-Uhlenbeck (OU) mean reverting process, and we
 start this section by a short review of the properties of this process.
