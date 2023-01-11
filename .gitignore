@@ -4,3 +4,4 @@ packages.bib
 *.log
 .Rhistory
 /docs
+/.Rhistory
