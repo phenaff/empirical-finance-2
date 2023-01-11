@@ -1,5 +1,14 @@
 # The Simulation Framework {#sim-framework}
 
+```{r setup, echo=FALSE, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dev.args = list(bg = "transparent"),
+  tidy=TRUE,
+  tidy.opts=list(width.cutoff=50)
+)
+```
+
 ```{r, echo=TRUE,results='hide', message=FALSE}
 library(fInstrument)
 library(empfin)
@@ -7,7 +16,7 @@ library(DynamicSimulation)
 library(kableExtra)
 ```
 
-The simulation framework has two main components:
+```{r tufte::newthought("The")}``` simulation framework has two main components:
 
 1.  A simulator, which can generate paths for the variables of interest
     (price of a asset, implied volatility, term structure of interest
@@ -152,6 +161,7 @@ the table show:
 
 ```{r, label=delta-hedge-few-samples, echo=FALSE}
   kable(sim.table, "latex", booktabs=T, 
+        digits=c(0,2,3,2,2,2),
         caption="Simulated value of a call option and its hedge portfolio over time")
 ```
 

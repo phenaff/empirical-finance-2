@@ -1,9 +1,13 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # Data Sources {#ch:data-sources}
+
+```{r setup, echo=FALSE, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dev.args = list(bg = "transparent"),
+  tidy=TRUE,
+  tidy.opts=list(width.cutoff=45)
+)
+```
 
 ```{r, 101-setup, echo=TRUE, message=FALSE, results='hide', prompt=TRUE, size='tiny'}
   library(RCurl)
@@ -18,7 +22,7 @@ output:
   data(LiborRates)
 ```
 
-This first chapter describes the data sources and the processing that
+`r tufte::newthought("This")` first chapter describes the data sources and the processing that
 has been performed to create the data sets found in the package. In the
 following chapters, we will use data from three asset classes:
 commodities, equities and fixed income.
@@ -118,14 +122,13 @@ head(tmp[,c('Month', 'Year', 'Contract', 'Settle')])
 ```
 
 The U.S. Energy Information Administration (www.eia.gov) publishes
-historical data on spot and future prices. The data set in package was
+historical data on spot and future prices. The data set in package \pkg{empfin} was
 obtained from that source.
 
 ## Libor Rates
 
-The package also contains a data set of USD libor and swap rates
-obtained from the US Federal Reserve archive (www.federalreserve.gov),
-but this publication was discontinued at the end of October 2016.
+The package \pkg{empfin} also contains a data set of USD libor and swap rates
+obtained from the US Federal Reserve archive (www.federalreserve.gov), which provides a data download program for table H15 at https://www.federalreserve.gov/datadownload/Choose.aspx?rel=H15.
 
 The time series can be downloaded from a web browser, but can also be
 downloaded programmatically. The site provides directions on how to
@@ -271,27 +274,34 @@ yield curve for a set of dates.
   setcolorder(ecb.series, neworder=sort.mat$ix)
 ```
 
-```{r, 101-plot-ecb, eval=FALSE, dependson='read-ecb'}
+Plotting a few curves let us measure the sharp increase in interest rate during the year 2022.
+
+```{r 101-plot-ecb, eval=FALSE}
   nbObs <- dim(ecb.series)[1]
-  indx <- seq(1, nbObs, 200)
+  indx <- seq(1, nbObs, 100)
 
   YC <- ecb.series[indx,]
   dtObs <- as.Date(row.names(ecb.series)[indx])
   nbSample <- length(indx)
 
   dtMat = dtObs[1] + months(sort.mat$x)
-  plot(dtMat, YC[1,],type='l', ylim=c(-1,7), 
+  plot(dtMat, YC[1,],type='l', ylim=c(-1,4), 
        xlim=c(dtObs[1], dtObs[nbSample]+months(last(sort.mat$x))),
+       bty='n',
        col=1, lwd=2, ylab='Euro AAA Govt Yield', xlab='Maturity date')
-  abline(h=0, lty=2, lwd=2)
+  text.legend = format(dtObs[1], "%D")
+  abline(h=0, lty=2, lwd=1)
   for(i in seq(2,nbSample)) {
     dtMat = dtObs[i] + months(sort.mat$x)
     lines(dtMat, YC[i,],type='l', col=i, lwd=2)
+    text.legend <- append(text.legend, list(format(dtObs[i], "%D")))
   }
+  
+  legend(x="topleft",legend=text.legend, lty=1, col=seq(nbSample), cex=1.0, box.lty=0)
 ```
 
-```{r, 101-fig-plot-ecb,fig=T, echo=F}
-  <<plot-ecb>>
+```{r 101-fig-plot-ecb,fig=T, echo=F}
+<<101-plot-ecb>>
 ```
 
 ## Equities Data
@@ -312,7 +322,7 @@ and a good-looking bar chart is obtained by invoking
 ```
 
 ```{r, 101-fig-bc-ford,fig=T, echo=FALSE}
-  <<barchart-ford>>
+<<101-barchart-ford>>
 ```
 
 For illustrative purpose, the package provides one time series of

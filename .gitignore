@@ -3,3 +3,4 @@ packages.bib
 .Rproj.user
 *.log
 .Rhistory
+/docs

@@ -1,19 +1,26 @@
 # Arbitrage-Free Pricing and Risk Neutral Valuation {#arb-free-pricing}
 
-```{r, init-discreteModels,echo=TRUE,results='hide'}
+```{r setup, echo=FALSE, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dev.args = list(bg = "transparent"),
+  tidy=TRUE,
+  tidy.opts=list(width.cutoff=45)
+)
+```
+
+```{r, init-discreteModels,echo=TRUE,message=FALSE,results='hide'}
   library(fBasics)
   library(xtable)
   library(empfin)
 ```
 
-## Arbitrage-free Pricing
-
-We are exclusively concerned about the pricing of redundant securities,
+```{r tufte::newthought("We")}``` are exclusively concerned about the pricing of redundant securities,
 i.e. relative value pricing. Financial economics tries to explain the
 pricing of underlying securities, mathematical finance is about the
 relative value pricing of derivatives securities.
 
-### An Introductory Example
+## Arbitrage-free Pricing
 
 Consider three produce baskets of apples and oranges.
 
@@ -34,29 +41,39 @@ B1 and B2. This is the essence of derivatives pricing.
 
 Imagine an economy that can evolve between time $t=0$ and $t=1$ to take
 one out of 3 possible states. There is a consensus to attribute
-probability $p_i$ to the occurence of state $i$. The interest rate is 0.
+probability $p_i$ to the occurence of state $i$. The interest rate is null.
 
 We next define 3 securities; each one pays a certain pattern of cashflow
 according to the future state, as pictured in figure \[fig:3states\].
 
-```{tikz, ThreeStates, fig.cap="Cashflows from 3 securities", 
-fig.align="center"}
+```{r  ThreeStates, echo=FALSE, engine='tikz', fig.cap="Cashflows from 3 securities", fig.align="center"}
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
+\begin{minipage}[c]{.3\linewidth}
 \begin{tikzpicture}
-
 \node{$S_1$}[grow' =right,sibling distance=1cm] child {node {0}} child {node
 {3}} child {node {1}};
-
-\node{$S_2$}[grow'=right,sibling distance=1cm] child {node {1}} child {node
-{2}} child {node {1}};
-
-\node{$S_3$}[grow'=right,sibling distance=1cm] child {node {1}} child {node
-{0}} child {node {2}};
-
 \end{tikzpicture}
+\center{Asset 1}
+\end{minipage}\hfill
+
+\begin{minipage}[c]{.3\linewidth}
+\begin{tikzpicture}
+\node{$S_2$}[grow=right,sibling distance=1cm] child {node {1}} child {node
+{2}} child {node {1}};
+\end{tikzpicture}
+\center{Asset 2}
+\end{minipage}\hfill
+\begin{minipage}[c]{.3\linewidth}
+\begin{tikzpicture}
+\node{$S_3$}[grow=right,sibling distance=1cm] child {node {1}} child {node
+{0}} child {node {2}};
+\end{tikzpicture}
+\center{Asset 3}
+\end{minipage}
 ```
+
 Assume that prices at time $t=0$ are: $S_1 = 1.3$, $S_2 = 1.25$,
 $S_3 = 1.3$. The price of these securities is determined by several
 factors:
@@ -78,7 +95,8 @@ value of such security in each future state of the world.
 The value of the first Arrow-Debreu security is determined by solving
 the following system:
 
-$$\begin{pmatrix}
+$$
+\begin{pmatrix}
     0 & 1 & 1 \\
     3 & 2 & 0 \\
     1 & 1 & 2
@@ -87,19 +105,8 @@ $$\begin{pmatrix}
 1 \\
 0 \\
 0
-\end{pmatrix}$$
-
-
-Replication of the first Arrow-Debreu security $$\begin{pmatrix}
-    0 & 1 & 1 \\
-    3 & 2 & 0 \\
-    1 & 1 & 2
-\end{pmatrix} W_1 =
-\begin{pmatrix}
-1 \\
-0 \\
-0
-\end{pmatrix}$$
+\end{pmatrix}
+$$
 
 which yields
 
@@ -129,24 +136,18 @@ securities are computed by:
 ```
 
 The replicating portfolios and prices of the 3 A-D assets are summarized
-in table \[tab:state-rep\].
+below.
 
-```{r, results='asis',echo=FALSE,fig=FALSE}
+```{r, results='asis',echo=FALSE,message=FALSE, fig=FALSE}
   z <- as.matrix(cbind(W1, W2, W3, rbind(a1, a2, a3)))
   colnames(z) <- c('W1', 'W2', 'W3', 'Price')
   xres<-xtable(z, digits=2)
 ```
 
-```{r, results='asis',echo=FALSE,fig=FALSE}
+```{r, results='asis',echo=FALSE,fig=FALSE, message=FALSE}
   print.xb(xres, include.colnames=T)
 ```
 
-\[tab:state-rep\]
-
-
-```{r, results='asis',echo=FALSE,fig=FALSE}
-  print.xb(xres, include.colnames=T)
-```
 
 A portfolio made of the three Arrow-Debreu securities guarantees a
 payoff of 1 euro. Therefore, this collection can be priced at time $t=0$
@@ -205,7 +206,7 @@ In that framework, it can be shown that $S_0$, the current asset price,
 is given by:
 
 $$S_0 = \frac{E(S_T)-\lambda \mbox{Cov}(S_T, M_T)}{R_f}
-    \label{eq:capm1}$$
+    (\#eq:capm1)$$
 
 where $\lambda$ is the market price of risk times the current market
 value $M_0$:
@@ -227,7 +228,7 @@ $$\begin{aligned}
     E(M_T) & = & \sum_i U_i p_i \\
     E(S_T M_T) & = & \sum_i U_i V_i p_i\end{aligned}$$
 
-Substitute in \[eq:capm1\] to get:
+Substitute in \@ref(eq:capm1) to get:
 
 $$S_0 = \sum_i V_i d_i p_i$$
 
@@ -236,7 +237,7 @@ where the discount factor $d_i$ is given by:
 $$d_i = \frac{1-\lambda(U_i - E(M_T))}{R_f}
     \label{eq:capm2}$$
 
-Equation \[eq:capm2\] shows that as aggregate wealth $U_i$ increases,
+Equation \@ref(eq:capm2) shows that as aggregate wealth $U_i$ increases,
 the discount factor decreases. An asset is more valuable, everything
 else being equal, if its payoffs occur in the states where $U_i$ is low,
 and therefore where the discount factor is high.

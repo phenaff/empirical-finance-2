@@ -2,5 +2,5 @@
 
 set -ev
 
-Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book', clean_envir=FALSE)"
+Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book')"
 

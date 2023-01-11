@@ -1,11 +1,6 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # (PART\*) Computational Framework {-} 
 
-This first part is dedicated to the description of the experimental
+`r tufte::newthought("This")` first part is dedicated to the description of the experimental
 environment used in this book.
 
 As mentioned earlier, our approach is data-driven and empirical. It is

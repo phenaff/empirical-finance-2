@@ -1,9 +1,17 @@
 # Trinomial Models {#sec:trinomial}
 
+```{r setup, echo=FALSE, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dev.args = list(bg = "transparent"),
+  tidy=TRUE,
+  tidy.opts=list(width.cutoff=45)
+)
+```
+
 A natural extension of the binomial model is a trinomial model, that is,
 a model with three possible future states at each time step and current
 state.
-
 
 ## The Trinomial Tree
 

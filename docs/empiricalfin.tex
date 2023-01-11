@@ -47,7 +47,8 @@
 \setlength{\cslhangindent}{1.5em}
 % For Pandoc 2.8 to 2.11
 \newenvironment{cslreferences}%
-  {}%
+  {\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
   {\par}
 % For pandoc 2.11+ using new --citeproc
 \newlength{\csllabelwidth}
@@ -143,11 +144,11 @@
 \author{Patrick Hénaff}
 \date{}
 
-%\usepackage{fontspec}
 % Preamble from Rmetrics
 
 \usepackage{booktabs}
 \usepackage{amsthm}
+\usepackage{xfrac}
 \makeatletter
 \def\thm@space@setup{%
   \thm@preskip=8pt plus 2pt minus 4pt
@@ -224,7 +225,7 @@
 {\fontsize{18}{18}\selectfont\textit{\@author}\par}
 \vspace{1.75in}{\fontsize{36}{14}\selectfont\@title\par}
 \vspace{0.5in}{\fontsize{20}{14}\selectfont with R and Rmetrics\par}
-\vspace{0.5in}{\fontsize{14}{14}\selectfont\textsf{\smallcaps{v 0.1}}\par}
+\vspace{0.5in}{\fontsize{14}{14}\selectfont\textsf{\smallcaps{v 2.0}}\par}
 \vfill{\fontsize{14}{14}\selectfont\textit{An Open Access Publication}\par}
 \thispagestyle{empty}
 \endgroup
@@ -300,9 +301,13 @@
 \tableofcontents
 }
 
-\hypertarget{preface}{%
-\chapter*{Preface}\label{preface}}
-\addcontentsline{toc}{chapter}{Preface}
+\hypertarget{preface-to-the-second-edition}{%
+\chapter*{Preface to the second edition}\label{preface-to-the-second-edition}}
+\addcontentsline{toc}{chapter}{Preface to the second edition}
+
+\hypertarget{preface-to-the-first-edition}{%
+\chapter*{Preface to the first edition}\label{preface-to-the-first-edition}}
+\addcontentsline{toc}{chapter}{Preface to the first edition}
 
 \newthought{This} textbook is about empirical finance, and focusses on the pricing and risk management of financial assets: bonds, futures contracts, and other derivative securities.
 
@@ -321,654 +326,1131 @@ This course would not be possible without the \RR{} statistical program and with
 This book is open access (free as in free beer). It's also \href{https://github.com/phenaff/empirical-finance-2}{open source}: feel free to clone and submit additions.
 You can download a \href{https://github.com/phenaff/empirical-finance-2/docs/empiricalfin.pdf}{PDF copy}
 
-\hypertarget{part-computational-framework}{%
-\part*{Computational Framework}\label{part-computational-framework}}
-\addcontentsline{toc}{part}{Computational Framework}
+\hypertarget{part-discreet-models}{%
+\part*{Discreet Models}\label{part-discreet-models}}
+\addcontentsline{toc}{part}{Discreet Models}
 
-This first part is dedicated to the description of the experimental
-environment used in this book.
+\hypertarget{arb-free-pricing}{%
+\chapter{Arbitrage-Free Pricing and Risk Neutral Valuation}\label{arb-free-pricing}}
 
-As mentioned earlier, our approach is data-driven and empirical. It is
-thus appropriate to start this text with a description of the sources of
-data that we will use, and how to fetch publicly available financial
-data from the Internet.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(fBasics)}
+\KeywordTok{library}\NormalTok{(xtable)}
+\KeywordTok{library}\NormalTok{(empfin)}
+\end{Highlighting}
+\end{Shaded}
 
-In the following chapters, we will make repeated use of the Rmetrics
-pricing libraries, and often compare different models applied to the
-same data. To facilitate this comparison, the Rmetrics pricing libraries
-have been wrapped in a object-oriented framework, which hides most of
-the implementation details, and allows us to focus on the key features
-of the financial instruments and models. The framework uses the S4
-object model (\protect\hyperlink{ref-Genolini2008}{\textbf{Genolini2008?}}) of the R language, and is described in
-Chapter \ref{basic-components}.
+\texttt{\{r\ tufte::newthought("We")\}} are exclusively concerned about the pricing of redundant securities,
+i.e.~relative value pricing. Financial economics tries to explain the
+pricing of underlying securities, mathematical finance is about the
+relative value pricing of derivatives securities.
 
-Simulation is our tool of choice to explore the features of pricing
-models and test their robustness. To that end, we have developped a
-framework that facilitates the definition and testing of simple risk
-management strategies. The core of this simulation framework is the \class{DataProvider}
-class, which is presented in Chapter \ref{sim-framework}.
+\hypertarget{arbitrage-free-pricing}{%
+\section{Arbitrage-free Pricing}\label{arbitrage-free-pricing}}
 
-In addition to the packages found on CRAN, data sets and code used in the
-text have been gathered into three packages:
+Consider three produce baskets of apples and oranges.
+
+\begin{longtable}[]{@{}cccc@{}}
+\toprule
+Basket & Apples & Oranges & Price (€)\tabularnewline
+\midrule
+\endhead
+B1 & 2 & 3 & 4\tabularnewline
+B2 & 3 & 2 & 5\tabularnewline
+B3 & 2 & 2 & ?\tabularnewline
+\bottomrule
+\end{longtable}
+
+Is €~3.5 a fair price for basket B3? The answer is no: I can buy 5
+baskets B3 and sell 2 baskets B1 and 2 baskets B1 for a riskless profit
+of €0.5. The fair price for B3 is 3.6~€. We have determined the
+arbitrage-free price for B3 by constructing a replication out of baskets
+B1 and B2. This is the essence of derivatives pricing.
+
+\hypertarget{arrow-debreu-securities}{%
+\subsection{Arrow-Debreu Securities}\label{arrow-debreu-securities}}
+
+Imagine an economy that can evolve between time \(t=0\) and \(t=1\) to take
+one out of 3 possible states. There is a consensus to attribute
+probability \(p_i\) to the occurence of state \(i\). The interest rate is null.
+
+We next define 3 securities; each one pays a certain pattern of cashflow
+according to the future state, as pictured in figure~\[fig:3states\].
+
+\begin{figure}
+
+{\centering \includegraphics{201-ArbFreePricing_files/figure-latex/ThreeStates-1} 
+
+}
+
+\caption[Cashflows from 3 securities]{Cashflows from 3 securities}\label{fig:ThreeStates}
+\end{figure}
+
+Assume that prices at time \(t=0\) are: \(S_1 = 1.3\), \(S_2 = 1.25\),
+\(S_3 = 1.3\). The price of these securities is determined by several
+factors:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  the preference of market participants for earning a payoff in one
+  state versus another: in a risk-adverse economy, earning 1 euro when
+  the aggregate wealth is low is more valuable than earning the same
+  amount when the aggregate wealth is high
+\item
+  the preference for holding money today rather than at time \(T\)
+\item
+  the likelihood of each state
+\end{enumerate}
+
+We are now interested in the price of securities that pays 1 euro if
+state \(i\) is realized, and nothing otherwise. Such securities are called
+Arrow-Debreu securities, and can be represented by a vector giving the
+value of such security in each future state of the world.
+
+The value of the first Arrow-Debreu security is determined by solving
+the following system:
+
+\[
+\begin{pmatrix}
+    0 & 1 & 1 \\
+    3 & 2 & 0 \\
+    1 & 1 & 2
+\end{pmatrix} W_1 =
+\begin{pmatrix}
+1 \\
+0 \\
+0
+\end{pmatrix}
+\]
+
+which yields
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P \textless{}{-}}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{A1 \textless{}{-}}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{W1 \textless{}{-}}\StringTok{ }\KeywordTok{inv}\NormalTok{(P) }\OperatorTok{\%*\%}\StringTok{ }\NormalTok{A1}
+\NormalTok{W1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]
+## [1,] -0.8
+## [2,]  1.2
+## [3,] -0.2
+\end{verbatim}
+
+The value of the first Arrow-Debreu security is thus:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S \textless{}{-}}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\FloatTok{1.3}\NormalTok{, }\FloatTok{1.25}\NormalTok{, }\FloatTok{1.3}\NormalTok{), }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{a1 \textless{}{-}}\StringTok{ }\KeywordTok{t}\NormalTok{(W1) }\OperatorTok{\%*\%}\StringTok{ }\NormalTok{S}
+\KeywordTok{print}\NormalTok{(a1[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.2
+\end{verbatim}
+
+Similarly, the prices \(a_2\) and \(a_3\) of the other two Arrow-Debreu
+securities are computed by:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{W2 \textless{}{-}}\StringTok{ }\KeywordTok{inv}\NormalTok{(P) }\OperatorTok{\%*\%}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{), }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{a2 \textless{}{-}}\StringTok{ }\KeywordTok{t}\NormalTok{(W2) }\OperatorTok{\%*\%}\StringTok{ }\NormalTok{S}
+\NormalTok{W3 \textless{}{-}}\StringTok{ }\KeywordTok{inv}\NormalTok{(P) }\OperatorTok{\%*\%}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{a3 \textless{}{-}}\StringTok{ }\KeywordTok{t}\NormalTok{(W3) }\OperatorTok{\%*\%}\StringTok{ }\NormalTok{S}
+\end{Highlighting}
+\end{Shaded}
+
+The replicating portfolios and prices of the 3 A-D assets are summarized
+below.
+
+\% latex table generated in R 4.2.2 by xtable 1.8-4 package
+\% Wed Jan 11 21:53:20 2023
+
+\begin{tabular}{rrrrr}
+  \toprule 
+ & W1 & W2 & W3 & Price \\ 
+  \midrule  
+1 & -0.80 & 0.20 & 0.40 & 0.20 \\ 
+  2 & 1.20 & 0.20 & -0.60 & 0.25 \\ 
+  3 & -0.20 & -0.20 & 0.60 & 0.55 \\ 
+   \bottomrule 
+\end{tabular}
+
+A portfolio made of the three Arrow-Debreu securities guarantees a
+payoff of 1 euro. Therefore, this collection can be priced at time \(t=0\)
+by discounting the payoff at the risk-free rate (0 for now). Thus, we
+must have:
+
+\[\sum a_i = 1\]
+
+Which is indeed the case:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(a1 }\OperatorTok{+}\StringTok{ }\NormalTok{a2 }\OperatorTok{+}\StringTok{ }\NormalTok{a3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]
+## [1,]    1
+\end{verbatim}
+
+\hypertarget{the-price-of-traded-securities}{%
+\subsection{The Price of Traded Securities}\label{the-price-of-traded-securities}}
+
+The price of Arrow-Debreu securities is determined by the price of
+traded securities. We now consider how these price are determined.
+
+The current price of an asset depends on the future payoffs, and on the
+states in which these payoffs occur: if the payoffs of an asset are
+positively correlated with the aggregate market value, it will be worth
+less, everything else being equal, than an asset whose payoffs are
+negatively correlated with the aggregate market value. The capital asset
+pricing model formalizes this observation. Let
 
 \begin{description}
-\tightlist
-\item[empfin]
-contains all the data sets and several utility functions for simple bond pricing and the manipulation of dates,
-\item[fInstrument]
-provides the \class{fInstrument} class, that wraps the Rmetrics pricing library and the \class{DataProvider} class, that acts as a container for market data,
-\item[DynamicSimulation]
-contains tools needed to perform dynamic simulations, such as scenario generators and delta hedging simulators.
+\item[\(S_t\)]
+Asset price at time \(t\)
+\item[\(M_t\)]
+Aggregate market wealth at time \(t\)
+\item[\(R_s\)]
+Return on asset: \(S_T/S_0\)
+\item[\(R_m\)]
+Market return: \(M_T/M_0\)
+\item[\(R_f\)]
+Risk-free return: \(1+r\)
 \end{description}
 
-\hypertarget{basic-components}{%
-\chapter{Basic Components}\label{basic-components}}
+The model relates the expected return of a security to the beta value:
+
+\[E(R_s) = R_f + \beta [ E(R_m) - R_f ]\]
+
+where
+
+\[\beta = \frac{\mbox{Cov}(R_s, R_m)}{\mbox{Var}(R_m)}\]
+
+In that framework, it can be shown that \(S_0\), the current asset price,
+is given by:
+
+\[S_0 = \frac{E(S_T)-\lambda \mbox{Cov}(S_T, M_T)}{R_f}
+    \label{eq:capm1}\]
+
+where \(\lambda\) is the market price of risk times the current market
+value \(M_0\):
+
+\[\lambda = \frac{M_0 [ E(R_m)-R_f ]}{\mbox{Var}(M_T)}\]
+
+In a complete market, the asset and the market portfolio can be
+expressed in terms of Arrow-Debreu securities:
+
+\[S_0 = \sum_i V_i a_i\]
+
+\[M_0 = \sum_i U_i a_i\]
+
+Assume that the states are ordered in order of increasing aggregate
+wealth. We have:
+
+\[\begin{aligned}
+    E(S_T) & = & \sum_i V_i p_i \\
+    E(M_T) & = & \sum_i U_i p_i \\
+    E(S_T M_T) & = & \sum_i U_i V_i p_i\end{aligned}\]
+
+Substitute in~\eqref{eq:capm1} to get:
+
+\[S_0 = \sum_i V_i d_i p_i\]
+
+where the discount factor \(d_i\) is given by:
+
+\[d_i = \frac{1-\lambda(U_i - E(M_T))}{R_f}
+    \label{eq:capm2}\]
+
+Equation~\eqref{eq:capm2} shows that as aggregate wealth \(U_i\) increases,
+the discount factor decreases. An asset is more valuable, everything
+else being equal, if its payoffs occur in the states where \(U_i\) is low,
+and therefore where the discount factor is high.
+
+To generalize: any factor that affects supply and demand for traded
+securities, and the market price of risk, will have a direct influence
+on the Arrow-Debreu prices and therefore on the risk neutral
+probabilities.
+
+As noted by Derman and Taleb(({\textbf{???}})),
+
+\begin{quote}
+The Nobel committee upon granting the Bank of Sweden Prize in honour
+of Alfred Nobel, provided the following citation: ``Black, Merton and
+Scholes made a vital contribution by showing that it is in fact not
+necessary to use any risk premium when valuing an option. This does
+not mean that the risk premium disappears; instead it is already
+included in the stock price.'' It is for having removed the effect of
+\(\mu\) \[the stock drift\] on the value of the option, and not for
+rendering the option a deterministic and riskless security, that their
+work is cited.
+\end{quote}
+
+\hypertarget{complete-market}{%
+\subsection{Complete Market}\label{complete-market}}
+
+A complete market is a market where all Arrow-Debreu securities can be
+traded, and therefore any payoff profile can be replicated as a
+portfolio of Arrow-Debreu securities. The existence of this replicating
+portfolio imposes a unique arbitrage-free price for any payoff. Going
+back to the elementary example above, consider now a new security that
+has the payoff profile illustrated in figure~\[fig:new-sec\].
+
+\[grow’=right,sibling distance=1cm\] child {node {1}} child {node
+{-0.5}} child {node {1}};
+
+\[grow’=right,sibling distance=1cm\] child {node {1}} child {node
+{-0.5}} child {node {1}};
+
+This security is equivalent to a portfolio of three Arrow-Debreu
+securities, and is worth
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(fOptions)}
-\FunctionTok{library}\NormalTok{(fExoticOptions)}
-\FunctionTok{library}\NormalTok{(fInstrument)}
-\FunctionTok{library}\NormalTok{(DynamicSimulation)}
-\FunctionTok{library}\NormalTok{(empfin)}
-\FunctionTok{library}\NormalTok{(plotly)}
+\NormalTok{V \textless{}{-}}\StringTok{ }\NormalTok{a1 }\OperatorTok{{-}}\StringTok{ }\FloatTok{0.5} \OperatorTok{*}\StringTok{ }\NormalTok{a2 }\OperatorTok{+}\StringTok{ }\NormalTok{a3}
 \end{Highlighting}
 \end{Shaded}
 
-This chapter provides a tutorial and explains the design of the object framework that has been build on top of the Rmetrics library.
-As mentioned earlier, this layer is meant to hide
-most of the implementation details, and allows us to focus on the key features of the
-financial instruments and models.
+If its market price of \(S_4\) is less than \(V=0.62\), you
+can earn a riskless profit by buying a unit of \(S_4\) and selling the
+portfolio \(P\).
 
-The reader is encouraged to work through the examples, but the sections on design and implementation can be skipped.
+In general, a security with payoff \(X_i\) in state \(i\) is worth:
 
-The object framework involves two main entities:
+\[\sum_i a_i X_i\]
 
-\begin{itemize}
-\tightlist
-\item
-  the \class{fInstrument} class models an abstract financial instrument, and exposes
-  generic methods for computing the net present value (NPV) and the risk
-  indicators (the ``greeks'\,'). With this class, one can perform calculations on portfolio of instruments, without being concerned about the implementation details specific to each type of asset. This will be illustrated below with the detailed description of a delta-hedging algorithm.
-\item
-  the \class{DataProvider} class is a container for market data, derived from the built-in \RR{} \code{environment}. It greatly simplifies the signature of pricing functions. Instead of passing as arguments all the necessary market data, we simply pass one \class{DataProvider} argument. The pricing methods fetch the necessary data from the \class{DataProvider}, as needed.
-\end{itemize}
+with
 
-Each entity is now described and illustrated.
+\[\sum_i a_i = 1\]
 
-\hypertarget{the-class}{%
-\section{\texorpdfstring{The \class{fInstrument} Class}{The  Class}}\label{the-class}}
+and
 
-As mentioned, the purpose of the \class{fInstrument} class is to create a layer of abstraction over the large variety of pricing models found in Rmetrics. With this class, we can express calculation algorithms in a generic manner. This is best explained by an example.
+\[a_i >0, \ \ \forall i\]
 
-\hypertarget{illustration}{%
-\subsection{Illustration}\label{illustration}}
+and we can interpret the Arrow-Debreu prices as probabilities. Since
+preferences no longer play a role, we call them ``risk-neutral''
+probabilities.
 
-Consider a portfolio made of two options, a vanilla European call and a binary (cash-or-nothing) option, both written on the same underlying asset. We would like to compute the NPV and delta of this portfolio. Let's contrast the process, first performed with the Rmetrics functions, and then with the \class{fInstrument} class.
+\hypertarget{equivalent-probability-measures}{%
+\subsection{Equivalent Probability Measures}\label{equivalent-probability-measures}}
 
-Starting with the Rmetrics functions, you first compute the price and delta of the European call:
+Two probability measures \(p\) and \(q\) are equivalent if they are
+consistent with respect to possible and impossible outcome:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\AttributeTok{mode =} \StringTok{"numeric"}\NormalTok{, }\AttributeTok{length =} \DecValTok{2}\NormalTok{)}
-\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\AttributeTok{mode =} \StringTok{"numeric"}\NormalTok{, }\AttributeTok{length =} \DecValTok{2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\[p_i >0 \Leftrightarrow q_i >0\]
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\AttributeTok{mode =} \StringTok{"numeric"}\NormalTok{, }\AttributeTok{length =} \DecValTok{2}\NormalTok{)}
-\NormalTok{cp }\OtherTok{\textless{}{-}} \StringTok{"c"}
-\NormalTok{Spot }\OtherTok{\textless{}{-}} \DecValTok{100}
-\NormalTok{Strike }\OtherTok{\textless{}{-}} \DecValTok{100}
-\NormalTok{Ttm }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{int.rate }\OtherTok{\textless{}{-}} \FloatTok{0.02}
-\NormalTok{div.yield }\OtherTok{\textless{}{-}} \FloatTok{0.02}
-\NormalTok{sigma }\OtherTok{\textless{}{-}} \FloatTok{0.3}
-\NormalTok{p[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{GBSOption}\NormalTok{(}\AttributeTok{TypeFlag =}\NormalTok{ cp, }\AttributeTok{S =}\NormalTok{ Spot, }\AttributeTok{X =}\NormalTok{ Strike,}
-    \AttributeTok{Time =}\NormalTok{ Ttm, }\AttributeTok{r =}\NormalTok{ int.rate, }\AttributeTok{b =}\NormalTok{ int.rate }\SpecialCharTok{{-}}\NormalTok{ div.yield,}
-    \AttributeTok{sigma =}\NormalTok{ sigma)}\SpecialCharTok{@}\NormalTok{price}
-\NormalTok{d[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{GBSGreeks}\NormalTok{(}\AttributeTok{Selection =} \StringTok{"delta"}\NormalTok{, }\AttributeTok{TypeFlag =}\NormalTok{ cp,}
-    \AttributeTok{S =}\NormalTok{ Spot, }\AttributeTok{X =}\NormalTok{ Strike, }\AttributeTok{Time =}\NormalTok{ Ttm, }\AttributeTok{r =}\NormalTok{ int.rate,}
-    \AttributeTok{b =}\NormalTok{ int.rate }\SpecialCharTok{{-}}\NormalTok{ div.yield, }\AttributeTok{sigma =}\NormalTok{ sigma)}
-\end{Highlighting}
-\end{Shaded}
+Let \(p\) be the real probability measure and \(q\) be the risk-neutral
+measure. It is easy to show that the two measures must be equivalent.
 
-Perform the same calculation for the binary option. The delta is computed
-by finite difference.
+Consider a state \(i\) such that \(p_i = 0\). then the corresponding
+Arrow-Debreu security cannot cost anything, or a riskless profit could
+be gained by selling this security. Thus, \(q_i=0\). A similar argument
+applies for the case \(p_i>0\).
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\AttributeTok{mode =} \StringTok{"numeric"}\NormalTok{, }\AttributeTok{length =} \DecValTok{2}\NormalTok{)}
-\NormalTok{K }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{p[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{CashOrNothingOption}\NormalTok{(}\AttributeTok{TypeFlag =}\NormalTok{ cp, }\AttributeTok{S =}\NormalTok{ Spot,}
-    \AttributeTok{X =}\NormalTok{ Strike, }\AttributeTok{K =}\NormalTok{ K, }\AttributeTok{Time =}\NormalTok{ Ttm, }\AttributeTok{r =}\NormalTok{ int.rate, }\AttributeTok{b =}\NormalTok{ int.rate }\SpecialCharTok{{-}}
-\NormalTok{        div.yield, }\AttributeTok{sigma =}\NormalTok{ sigma)}\SpecialCharTok{@}\NormalTok{price}
-\NormalTok{h }\OtherTok{\textless{}{-}}\NormalTok{ Spot }\SpecialCharTok{*} \FloatTok{0.001}
-\NormalTok{dh }\OtherTok{\textless{}{-}} \FunctionTok{CashOrNothingOption}\NormalTok{(}\AttributeTok{TypeFlag =}\NormalTok{ cp, }\AttributeTok{S =} \FunctionTok{c}\NormalTok{(Spot }\SpecialCharTok{+}
-\NormalTok{    h, Spot }\SpecialCharTok{{-}}\NormalTok{ h), }\AttributeTok{X =}\NormalTok{ Strike, }\AttributeTok{K =}\NormalTok{ K, }\AttributeTok{Time =}\NormalTok{ Ttm, }\AttributeTok{r =}\NormalTok{ int.rate,}
-    \AttributeTok{b =}\NormalTok{ int.rate }\SpecialCharTok{{-}}\NormalTok{ div.yield, }\AttributeTok{sigma =}\NormalTok{ sigma)}\SpecialCharTok{@}\NormalTok{price}
-\NormalTok{d[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{diff}\NormalTok{(dh)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ h)}
-\end{Highlighting}
-\end{Shaded}
+\hypertarget{the-impact-of-interest-rate}{%
+\subsection{The Impact of Interest Rate}\label{the-impact-of-interest-rate}}
 
-Finally, sum both vectors to get the portfolio NPV and delta.
+What happens to Arrow-Debreu prices and risk-neutral probabilities when
+interest rate is not null? In the presence of interest rate, the value
+of a complete set of Arrow-Debreu securities must be
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\AttributeTok{mode =} \StringTok{"numeric"}\NormalTok{, }\AttributeTok{length =} \DecValTok{2}\NormalTok{)}
-\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"Price:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{sum}\NormalTok{(p), }\DecValTok{2}\NormalTok{), }\StringTok{"Delta:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{sum}\NormalTok{(d),}
-    \DecValTok{3}\NormalTok{)))}
-\end{Highlighting}
-\end{Shaded}
+\[\sum_i a_i = e^{-rT}\]
+
+The risk-neutral probabilities are now defined as:
+
+\[q_i = a_i e^{rT}\]
+
+so that we still have \(\sum_i q_i = 1\). As before, an arbitrary security
+with payoff \(X_i\) in state \(i\) is worth,
+
+\[P(X) = e^{-rT} \sum_i X_i q_i\]
+
+or,
+
+\[P(X) = e^{-rT} E^Q[X]\]
+
+Risk-neutral probabilities are compounded Arrow-Debreu prices. Here, for
+expository purpose, we have derived risk-neutral probabilities from
+state prices, but in practice, we will do the opposite: to obtain state
+prices from risk-neutral probabilities.
+
+\hypertarget{trading-strategy-and-dynamic-completeness}{%
+\subsection{Trading Strategy and Dynamic Completeness}\label{trading-strategy-and-dynamic-completeness}}
+
+Let's now consider an economy where decisions can be made at various
+stages. This economy is illustrated in Figure~\[fig:bin-tree-0\]. At the
+second time step, we have 3 distinct states, i.e.~3 Arrow-Debreu
+securities. If we only had one time step, we would need 3 linearly
+independent assets to construct these securities. Now, because of the
+intermediate trading opportunity, we may be able to construct the
+Arrow-Debreu securities with fewer (i.e.~two) underlying assets. A
+market in which every Arrow-Debreu security can be constructed with a
+self-financing trading strategy is called dynamically complete.
+
+\hypertarget{discounted-asset-prices-as-martingales}{%
+\subsection{Discounted Asset Prices as Martingales}\label{discounted-asset-prices-as-martingales}}
+
+Let's consider again a two-stage economy. What can we say at time 0
+about the expected value of a derivative at a future time \(t\)?
+
+\[E_0^Q[P_t(X)], \forall t \geq 0\]
+
+\[E_0^Q[P_t(X)] = e^{-2r}E_0^Q[X]\]
+
+Now let's consider the expected price at \(t=1\):
+
+\[\begin{aligned}
+E_0^Q[P_1(X)] & = & E_0^Q[e^{-r}E_1^Q[X]] \\
+E_0^Q[P_1(X)] & = & E_0^Q[e^{-r}E_0^Q[X]] \\
+E_0^Q[P_1(X)] & = & e^{-r} E_0^Q[X]\end{aligned}\]
+
+Similarly,
+
+\[\begin{aligned}
+E_0^Q[P_2(X)] & = & E_0^Q[E_2^Q[X]] \\
+E_0^Q[P_2(X)] & = & E_0^Q[X]\end{aligned}\]
+
+The price of each state-dependent payoff grows at the risk-free rate,
+simply because this growth rate is incorporated in the definition of
+each risk-neutral probability with which we weight the state-dependent
+payoffs.
+
+The expected price of any asset (as seen from time \(t=0\)) grows at the
+risk-free rate. Not the price, but the expectation of the price.
+Generalizing, we have:
+
+\[P_0(X) = e^{-rt}E_0[P_t(X)], \ \forall t>0\]
+
+\hypertarget{binomial}{%
+\chapter{Risk-Neutral Pricing in a Binomial Framework}\label{binomial}}
 
 \begin{verbatim}
-## [1] "Price: 0 Delta: 0.536"
+## Loading required package: timeDate
 \end{verbatim}
-
-With the \class{fInstrument} class, the calculation steps are quite different.
-
-You first create a vanilla instrument with the \code{fInstrumentFactory} function:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dtExpiry }\OtherTok{\textless{}{-}} \FunctionTok{myDate}\NormalTok{(}\StringTok{"01jan2011"}\NormalTok{)}
-\NormalTok{underlying }\OtherTok{\textless{}{-}} \StringTok{"IBM"}
-\NormalTok{Strike }\OtherTok{\textless{}{-}} \DecValTok{100}
-\NormalTok{K }\OtherTok{\textless{}{-}} \DecValTok{1}
-
-\NormalTok{b }\OtherTok{\textless{}{-}} \FunctionTok{fInstrumentFactory}\NormalTok{(}\StringTok{"vanilla"}\NormalTok{, }\AttributeTok{quantity =} \DecValTok{1}\NormalTok{, }\AttributeTok{params =} \FunctionTok{list}\NormalTok{(}\AttributeTok{cp =} \StringTok{"c"}\NormalTok{,}
-    \AttributeTok{strike =}\NormalTok{ Strike, }\AttributeTok{dtExpiry =}\NormalTok{ dtExpiry, }\AttributeTok{underlying =}\NormalTok{ underlying,}
-    \AttributeTok{discountRef =} \StringTok{"USD.LIBOR"}\NormalTok{, }\AttributeTok{trace =} \ConstantTok{FALSE}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-Next, use again the \code{fInstrumentfactory} to create the binary option:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{v }\OtherTok{\textless{}{-}} \FunctionTok{fInstrumentFactory}\NormalTok{(}\StringTok{"binary"}\NormalTok{, }\AttributeTok{quantity =} \DecValTok{1}\NormalTok{, }\AttributeTok{params =} \FunctionTok{list}\NormalTok{(}\AttributeTok{cp =} \StringTok{"c"}\NormalTok{,}
-    \AttributeTok{strike =}\NormalTok{ Strike, }\AttributeTok{dtExpiry =}\NormalTok{ dtExpiry, }\AttributeTok{K =}\NormalTok{ K, }\AttributeTok{underlying =}\NormalTok{ underlying,}
-    \AttributeTok{discountRef =} \StringTok{"USD.LIBOR"}\NormalTok{, }\AttributeTok{trace =} \ConstantTok{FALSE}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-Insert the relevant market data into a \class{DataProvider} (this will be explained in the next section):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{base.env }\OtherTok{\textless{}{-}} \FunctionTok{DataProvider}\NormalTok{()}
-\NormalTok{dtCalc }\OtherTok{\textless{}{-}} \FunctionTok{myDate}\NormalTok{(}\StringTok{"01jan2010"}\NormalTok{)}
-\FunctionTok{setData}\NormalTok{(base.env, underlying, }\StringTok{"Price"}\NormalTok{, dtCalc, }\DecValTok{100}\NormalTok{)}
-\FunctionTok{setData}\NormalTok{(base.env, underlying, }\StringTok{"DivYield"}\NormalTok{, dtCalc, div.yield)}
-\FunctionTok{setData}\NormalTok{(base.env, underlying, }\StringTok{"ATMVol"}\NormalTok{, dtCalc, sigma)}
-\FunctionTok{setData}\NormalTok{(base.env, }\StringTok{"USD.LIBOR"}\NormalTok{, }\StringTok{"Yield"}\NormalTok{, dtCalc, int.rate)}
-\end{Highlighting}
-\end{Shaded}
-
-Construct a portfolio, as a list of \class{fInstrument} objects:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{portfolio }\OtherTok{=} \FunctionTok{c}\NormalTok{(v, b)}
-\end{Highlighting}
-\end{Shaded}
-
-and finally compute the price and delta of the portfolio:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{price }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(portfolio, }\ControlFlowTok{function}\NormalTok{(a) }\FunctionTok{getValue}\NormalTok{(a,}
-    \StringTok{"Price"}\NormalTok{, dtCalc, base.env)))}
-\NormalTok{delta }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(portfolio, }\ControlFlowTok{function}\NormalTok{(a) }\FunctionTok{getValue}\NormalTok{(a,}
-    \StringTok{"Delta"}\NormalTok{, dtCalc, base.env)))}
-\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"Price:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(price, }\DecValTok{2}\NormalTok{), }\StringTok{"Delta:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(delta,}
-    \DecValTok{3}\NormalTok{)))}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
-## [1] "Price: 13.31 Delta: 0.599"
+## Loading required package: timeSeries
 \end{verbatim}
-
-\hypertarget{design-and-implementation}{%
-\subsection{Design and Implementation}\label{design-and-implementation}}
-
-\class{finstrument} objects are instantiated by the \code{fInstrumentfactory} class
-method, which takes as argument:
-
-\begin{itemize}
-  \item the type of instrument being instantiated,
-    \item the quantity or nominal amount of the instrument
-    \item a list of parameters that define the instrument
-\end{itemize}
-
-The \code{fInstrumentFactory} method is simply a switch that delegates the
-object instantiation the the concrete subclasses of \class{fInstrument}. The following code fragment is extracted from the file \code{fInstrument.r} in package \pkg{fInstrument}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{fInstrumentFactory }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(type, quantity, params) \{}
-    \ControlFlowTok{switch}\NormalTok{(}\FunctionTok{toupper}\NormalTok{(type), }\AttributeTok{VANILLA =} \FunctionTok{Vanilla}\NormalTok{(quantity,}
-\NormalTok{        params), }\AttributeTok{BINARY =} \FunctionTok{Binary}\NormalTok{(quantity, params),}
-        \AttributeTok{ASIAN =} \FunctionTok{Asian}\NormalTok{(quantity, params), }\AttributeTok{STANDARDBARRIER =} \FunctionTok{StandardBarrier}\NormalTok{(quantity,}
-\NormalTok{            params))}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-There is only one method defined on \class{fInstrument} objects. This method is \code{getValue}, and takes as argument:
-
-\begin{itemize}
-  \item the kind of calculation being requested (price, delta)
-    \item the calculation date,
-      \item the data container from which the required market data will be fetched.
-        \end{itemize}
-
-Again, this method simply delegates to the concrete classes the requested calculation:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{setMethod}\NormalTok{(}\AttributeTok{f =} \StringTok{"getValue"}\NormalTok{, }\AttributeTok{signature =} \FunctionTok{signature}\NormalTok{(}\StringTok{"fInstrument"}\NormalTok{),}
-    \AttributeTok{definition =} \ControlFlowTok{function}\NormalTok{(object, selection, dtCalc,}
-        \AttributeTok{env =} \ConstantTok{NULL}\NormalTok{) \{}
-\NormalTok{        res }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{        res }\OtherTok{\textless{}{-}} \ControlFlowTok{switch}\NormalTok{(}\FunctionTok{toupper}\NormalTok{(selection), }\AttributeTok{PRICE =}\NormalTok{ object}\SpecialCharTok{@}\FunctionTok{p}\NormalTok{(dtCalc,}
-\NormalTok{            env), }\AttributeTok{DELTA =}\NormalTok{ object}\SpecialCharTok{@}\FunctionTok{d}\NormalTok{(dtCalc, env), }\AttributeTok{GAMMA =}\NormalTok{ object}\SpecialCharTok{@}\FunctionTok{g}\NormalTok{(dtCalc,}
-\NormalTok{            env), }\AttributeTok{VEGA =}\NormalTok{ object}\SpecialCharTok{@}\FunctionTok{v}\NormalTok{(dtCalc, env))}
-        \FunctionTok{return}\NormalTok{(res }\SpecialCharTok{*}\NormalTok{ object}\SpecialCharTok{@}\NormalTok{quantity)}
-\NormalTok{    \})}
-\end{Highlighting}
-\end{Shaded}
-
-As an illustration, the price calculation for vanilla options is implemented as follows in
-\code{Vanilla.r}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{getP }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dtCalc, env) \{}
-\NormalTok{    Spot }\OtherTok{\textless{}{-}} \FunctionTok{getData}\NormalTok{(env, Underlying, }\StringTok{"Price"}\NormalTok{, dtCalc)}
-\NormalTok{    s }\OtherTok{\textless{}{-}} \FunctionTok{getData}\NormalTok{(env, Underlying, }\StringTok{"ATMVol"}\NormalTok{, dtCalc)}
-\NormalTok{    r }\OtherTok{\textless{}{-}} \FunctionTok{getData}\NormalTok{(env, df, }\StringTok{"Yield"}\NormalTok{, dtCalc)}
-\NormalTok{    b }\OtherTok{\textless{}{-}} \FunctionTok{getData}\NormalTok{(env, Underlying, }\StringTok{"DivYield"}\NormalTok{, dtCalc)}
-\NormalTok{    t }\OtherTok{\textless{}{-}} \FunctionTok{tDiff}\NormalTok{(dtCalc, dtExpiry)}
-    \ControlFlowTok{if}\NormalTok{ (trace) \{}
-        \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"Calling GBSOption with Spot="}\NormalTok{,}
-\NormalTok{            Spot, }\StringTok{"Strike="}\NormalTok{, Strike, }\StringTok{"t="}\NormalTok{, t, }\StringTok{"r="}\NormalTok{,}
-\NormalTok{            r, }\StringTok{"b="}\NormalTok{, b, }\StringTok{"sigma="}\NormalTok{, s))}
-\NormalTok{    \}}
-    \FunctionTok{GBSOption}\NormalTok{(}\AttributeTok{TypeFlag =}\NormalTok{ cp, }\AttributeTok{S =}\NormalTok{ Spot, }\AttributeTok{X =}\NormalTok{ Strike,}
-        \AttributeTok{Time =}\NormalTok{ t, }\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{b =}\NormalTok{ b, }\AttributeTok{sigma =}\NormalTok{ s)}\SpecialCharTok{@}\NormalTok{price}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-The actual calculation being performed by the Rmetrics \code{GBSOption} function. The model can be easily extended to accommodate other instruments.
-
-\hypertarget{the-class-1}{%
-\section{\texorpdfstring{The \class{DataProvider} Class}{The  Class}}\label{the-class-1}}
-
-The \code{DataProvider} class is a container of market data, from which the pricing algorithm will fetch the necessary market information, as illustrated in the code fragment above.
-We first describe the representation of market data, then the algorithm for searching data in a \code{DataProvider}.
-
-\hypertarget{the-model-for-market-data}{%
-\subsection{The Model for Market Data}\label{the-model-for-market-data}}
-
-The model for market data is strongly inspired by M. Folwer (\protect\hyperlink{ref-Fowler1996}{1996}). To summarize, a piece of market data is modeled as an observed phenomenon on a financial instrument. Therefore, every market data item is identified by three attributes:
-
-\begin{itemize}
-\tightlist
-\item
-  the financial instrument being observed (e.g.~a stock)
-\item
-  item the observed phenomenon (e.g.~the implied volatility, or the price)
-\item
-  the observation date
-\end{itemize}
-
-In order to optimize storage, the data is stored in a hash table. The first two attributes are combined to created the key, and the data for all observation dates is stored as a time series, with one column for actual data, and many additional columns when performing a simulation.
-
-\hypertarget{the-search-algorithm}{%
-\subsection{The Search Algorithm}\label{the-search-algorithm}}
-
-The \class{DataProvider} inherits from the built-in \code{environment} class. In particular, it inherits the parent/child relationship: if a \class{DataProvider} has a parent, the data not found in the child environment is fetched from the parent, if possible, or from the grand-parent, and so forth.
-
-This is useful when performing a scenario analysis where only a few variables are modified: The data held constant is stored in the parent scenario, and the modified data is stored in the child scenario which is passed as argument. This scheme is illustrated by the following example.
-
-Let's define a vanilla option:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dtExpiry }\OtherTok{\textless{}{-}} \FunctionTok{myDate}\NormalTok{(}\StringTok{"01jan2011"}\NormalTok{)}
-\NormalTok{underlying }\OtherTok{\textless{}{-}} \StringTok{"IBM"}
-\NormalTok{K }\OtherTok{\textless{}{-}} \DecValTok{100}
-\NormalTok{a }\OtherTok{\textless{}{-}} \FunctionTok{fInstrumentFactory}\NormalTok{(}\StringTok{"vanilla"}\NormalTok{, }\AttributeTok{quantity =} \DecValTok{1}\NormalTok{, }\AttributeTok{params =} \FunctionTok{list}\NormalTok{(}\AttributeTok{cp =} \StringTok{"c"}\NormalTok{,}
-    \AttributeTok{strike =}\NormalTok{ K, }\AttributeTok{dtExpiry =}\NormalTok{ dtExpiry, }\AttributeTok{underlying =}\NormalTok{ underlying,}
-    \AttributeTok{discountRef =} \StringTok{"USD.LIBOR"}\NormalTok{, }\AttributeTok{trace =} \ConstantTok{FALSE}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-and populate a DataProvider with the necessary market data:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{base.env }\OtherTok{\textless{}{-}} \FunctionTok{DataProvider}\NormalTok{()}
-\NormalTok{dtCalc }\OtherTok{\textless{}{-}} \FunctionTok{myDate}\NormalTok{(}\StringTok{"01jan2010"}\NormalTok{)}
-
-\FunctionTok{setData}\NormalTok{(base.env, underlying, }\StringTok{"Price"}\NormalTok{, dtCalc, }\DecValTok{100}\NormalTok{)}
-\FunctionTok{setData}\NormalTok{(base.env, underlying, }\StringTok{"DivYield"}\NormalTok{, dtCalc, }\FloatTok{0.02}\NormalTok{)}
-\FunctionTok{setData}\NormalTok{(base.env, underlying, }\StringTok{"ATMVol"}\NormalTok{, dtCalc, }\FloatTok{0.3}\NormalTok{)}
-\FunctionTok{setData}\NormalTok{(base.env, }\StringTok{"USD.LIBOR"}\NormalTok{, }\StringTok{"Yield"}\NormalTok{, dtCalc, }\FloatTok{0.02}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-The NPV of the derivative is obtained by:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{getValue}\NormalTok{(a, }\StringTok{"Price"}\NormalTok{, dtCalc, base.env)}
-\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{12.82158}
-\end{Highlighting}
-\end{Shaded}
-
-Next, we investigate the relationship between the underlying price and the value of the derivative, by inserting a set of scenarios for the underlying asset price in a child \class{DataProvider}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{sce }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{80}\NormalTok{, }\DecValTok{120}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{30}\NormalTok{)))}
-\NormalTok{sce.env }\OtherTok{\textless{}{-}} \FunctionTok{DataProvider}\NormalTok{(}\AttributeTok{parent =}\NormalTok{ base.env)}
-\FunctionTok{setData}\NormalTok{(sce.env, underlying, }\StringTok{"Price"}\NormalTok{, dtCalc, sce)}
-\end{Highlighting}
-\end{Shaded}
-
-and compute the NPV of the derivative for each scenario. The relationship between the underlying price and the value of the call is illustrated in figure \ref{fig:sce-plot}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{getValue}\NormalTok{(a, }\StringTok{"Price"}\NormalTok{, dtCalc, sce.env)}
-\FunctionTok{plot}\NormalTok{(sce, p, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Spot"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Price"}\NormalTok{,}
-    \AttributeTok{bty =} \StringTok{"n"}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{marginfigure}
-\includegraphics{empiricalfin_files/figure-latex/sce-plot-1} \caption[Call Price as a function of spot value]{Call Price as a function of spot value. Strike: 100, maturity: 1 Year}\label{fig:sce-plot}
-\end{marginfigure}
-
-\hypertarget{sim-framework}{%
-\chapter{The Simulation Framework}\label{sim-framework}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(fInstrument)}
-\FunctionTok{library}\NormalTok{(empfin)}
-\FunctionTok{library}\NormalTok{(DynamicSimulation)}
-\FunctionTok{library}\NormalTok{(kableExtra)}
-\end{Highlighting}
-\end{Shaded}
-
-The simulation framework has two main components:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  A simulator, which can generate paths for the variables of interest
-  (price of a asset, implied volatility, term structure of interest
-  rate, etc.), according to a model that relates the variables to
-  stochastic risk factors.
-\item
-  A framework for expressing trading strategies, and in particular
-  dynamic hedging policies.
-\end{enumerate}
-
-This is again best explained by an example, and we describe next the use
-of this framework for running a delta-hedging experiment. The main
-elements of the design are discussed afterwards.
-
-\hypertarget{scenario-simulator}{%
-\section{Scenario Simulator}\label{scenario-simulator}}
-
-Assume that you want to simulate 500 price paths over a period of one
-year, with 100 time steps. The price process will be log-normal with
-annual volatility of \(30\%\), starting from an initial value of \(\$100\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dtStart }\OtherTok{\textless{}{-}} \FunctionTok{myDate}\NormalTok{(}\StringTok{"01jan2010"}\NormalTok{)}
-\NormalTok{dtEnd }\OtherTok{\textless{}{-}} \FunctionTok{myDate}\NormalTok{(}\StringTok{"01jan2011"}\NormalTok{)}
-\NormalTok{nbSteps }\OtherTok{\textless{}{-}} \DecValTok{100}
-\NormalTok{nbPaths }\OtherTok{\textless{}{-}} \DecValTok{500}
-\end{Highlighting}
-\end{Shaded}
-
-Next, define the sequence of simulation dates and the volatility of the simulated log-normal process:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dtSim }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(dtStart, dtEnd, }\AttributeTok{length.out =}\NormalTok{ nbSteps }\SpecialCharTok{+}
-    \DecValTok{1}\NormalTok{)}
-\NormalTok{sigma }\OtherTok{\textless{}{-}} \FloatTok{0.3}
-\end{Highlighting}
-\end{Shaded}
-
-Use a sobol sequence as random number generator, with antithetic variates, standardized to unit variance:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{tSpot }\OtherTok{\textless{}{-}} \FunctionTok{pathSimulator}\NormalTok{(}\AttributeTok{dtSim =}\NormalTok{ dtSim, }\AttributeTok{nbPaths =}\NormalTok{ nbPaths,}
-    \AttributeTok{innovations.gen =}\NormalTok{ sobolInnovations, }\AttributeTok{path.gen =}\NormalTok{ logNormal,}
-    \AttributeTok{path.param =} \FunctionTok{list}\NormalTok{(}\AttributeTok{mu =} \DecValTok{0}\NormalTok{, }\AttributeTok{sigma =}\NormalTok{ sigma), }\AttributeTok{S0 =} \DecValTok{100}\NormalTok{,}
-    \AttributeTok{antithetic =}\NormalTok{ F, }\AttributeTok{standardization =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{trace =} \ConstantTok{FALSE}\NormalTok{)}
-\FunctionTok{print}\NormalTok{(}\FunctionTok{head}\NormalTok{(tSpot[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{]))}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
-## GMT 
-##                         TS.1     TS.2
-## 2010-01-01 00:00:00 100.0000 100.0000
-## 2010-01-04 15:36:00 105.1741 100.4329
-## 2010-01-08 07:12:00 106.1126 101.1069
-## 2010-01-11 22:48:00 102.1089 102.3776
-## 2010-01-15 14:24:00 101.5093 100.7461
-## 2010-01-19 06:00:00 102.3337 104.7047
+## Loading required package: fBasics
 \end{verbatim}
 
-The output of the path simulator is a \class{timeSeries}. A plot of the first few paths is
-displayed in figure \ref{fig:price-plot}. The function can generate simulated
-values acording to various statistical processes; this is documented in
-the vignette of the package.
+In this chapter we use the binomial tree framework to introduce the key
+concepts of option valuation.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(tSpot[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{], }\AttributeTok{plot.type =} \StringTok{"single"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Price"}\NormalTok{,}
-    \AttributeTok{format =} \StringTok{"\%b \%d"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
 
-\begin{marginfigure}
-\includegraphics{empiricalfin_files/figure-latex/price-plot-1} \caption[Simulated price paths under a log-normal diffusion process]{Simulated price paths under a log-normal diffusion process}\label{fig:price-plot}
-\end{marginfigure}
+Consider first a one-period model: An asset \(S_t\) is worth \$40 at
+\(t=0\), and suppose that a month later, at \(t=T\), it will be either \$45
+or \$35. We are interested in buying a call option struck at \(K=40\),
+expiring at \(T\). Interest rate is 1\% per month. What is the fair price
+of this option?
 
-\hypertarget{a-delta-hedging-experiment}{%
-\section{A Delta Hedging Experiment}\label{a-delta-hedging-experiment}}
+The option payoff is
 
-Having generated some scenarios for the stock price, let's now simulate
-the dynamic hedging of a European call option written on this stock,
-using the Black-Scholes pricing model, with the implied volatility and
-interest rate held constant.
+\[c_T = (S_T-K)^+ =
+    \begin{cases}
+        5 & \text{if $S_T=45$}\\
+        0 & \text{if $S_T=35$}
+    \end{cases}\]
 
-Fist, we define the instrument to be hedged:
+Now consider a portfolio made of one unit of stock and 2 call options:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dtExpiry }\OtherTok{\textless{}{-}}\NormalTok{ dtEnd}
+\[\Phi = S - 2c\]
 
-\NormalTok{underlying }\OtherTok{\textless{}{-}} \StringTok{"IBM"}
-\NormalTok{K }\OtherTok{\textless{}{-}} \DecValTok{100}
+\[S_T - 2 c_T =
+    \begin{cases}
+        35 & \text{if $S_T=45$}\\
+        35 & \text{if $S_T=35$}
+    \end{cases}\]
 
-\NormalTok{a }\OtherTok{\textless{}{-}} \FunctionTok{fInstrumentFactory}\NormalTok{(}\StringTok{"vanilla"}\NormalTok{, }\AttributeTok{quantity =} \DecValTok{1}\NormalTok{, }\AttributeTok{params =} \FunctionTok{list}\NormalTok{(}\AttributeTok{cp =} \StringTok{"c"}\NormalTok{,}
-    \AttributeTok{strike =}\NormalTok{ K, }\AttributeTok{dtExpiry =}\NormalTok{ dtExpiry, }\AttributeTok{underlying =}\NormalTok{ underlying,}
-    \AttributeTok{discountRef =} \StringTok{"USD.LIBOR"}\NormalTok{, }\AttributeTok{trace =} \ConstantTok{FALSE}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
+This portfolio is worth today the same as a bank deposit that would
+provide \$35 in a month, or
 
-Next, we define the market data that will be held constant during the
-simulation, and insert it in a \class{DataProvider}:
+\[\frac{35}{1 + 1\%} = 34.65\]
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{base.env }\OtherTok{\textless{}{-}} \FunctionTok{DataProvider}\NormalTok{()}
-\FunctionTok{setData}\NormalTok{(base.env, underlying, }\StringTok{"Price"}\NormalTok{, dtStart, }\DecValTok{100}\NormalTok{)}
-\FunctionTok{setData}\NormalTok{(base.env, underlying, }\StringTok{"DivYield"}\NormalTok{, dtStart,}
-    \FloatTok{0.02}\NormalTok{)}
-\FunctionTok{setData}\NormalTok{(base.env, underlying, }\StringTok{"ATMVol"}\NormalTok{, dtStart, sigma)}
-\FunctionTok{setData}\NormalTok{(base.env, underlying, }\StringTok{"discountRef"}\NormalTok{, dtStart,}
-    \StringTok{"USD.LIBOR"}\NormalTok{)}
-\FunctionTok{setData}\NormalTok{(base.env, }\StringTok{"USD.LIBOR"}\NormalTok{, }\StringTok{"Yield"}\NormalTok{, dtStart, }\FloatTok{0.02}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+In this simple one-period economy, the option is thus worth:
 
-At this stage, we can price the asset as of the start date of the
-simulation:
+\[c_o = \frac{40-34.65}{2} = 2.695\]
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{getValue}\NormalTok{(a, }\StringTok{"Price"}\NormalTok{, dtStart, base.env)}
-\end{Highlighting}
-\end{Shaded}
+\hypertarget{subsec:binomial}{%
+\subsection{The Binomial Model for Stocks}\label{subsec:binomial}}
 
-which gives a value of \(p = 12.82\).
+Consider again the one-period binomial model of the previous section,
+and introduce notation to characterize the value of the three assets of
+interest, today and in the two future states, labeled ``Up'' and ``Down''.
+The notation is summarized in Table~\[tab:binomial\].
 
-Next, define the simulation parameters: we want to simulate a dynamic
-hedging policy over 500 paths, and 100 time steps per path:
-
-We use a child \class{DataProvider} to store the simulated paths. Data not found in the child \class{DataProvider}
-will be searched for (and found) in the parent \code{base.env}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{sce.env }\OtherTok{\textless{}{-}} \FunctionTok{DataProvider}\NormalTok{(}\AttributeTok{parent =}\NormalTok{ base.env)}
-\FunctionTok{setData}\NormalTok{(sce.env, underlying, }\StringTok{"Price"}\NormalTok{, }\FunctionTok{time}\NormalTok{(tSpot),}
-    \FunctionTok{as.matrix}\NormalTok{(tSpot))}
-\end{Highlighting}
-\end{Shaded}
-
-We can now run the delta-hedge strategy along each path:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{assets }\OtherTok{=} \FunctionTok{list}\NormalTok{(a)}
-\NormalTok{res }\OtherTok{\textless{}{-}} \FunctionTok{deltaHedge}\NormalTok{(assets, sce.env, }\AttributeTok{params =} \FunctionTok{list}\NormalTok{(}\AttributeTok{dtSim =} \FunctionTok{time}\NormalTok{(tSpot),}
-    \AttributeTok{transaction.cost =} \DecValTok{0}\NormalTok{), }\AttributeTok{trace =} \ConstantTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-The result is a data structure that contains the residual wealth
-(hedging error) per scenario and time step. The distribution of hedging
-error at expiry is shown in Figure \ref{fig:delta-hedge-41}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{hist}\NormalTok{(}\FunctionTok{tail}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{wealth, }\DecValTok{1}\NormalTok{), }\DecValTok{50}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Residual wealth at expiry"}\NormalTok{,}
-    \AttributeTok{main =} \StringTok{""}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{marginfigure}
-\includegraphics{empiricalfin_files/figure-latex/delta-hedge-41-1} \caption[Distribution of residual wealth at expiry]{Distribution of residual wealth at expiry: delta hedge of a 1 year call option}\label{fig:delta-hedge-41}
-\end{marginfigure}
-
-To better illustrate the hedging policy, let's run a toy example with
-few time steps. The function \Rfun{deltaHedge} produces a detailed log of the hedging
-policy, which is presented in Table \ref{tab:delta-hedge-few-samples}. For each time step,
-the table show:
-
-\begin{itemize}
-\item
-  The stock price,
-\item
-  the option delta,
-\item
-  the option value,
-\item
-  the value of the replicating portfolio and the short bond position in that portfolio.
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dtSim }\OtherTok{\textless{}{-}} \FunctionTok{time}\NormalTok{(tSpot)[}\FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FunctionTok{dim}\NormalTok{(tSpot)[}\DecValTok{1}\NormalTok{], }\DecValTok{10}\NormalTok{)]}
-\NormalTok{res }\OtherTok{\textless{}{-}} \FunctionTok{deltaHedge}\NormalTok{(assets, sce.env, }\AttributeTok{params =} \FunctionTok{list}\NormalTok{(}\AttributeTok{dtSim =}\NormalTok{ dtSim,}
-    \AttributeTok{transaction.cost =} \DecValTok{0}\NormalTok{), }\AttributeTok{trace =} \ConstantTok{FALSE}\NormalTok{)}
-\NormalTok{sim.table }\OtherTok{\textless{}{-}} \FunctionTok{makeTable}\NormalTok{(}\DecValTok{1}\NormalTok{, res)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{table}
-
-\caption{\label{tab:delta-hedge-few-samples}Simulated value of a call option and its hedge portfolio over time}
-\centering
-\begin{tabular}[t]{rrrrrr}
+\begin{longtable}[]{@{}llll@{}}
 \toprule
-time & stock price & delta & option & bond pos & hedge port.\\
+State & Stock & Bond & Call\tabularnewline
 \midrule
-1 & 100.00000 & 0.5857659 & 12.8215847 & -46.679318 & 12.8215847\\
-2 & 97.00535 & 0.5393194 & 10.4505725 & -42.091929 & 10.9758209\\
-3 & 104.71501 & 0.6426285 & 14.2776535 & -53.084419 & 15.0510232\\
-4 & 105.29617 & 0.6505785 & 13.8692900 & -53.933323 & 15.3199039\\
-5 & 115.98565 & 0.7898772 & 20.7809251 & -70.285023 & 22.1677804\\
-\addlinespace
-6 & 94.43981 & 0.4536390 & 6.0882182 & -38.211619 & 5.0101741\\
-7 & 97.30819 & 0.4972939 & 6.5169379 & -42.493719 & 6.2356476\\
-8 & 87.15693 & 0.2364152 & 1.8346996 & -19.619493 & 1.1030904\\
-9 & 84.01967 & 0.1148928 & 0.5969689 & -9.368302 & 0.3223531\\
-10 & 80.58910 & 0.0136819 & 0.0356091 & -1.195477 & -0.0904753\\
-\addlinespace
-11 & 74.32359 & 0.0000000 & 0.0000000 & -0.178588 & -0.1785880\\
+\endhead
+Today & \(S_0\) & \(B_0\) & \(c_0\)\tabularnewline
+Up & \(S_T^u = S_0u\) & \((1+rT)B_0\) & \(c_T^u = (S_T^u - K)^+\)\tabularnewline
+Down & \(S_T^d = S_0d\) & \((1+rT)B_0\) & \(c_T^d = (S_T^d - K)^+\)\tabularnewline
 \bottomrule
-\end{tabular}
-\end{table}
+\end{longtable}
 
-\hypertarget{design-considerations}{%
-\subsection{Design Considerations}\label{design-considerations}}
+Construct a risk-free portfolio made of the option and the stock:
 
-Two design features are worth mentioning.
+\[\Pi_0 = c_0 - \Delta S_0\]
 
-The generation of the scenarios is independent from the expression of
-the dynamic trading strategies. Remember that every data element stored
-in a \class{DataProvider} is a \class{timeSeries}. Since all the calculations on \class{fInstrument} are vectorized, there is no
-difference between performing a calculation on a scalar, or performing a
-simulation on multiple scenarios.
+To be riskless, one must have:
 
-The second aspect is the use of parent/child relationships among
-\class{DataProvider} objects. All the market data that is held constant in the simulation is
-stored in the parent \class{DataProvider}. The data that changes from simulation to
-simulation is stored in the child \class{DataProvider}, and this is the object that is
-passed to the simulator. When a piece of data is requested from the
-child \class{DataProvider}, the following logic is applied:
+\[\Pi_T = (1+rT) \Pi_0\]
+
+In particular, this is true in the two scenarios for \(S_T\):
+
+\[\begin{aligned}
+    c_T^u - \Delta S_0u & = & (1+rT)(c_0 - \Delta S_0) \\
+    c_T^d - \Delta S_0d & = & (1+rT)(c_0 - \Delta S_0)\end{aligned}\]
+
+Solve for \(\Delta\):
+
+\[\Delta = \frac{c_T^u-c_T^d}{S_0(u-d)}\]
+
+Set \((1+rT) = \rho\). The option value at time \(t=0\) is:
+
+\[\begin{aligned}
+    c_0 &=& \frac{1}{\rho} \Pi_T + \Delta S_0 \\
+    &=& \frac{1}{\rho} \left( \frac{\rho-d}{u-d} c_T^u + \frac{u-\rho}{u-d} c_T^d \right)\end{aligned}\]
+
+Assume \(d<\rho<u\). and define:
+
+\[\begin{aligned}
+    q_u &=& \frac{\rho-d}{u-d} \\
+    q_d &=& \frac{u-\rho}{u-d}\end{aligned}\]
+
+Rewrite:
+
+\[c_0 = \frac{1}{\rho} \left(q_u c_T^u + q_d c_T^d \right)
+\label{eq:cox-ross-1}\]
+
+One can observe that \(0<q_u, q_d<1\) and that \(q_u+q_d=1\), and therefore
+interpret \(q_u\) and \(q_d\) as probabilities associated with the events
+\({S_T=S_T^u}\) and \({S_T=S_T^d}\). Let \(Q\) be this probability measure.
+This leads us to write:
+
+\[c_0 = \frac{1}{\rho} E^Q(c_T)\]
+
+The option price is the discounted expected future payoff, under the
+probability \(Q\).
+
+\hypertarget{pricing-with-arrow-debreu-securities}{%
+\section{Pricing With Arrow-Debreu Securities}\label{pricing-with-arrow-debreu-securities}}
+
+An alternative derivation of the same result can be obtained with
+Arrow-Debreu securities. Let's first compute the price \(a_1\) and \(a_2\)
+of the two Arrow-Debreu securities in this economy. The price of the
+option will then be, by definition:
+
+\[c_0 = a_1 c^u_T + a_2 c^d_T\]
+
+where \(a_1\) and \(a_2\) are the prices of the Arrow-Debreu securities for
+the up and down scenarios.
+
+Let's now determine the prices of these Arrrow-Debreu securities. To do
+so, we construct a portfolio made of \(x\) units of stock and \(y\) units of
+bond, that has the same payoff as an Arrrow-Debreu security. Setting
+\(B_0 = 1\), the replicating portfolio for the first Arrow-Debreu security
+is obtained by solving the system:
+
+\[\begin{pmatrix}
+        S_0u & \rho \\
+        S_0d & \rho
+    \end{pmatrix}
+    \begin{pmatrix}
+        x \\
+        y
+    \end{pmatrix} =
+    \begin{pmatrix}
+        1 \\
+        0
+    \end{pmatrix}\]
+
+Which yields:
+
+\[x = \frac{1}{S_0(u-d)}, \  \ y = -\frac{d}{\rho(u-d)}\]
+
+The price of the first Arrow-Debreu security is thus:
+
+\[\begin{aligned}
+    a_1 & = & x S_0 + y B_0 \\
+        & = & \frac{1}{\rho} \frac{\rho-d}{u-d}\end{aligned}\]
+
+Similarly, the second Arrow-Debreu security is found to be worth:
+
+\[a_2 = \frac{1}{\rho} \frac{\rho-u}{u-d}\]
+
+and we obtain therefore the same option price as in (\[eq:cox-ross-1\])
+
+\hypertarget{multi-period-binomial-model}{%
+\section{Multi-Period Binomial Model}\label{multi-period-binomial-model}}
+
+The logic of the previous sections can be extented to multiple periods.
+When dealing with multiple periods, it is important in practice to
+construct recombining trees, i.e.~trees where an up move followed by a
+down move results in the same state than a down move followed by a up
+move. \(N\) steps in a recombining tree generate \(N+1\) states, but \(2^N\)
+states in a non-recombining binomial tree.
+
+The calculation process in a multi-period tree is best explained through
+an example. Consider a stock priced at 45.45€. At each period, the stock
+may appreciate or depreciate by \(10\%\). The riskless rate is \(5\%\), and
+we want to price a call option struck at 40€. The two-period tree is
+represented in figure~\[fig:2-per-bin\], with stock price in black and
+the option exercise value in red.
+
+\begin{tikzpicture}[level distance=2.5cm]
+    \tikzstyle{level 0}=[rectangle, draw]
+    \tikzstyle{level 1}=[rectangle, draw]
+    \tikzstyle{level 2}=[rectangle split,rectangle split parts=2,draw]
+    \tikzstyle{edge from parent}=[->,draw]
+    \tikzstyle{blank}=[rectangle]
+    \node[level 0] {$S_0 = 45.45$} [grow'=right,sibling distance=3cm]
+      child {node[level 1] {$S_{1,1}=50$}
+             child {node[level 2] {$S_{2,2}=55$\nodepart{second}\textcolor{red}{$C_{2,2}=15$}}
+             edge from parent node[blank,above left] {$p$}
+                   }
+             child {node[level 2] {\phantom{$S_{2,1}=45$}\nodepart{second}\textcolor{red}{\phantom{$C_{2,1}=5$}}}
+                    edge from parent node[blank,below left] {$q_d$}
+                   }
+             edge from parent node[blank,above left] {$q_u$}
+            }
+      child {node[level 1] {$S_{1,0}=40.91$}
+             child {node[level 2] {$S_{2,1}=45$\nodepart{second}\textcolor{red}{$C_{2,1}=5$}}
+                    edge from parent node[blank,above left] {$q_u$}
+                   }
+             child {node[level 2] {$S_{2,0}=36.82$\nodepart{second}\textcolor{red}{$C_{2,0}=0$}}
+                    edge from parent node[blank,below left] {$q_d$}
+                   }
+             edge from parent node[blank,below left] {$q_d$}
+            };
+\end{tikzpicture}
+
+The risk-neutral probabilities are identical at all nodes:
+
+\[\begin{aligned}
+    q_u &=& \frac{\rho-d}{u-d} = \frac{1.05-.9}{1.1-.9} = .75  \\
+    q_d &=& .25\end{aligned}\]
+
+Using these values, the option value one step prior to expiry can be
+computed using (\[eq:cox-ross-1\]):
+
+\[\begin{aligned}
+C_{1,1} &=& \frac{1}{\rho}(q_u C_{2,2} + q_d C_{2,1}) = 11.90  \\
+C_{1,0} &=& \frac{1}{\rho}(q_u C_{2,1} + q_d C_{2,0}) = 3.57 \\\end{aligned}\]
+
+The reasoning that led to (\[eq:cox-ross-1\]) applies however to any
+node, and in particular to node (0,0). The option price at that node is
+thus:
+
+\[C_{0,0} = \frac{1}{\rho}(q_u C_{1,1} + q_d C_{1,0}) = 9.35\]
+
+The process is pictured in Figure~\[fig:bin-tree-3\].
+
+\hypertarget{american-exercise}{%
+\section{American Exercise}\label{american-exercise}}
+
+American exercise refer to the right to exercise the option at any time
+before expiry. Clearly, an option with American exercise is worth more
+than the comparable option with European exercise. To price an American
+option, we introduce the notion of continuation value. The continuation
+value \(V^i_t\) at node \(i\) and time \(t\) is the option value, assuming
+that it will be exercised after time \(t\). At each step, one determines
+the optimal decision by comparing the value of an immediate exercise to
+the continuation value. The option value is therefore, for a call:
+
+\[\begin{aligned}
+C^i_t  &=& \max(S^i_t - K, V^i_t) \\
+       &=& \max(S^i_t-K, \frac{1}{\rho} (q_u C^{i+1}_{t+1} + q_d C^{i}_{t+1}))
+     \end{aligned}\]
+
+Starting from the data of the previous section, we now assume that the
+stock pays a dividend of 3 €~in period 2. The modified tree is
+represented in figure~\[fig:bin-tree-4\].
+
+We price an American call struck at 40€~in this tree. Exercise values in
+period 2 are computed as before, giving the following values:
+
+\[\begin{aligned}
+C_{2,2} &=& 12 \\
+C_{2,1} &=& 0 \\
+C_{2,0} &=& 0 \end{aligned}\]
+
+At period 1, the option holder determines the optimal policy: exercise
+immediately or hold the option until period 2. The resulting values are:
+
+\[\begin{aligned}
+C_{1,1} &=& \max((50-40), \frac{1}{\rho} (q_u 10 + q_d 2)) = 10 \\
+C_{1,0} &=& \max((40.91-40), \frac{1}{\rho} (q_u 2 + q_d 0)) = 1.42 \\\end{aligned}\]
+
+The option value today is finally determined to be:
+
+\[\begin{aligned}
+C_{0,0} &=& \max(5.45, \frac{1}{\rho} (q_u 10  + q_d 1.42)) \\
+&=& 7.48\end{aligned}\]
+
+Under the same conditions, a European option is worth \(C_{0,0} = 6.79\).
+The difference comes from the early exercise of the American option in
+node (1,1).
+
+\hypertarget{calibration-of-the-binomial-model}{%
+\section{Calibration of the Binomial Model}\label{calibration-of-the-binomial-model}}
+
+With interest rate assumed to be known, option prices are determined by
+the terms \(u\) and \(d\) that describe the binomial branching process. How
+should \(u\) and \(d\) be chosen?
+
+The time interval \([0, T]\) is divided into \(N\) equal steps
+\([t_j , t_{j+1}]\) of length \(\Delta t\). Assume that the process for the
+underlying asset \(S_t\) is such that \(V_t = \ln(S_t/S_{t-\Delta t})\) are
+iid random variables with mean \(\mu \Delta t\) and variance
+\(\sigma^2 \Delta t\).
+
+\[S_{t_j} = S_{t_{j-1}} e^{V_j}\]
+
+Let's determine \(u\) and \(d\) by matching the mean and variance of \(V_t\)
+and of the binomial process:
+
+\[\begin{aligned}
+E(V_j) & = & p \ln u + (1-p) \ln d \\
+& = & \mu \Delta t \\
+V(V_j) & = & E(V_j^2) - E(V_j)^2 \\
+& = & \sigma^2 \Delta t\end{aligned}\]
+
+Which forms a system of 2 equations and three unknown. Without loss of
+generality, set \(p=1/2\), to obtain:
+
+\[\begin{aligned}
+\frac{1}{2} (\ln u + \ln d) &=& \mu \Delta t \\
+\frac{1}{4} (\ln u + \ln d)^2 &=& \sigma^2 \Delta t\end{aligned}\]
+
+The solution is:
+
+\[\begin{aligned}
+u &=& e^{\mu \Delta t + \sigma \sqrt{\Delta t}} \nonumber \\
+d &=& e^{\mu \Delta t - \sigma \sqrt{\Delta t}}
+\label{eq:ud}\end{aligned}\]
+
+The corresponding value of the risk-neutral up probability, \(q_u\) is
+
+\[q_u = \frac{e^{r\Delta t} - e^{\mu \Delta t - \sigma \sqrt{\Delta t}}}{e^{\mu \Delta t + \sigma \sqrt{\Delta t}} - e^{\mu \Delta t - \sigma \sqrt{\Delta t}}}
+\label{eq:qu}\]
+
+This is the single-period risk-neutral probability, not the objective
+probability \(p\). We next compute the limit of \(q_u\) as
+\(\Delta t \rightarrow 0\).
+
+We use the following first order approximation:
+
+\[\begin{aligned}
+    e^{\mu \Delta t + \sigma \sqrt{\Delta t}} &=& (1+\mu \Delta t + \sigma \sqrt{\Delta t} + \frac{1}{2}(\mu \Delta t + \sigma \sqrt{\Delta t})^2 + \ldots \\
+    &=& 1+\mu \Delta t + \sigma \sqrt{\Delta t} +
+    \frac{1}{2} \sigma^2 \Delta t + O(\Delta t^{3/2})\end{aligned}\]
+
+and similarly,
+
+\[e^{\mu \Delta t - \sigma \sqrt{\Delta t}} =
+    1+\mu \Delta t - \sigma \sqrt{\Delta t} + \frac{1}{2} \sigma^2 \Delta t + O(\Delta t^{3/2})\]
+
+Combining these approximations with (\[eq:qu\]) yields,
+
+\[\begin{aligned}
+q_u &=& \frac{\sigma \sqrt{\Delta t} + (r-\frac{1}{2} \sigma^2 - \mu) \Delta t + O(\Delta t ^{3/2})}{2 \sigma \sqrt{\Delta t} + O(\Delta t ^{3/2})}  \nonumber \\
+&=& \frac{1}{2} + \frac{r-\frac{1}{2} \sigma^2 - \mu}{2 \sigma} \sqrt{\Delta t}  + O(\Delta t)
+\label{eq:qu-2}\end{aligned}\]
+
+Let's now use these expressions for \(q_u\) to compute the mean and
+variance of \(V_j\).
+
+\[E(V_j) = q_u \ln u + (1-q_u) \ln d\]
+
+Use (\[eq:ud\]) to get:
+
+\[E(V_j) = q_u (2\sigma\sqrt{\Delta t}) + \mu \Delta t - \sigma \sqrt{\Delta t}\]
+
+Substitute \(q_u\) by its value (\[eq:qu\]) to get:
+
+\[E(V_j) = (r-\frac{1}{2} \sigma^2) \Delta t + O(\Delta t ^{3/2})\]
+
+Similarly,
+
+\[Var(V_j) = \sigma^2 \Delta t + O(\Delta t^{3/2})\]
+
+The remarkable point of this result is that \(\mu\) no longer appears.
+
+Extending the reasoning of Section~\[subsec:binomial\] to multiple
+periods, we write that under the risk neutral probability \(q_u, q_d\),
+the option value is the discounted expected value of the payoff:
+
+\[\begin{aligned}
+P(S_0) &=& e^{-rT} E^Q(f(S_T)) \\
+ &=& e^{-rT} E^Q(f(S_0e^{\sum_{i=1}^N V_i})) \nonumber
+\label{eq:pso}\end{aligned}\]
+
+where \(f(S_T)\) is the payoff at expiry. We next need to compute the
+limit: \[\lim_{N\to\infty} \sum_{i=1}^N V_i\]
+
+The variables \(V_i\) are a function of \(N\), thus the Central Limit
+Theorem cannot be used as such. However, we can invoke Lindeberg's
+condition to obtain the same result:
+
+\emph{(Lindeberg's Condition)} Let \(X_k, k \in N\) be independent variables
+with \(E(X_k)=\mu_k\) and \(V(X_k) = \sigma^2_k\). Let
+\(s_n^2 = \sum_i^n \sigma^2_i\). If the variables satisfy Lindeberg's
+condition, then
+\[Z_n = \frac{\sum_{k=1}^n (X_k - \mu_k)}{s_n} \rightarrow N(0, 1)\]
+
+To simplify notation, let \(E^Q(V_i) = a\), \(Var^Q(V_i) = b\), Lindeberg's
+condition yields:
+
+\[\frac{\sum_i^N V_i - Na }{b \sqrt{N}} \rightarrow N(0,1)\]
+
+\[\frac{\sum_i^N V_i - Na }{b \sqrt{N}} = \frac{\sum_i^N V_i - (r-\frac{1}{2} \sigma^2)T + O(N^{-1/2}) }{\sigma \sqrt{T} + O(N^{-1/2})}\]
+
+\[\frac{\sum_i^N V_i - (r-\frac{1}{2} \sigma^2)T}{\sigma \sqrt{T})} \rightarrow N(0,1)\]
+
+Thus,
+
+\[\sum_i^N V_i \rightarrow  N \left( (r-\frac{1}{2} \sigma^2)T, \sigma^2 T \right)\]
+
+Finally, as \(N \rightarrow \infty\), (\[eq:pso\]) becomes:
+
+\[P(S_0) = \frac{e^{-rT}}{\sqrt{2\pi}} \int_{-\infty}^{\infty} f(S_0e^{(r-\frac{1}{2} \sigma^2)T + \sigma \sqrt{T}} e^{-\frac{1}{2} u^2} du\]
+
+which is the Black-Scholes valuation formula, as derived by
+Cox, Ross, and Rubinstein (\protect\hyperlink{ref-JohnC.Cox1979}{1979}). Again, the significance of this result is that \(\mu\)
+does not appear in the formula.
+
+\hypertarget{tree-geometry}{%
+\subsection{Tree Geometry}\label{tree-geometry}}
+
+We now use the result from the previous section to determine the
+geometry of the tree and the risk-neutral transition probabilities,
+consistent with the parameters of the diffusion process.
+
+Recall from the previous section that \(u\) and \(d\) are defined by:
+
+\[\begin{aligned}
+u &=& e^{\mu \Delta t + \sigma \sqrt{\Delta t}} \\
+d &=& e^{\mu \Delta t - \sigma \sqrt{\Delta t}}\end{aligned}\]
+
+Ultimately, \(\mu\) does not appear in the valuation formula, it can thus
+be set to an arbitrary value without loss of generality.
+
+In the original CRR model, \(\mu = 0\), which leads to:
+
+\[\begin{aligned}
+ u &=& e^{\sigma \sqrt{t}} \\
+d &=& e^{-\sigma \sqrt{t}} \\
+q_u &=& \frac{e^{rt} - e^{-\sigma \sqrt{t}}}{e^{\sigma \sqrt{t}} - e^{-\sigma \sqrt{t}}}\end{aligned}\]
+
+There are many other possibilities: a popular choice introduced by
+Jarrow and Rudd (\protect\hyperlink{ref-R.Jarrow1993}{1993}) is to set \(\mu\) so that transition probabilities are equal
+to \(\frac{1}{2}\). Using (\[eq:qu-2\]), this involves setting
+\(\mu=r-\frac{1}{2}\sigma^2\), and the branching process is then:
+\[\begin{aligned}
+ u &=& e^{(r-\frac{1}{2} \sigma^2)\Delta t + \sigma \sqrt{\Delta t}} \\
+d &=& e^{(r-\frac{1}{2} \sigma^2)\Delta t -\sigma \sqrt{\Delta t}} \\
+q_u &=& \frac{1}{2}\end{aligned}\]
+
+There are many other possible choices, but no significant differences in
+the convergence rate to the Black-Scholes option value. Most of the
+models, however, suffer from a form of instability which is now
+described.
+
+\hypertarget{stability-of-the-binomial-model}{%
+\chapter{Stability of the Binomial Model}\label{stability-of-the-binomial-model}}
+
+\texttt{\{r\ tufte::newthought("We")\}} would like to verify the convergence of the Cox-Ross model to the
+Black-Scholes price as the number of steps \(N\) increases. This can be
+investigated with the following script:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Strike \textless{}{-}}\StringTok{ }\DecValTok{100}
+\NormalTok{Spot \textless{}{-}}\StringTok{ }\DecValTok{100}
+\NormalTok{T1 \textless{}{-}}\StringTok{ }\DecValTok{1}\OperatorTok{/}\DecValTok{4}
+\NormalTok{r \textless{}{-}}\StringTok{ }\FloatTok{0.05}
+\NormalTok{b \textless{}{-}}\StringTok{ }\FloatTok{0.05}
+\NormalTok{sigma \textless{}{-}}\StringTok{ }\FloatTok{0.3}
+
+\NormalTok{NN \textless{}{-}}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{nb \textless{}{-}}\StringTok{ }\KeywordTok{length}\NormalTok{(NN)}
+\NormalTok{res \textless{}{-}}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{nrow =}\NormalTok{ nb, }\DataTypeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\NormalTok{bs \textless{}{-}}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+
+\CommentTok{\# The Black{-}Scholes price}
+\NormalTok{bs[}\DecValTok{1}\NormalTok{] \textless{}{-}}\StringTok{ }\KeywordTok{GBSOption}\NormalTok{(}\DataTypeTok{TypeFlag =} \StringTok{"c"}\NormalTok{, }\DataTypeTok{S =}\NormalTok{ Spot, }\DataTypeTok{X =}\NormalTok{ Strike,}
+    \DataTypeTok{Time =}\NormalTok{ T1, }\DataTypeTok{r =}\NormalTok{ r, }\DataTypeTok{b =}\NormalTok{ b, }\DataTypeTok{sigma =}\NormalTok{ sigma)}\OperatorTok{@}\NormalTok{price}
+\NormalTok{bs[}\DecValTok{2}\NormalTok{] \textless{}{-}}\StringTok{ }\KeywordTok{GBSOption}\NormalTok{(}\DataTypeTok{TypeFlag =} \StringTok{"c"}\NormalTok{, }\DataTypeTok{S =}\NormalTok{ Spot, }\DataTypeTok{X =}\NormalTok{ Strike }\OperatorTok{+}
+\StringTok{    }\DecValTok{10}\NormalTok{, }\DataTypeTok{Time =}\NormalTok{ T1, }\DataTypeTok{r =}\NormalTok{ r, }\DataTypeTok{b =}\NormalTok{ b, }\DataTypeTok{sigma =}\NormalTok{ sigma)}\OperatorTok{@}\NormalTok{price}
+
+\CommentTok{\# Binomial price, function of number of}
+\CommentTok{\# steps}
+\NormalTok{res[, }\DecValTok{1}\NormalTok{] \textless{}{-}}\StringTok{ }\KeywordTok{sapply}\NormalTok{(NN, }\ControlFlowTok{function}\NormalTok{(n) }\KeywordTok{CRRBinomialTreeOption}\NormalTok{(}\DataTypeTok{TypeFlag =} \StringTok{"ce"}\NormalTok{,}
+    \DataTypeTok{S =}\NormalTok{ Spot, }\DataTypeTok{X =}\NormalTok{ Strike, }\DataTypeTok{Time =}\NormalTok{ T1, }\DataTypeTok{r =}\NormalTok{ r, }\DataTypeTok{b =}\NormalTok{ b,}
+    \DataTypeTok{sigma =}\NormalTok{ sigma, n)}\OperatorTok{@}\NormalTok{price)}
+
+\NormalTok{res[, }\DecValTok{2}\NormalTok{] \textless{}{-}}\StringTok{ }\KeywordTok{sapply}\NormalTok{(NN, }\ControlFlowTok{function}\NormalTok{(n) }\KeywordTok{CRRBinomialTreeOption}\NormalTok{(}\DataTypeTok{TypeFlag =} \StringTok{"ce"}\NormalTok{,}
+    \DataTypeTok{S =}\NormalTok{ Spot, }\DataTypeTok{X =}\NormalTok{ Strike }\OperatorTok{+}\StringTok{ }\DecValTok{10}\NormalTok{, }\DataTypeTok{Time =}\NormalTok{ T1, }\DataTypeTok{r =}\NormalTok{ r,}
+    \DataTypeTok{b =}\NormalTok{ b, }\DataTypeTok{sigma =}\NormalTok{ sigma, n)}\OperatorTok{@}\NormalTok{price)}
+\end{Highlighting}
+\end{Shaded}
+
+A plot of the prices as a function of the number of steps
+(Figure~\[fig:bin-conv\]) shows an oscillating pattern:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(NN, res[, }\DecValTok{1}\NormalTok{], }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{, }\DataTypeTok{main =} \StringTok{"ATM"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Number of steps"}\NormalTok{,}
+    \DataTypeTok{ylab =} \StringTok{"price"}\NormalTok{, }\DataTypeTok{col =} \StringTok{"blue"}\NormalTok{, }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(res[,}
+        \DecValTok{1}\NormalTok{]), }\KeywordTok{max}\NormalTok{(res[, }\DecValTok{1}\NormalTok{])))}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{h =}\NormalTok{ bs[}\DecValTok{1}\NormalTok{], }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{)}
+
+\KeywordTok{plot}\NormalTok{(NN, res[, }\DecValTok{2}\NormalTok{], }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{, }\DataTypeTok{main =} \StringTok{"OTM"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Number of steps"}\NormalTok{,}
+    \DataTypeTok{ylab =} \StringTok{"price"}\NormalTok{, }\DataTypeTok{col =} \StringTok{"blue"}\NormalTok{, }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(res[,}
+        \DecValTok{2}\NormalTok{]), }\KeywordTok{max}\NormalTok{(res[, }\DecValTok{2}\NormalTok{])))}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{h =}\NormalTok{ bs[}\DecValTok{2}\NormalTok{], }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{)}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{203-Binomial2_files/figure-latex/fig-bin-conv-a-1}
+
+Other binomial algorithms, such as Tian's, exhibit a similar pattern, as
+evidenced in Figure~\[fig:bin-conv-2\]. The horizontal line marks the
+Black-Scholes price.
+
+\includegraphics{203-Binomial2_files/figure-latex/fig-bin-conv-2-a-1}
+
+This sawtooth pattern is due to the position of the strike relative to
+the sequence of nodes at expiry;
+we describe below some computational strategies
+for smoothing these oscillations and speeding up the convergence of
+binomial trees. See
+Joshi (\protect\hyperlink{ref-Joshi2007}{2007}) for an extensive survey of binomial models with
+improved convergence properties.
+
+Since the oscillations are caused by the variations in the relative
+position of the strike with respect to nodes at expiry, a natural
+strategy, introduced by Leisen and Reimer (\protect\hyperlink{ref-Leisen1996}{1996}), is to construct the tree such that
+the strike coincides with a node. This is achieved by setting
+\[\mu = \frac{1}{T} \log \left(\frac{K}{S_0} \right)\]
+
+The resulting tree is centered on \(K\) in log space. The pricing method
+is implemented as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CRRWithDrift \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{TypeFlag =} \KeywordTok{c}\NormalTok{(}\StringTok{"ce"}\NormalTok{, }\StringTok{"pe"}\NormalTok{,}
+    \StringTok{"ca"}\NormalTok{, }\StringTok{"pa"}\NormalTok{), S, X, Time, r, mu, sigma, n) \{}
+\NormalTok{    TypeFlag =}\StringTok{ }\NormalTok{TypeFlag[}\DecValTok{1}\NormalTok{]}
+\NormalTok{    z =}\StringTok{ }\OtherTok{NA}
+    \ControlFlowTok{if}\NormalTok{ (TypeFlag }\OperatorTok{==}\StringTok{ "ce"} \OperatorTok{||}\StringTok{ }\NormalTok{TypeFlag }\OperatorTok{==}\StringTok{ "ca"}\NormalTok{)}
+\NormalTok{        z =}\StringTok{ }\OperatorTok{+}\DecValTok{1}
+    \ControlFlowTok{if}\NormalTok{ (TypeFlag }\OperatorTok{==}\StringTok{ "pe"} \OperatorTok{||}\StringTok{ }\NormalTok{TypeFlag }\OperatorTok{==}\StringTok{ "pa"}\NormalTok{)}
+\NormalTok{        z =}\StringTok{ }\DecValTok{{-}1}
+    \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.na}\NormalTok{(z))}
+        \KeywordTok{stop}\NormalTok{(}\StringTok{"TypeFlag misspecified: ce|ca|pe|pa"}\NormalTok{)}
+\NormalTok{    dt =}\StringTok{ }\NormalTok{Time}\OperatorTok{/}\NormalTok{n}
+\NormalTok{    u =}\StringTok{ }\KeywordTok{exp}\NormalTok{(mu }\OperatorTok{*}\StringTok{ }\NormalTok{dt }\OperatorTok{+}\StringTok{ }\NormalTok{sigma }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(dt))}
+\NormalTok{    d =}\StringTok{ }\KeywordTok{exp}\NormalTok{(mu }\OperatorTok{*}\StringTok{ }\NormalTok{dt }\OperatorTok{{-}}\StringTok{ }\NormalTok{sigma }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(dt))}
+
+\NormalTok{    p =}\StringTok{ }\NormalTok{(}\KeywordTok{exp}\NormalTok{(r }\OperatorTok{*}\StringTok{ }\NormalTok{dt) }\OperatorTok{{-}}\StringTok{ }\NormalTok{d)}\OperatorTok{/}\NormalTok{(u }\OperatorTok{{-}}\StringTok{ }\NormalTok{d)}
+\NormalTok{    Df =}\StringTok{ }\KeywordTok{exp}\NormalTok{(}\OperatorTok{{-}}\NormalTok{r }\OperatorTok{*}\StringTok{ }\NormalTok{dt)}
+
+    \CommentTok{\# underlying asset at step N{-}1}
+\NormalTok{    ST \textless{}{-}}\StringTok{ }\NormalTok{S }\OperatorTok{*}\StringTok{ }\NormalTok{(d}\OperatorTok{\^{}}\NormalTok{(n }\OperatorTok{{-}}\StringTok{ }\DecValTok{1}\NormalTok{)) }\OperatorTok{*}\StringTok{ }\KeywordTok{cumprod}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{rep}\NormalTok{((u}\OperatorTok{/}\NormalTok{d),}
+\NormalTok{        n }\OperatorTok{{-}}\StringTok{ }\DecValTok{1}\NormalTok{)))}
+    \CommentTok{\# at step (n{-}1), value an European}
+    \CommentTok{\# option of maturity dt}
+\NormalTok{    BSTypeFlag \textless{}{-}}\StringTok{ }\KeywordTok{substr}\NormalTok{(TypeFlag, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{    OptionValue \textless{}{-}}\StringTok{ }\KeywordTok{GBSOption}\NormalTok{(BSTypeFlag, ST, X,}
+\NormalTok{        dt, r, b, sigma)}\OperatorTok{@}\NormalTok{price}
+
+    \ControlFlowTok{if}\NormalTok{ (TypeFlag }\OperatorTok{==}\StringTok{ "ce"} \OperatorTok{||}\StringTok{ }\NormalTok{TypeFlag }\OperatorTok{==}\StringTok{ "pe"}\NormalTok{) \{}
+        \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =}\NormalTok{ n }\OperatorTok{{-}}\StringTok{ }\DecValTok{2}\NormalTok{, }\DataTypeTok{to =} \DecValTok{0}\NormalTok{, }\DataTypeTok{by =} \DecValTok{{-}1}\NormalTok{)) OptionValue \textless{}{-}}\StringTok{ }\NormalTok{(p }\OperatorTok{*}
+\StringTok{            }\NormalTok{OptionValue[}\DecValTok{2}\OperatorTok{:}\NormalTok{(j }\OperatorTok{+}\StringTok{ }\DecValTok{2}\NormalTok{)] }\OperatorTok{+}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p) }\OperatorTok{*}
+\StringTok{            }\NormalTok{OptionValue[}\DecValTok{1}\OperatorTok{:}\NormalTok{(j }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)]) }\OperatorTok{*}\StringTok{ }\NormalTok{Df}
+\NormalTok{    \}}
+
+    \ControlFlowTok{if}\NormalTok{ (TypeFlag }\OperatorTok{==}\StringTok{ "ca"} \OperatorTok{||}\StringTok{ }\NormalTok{TypeFlag }\OperatorTok{==}\StringTok{ "pa"}\NormalTok{) \{}
+        \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =}\NormalTok{ n }\OperatorTok{{-}}\StringTok{ }\DecValTok{2}\NormalTok{, }\DataTypeTok{to =} \DecValTok{0}\NormalTok{, }\DataTypeTok{by =} \DecValTok{{-}1}\NormalTok{)) \{}
+\NormalTok{            ContValue \textless{}{-}}\StringTok{ }\NormalTok{(p }\OperatorTok{*}\StringTok{ }\NormalTok{OptionValue[}\DecValTok{2}\OperatorTok{:}\NormalTok{(j }\OperatorTok{+}
+\StringTok{                }\DecValTok{2}\NormalTok{)] }\OperatorTok{+}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p) }\OperatorTok{*}\StringTok{ }\NormalTok{OptionValue[}\DecValTok{1}\OperatorTok{:}\NormalTok{(j }\OperatorTok{+}
+\StringTok{                }\DecValTok{1}\NormalTok{)]) }\OperatorTok{*}\StringTok{ }\NormalTok{Df}
+\NormalTok{            ST \textless{}{-}}\StringTok{ }\NormalTok{S }\OperatorTok{*}\StringTok{ }\NormalTok{(d}\OperatorTok{\^{}}\NormalTok{j) }\OperatorTok{*}\StringTok{ }\KeywordTok{cumprod}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{rep}\NormalTok{((u}\OperatorTok{/}\NormalTok{d),}
+\NormalTok{                j)))}
+\NormalTok{            OptionValue \textless{}{-}}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{(j }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{), }\ControlFlowTok{function}\NormalTok{(i) }\KeywordTok{max}\NormalTok{(ST[i] }\OperatorTok{{-}}
+\StringTok{                }\NormalTok{X, ContValue[i]))}
+\NormalTok{        \}}
+\NormalTok{    \}}
+
+\NormalTok{    OptionValue[}\DecValTok{1}\NormalTok{]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Convergence of the model as \(N\) increases is significantly improved, as
+evidenced by the graphs in Figure~\[fig:CRRWithDrift\].
+
+\includegraphics{203-Binomial2_files/figure-latex/fig-crrwithdrift-1}
+
+In the context of an American option, note that if the option has not
+been exercised at step \(N-1\), the option is now European, and can be
+priced at these nodes with the Black-Scholes model, rather than with the
+backward recursion from step \(N\) (the expiry date). This simple
+modification smooths the option value at step \(N-1\) and cancels the
+oscillations, as illustrated in figure~\[fig:bin-conv-crr-bs\], but at
+the price of a substantial increase in computation time.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CRRWithBS \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{TypeFlag =} \KeywordTok{c}\NormalTok{(}\StringTok{"ce"}\NormalTok{, }\StringTok{"pe"}\NormalTok{,}
+    \StringTok{"ca"}\NormalTok{, }\StringTok{"pa"}\NormalTok{), S, X, Time, r, b, sigma, n) \{}
+\NormalTok{    TypeFlag =}\StringTok{ }\NormalTok{TypeFlag[}\DecValTok{1}\NormalTok{]}
+\NormalTok{    z =}\StringTok{ }\OtherTok{NA}
+    \ControlFlowTok{if}\NormalTok{ (TypeFlag }\OperatorTok{==}\StringTok{ "ce"} \OperatorTok{||}\StringTok{ }\NormalTok{TypeFlag }\OperatorTok{==}\StringTok{ "ca"}\NormalTok{)}
+\NormalTok{        z =}\StringTok{ }\OperatorTok{+}\DecValTok{1}
+    \ControlFlowTok{if}\NormalTok{ (TypeFlag }\OperatorTok{==}\StringTok{ "pe"} \OperatorTok{||}\StringTok{ }\NormalTok{TypeFlag }\OperatorTok{==}\StringTok{ "pa"}\NormalTok{)}
+\NormalTok{        z =}\StringTok{ }\DecValTok{{-}1}
+    \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.na}\NormalTok{(z))}
+        \KeywordTok{stop}\NormalTok{(}\StringTok{"TypeFlag misspecified: ce|ca|pe|pa"}\NormalTok{)}
+\NormalTok{    dt =}\StringTok{ }\NormalTok{Time}\OperatorTok{/}\NormalTok{n}
+\NormalTok{    u =}\StringTok{ }\KeywordTok{exp}\NormalTok{(sigma }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(dt))}
+\NormalTok{    d =}\StringTok{ }\DecValTok{1}\OperatorTok{/}\NormalTok{u}
+\NormalTok{    p =}\StringTok{ }\NormalTok{(}\KeywordTok{exp}\NormalTok{(b }\OperatorTok{*}\StringTok{ }\NormalTok{dt) }\OperatorTok{{-}}\StringTok{ }\NormalTok{d)}\OperatorTok{/}\NormalTok{(u }\OperatorTok{{-}}\StringTok{ }\NormalTok{d)}
+\NormalTok{    Df =}\StringTok{ }\KeywordTok{exp}\NormalTok{(}\OperatorTok{{-}}\NormalTok{r }\OperatorTok{*}\StringTok{ }\NormalTok{dt)}
+
+    \CommentTok{\# underlying asset at step N{-}1}
+\NormalTok{    ST \textless{}{-}}\StringTok{ }\NormalTok{S }\OperatorTok{*}\StringTok{ }\NormalTok{(d}\OperatorTok{\^{}}\NormalTok{(n }\OperatorTok{{-}}\StringTok{ }\DecValTok{1}\NormalTok{)) }\OperatorTok{*}\StringTok{ }\KeywordTok{cumprod}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{rep}\NormalTok{((u}\OperatorTok{/}\NormalTok{d),}
+\NormalTok{        n }\OperatorTok{{-}}\StringTok{ }\DecValTok{1}\NormalTok{)))}
+    \CommentTok{\# at step (n{-}1), value an European}
+    \CommentTok{\# option of maturity dt}
+\NormalTok{    BSTypeFlag \textless{}{-}}\StringTok{ }\KeywordTok{substr}\NormalTok{(TypeFlag, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{    OptionValue \textless{}{-}}\StringTok{ }\KeywordTok{GBSOption}\NormalTok{(BSTypeFlag, ST, X,}
+\NormalTok{        dt, r, b, sigma)}\OperatorTok{@}\NormalTok{price}
+
+    \ControlFlowTok{if}\NormalTok{ (TypeFlag }\OperatorTok{==}\StringTok{ "ce"} \OperatorTok{||}\StringTok{ }\NormalTok{TypeFlag }\OperatorTok{==}\StringTok{ "pe"}\NormalTok{) \{}
+        \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =}\NormalTok{ n }\OperatorTok{{-}}\StringTok{ }\DecValTok{2}\NormalTok{, }\DataTypeTok{to =} \DecValTok{0}\NormalTok{, }\DataTypeTok{by =} \DecValTok{{-}1}\NormalTok{)) OptionValue \textless{}{-}}\StringTok{ }\NormalTok{(p }\OperatorTok{*}
+\StringTok{            }\NormalTok{OptionValue[}\DecValTok{2}\OperatorTok{:}\NormalTok{(j }\OperatorTok{+}\StringTok{ }\DecValTok{2}\NormalTok{)] }\OperatorTok{+}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p) }\OperatorTok{*}
+\StringTok{            }\NormalTok{OptionValue[}\DecValTok{1}\OperatorTok{:}\NormalTok{(j }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)]) }\OperatorTok{*}\StringTok{ }\NormalTok{Df}
+\NormalTok{    \}}
+
+    \ControlFlowTok{if}\NormalTok{ (TypeFlag }\OperatorTok{==}\StringTok{ "ca"} \OperatorTok{||}\StringTok{ }\NormalTok{TypeFlag }\OperatorTok{==}\StringTok{ "pa"}\NormalTok{) \{}
+        \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =}\NormalTok{ n }\OperatorTok{{-}}\StringTok{ }\DecValTok{2}\NormalTok{, }\DataTypeTok{to =} \DecValTok{0}\NormalTok{, }\DataTypeTok{by =} \DecValTok{{-}1}\NormalTok{)) \{}
+\NormalTok{            ContValue \textless{}{-}}\StringTok{ }\NormalTok{(p }\OperatorTok{*}\StringTok{ }\NormalTok{OptionValue[}\DecValTok{2}\OperatorTok{:}\NormalTok{(j }\OperatorTok{+}
+\StringTok{                }\DecValTok{2}\NormalTok{)] }\OperatorTok{+}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p) }\OperatorTok{*}\StringTok{ }\NormalTok{OptionValue[}\DecValTok{1}\OperatorTok{:}\NormalTok{(j }\OperatorTok{+}
+\StringTok{                }\DecValTok{1}\NormalTok{)]) }\OperatorTok{*}\StringTok{ }\NormalTok{Df}
+\NormalTok{            ST \textless{}{-}}\StringTok{ }\NormalTok{S }\OperatorTok{*}\StringTok{ }\NormalTok{(d}\OperatorTok{\^{}}\NormalTok{j) }\OperatorTok{*}\StringTok{ }\KeywordTok{cumprod}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{rep}\NormalTok{((u}\OperatorTok{/}\NormalTok{d),}
+\NormalTok{                j)))}
+\NormalTok{            OptionValue \textless{}{-}}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{(j }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{), }\ControlFlowTok{function}\NormalTok{(i) }\KeywordTok{max}\NormalTok{(ST[i] }\OperatorTok{{-}}
+\StringTok{                }\NormalTok{X, ContValue[i]))}
+\NormalTok{        \}}
+\NormalTok{    \}}
+
+\NormalTok{    OptionValue[}\DecValTok{1}\NormalTok{]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{203-Binomial2_files/figure-latex/fig-CRRWithBS-1}
+
+\hypertarget{sec:trinomial}{%
+\chapter{Trinomial Models}\label{sec:trinomial}}
+
+A natural extension of the binomial model is a trinomial model, that is,
+a model with three possible future states at each time step and current
+state.
+
+\hypertarget{the-trinomial-tree}{%
+\section{The Trinomial Tree}\label{the-trinomial-tree}}
+
+The stock price at time \(t\) is \(S_t\). From \(t\) to \(t+\Delta t\), the
+stock may move up to \(S_u\) with probability \(p_u\), down to \(S_d\) with
+probability \(p_d\), or move to a middle state \(S_m\) with probability
+\(1-p_u-p_d\). The probabilities and future states must satisfy the
+following constraints:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  First look for the data in the current \class{DataProvider} (the object passed as
-  argument to the simulator)
+  The expected value of the stock at \(t+\Delta t\) must be the forward
+  price:
+  \[p_u S_u + p_d S_d + (1-p_u-p_d) S_m = F = S e^{(r-\delta)\Delta t}\]
 \item
-  if not found, look for the data in the parent \class{DataProvider}.
-\item
-  and so forth: the logic is recursive.
+  Variance:
+  \[p_u (S_u-F)^2 + p_d(S_d-F)^2 +(1-p_u-p_d)(S_m-F)^2 = S^2\sigma^2\Delta t\]
 \end{enumerate}
 
-This behavior is inherited from the built-in \class{environment}.
+The first method for constructing trinomial trees is simply to combine
+two steps of any binomial tree.
 
-\hypertarget{references}{%
-\chapter{References}\label{references}}
+Recall that a CRR binomial tree is defined by:
+
+\[\begin{aligned}
+    u &=& e^{\sigma \sqrt{\Delta t}} \\
+    d &=& e^{-\sigma \sqrt{\Delta t}} \\
+    p &=& \frac{e^{rt} - e^{-\sigma \sqrt{\Delta t}}}{e^{\sigma \sqrt{\Delta t}} - e^{-\sigma \sqrt{\Delta t}}}\end{aligned}\]
+
+Combining two steps at a time, we obtain a trinomial tree with
+
+\[\begin{aligned}
+    S_u &=& S e^{\sigma \sqrt{2 \Delta t}} \\
+    S_m & = & S \\
+    S_d &=& S e^{-\sigma \sqrt{2 \Delta t}} \\
+    p_u &=& \left( \frac{e^{r \Delta t} - e^{-\sigma \sqrt{\Delta t}}}{e^{\sigma \sqrt{\Delta t}} - e^{-\sigma \sqrt{\Delta t}}} \right)^2 \\
+    p_d &=& (1-\sqrt{p_u})^2\end{aligned}\]
+
+To every binomial tree corresponds a trinomial tree, obtained by
+aggregating two steps.
+
+Another geometry can be defined by setting the middle node to
+\(S\) (\textasciitilde{}\cite{Hull1997} p.~360):
+
+\begin{eqnarray*}
+    S_m &=& S  \\
+    S_u &=& S_m e^{\sigma \sqrt{3 \Delta t}} \\
+    S_d &=& S_m e^{-\sigma \sqrt{3 \Delta t}} \\
+    p_u &=& -\sqrt{\frac{\Delta t}{12 \sigma^2}} \left(r-\frac{\sigma^2}{2} \right) + \frac{1}{6} \\
+    p_d &=&  \sqrt{\frac{\Delta t}{12 \sigma^2}} \left(r-\frac{\sigma^2}{2} \right) + \frac{1}{6}
+\end{eqnarray*}
+
+\hypertarget{bibliography}{%
+\chapter{Bibliography}\label{bibliography}}
 
 \hypertarget{refs}{}
-\begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-Fowler1996}{}}%
-Fowler, Martin. 1996. \emph{{Analysis Patterns: Reusable Object Models}}. Addison-Wesley.
+\begin{cslreferences}
+\leavevmode\hypertarget{ref-JohnC.Cox1979}{}%
+Cox, J C, Stephen A Ross, and Mark Rubinstein. 1979. ``Option pricing: a simplified approach.'' \emph{Journal of Financial Econometrics} 7: 229--63.
 
-\end{CSLReferences}
+\leavevmode\hypertarget{ref-R.Jarrow1993}{}%
+Jarrow, Robert, and Andrew Rudd. 1993. \emph{Option pricing}. Richard D. Irwin.
+
+\leavevmode\hypertarget{ref-Joshi2007}{}%
+Joshi, Mark S. 2007. ``The Convergence of Binomial Trees for Pricing the American Put.'' \url{ssrn.com/abstract=1030143}.
+
+\leavevmode\hypertarget{ref-Leisen1996}{}%
+Leisen, D P J, and M Reimer. 1996. ``Binomial Models for Option Valuation - Examining and Improving Convergence.'' \emph{Applied Mathematical Finance} 3: 319--46.
+\end{cslreferences}
 
 
 \printindex

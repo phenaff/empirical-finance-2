@@ -1,5 +1,14 @@
 # Risk-Neutral Pricing in a Binomial Framework {#binomial}
 
+```{r setup, echo=FALSE, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dev.args = list(bg = "transparent"),
+  tidy=TRUE,
+  tidy.opts=list(width.cutoff=45)
+)
+```
+
 ```{r, label=discmodBinomial-setup, echo=FALSE, results='hide'}
   library(fOptions)
   library(fExoticOptions)
