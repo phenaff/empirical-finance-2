@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="12 The implied volatility | Topics in Empirical Finance" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/img/frontCover.pdf" />
+<meta property="og:description" content="An open access textbook on empirical finance" />
+<meta name="github-repo" content="phenaff/empirical-finance-2" />
+
+<meta name="author" content="Patrick Hénaff" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="An open access textbook on empirical finance">
+
+<title>12 The implied volatility | Topics in Empirical Finance</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+<!--
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@jweisber" />
+<meta name="twitter:creator" content="@jweisber" />
+<meta name="twitter:title" content="Odds &amp; Ends" />
+<meta name="twitter:description" content="An open access textbook for introductory philosophy courses on probability and inductive logic." />
+<meta name="twitter:image" content="img/social_image.png" />
+-->
+
+
+<!--
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["output/HTML-CSS"],
+  "HTML-CSS": {
+    availableFonts: ["Gyre-Pagella"],
+    preferredFont: "Gyre-Pagella",
+    webFont: "Gyre-Pagella",
+    imageFont: "Gyre-Pagella"
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      extensions: ["color.js"]
+    }
+  });
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="toc.css" type="text/css" />
+<link rel="stylesheet" href="custom.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+<div style="display: none;">
+$$
+  \newcommand{\given}{\mid}
+  \renewcommand{\neg}{\mathbin{\sim}}
+  \renewcommand{\wedge}{\mathbin{\&}}
+  \newcommand{\p}{Pr}
+  \newcommand{\degr}{^{\circ}}
+  \newcommand{\E}{E}
+  \newcommand{\EU}{EU}
+  \newcommand{\u}{U}
+  \newcommand{\pr}{Pr}
+  \newcommand{\po}{Pr^*}
+  \definecolor{bookred}{RGB}{228,6,19}
+  \definecolor{bookblue}{RGB}{0,92,169}
+  \definecolor{bookpurple}{RGB}{114,49,94} 
+$$
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface-to-the-second-edition">Preface to the second edition</a></li>
+<li><a href="preface-to-the-first-edition.html#preface-to-the-first-edition">Preface to the first edition</a></li>
+<li class="part"><span><b>Computational Framework</b></span></li>
+<li class="has-sub"><a href="basic-components.html#basic-components"><span class="toc-section-number">1</span> Basic Components</a>
+<ul>
+<li class="has-sub"><a href="basic-components.html#the-class"><span class="toc-section-number">1.1</span> The Class</a>
+<ul>
+<li><a href="basic-components.html#illustration"><span class="toc-section-number">1.1.1</span> Illustration</a></li>
+<li><a href="basic-components.html#design-and-implementation"><span class="toc-section-number">1.1.2</span> Design and Implementation</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#the-class-1"><span class="toc-section-number">1.2</span> The Class</a>
+<ul>
+<li><a href="basic-components.html#the-model-for-market-data"><span class="toc-section-number">1.2.1</span> The Model for Market Data</a></li>
+<li><a href="basic-components.html#the-search-algorithm"><span class="toc-section-number">1.2.2</span> The Search Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="sim-framework.html#sim-framework"><span class="toc-section-number">2</span> The Simulation Framework</a>
+<ul>
+<li><a href="sim-framework.html#scenario-simulator"><span class="toc-section-number">2.1</span> Scenario Simulator</a></li>
+<li class="has-sub"><a href="sim-framework.html#a-delta-hedging-experiment"><span class="toc-section-number">2.2</span> A Delta Hedging Experiment</a>
+<ul>
+<li><a href="sim-framework.html#design-considerations"><span class="toc-section-number">2.2.1</span> Design Considerations</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Discreet Models</b></span></li>
+<li class="has-sub"><a href="arb-free-pricing.html#arb-free-pricing"><span class="toc-section-number">3</span> Arbitrage-Free Pricing and Risk Neutral Valuation</a>
+<ul>
+<li class="has-sub"><a href="arb-free-pricing.html#arbitrage-free-pricing"><span class="toc-section-number">3.1</span> Arbitrage-free Pricing</a>
+<ul>
+<li><a href="arb-free-pricing.html#arrow-debreu-securities"><span class="toc-section-number">3.1.1</span> Arrow-Debreu Securities</a></li>
+<li><a href="arb-free-pricing.html#the-price-of-traded-securities"><span class="toc-section-number">3.1.2</span> The Price of Traded Securities</a></li>
+<li><a href="arb-free-pricing.html#complete-market"><span class="toc-section-number">3.1.3</span> Complete Market</a></li>
+<li><a href="arb-free-pricing.html#equivalent-probability-measures"><span class="toc-section-number">3.1.4</span> Equivalent Probability Measures</a></li>
+<li><a href="arb-free-pricing.html#the-impact-of-interest-rate"><span class="toc-section-number">3.1.5</span> The Impact of Interest Rate</a></li>
+<li><a href="arb-free-pricing.html#trading-strategy-and-dynamic-completeness"><span class="toc-section-number">3.1.6</span> Trading Strategy and Dynamic Completeness</a></li>
+<li><a href="arb-free-pricing.html#discounted-asset-prices-as-martingales"><span class="toc-section-number">3.1.7</span> Discounted Asset Prices as Martingales</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="binomial.html#binomial"><span class="toc-section-number">4</span> Risk-Neutral Pricing in a Binomial Framework</a>
+<ul>
+<li class="has-sub"><a href="binomial.html#introduction"><span class="toc-section-number">4.1</span> Introduction</a>
+<ul>
+<li><a href="binomial.html#subsec:binomial"><span class="toc-section-number">4.1.1</span> The Binomial Model for Stocks</a></li>
+</ul></li>
+<li><a href="binomial.html#pricing-with-arrow-debreu-securities"><span class="toc-section-number">4.2</span> Pricing With Arrow-Debreu Securities</a></li>
+<li><a href="binomial.html#multi-period-binomial-model"><span class="toc-section-number">4.3</span> Multi-Period Binomial Model</a></li>
+<li><a href="binomial.html#american-exercise"><span class="toc-section-number">4.4</span> American Exercise</a></li>
+<li class="has-sub"><a href="binomial.html#calibration-of-the-binomial-model"><span class="toc-section-number">4.5</span> Calibration of the Binomial Model</a>
+<ul>
+<li><a href="binomial.html#tree-geometry"><span class="toc-section-number">4.5.1</span> Tree Geometry</a></li>
+</ul></li>
+</ul></li>
+<li><a href="stability-of-the-binomial-model.html#stability-of-the-binomial-model"><span class="toc-section-number">5</span> Stability of the Binomial Model</a></li>
+<li class="has-sub"><a href="sec:trinomial.html#sec:trinomial"><span class="toc-section-number">6</span> Trinomial Models</a>
+<ul>
+<li><a href="sec:trinomial.html#the-trinomial-tree"><span class="toc-section-number">6.1</span> The Trinomial Tree</a></li>
+</ul></li>
+<li class="part"><span><b>Derivatives in the Black-Scholes Framework</b></span></li>
+<li class="has-sub"><a href="pricing-with-black-scholes.html#pricing-with-black-scholes"><span class="toc-section-number">7</span> Pricing with Black-Scholes</a>
+<ul>
+<li><a href="pricing-with-black-scholes.html#relationships-among-greeks"><span class="toc-section-number">7.1</span> Relationships Among Greeks</a></li>
+</ul></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#applicability-of-the-black-scholes-model"><span class="toc-section-number">8</span> Applicability of the Black-Scholes Model</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#self-financing-replicating-portfolio"><span class="toc-section-number">8.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging"><span class="toc-section-number">8.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#error-due-to-unknown-volatility"><span class="toc-section-number">8.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#second-order-hedging"><span class="toc-section-number">8.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#gamma-smoothing"><span class="toc-section-number">8.4.1</span> Gamma Smoothing</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#dynamic-delta-gamma-hedge"><span class="toc-section-number">8.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#price-and-greeks-in-the-black-scholes-model"><span class="toc-section-number">9</span> Price and Greeks in the Black-Scholes Model</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#solving-the-pricing-equation"><span class="toc-section-number">9.1</span> Solving the Pricing Equation</a></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#an-option-dashboard"><span class="toc-section-number">9.2</span> An Option Dashboard</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#vanilla-option"><span class="toc-section-number">9.2.1</span> Vanilla Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#binary-option"><span class="toc-section-number">9.2.2</span> Binary Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#barrier-option"><span class="toc-section-number">9.2.3</span> Barrier Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#asian-option"><span class="toc-section-number">9.2.4</span> Asian Option</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-hedging-with-the-black-scholes-model"><span class="toc-section-number">10</span> Dynamic Hedging with the Black-Scholes Model</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#self-financing-replicating-portfolio-1"><span class="toc-section-number">10.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging-1"><span class="toc-section-number">10.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#error-due-to-unknown-volatility-1"><span class="toc-section-number">10.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#second-order-hedging-1"><span class="toc-section-number">10.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#gamma-smoothing-1"><span class="toc-section-number">10.4.1</span> Gamma Smoothing</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-delta-gamma-hedge-1"><span class="toc-section-number">10.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#dynamic-hedging-in-the-black-scholes-framework"><span class="toc-section-number">11</span> Dynamic Hedging in the Black-Scholes Framework</a>
+<ul>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#self-financing-replicating-portfolio-2"><span class="toc-section-number">11.1</span> Self-Financing Replicating Portfolio</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#continuous-rebalancing"><span class="toc-section-number">11.1.1</span> Continuous rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#discreet-rebalancing"><span class="toc-section-number">11.1.2</span> Discreet rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#illustration-1"><span class="toc-section-number">11.1.3</span> Illustration</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#a-more-realistic-example"><span class="toc-section-number">11.1.4</span> A More Realistic Example</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-discrete-hedging-2"><span class="toc-section-number">11.2</span> Hedging Error due to Discrete Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test"><span class="toc-section-number">11.2.1</span> Empirical Test</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-transaction-cost"><span class="toc-section-number">11.3</span> Hedging Error due to Transaction Cost</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test-1"><span class="toc-section-number">11.3.1</span> Empirical Test</a></li>
+</ul></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-unknown-volatility"><span class="toc-section-number">11.4</span> Hedging Error due to Unknown Volatility</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#conclusion"><span class="toc-section-number">11.5</span> Conclusion</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#second-order-hedging-2"><span class="toc-section-number">11.6</span> Second-Order Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-implied-volatility.html#the-implied-volatility"><span class="toc-section-number">12</span> The implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#market-data"><span class="toc-section-number">12.1</span> Market Data</a></li>
+<li class="has-sub"><a href="the-implied-volatility.html#calculation-of-implied-volatility"><span class="toc-section-number">12.2</span> Calculation of implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#newtons-method"><span class="toc-section-number">12.2.1</span> Newton’s method</a></li>
+<li><a href="the-implied-volatility.html#implied-volatility-by-newtons-method"><span class="toc-section-number">12.2.2</span> Implied Volatility by Newton’s Method</a></li>
+<li><a href="the-implied-volatility.html#secant-method"><span class="toc-section-number">12.2.3</span> Secant Method</a></li>
+<li><a href="the-implied-volatility.html#jaeckels-method"><span class="toc-section-number">12.2.4</span> Jaeckel’s method</a></li>
+<li><a href="the-implied-volatility.html#normalized-call-price-as-a-function-of-sigma"><span class="toc-section-number">12.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></a></li>
+<li><a href="the-implied-volatility.html#transformed-objective-function"><span class="toc-section-number">12.2.6</span> Transformed objective function</a></li>
+<li><a href="the-implied-volatility.html#impact-of-dividends"><span class="toc-section-number">12.2.7</span> Impact of Dividends</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-pricing-and-hedging"><span class="toc-section-number">13</span> Vanna-Volga Pricing and Hedging</a>
+<ul>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#principle"><span class="toc-section-number">13.1</span> Principle</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging"><span class="toc-section-number">13.1.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#implementation"><span class="toc-section-number">13.2</span> Implementation</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging-1"><span class="toc-section-number">13.2.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#illustrations"><span class="toc-section-number">13.3</span> Illustrations</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#volatility-interpolation"><span class="toc-section-number">13.3.1</span> Volatility Interpolation</a></li>
+<li><a href="vanna-volga-pricing-and-hedging.html#pricing-a-binary-option"><span class="toc-section-number">13.3.2</span> Pricing a Binary Option</a></li>
+</ul></li>
+</ul></li>
+<li><a href="bibliography.html#bibliography"><span class="toc-section-number">14</span> Bibliography</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="the-implied-volatility" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> The implied volatility</h1>
+<pre><code>## Loading required package: timeDate</code></pre>
+<pre><code>## Loading required package: timeSeries</code></pre>
+<pre><code>## Loading required package: fBasics</code></pre>
+<pre><code>## Loading required package: gsw</code></pre>
+<pre><code>## Loading required package: fExoticOptions</code></pre>
+<pre><code>## Loading required package: fAsianOptions</code></pre>
+<pre><code>## Loading required package: fImport</code></pre>
+<pre><code>## Loading required package: RCurl</code></pre>
+<pre><code>## Loading required package: Hmisc</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<pre><code>## Loading required package: Formula</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Hmisc&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     format.pval, units</code></pre>
+<p><span class="newthought">Listed</span> options are quoted in price. Implied volatility is the volatility
+that recovers that quoted price, using the Black-Scholes model.
+Computing implied volatility amounts to inverting the BS formula, given
+an option price. This chapter discusses the issues involved in such
+calculation, and how to represent the result.</p>
+<div id="market-data" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Market Data</h2>
+<p>Option settlement prices are published every day by exchanges.
+Figure <span class="math display">\[fig:iv-data\]</span> shows a sample of the data file published every
+day by the NYMEX.</p>
+<pre fontsize="\tiny"><code>                NEW YORK MERCANTILE EXCHANGE
+          NYMEX OPTIONS CONTRACT LISTING FOR 12/29/2008
+
+                           TODAY&#39;S  PREVIOUS  ESTIMATED   
+--------CONTRACT--------    SETTLE    SETTLE     VOLUME   
+LC    02 09    P   30.00       .53       .85          0    
+LC    02 09    P   35.00      1.58      2.28          0    
+LC    02 09    P   37.50      2.44      3.45          0    
+LC    02 09    C   40.00      3.65      2.61         10    
+LC    02 09    P   40.00      3.63      4.90          0    
+LC    02 09    P   42.00      4.78      6.23          0    
+LC    02 09    C   42.50      2.61      1.80          0    
+LC    02 09    C   43.00      2.43      1.66          0    
+LC    02 09    P   43.00      5.41      6.95        100    </code></pre>
+<p>NEW YORK MERCANTILE EXCHANGE NYMEX OPTIONS CONTRACT LISTING FOR
+12/29/2008</p>
+<p>TODAY’S PREVIOUS ESTIMATED ——–CONTRACT——– SETTLE SETTLE VOLUME LC 02 09
+P 30.00 .53 .85 0 LC 02 09 P 35.00 1.58 2.28 0 LC 02 09 P 37.50 2.44
+3.45 0 LC 02 09 C 40.00 3.65 2.61 10 LC 02 09 P 40.00 3.63 4.90 0 LC 02
+09 P 42.00 4.78 6.23 0 LC 02 09 C 42.50 2.61 1.80 0 LC 02 09 C 43.00
+2.43 1.66 0 LC 02 09 P 43.00 5.41 6.95 100</p>
+<p>Notice that settlement prices are provided even for options that have
+not been traded today. Providing a price for all strikes and maturities
+is necessary in order to compute margin calls on open positions. The
+exchange uses an interpolation method for estimating these settlement
+prices in the absence of actual transactions.</p>
+</div>
+<div id="calculation-of-implied-volatility" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Calculation of implied volatility</h2>
+<p>Given an observed price <span class="math inline">\(C^*\)</span>, compute the volatility <span class="math inline">\(\sigma\)</span> such
+that:</p>
+<p><span class="math display">\[\begin{aligned}
+C^* &amp; = &amp; C(S, K, T, r, \sigma) \\
+&amp; = &amp; C(\sigma)\end{aligned}\]</span></p>
+<p>Observe that there is a change in convexity in <span class="math inline">\(f(\sigma)\)</span>:</p>
+<p><span class="math display">\[\frac{\partial C}{\partial \sigma} = S n(d_1) \sqrt{T}\]</span></p>
+<p><span class="math display">\[\frac{\partial^2 C}{\partial \sigma^2} = S\sqrt{T} n(d_1) \frac{1}{\sigma} \left[  \frac{1}{\sigma^2 T} \ln(\frac{F}{K})^2-\frac{1}{4} \sigma^2 T \right]\]</span></p>
+<p>with <span class="math inline">\(F = Se^{rT}\)</span>.</p>
+<p>Thus, <span class="math inline">\(C(\sigma)\)</span> is convex on the interval
+<span class="math inline">\((0, \sqrt{\frac{2|\ln(F/K)|}{T}}]\)</span>, and concave otherwise.</p>
+<div id="newtons-method" class="section level3" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Newton’s method</h3>
+<p>Let <span class="math inline">\(C^*\)</span> be the price of a call option. We look for the volatility
+<span class="math inline">\(\sigma^*\)</span> such that <span class="math display">\[C^* = C(S, K, T, r, \sigma^*)\]</span></p>
+<p>To ensure convergence of Newton’s method, one must carefully choose the
+initial point.</p>
+<p>Let <span class="math inline">\(f\)</span> be defined on the interval <span class="math inline">\([a,b]\)</span> and assume that:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(f(x^*) = 0\)</span> for some <span class="math inline">\(x^* \in [a, b]\)</span></p></li>
+<li><p><span class="math inline">\(f&#39;(x) &gt; 0\)</span></p></li>
+<li><p><span class="math inline">\(f&#39;&#39;(x) \geq 0\)</span></p></li>
+</ol>
+<p>Then Newton’s method converges monotonically from <span class="math inline">\(x_0 = b\)</span>. If</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(f(x^*) = 0\)</span> for some <span class="math inline">\(x^* \in [a, b]\)</span></p></li>
+<li><p><span class="math inline">\(f&#39;(x) &gt; 0\)</span></p></li>
+<li><p><span class="math inline">\(f&#39;&#39;(x) \leq 0\)</span></p></li>
+</ol>
+<p>Then Newton’s method converges monotonically from <span class="math inline">\(x_0 = a\)</span>.</p>
+<p>We prove the first assertion. For all <span class="math inline">\(x_n \in [a, b]\)</span>,
+<span class="math display">\[f(x^*) = f(x_n) + (x^* - x_n) \frac{\partial f}{\partial x} + K\]</span> with
+<span class="math inline">\(K &gt; 0\)</span>. Therefore, <span class="math display">\[x^* &lt; x_n - \frac{\partial f}{\partial x}\]</span></p>
+<p>or,</p>
+<p><span class="math display">\[x^* &lt;= x_{n+1} &lt; x_n\]</span></p>
+<p>Newton’s method generates a monotonic sequence that must converge to
+<span class="math inline">\(x^*\)</span>.</p>
+<p>Consider now Newton’s method started at
+<span class="math display">\[\sigma_0 = \sqrt{\frac{2|\ln(F/K)|}{T}}\]</span></p>
+<p>If <span class="math inline">\(f(\sigma_0)&gt;0\)</span>, we are in case I of the above theorem, and Newton’s
+method generates a decreasing sequence that converges to <span class="math inline">\(\sigma^*\)</span>. If
+<span class="math inline">\(f(\sigma_0)&lt;0\)</span> we are in case II, and Newton’s method also converges.
+The algorithm is as follows:</p>
+</div>
+<div id="implied-volatility-by-newtons-method" class="section level3" number="12.2.2">
+<h3><span class="header-section-number">12.2.2</span> Implied Volatility by Newton’s Method</h3>
+<p>The following algorithm generates a monotonic series <span class="math inline">\((\sigma_n)\)</span>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Set <span class="math inline">\(\sigma_0 = \sqrt{\frac{2|\ln(F/K)|}{T}}\)</span></p></li>
+<li><p>While <span class="math inline">\(|C(\sigma_n) - C^*| &gt; \epsilon\)</span>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Let
+<span class="math display">\[\sigma_{n+1} = \sigma_n + \frac{C^*-C(\sigma_n)}{\frac{\partial C}{\partial \sigma}}\]</span></p></li>
+<li><p><span class="math inline">\(n \leftarrow n+1\)</span></p></li>
+</ol></li>
+</ol>
+<p>The algorithm is implemented as follows:</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="the-implied-volatility.html#cb155-1" aria-hidden="true" tabindex="-1"></a>  ImpliedVolNewton <span class="ot">&lt;-</span> <span class="cf">function</span>(p, TypeFlag, S, X, Time, r, b, tol, <span class="at">maxiter=</span><span class="dv">50</span>) {</span>
+<span id="cb155-2"><a href="the-implied-volatility.html#cb155-2" aria-hidden="true" tabindex="-1"></a>    F <span class="ot">&lt;-</span> S <span class="sc">*</span> <span class="fu">exp</span>((r<span class="sc">-</span>b)<span class="sc">*</span>T)</span>
+<span id="cb155-3"><a href="the-implied-volatility.html#cb155-3" aria-hidden="true" tabindex="-1"></a>    s <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(F<span class="sc">/</span>X)<span class="sc">/</span>T)</span>
+<span id="cb155-4"><a href="the-implied-volatility.html#cb155-4" aria-hidden="true" tabindex="-1"></a>    not_converged <span class="ot">&lt;-</span> T</span>
+<span id="cb155-5"><a href="the-implied-volatility.html#cb155-5" aria-hidden="true" tabindex="-1"></a>    vega <span class="ot">&lt;-</span> <span class="fu">GBSGreeks</span>(<span class="at">Selection=</span><span class="st">&quot;vega&quot;</span>, TypeFlag, S, X, Time, r, b, s)</span>
+<span id="cb155-6"><a href="the-implied-volatility.html#cb155-6" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb155-7"><a href="the-implied-volatility.html#cb155-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(not_converged <span class="sc">&amp;</span> (i<span class="sc">&lt;</span>maxiter)) {</span>
+<span id="cb155-8"><a href="the-implied-volatility.html#cb155-8" aria-hidden="true" tabindex="-1"></a>      err <span class="ot">&lt;-</span> (p<span class="sc">-</span><span class="fu">GBSOption</span>(TypeFlag, S, X, Time, r, b, s)<span class="sc">@</span>price)</span>
+<span id="cb155-9"><a href="the-implied-volatility.html#cb155-9" aria-hidden="true" tabindex="-1"></a>      s <span class="ot">&lt;-</span> s <span class="sc">+</span> err<span class="sc">/</span>vega</span>
+<span id="cb155-10"><a href="the-implied-volatility.html#cb155-10" aria-hidden="true" tabindex="-1"></a>      not_converged <span class="ot">&lt;-</span> (<span class="fu">abs</span>(err<span class="sc">/</span>vega) <span class="sc">&gt;</span> tol)</span>
+<span id="cb155-11"><a href="the-implied-volatility.html#cb155-11" aria-hidden="true" tabindex="-1"></a>      i <span class="ot">&lt;-</span> i<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb155-12"><a href="the-implied-volatility.html#cb155-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb155-13"><a href="the-implied-volatility.html#cb155-13" aria-hidden="true" tabindex="-1"></a>  s</span>
+<span id="cb155-14"><a href="the-implied-volatility.html#cb155-14" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<p>A timing test demonstrate the advantage of choosing the initial point
+described above:</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="the-implied-volatility.html#cb156-1" aria-hidden="true" tabindex="-1"></a>  TypeFlag <span class="ot">&lt;-</span> <span class="st">&#39;c&#39;</span></span>
+<span id="cb156-2"><a href="the-implied-volatility.html#cb156-2" aria-hidden="true" tabindex="-1"></a>  S <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb156-3"><a href="the-implied-volatility.html#cb156-3" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb156-4"><a href="the-implied-volatility.html#cb156-4" aria-hidden="true" tabindex="-1"></a>  Time <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb156-5"><a href="the-implied-volatility.html#cb156-5" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> .<span class="dv">03</span></span>
+<span id="cb156-6"><a href="the-implied-volatility.html#cb156-6" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> .<span class="dv">01</span></span>
+<span id="cb156-7"><a href="the-implied-volatility.html#cb156-7" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> .<span class="dv">314</span></span>
+<span id="cb156-8"><a href="the-implied-volatility.html#cb156-8" aria-hidden="true" tabindex="-1"></a>  tol <span class="ot">&lt;-</span> <span class="fl">1e-6</span></span>
+<span id="cb156-9"><a href="the-implied-volatility.html#cb156-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-10"><a href="the-implied-volatility.html#cb156-10" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">GBSOption</span>(TypeFlag, S, X, Time, r, b, sigma)<span class="sc">@</span>price</span></code></pre></div>
+<p>We perform 100 replications of the same calculation.</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="the-implied-volatility.html#cb157-1" aria-hidden="true" tabindex="-1"></a>  t1 <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">100</span>) {</span>
+<span id="cb157-2"><a href="the-implied-volatility.html#cb157-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb157-3"><a href="the-implied-volatility.html#cb157-3" aria-hidden="true" tabindex="-1"></a>  si <span class="ot">&lt;-</span> <span class="fu">GBSVolatility</span>(p, TypeFlag, S, X, Time, r, b, <span class="at">tol=</span>tol, <span class="at">maxiter=</span><span class="dv">50</span>)</span>
+<span id="cb157-4"><a href="the-implied-volatility.html#cb157-4" aria-hidden="true" tabindex="-1"></a>  }}</span>
+<span id="cb157-5"><a href="the-implied-volatility.html#cb157-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-6"><a href="the-implied-volatility.html#cb157-6" aria-hidden="true" tabindex="-1"></a>  t2 <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">100</span>) {</span>
+<span id="cb157-7"><a href="the-implied-volatility.html#cb157-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb157-8"><a href="the-implied-volatility.html#cb157-8" aria-hidden="true" tabindex="-1"></a>  si <span class="ot">&lt;-</span> <span class="fu">ImpliedVolNewton</span>(p, TypeFlag, S, X, Time, r, b, tol) }}</span></code></pre></div>
+<p>Statistics for the default implied volatility calculation are:</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="the-implied-volatility.html#cb158-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system.time</span>(<span class="fu">t1</span>(<span class="dv">100</span>))</span></code></pre></div>
+<pre><code>##    user  system elapsed 
+##   0.173   0.005   0.177</code></pre>
+<p>and with Newton’s method and the initial point computed as above:</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="the-implied-volatility.html#cb160-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system.time</span>(<span class="fu">t2</span>(<span class="dv">100</span>))</span></code></pre></div>
+<pre><code>##    user  system elapsed 
+##   0.091   0.000   0.091</code></pre>
+</div>
+<div id="secant-method" class="section level3" number="12.2.3">
+<h3><span class="header-section-number">12.2.3</span> Secant Method</h3>
+<p>For deep in the money or out of the money options, where vega is very
+small, a solution method that does not require a derivative may be
+prefered. The secant method starts with a bracking interval around the
+solution, and progressively shrinks it. The algorithm is as follows:</p>
+<p>It implementation is straight-forward:</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="the-implied-volatility.html#cb162-1" aria-hidden="true" tabindex="-1"></a>  ImpliedVolSecant <span class="ot">&lt;-</span> <span class="cf">function</span>(p, TypeFlag, S, X, Time, r, b, tol, sBounds, <span class="at">maxiter=</span><span class="dv">100</span>) {</span>
+<span id="cb162-2"><a href="the-implied-volatility.html#cb162-2" aria-hidden="true" tabindex="-1"></a>  sMin <span class="ot">&lt;-</span> <span class="fu">min</span>(sBounds)</span>
+<span id="cb162-3"><a href="the-implied-volatility.html#cb162-3" aria-hidden="true" tabindex="-1"></a>  sMax <span class="ot">&lt;-</span> <span class="fu">max</span>(sBounds)</span>
+<span id="cb162-4"><a href="the-implied-volatility.html#cb162-4" aria-hidden="true" tabindex="-1"></a>  pMin <span class="ot">&lt;-</span> <span class="fu">GBSOption</span>(TypeFlag, S, X, Time, r, b, sMin)<span class="sc">@</span>price</span>
+<span id="cb162-5"><a href="the-implied-volatility.html#cb162-5" aria-hidden="true" tabindex="-1"></a>  pMax <span class="ot">&lt;-</span> <span class="fu">GBSOption</span>(TypeFlag, S, X, Time, r, b, sMax)<span class="sc">@</span>price</span>
+<span id="cb162-6"><a href="the-implied-volatility.html#cb162-6" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb162-7"><a href="the-implied-volatility.html#cb162-7" aria-hidden="true" tabindex="-1"></a>  not_converged <span class="ot">&lt;-</span> <span class="fu">abs</span>(pMin<span class="sc">-</span>pMax) <span class="sc">&gt;</span> tol</span>
+<span id="cb162-8"><a href="the-implied-volatility.html#cb162-8" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb162-9"><a href="the-implied-volatility.html#cb162-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-10"><a href="the-implied-volatility.html#cb162-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(not_converged <span class="sc">&amp;</span> (i<span class="sc">&lt;</span>maxiter)) {</span>
+<span id="cb162-11"><a href="the-implied-volatility.html#cb162-11" aria-hidden="true" tabindex="-1"></a>    sStar <span class="ot">&lt;-</span> (sMin <span class="sc">+</span> sMax)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb162-12"><a href="the-implied-volatility.html#cb162-12" aria-hidden="true" tabindex="-1"></a>    pStar <span class="ot">&lt;-</span> <span class="fu">GBSOption</span>(TypeFlag, S, X, Time, r, b, sStar)<span class="sc">@</span>price</span>
+<span id="cb162-13"><a href="the-implied-volatility.html#cb162-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(pStar <span class="sc">&lt;</span> p) {</span>
+<span id="cb162-14"><a href="the-implied-volatility.html#cb162-14" aria-hidden="true" tabindex="-1"></a>      pMin <span class="ot">&lt;-</span> pStar;</span>
+<span id="cb162-15"><a href="the-implied-volatility.html#cb162-15" aria-hidden="true" tabindex="-1"></a>      sMin <span class="ot">&lt;-</span> sStar</span>
+<span id="cb162-16"><a href="the-implied-volatility.html#cb162-16" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb162-17"><a href="the-implied-volatility.html#cb162-17" aria-hidden="true" tabindex="-1"></a>      pMax <span class="ot">&lt;-</span> pStar;</span>
+<span id="cb162-18"><a href="the-implied-volatility.html#cb162-18" aria-hidden="true" tabindex="-1"></a>      sMax <span class="ot">&lt;-</span> sStar</span>
+<span id="cb162-19"><a href="the-implied-volatility.html#cb162-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb162-20"><a href="the-implied-volatility.html#cb162-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-21"><a href="the-implied-volatility.html#cb162-21" aria-hidden="true" tabindex="-1"></a>    not_converged <span class="ot">&lt;-</span> (<span class="fu">abs</span>(pMin<span class="sc">-</span>pMax) <span class="sc">&gt;</span> tol)</span>
+<span id="cb162-22"><a href="the-implied-volatility.html#cb162-22" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> i<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb162-23"><a href="the-implied-volatility.html#cb162-23" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb162-24"><a href="the-implied-volatility.html#cb162-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-25"><a href="the-implied-volatility.html#cb162-25" aria-hidden="true" tabindex="-1"></a>  (sMin<span class="sc">+</span>sMax)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb162-26"><a href="the-implied-volatility.html#cb162-26" aria-hidden="true" tabindex="-1"></a>  }   </span>
+<span id="cb162-27"><a href="the-implied-volatility.html#cb162-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-28"><a href="the-implied-volatility.html#cb162-28" aria-hidden="true" tabindex="-1"></a>  t3 <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">100</span>) {</span>
+<span id="cb162-29"><a href="the-implied-volatility.html#cb162-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb162-30"><a href="the-implied-volatility.html#cb162-30" aria-hidden="true" tabindex="-1"></a>  si <span class="ot">&lt;-</span> <span class="fu">ImpliedVolSecant</span>(p, TypeFlag, S, X, Time, r, b, tol, <span class="fu">c</span>(.<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb162-31"><a href="the-implied-volatility.html#cb162-31" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb162-32"><a href="the-implied-volatility.html#cb162-32" aria-hidden="true" tabindex="-1"></a>  si</span>
+<span id="cb162-33"><a href="the-implied-volatility.html#cb162-33" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<p>A timing test shows the value of this algorithm for a deep our of the
+money call:</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="the-implied-volatility.html#cb163-1" aria-hidden="true" tabindex="-1"></a>  S <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb163-2"><a href="the-implied-volatility.html#cb163-2" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb163-3"><a href="the-implied-volatility.html#cb163-3" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> .<span class="dv">514</span></span>
+<span id="cb163-4"><a href="the-implied-volatility.html#cb163-4" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">GBSOption</span>(TypeFlag, S, X, Time, r, b, sigma)<span class="sc">@</span>price</span>
+<span id="cb163-5"><a href="the-implied-volatility.html#cb163-5" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb163-6"><a href="the-implied-volatility.html#cb163-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-7"><a href="the-implied-volatility.html#cb163-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system.time</span>(<span class="fu">t1</span>(n))</span></code></pre></div>
+<pre><code>##    user  system elapsed 
+##   0.357   0.008   0.365</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="the-implied-volatility.html#cb165-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system.time</span>(<span class="fu">t2</span>(n))</span></code></pre></div>
+<pre><code>##    user  system elapsed 
+##   0.747   0.011   0.760</code></pre>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="the-implied-volatility.html#cb167-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system.time</span>(<span class="fu">t3</span>(n))</span></code></pre></div>
+<pre><code>##    user  system elapsed 
+##   0.325   0.000   0.325</code></pre>
+</div>
+<div id="jaeckels-method" class="section level3" number="12.2.4">
+<h3><span class="header-section-number">12.2.4</span> Jaeckel’s method</h3>
+<p>Peter Jackel (<span class="citation">(<label for="tufte-mn-8" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-8" class="margin-toggle">Jaeckel 2006<span class="marginnote">Jaeckel, Peter. 2006. <span>“<span>By Implication</span>.”</span> <em>Wilmott Magazine</em>.</span>)</span>) proposes a variant of the above method to
+regularize Newton’s method.</p>
+<p>Given an option price <span class="math inline">\(p\)</span>, we must solve for <span class="math inline">\(\sigma\)</span></p>
+<p><span class="math display">\[p = \delta \theta \left[ F \Phi \left(\theta \left[ \frac{\ln(F/K)}{\sigma} + \frac{\sigma}{2} \right] \right) - K \Phi \left(\theta \left[ \frac{\ln(F/K)}{\sigma} - \frac{\sigma}{2} \right] \right) \right]\]</span></p>
+<p>where:</p>
+<dl>
+<dt><span class="math inline">\(\delta\)</span></dt>
+<dd>
+<p>discount factor</p>
+</dd>
+<dt><span class="math inline">\(\theta\)</span></dt>
+<dd>
+<p>1 for call, -1 for put</p>
+</dd>
+<dt><span class="math inline">\(F\)</span></dt>
+<dd>
+<p>Forward price: <span class="math inline">\(S e^{(r-d)T}\)</span></p>
+</dd>
+<dt><span class="math inline">\(\sigma\)</span></dt>
+<dd>
+<p><span class="math inline">\(\sigma \sqrt{T}\)</span></p>
+</dd>
+</dl>
+<p>Set:</p>
+<p><span class="math display">\[\begin{aligned}
+    x &amp; = &amp;\ln(F/K) \\
+    b &amp; = &amp; \frac{p}{\delta \sqrt{FK}}\end{aligned}\]</span></p>
+<p>The Black-Scholes equation becomes:</p>
+<p><span class="math display">\[b = \theta \left[ e^{x/2} \Phi \left(\theta \left[ \frac{x}{\sigma} + \frac{\sigma}{2} \right] \right) - e^{-x/2} \Phi \left(\theta \left[ \frac{x}{\sigma} - \frac{\sigma}{2} \right] \right) \right]\]</span></p>
+</div>
+<div id="normalized-call-price-as-a-function-of-sigma" class="section level3" number="12.2.5">
+<h3><span class="header-section-number">12.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></h3>
+<div class="figure">
+<embed src="img/iv-1.pdf" />
+<p class="caption">image</p>
+</div>
+<div class="figure">
+<embed src="img/iv-1.pdf" />
+<p class="caption">image</p>
+</div>
+<p>As in the previous section, the normalized price function changes
+convexity at <span class="math inline">\(\sigma_c = \sqrt{|x|}\)</span></p>
+<p>Jackel further defines <span class="math display">\[f(\sigma) = \left\{
+        \begin{array}{rr}
+            \ln(\frac{b-i}{\overline{b}-i}) &amp; \mbox{if} \overline{b} &lt; b_c \\
+            b-\overline{b} &amp; \mbox{otherwise}
+        \end{array}
+    \right.\]</span></p>
+<p>with:</p>
+<dl>
+<dt><span class="math inline">\(b_c\)</span></dt>
+<dd>
+<p><span class="math inline">\(b(x, \sigma_c, \theta)\)</span></p>
+</dd>
+<dt><span class="math inline">\(i\)</span></dt>
+<dd>
+<p>normalized intrinsic value:
+<span class="math inline">\(1_{\theta x&gt;0} \theta \left( e^{x/2} - e^{-x/2}\right)\)</span></p>
+</dd>
+<dt><span class="math inline">\(\overline{b}\)</span></dt>
+<dd>
+<p>target normalized price</p>
+</dd>
+</dl>
+<p>The function <span class="math inline">\(f(\sigma)\)</span> is now monotonously concave, and the implied
+volatility problem amounts to solving: <span class="math display">\[f(\sigma) = 0\]</span></p>
+</div>
+<div id="transformed-objective-function" class="section level3" number="12.2.6">
+<h3><span class="header-section-number">12.2.6</span> Transformed objective function</h3>
+<div class="figure">
+<embed src="img/iv-2.pdf" />
+<p class="caption">image</p>
+</div>
+<div class="figure">
+<embed src="img/iv-2.pdf" />
+<p class="caption">image</p>
+</div>
+</div>
+<div id="impact-of-dividends" class="section level3" number="12.2.7">
+<h3><span class="header-section-number">12.2.7</span> Impact of Dividends</h3>
+<p>For indices: watch for dividends impact, compute implied dividend rate
+from C/P parity, then compute implied vol.</p>
+
+</div>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="dynamic-hedging-in-the-black-scholes-framework.html"><button class="btn btn-default">Previous</button></a>
+<a href="vanna-volga-pricing-and-hedging.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

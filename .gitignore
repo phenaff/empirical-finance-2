@@ -3,5 +3,6 @@ packages.bib
 .Rproj.user
 *.log
 .Rhistory
-/docs
+/docs/*.md
+/docs/*.tex
 /.Rhistory

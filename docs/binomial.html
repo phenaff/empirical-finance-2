@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="4 Risk-Neutral Pricing in a Binomial Framework | Topics in Empirical Finance" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/img/frontCover.pdf" />
+<meta property="og:description" content="An open access textbook on empirical finance" />
+<meta name="github-repo" content="phenaff/empirical-finance-2" />
+
+<meta name="author" content="Patrick Hénaff" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="An open access textbook on empirical finance">
+
+<title>4 Risk-Neutral Pricing in a Binomial Framework | Topics in Empirical Finance</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+<!--
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@jweisber" />
+<meta name="twitter:creator" content="@jweisber" />
+<meta name="twitter:title" content="Odds &amp; Ends" />
+<meta name="twitter:description" content="An open access textbook for introductory philosophy courses on probability and inductive logic." />
+<meta name="twitter:image" content="img/social_image.png" />
+-->
+
+
+<!--
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["output/HTML-CSS"],
+  "HTML-CSS": {
+    availableFonts: ["Gyre-Pagella"],
+    preferredFont: "Gyre-Pagella",
+    webFont: "Gyre-Pagella",
+    imageFont: "Gyre-Pagella"
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      extensions: ["color.js"]
+    }
+  });
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="toc.css" type="text/css" />
+<link rel="stylesheet" href="custom.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+<div style="display: none;">
+$$
+  \newcommand{\given}{\mid}
+  \renewcommand{\neg}{\mathbin{\sim}}
+  \renewcommand{\wedge}{\mathbin{\&}}
+  \newcommand{\p}{Pr}
+  \newcommand{\degr}{^{\circ}}
+  \newcommand{\E}{E}
+  \newcommand{\EU}{EU}
+  \newcommand{\u}{U}
+  \newcommand{\pr}{Pr}
+  \newcommand{\po}{Pr^*}
+  \definecolor{bookred}{RGB}{228,6,19}
+  \definecolor{bookblue}{RGB}{0,92,169}
+  \definecolor{bookpurple}{RGB}{114,49,94} 
+$$
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface-to-the-second-edition">Preface to the second edition</a></li>
+<li><a href="preface-to-the-first-edition.html#preface-to-the-first-edition">Preface to the first edition</a></li>
+<li class="part"><span><b>Computational Framework</b></span></li>
+<li class="has-sub"><a href="basic-components.html#basic-components"><span class="toc-section-number">1</span> Basic Components</a>
+<ul>
+<li class="has-sub"><a href="basic-components.html#the-class"><span class="toc-section-number">1.1</span> The Class</a>
+<ul>
+<li><a href="basic-components.html#illustration"><span class="toc-section-number">1.1.1</span> Illustration</a></li>
+<li><a href="basic-components.html#design-and-implementation"><span class="toc-section-number">1.1.2</span> Design and Implementation</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#the-class-1"><span class="toc-section-number">1.2</span> The Class</a>
+<ul>
+<li><a href="basic-components.html#the-model-for-market-data"><span class="toc-section-number">1.2.1</span> The Model for Market Data</a></li>
+<li><a href="basic-components.html#the-search-algorithm"><span class="toc-section-number">1.2.2</span> The Search Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="sim-framework.html#sim-framework"><span class="toc-section-number">2</span> The Simulation Framework</a>
+<ul>
+<li><a href="sim-framework.html#scenario-simulator"><span class="toc-section-number">2.1</span> Scenario Simulator</a></li>
+<li class="has-sub"><a href="sim-framework.html#a-delta-hedging-experiment"><span class="toc-section-number">2.2</span> A Delta Hedging Experiment</a>
+<ul>
+<li><a href="sim-framework.html#design-considerations"><span class="toc-section-number">2.2.1</span> Design Considerations</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Discreet Models</b></span></li>
+<li class="has-sub"><a href="arb-free-pricing.html#arb-free-pricing"><span class="toc-section-number">3</span> Arbitrage-Free Pricing and Risk Neutral Valuation</a>
+<ul>
+<li class="has-sub"><a href="arb-free-pricing.html#arbitrage-free-pricing"><span class="toc-section-number">3.1</span> Arbitrage-free Pricing</a>
+<ul>
+<li><a href="arb-free-pricing.html#arrow-debreu-securities"><span class="toc-section-number">3.1.1</span> Arrow-Debreu Securities</a></li>
+<li><a href="arb-free-pricing.html#the-price-of-traded-securities"><span class="toc-section-number">3.1.2</span> The Price of Traded Securities</a></li>
+<li><a href="arb-free-pricing.html#complete-market"><span class="toc-section-number">3.1.3</span> Complete Market</a></li>
+<li><a href="arb-free-pricing.html#equivalent-probability-measures"><span class="toc-section-number">3.1.4</span> Equivalent Probability Measures</a></li>
+<li><a href="arb-free-pricing.html#the-impact-of-interest-rate"><span class="toc-section-number">3.1.5</span> The Impact of Interest Rate</a></li>
+<li><a href="arb-free-pricing.html#trading-strategy-and-dynamic-completeness"><span class="toc-section-number">3.1.6</span> Trading Strategy and Dynamic Completeness</a></li>
+<li><a href="arb-free-pricing.html#discounted-asset-prices-as-martingales"><span class="toc-section-number">3.1.7</span> Discounted Asset Prices as Martingales</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="binomial.html#binomial"><span class="toc-section-number">4</span> Risk-Neutral Pricing in a Binomial Framework</a>
+<ul>
+<li class="has-sub"><a href="binomial.html#introduction"><span class="toc-section-number">4.1</span> Introduction</a>
+<ul>
+<li><a href="binomial.html#subsec:binomial"><span class="toc-section-number">4.1.1</span> The Binomial Model for Stocks</a></li>
+</ul></li>
+<li><a href="binomial.html#pricing-with-arrow-debreu-securities"><span class="toc-section-number">4.2</span> Pricing With Arrow-Debreu Securities</a></li>
+<li><a href="binomial.html#multi-period-binomial-model"><span class="toc-section-number">4.3</span> Multi-Period Binomial Model</a></li>
+<li><a href="binomial.html#american-exercise"><span class="toc-section-number">4.4</span> American Exercise</a></li>
+<li class="has-sub"><a href="binomial.html#calibration-of-the-binomial-model"><span class="toc-section-number">4.5</span> Calibration of the Binomial Model</a>
+<ul>
+<li><a href="binomial.html#tree-geometry"><span class="toc-section-number">4.5.1</span> Tree Geometry</a></li>
+</ul></li>
+</ul></li>
+<li><a href="stability-of-the-binomial-model.html#stability-of-the-binomial-model"><span class="toc-section-number">5</span> Stability of the Binomial Model</a></li>
+<li class="has-sub"><a href="sec:trinomial.html#sec:trinomial"><span class="toc-section-number">6</span> Trinomial Models</a>
+<ul>
+<li><a href="sec:trinomial.html#the-trinomial-tree"><span class="toc-section-number">6.1</span> The Trinomial Tree</a></li>
+</ul></li>
+<li class="part"><span><b>Derivatives in the Black-Scholes Framework</b></span></li>
+<li class="has-sub"><a href="pricing-with-black-scholes.html#pricing-with-black-scholes"><span class="toc-section-number">7</span> Pricing with Black-Scholes</a>
+<ul>
+<li><a href="pricing-with-black-scholes.html#relationships-among-greeks"><span class="toc-section-number">7.1</span> Relationships Among Greeks</a></li>
+</ul></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#applicability-of-the-black-scholes-model"><span class="toc-section-number">8</span> Applicability of the Black-Scholes Model</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#self-financing-replicating-portfolio"><span class="toc-section-number">8.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging"><span class="toc-section-number">8.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#error-due-to-unknown-volatility"><span class="toc-section-number">8.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#second-order-hedging"><span class="toc-section-number">8.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#gamma-smoothing"><span class="toc-section-number">8.4.1</span> Gamma Smoothing</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#dynamic-delta-gamma-hedge"><span class="toc-section-number">8.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#price-and-greeks-in-the-black-scholes-model"><span class="toc-section-number">9</span> Price and Greeks in the Black-Scholes Model</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#solving-the-pricing-equation"><span class="toc-section-number">9.1</span> Solving the Pricing Equation</a></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#an-option-dashboard"><span class="toc-section-number">9.2</span> An Option Dashboard</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#vanilla-option"><span class="toc-section-number">9.2.1</span> Vanilla Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#binary-option"><span class="toc-section-number">9.2.2</span> Binary Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#barrier-option"><span class="toc-section-number">9.2.3</span> Barrier Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#asian-option"><span class="toc-section-number">9.2.4</span> Asian Option</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-hedging-with-the-black-scholes-model"><span class="toc-section-number">10</span> Dynamic Hedging with the Black-Scholes Model</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#self-financing-replicating-portfolio-1"><span class="toc-section-number">10.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging-1"><span class="toc-section-number">10.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#error-due-to-unknown-volatility-1"><span class="toc-section-number">10.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#second-order-hedging-1"><span class="toc-section-number">10.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#gamma-smoothing-1"><span class="toc-section-number">10.4.1</span> Gamma Smoothing</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-delta-gamma-hedge-1"><span class="toc-section-number">10.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#dynamic-hedging-in-the-black-scholes-framework"><span class="toc-section-number">11</span> Dynamic Hedging in the Black-Scholes Framework</a>
+<ul>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#self-financing-replicating-portfolio-2"><span class="toc-section-number">11.1</span> Self-Financing Replicating Portfolio</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#continuous-rebalancing"><span class="toc-section-number">11.1.1</span> Continuous rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#discreet-rebalancing"><span class="toc-section-number">11.1.2</span> Discreet rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#illustration-1"><span class="toc-section-number">11.1.3</span> Illustration</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#a-more-realistic-example"><span class="toc-section-number">11.1.4</span> A More Realistic Example</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-discrete-hedging-2"><span class="toc-section-number">11.2</span> Hedging Error due to Discrete Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test"><span class="toc-section-number">11.2.1</span> Empirical Test</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-transaction-cost"><span class="toc-section-number">11.3</span> Hedging Error due to Transaction Cost</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test-1"><span class="toc-section-number">11.3.1</span> Empirical Test</a></li>
+</ul></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-unknown-volatility"><span class="toc-section-number">11.4</span> Hedging Error due to Unknown Volatility</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#conclusion"><span class="toc-section-number">11.5</span> Conclusion</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#second-order-hedging-2"><span class="toc-section-number">11.6</span> Second-Order Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-implied-volatility.html#the-implied-volatility"><span class="toc-section-number">12</span> The implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#market-data"><span class="toc-section-number">12.1</span> Market Data</a></li>
+<li class="has-sub"><a href="the-implied-volatility.html#calculation-of-implied-volatility"><span class="toc-section-number">12.2</span> Calculation of implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#newtons-method"><span class="toc-section-number">12.2.1</span> Newton’s method</a></li>
+<li><a href="the-implied-volatility.html#implied-volatility-by-newtons-method"><span class="toc-section-number">12.2.2</span> Implied Volatility by Newton’s Method</a></li>
+<li><a href="the-implied-volatility.html#secant-method"><span class="toc-section-number">12.2.3</span> Secant Method</a></li>
+<li><a href="the-implied-volatility.html#jaeckels-method"><span class="toc-section-number">12.2.4</span> Jaeckel’s method</a></li>
+<li><a href="the-implied-volatility.html#normalized-call-price-as-a-function-of-sigma"><span class="toc-section-number">12.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></a></li>
+<li><a href="the-implied-volatility.html#transformed-objective-function"><span class="toc-section-number">12.2.6</span> Transformed objective function</a></li>
+<li><a href="the-implied-volatility.html#impact-of-dividends"><span class="toc-section-number">12.2.7</span> Impact of Dividends</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-pricing-and-hedging"><span class="toc-section-number">13</span> Vanna-Volga Pricing and Hedging</a>
+<ul>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#principle"><span class="toc-section-number">13.1</span> Principle</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging"><span class="toc-section-number">13.1.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#implementation"><span class="toc-section-number">13.2</span> Implementation</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging-1"><span class="toc-section-number">13.2.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#illustrations"><span class="toc-section-number">13.3</span> Illustrations</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#volatility-interpolation"><span class="toc-section-number">13.3.1</span> Volatility Interpolation</a></li>
+<li><a href="vanna-volga-pricing-and-hedging.html#pricing-a-binary-option"><span class="toc-section-number">13.3.2</span> Pricing a Binary Option</a></li>
+</ul></li>
+</ul></li>
+<li><a href="bibliography.html#bibliography"><span class="toc-section-number">14</span> Bibliography</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="binomial" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Risk-Neutral Pricing in a Binomial Framework</h1>
+<pre><code>## Loading required package: timeDate</code></pre>
+<pre><code>## Loading required package: timeSeries</code></pre>
+<pre><code>## Loading required package: fBasics</code></pre>
+<p>In this chapter we use the binomial tree framework to introduce the key
+concepts of option valuation.</p>
+<div id="introduction" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Introduction</h2>
+<p>Consider first a one-period model: An asset <span class="math inline">\(S_t\)</span> is worth $40 at
+<span class="math inline">\(t=0\)</span>, and suppose that a month later, at <span class="math inline">\(t=T\)</span>, it will be either $45
+or $35. We are interested in buying a call option struck at <span class="math inline">\(K=40\)</span>,
+expiring at <span class="math inline">\(T\)</span>. Interest rate is 1% per month. What is the fair price
+of this option?</p>
+<p>The option payoff is</p>
+<p><span class="math display">\[c_T = (S_T-K)^+ =
+    \begin{cases}
+        5 &amp; \text{if $S_T=45$}\\
+        0 &amp; \text{if $S_T=35$}
+    \end{cases}\]</span></p>
+<p>Now consider a portfolio made of one unit of stock and 2 call options:</p>
+<p><span class="math display">\[\Phi = S - 2c\]</span></p>
+<p><span class="math display">\[S_T - 2 c_T =
+    \begin{cases}
+        35 &amp; \text{if $S_T=45$}\\
+        35 &amp; \text{if $S_T=35$}
+    \end{cases}\]</span></p>
+<p>This portfolio is worth today the same as a bank deposit that would
+provide $35 in a month, or</p>
+<p><span class="math display">\[\frac{35}{1 + 1\%} = 34.65\]</span></p>
+<p>In this simple one-period economy, the option is thus worth:</p>
+<p><span class="math display">\[c_o = \frac{40-34.65}{2} = 2.695\]</span></p>
+<div id="subsec:binomial" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> The Binomial Model for Stocks</h3>
+<p>Consider again the one-period binomial model of the previous section,
+and introduce notation to characterize the value of the three assets of
+interest, today and in the two future states, labeled “Up” and “Down”.
+The notation is summarized in Table <span class="math display">\[tab:binomial\]</span>.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">State</th>
+<th align="left">Stock</th>
+<th align="left">Bond</th>
+<th align="left">Call</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Today</td>
+<td align="left"><span class="math inline">\(S_0\)</span></td>
+<td align="left"><span class="math inline">\(B_0\)</span></td>
+<td align="left"><span class="math inline">\(c_0\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Up</td>
+<td align="left"><span class="math inline">\(S_T^u = S_0u\)</span></td>
+<td align="left"><span class="math inline">\((1+rT)B_0\)</span></td>
+<td align="left"><span class="math inline">\(c_T^u = (S_T^u - K)^+\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Down</td>
+<td align="left"><span class="math inline">\(S_T^d = S_0d\)</span></td>
+<td align="left"><span class="math inline">\((1+rT)B_0\)</span></td>
+<td align="left"><span class="math inline">\(c_T^d = (S_T^d - K)^+\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Construct a risk-free portfolio made of the option and the stock:</p>
+<p><span class="math display">\[\Pi_0 = c_0 - \Delta S_0\]</span></p>
+<p>To be riskless, one must have:</p>
+<p><span class="math display">\[\Pi_T = (1+rT) \Pi_0\]</span></p>
+<p>In particular, this is true in the two scenarios for <span class="math inline">\(S_T\)</span>:</p>
+<p><span class="math display">\[\begin{aligned}
+    c_T^u - \Delta S_0u &amp; = &amp; (1+rT)(c_0 - \Delta S_0) \\
+    c_T^d - \Delta S_0d &amp; = &amp; (1+rT)(c_0 - \Delta S_0)\end{aligned}\]</span></p>
+<p>Solve for <span class="math inline">\(\Delta\)</span>:</p>
+<p><span class="math display">\[\Delta = \frac{c_T^u-c_T^d}{S_0(u-d)}\]</span></p>
+<p>Set <span class="math inline">\((1+rT) = \rho\)</span>. The option value at time <span class="math inline">\(t=0\)</span> is:</p>
+<p><span class="math display">\[\begin{aligned}
+    c_0 &amp;=&amp; \frac{1}{\rho} \Pi_T + \Delta S_0 \\
+    &amp;=&amp; \frac{1}{\rho} \left( \frac{\rho-d}{u-d} c_T^u + \frac{u-\rho}{u-d} c_T^d \right)\end{aligned}\]</span></p>
+<p>Assume <span class="math inline">\(d&lt;\rho&lt;u\)</span>. and define:</p>
+<p><span class="math display">\[\begin{aligned}
+    q_u &amp;=&amp; \frac{\rho-d}{u-d} \\
+    q_d &amp;=&amp; \frac{u-\rho}{u-d}\end{aligned}\]</span></p>
+<p>Rewrite:</p>
+<p><span class="math display">\[c_0 = \frac{1}{\rho} \left(q_u c_T^u + q_d c_T^d \right)
+\label{eq:cox-ross-1}\]</span></p>
+<p>One can observe that <span class="math inline">\(0&lt;q_u, q_d&lt;1\)</span> and that <span class="math inline">\(q_u+q_d=1\)</span>, and therefore
+interpret <span class="math inline">\(q_u\)</span> and <span class="math inline">\(q_d\)</span> as probabilities associated with the events
+<span class="math inline">\({S_T=S_T^u}\)</span> and <span class="math inline">\({S_T=S_T^d}\)</span>. Let <span class="math inline">\(Q\)</span> be this probability measure.
+This leads us to write:</p>
+<p><span class="math display">\[c_0 = \frac{1}{\rho} E^Q(c_T)\]</span></p>
+<p>The option price is the discounted expected future payoff, under the
+probability <span class="math inline">\(Q\)</span>.</p>
+</div>
+</div>
+<div id="pricing-with-arrow-debreu-securities" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Pricing With Arrow-Debreu Securities</h2>
+<p>An alternative derivation of the same result can be obtained with
+Arrow-Debreu securities. Let’s first compute the price <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span>
+of the two Arrow-Debreu securities in this economy. The price of the
+option will then be, by definition:</p>
+<p><span class="math display">\[c_0 = a_1 c^u_T + a_2 c^d_T\]</span></p>
+<p>where <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span> are the prices of the Arrow-Debreu securities for
+the up and down scenarios.</p>
+<p>Let’s now determine the prices of these Arrrow-Debreu securities. To do
+so, we construct a portfolio made of <span class="math inline">\(x\)</span> units of stock and <span class="math inline">\(y\)</span> units of
+bond, that has the same payoff as an Arrrow-Debreu security. Setting
+<span class="math inline">\(B_0 = 1\)</span>, the replicating portfolio for the first Arrow-Debreu security
+is obtained by solving the system:</p>
+<p><span class="math display">\[\begin{pmatrix}
+        S_0u &amp; \rho \\
+        S_0d &amp; \rho
+    \end{pmatrix}
+    \begin{pmatrix}
+        x \\
+        y
+    \end{pmatrix} =
+    \begin{pmatrix}
+        1 \\
+        0
+    \end{pmatrix}\]</span></p>
+<p>Which yields:</p>
+<p><span class="math display">\[x = \frac{1}{S_0(u-d)}, \  \ y = -\frac{d}{\rho(u-d)}\]</span></p>
+<p>The price of the first Arrow-Debreu security is thus:</p>
+<p><span class="math display">\[\begin{aligned}
+    a_1 &amp; = &amp; x S_0 + y B_0 \\
+        &amp; = &amp; \frac{1}{\rho} \frac{\rho-d}{u-d}\end{aligned}\]</span></p>
+<p>Similarly, the second Arrow-Debreu security is found to be worth:</p>
+<p><span class="math display">\[a_2 = \frac{1}{\rho} \frac{\rho-u}{u-d}\]</span></p>
+<p>and we obtain therefore the same option price as in (<span class="math display">\[eq:cox-ross-1\]</span>)</p>
+</div>
+<div id="multi-period-binomial-model" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Multi-Period Binomial Model</h2>
+<p>The logic of the previous sections can be extented to multiple periods.
+When dealing with multiple periods, it is important in practice to
+construct recombining trees, i.e. trees where an up move followed by a
+down move results in the same state than a down move followed by a up
+move. <span class="math inline">\(N\)</span> steps in a recombining tree generate <span class="math inline">\(N+1\)</span> states, but <span class="math inline">\(2^N\)</span>
+states in a non-recombining binomial tree.</p>
+<p>The calculation process in a multi-period tree is best explained through
+an example. Consider a stock priced at 45.45€. At each period, the stock
+may appreciate or depreciate by <span class="math inline">\(10\%\)</span>. The riskless rate is <span class="math inline">\(5\%\)</span>, and
+we want to price a call option struck at 40€. The two-period tree is
+represented in figure <span class="math display">\[fig:2-per-bin\]</span>, with stock price in black and
+the option exercise value in red.</p>
+<p><img src="202-Binomial_files/figure-html/unnamed-chunk-1-1.png" width="60%"  /></p>
+<p>The risk-neutral probabilities are identical at all nodes:</p>
+<p><span class="math display">\[\begin{aligned}
+    q_u &amp;=&amp; \frac{\rho-d}{u-d} = \frac{1.05-.9}{1.1-.9} = .75  \\
+    q_d &amp;=&amp; .25\end{aligned}\]</span></p>
+<p>Using these values, the option value one step prior to expiry can be
+computed using (<span class="math display">\[eq:cox-ross-1\]</span>):</p>
+<p><span class="math display">\[\begin{aligned}
+C_{1,1} &amp;=&amp; \frac{1}{\rho}(q_u C_{2,2} + q_d C_{2,1}) = 11.90  \\
+C_{1,0} &amp;=&amp; \frac{1}{\rho}(q_u C_{2,1} + q_d C_{2,0}) = 3.57 \\\end{aligned}\]</span></p>
+<p>The reasoning that led to (<span class="math display">\[eq:cox-ross-1\]</span>) applies however to any
+node, and in particular to node (0,0). The option price at that node is
+thus:</p>
+<p><span class="math display">\[C_{0,0} = \frac{1}{\rho}(q_u C_{1,1} + q_d C_{1,0}) = 9.35\]</span></p>
+<p>The process is pictured in Figure <span class="math display">\[fig:bin-tree-3\]</span>.</p>
+</div>
+<div id="american-exercise" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> American Exercise</h2>
+<p>American exercise refer to the right to exercise the option at any time
+before expiry. Clearly, an option with American exercise is worth more
+than the comparable option with European exercise. To price an American
+option, we introduce the notion of continuation value. The continuation
+value <span class="math inline">\(V^i_t\)</span> at node <span class="math inline">\(i\)</span> and time <span class="math inline">\(t\)</span> is the option value, assuming
+that it will be exercised after time <span class="math inline">\(t\)</span>. At each step, one determines
+the optimal decision by comparing the value of an immediate exercise to
+the continuation value. The option value is therefore, for a call:</p>
+<p><span class="math display">\[\begin{aligned}
+C^i_t  &amp;=&amp; \max(S^i_t - K, V^i_t) \\
+       &amp;=&amp; \max(S^i_t-K, \frac{1}{\rho} (q_u C^{i+1}_{t+1} + q_d C^{i}_{t+1}))
+     \end{aligned}\]</span></p>
+<p>Starting from the data of the previous section, we now assume that the
+stock pays a dividend of 3 € in period 2. The modified tree is
+represented in figure <span class="math display">\[fig:bin-tree-4\]</span>.</p>
+<p>We price an American call struck at 40€ in this tree. Exercise values in
+period 2 are computed as before, giving the following values:</p>
+<p><span class="math display">\[\begin{aligned}
+C_{2,2} &amp;=&amp; 12 \\
+C_{2,1} &amp;=&amp; 0 \\
+C_{2,0} &amp;=&amp; 0 \end{aligned}\]</span></p>
+<p>At period 1, the option holder determines the optimal policy: exercise
+immediately or hold the option until period 2. The resulting values are:</p>
+<p><span class="math display">\[\begin{aligned}
+C_{1,1} &amp;=&amp; \max((50-40), \frac{1}{\rho} (q_u 10 + q_d 2)) = 10 \\
+C_{1,0} &amp;=&amp; \max((40.91-40), \frac{1}{\rho} (q_u 2 + q_d 0)) = 1.42 \\\end{aligned}\]</span></p>
+<p>The option value today is finally determined to be:</p>
+<p><span class="math display">\[\begin{aligned}
+C_{0,0} &amp;=&amp; \max(5.45, \frac{1}{\rho} (q_u 10  + q_d 1.42)) \\
+&amp;=&amp; 7.48\end{aligned}\]</span></p>
+<p>Under the same conditions, a European option is worth <span class="math inline">\(C_{0,0} = 6.79\)</span>.
+The difference comes from the early exercise of the American option in
+node (1,1).</p>
+</div>
+<div id="calibration-of-the-binomial-model" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Calibration of the Binomial Model</h2>
+<p>With interest rate assumed to be known, option prices are determined by
+the terms <span class="math inline">\(u\)</span> and <span class="math inline">\(d\)</span> that describe the binomial branching process. How
+should <span class="math inline">\(u\)</span> and <span class="math inline">\(d\)</span> be chosen?</p>
+<p>The time interval <span class="math inline">\([0, T]\)</span> is divided into <span class="math inline">\(N\)</span> equal steps
+<span class="math inline">\([t_j , t_{j+1}]\)</span> of length <span class="math inline">\(\Delta t\)</span>. Assume that the process for the
+underlying asset <span class="math inline">\(S_t\)</span> is such that <span class="math inline">\(V_t = \ln(S_t/S_{t-\Delta t})\)</span> are
+iid random variables with mean <span class="math inline">\(\mu \Delta t\)</span> and variance
+<span class="math inline">\(\sigma^2 \Delta t\)</span>.</p>
+<p><span class="math display">\[S_{t_j} = S_{t_{j-1}} e^{V_j}\]</span></p>
+<p>Let’s determine <span class="math inline">\(u\)</span> and <span class="math inline">\(d\)</span> by matching the mean and variance of <span class="math inline">\(V_t\)</span>
+and of the binomial process:</p>
+<p><span class="math display">\[\begin{aligned}
+E(V_j) &amp; = &amp; p \ln u + (1-p) \ln d \\
+&amp; = &amp; \mu \Delta t \\
+V(V_j) &amp; = &amp; E(V_j^2) - E(V_j)^2 \\
+&amp; = &amp; \sigma^2 \Delta t\end{aligned}\]</span></p>
+<p>Which forms a system of 2 equations and three unknown. Without loss of
+generality, set <span class="math inline">\(p=1/2\)</span>, to obtain:</p>
+<p><span class="math display">\[\begin{aligned}
+\frac{1}{2} (\ln u + \ln d) &amp;=&amp; \mu \Delta t \\
+\frac{1}{4} (\ln u + \ln d)^2 &amp;=&amp; \sigma^2 \Delta t\end{aligned}\]</span></p>
+<p>The solution is:</p>
+<p><span class="math display">\[\begin{aligned}
+u &amp;=&amp; e^{\mu \Delta t + \sigma \sqrt{\Delta t}} \nonumber \\
+d &amp;=&amp; e^{\mu \Delta t - \sigma \sqrt{\Delta t}}
+\label{eq:ud}\end{aligned}\]</span></p>
+<p>The corresponding value of the risk-neutral up probability, <span class="math inline">\(q_u\)</span> is</p>
+<p><span class="math display">\[q_u = \frac{e^{r\Delta t} - e^{\mu \Delta t - \sigma \sqrt{\Delta t}}}{e^{\mu \Delta t + \sigma \sqrt{\Delta t}} - e^{\mu \Delta t - \sigma \sqrt{\Delta t}}}
+\label{eq:qu}\]</span></p>
+<p>This is the single-period risk-neutral probability, not the objective
+probability <span class="math inline">\(p\)</span>. We next compute the limit of <span class="math inline">\(q_u\)</span> as
+<span class="math inline">\(\Delta t \rightarrow 0\)</span>.</p>
+<p>We use the following first order approximation:</p>
+<p><span class="math display">\[\begin{aligned}
+    e^{\mu \Delta t + \sigma \sqrt{\Delta t}} &amp;=&amp; (1+\mu \Delta t + \sigma \sqrt{\Delta t} + \frac{1}{2}(\mu \Delta t + \sigma \sqrt{\Delta t})^2 + \ldots \\
+    &amp;=&amp; 1+\mu \Delta t + \sigma \sqrt{\Delta t} +
+    \frac{1}{2} \sigma^2 \Delta t + O(\Delta t^{3/2})\end{aligned}\]</span></p>
+<p>and similarly,</p>
+<p><span class="math display">\[e^{\mu \Delta t - \sigma \sqrt{\Delta t}} =
+    1+\mu \Delta t - \sigma \sqrt{\Delta t} + \frac{1}{2} \sigma^2 \Delta t + O(\Delta t^{3/2})\]</span></p>
+<p>Combining these approximations with (<span class="math display">\[eq:qu\]</span>) yields,</p>
+<p><span class="math display">\[\begin{aligned}
+q_u &amp;=&amp; \frac{\sigma \sqrt{\Delta t} + (r-\frac{1}{2} \sigma^2 - \mu) \Delta t + O(\Delta t ^{3/2})}{2 \sigma \sqrt{\Delta t} + O(\Delta t ^{3/2})}  \nonumber \\
+&amp;=&amp; \frac{1}{2} + \frac{r-\frac{1}{2} \sigma^2 - \mu}{2 \sigma} \sqrt{\Delta t}  + O(\Delta t)
+\label{eq:qu-2}\end{aligned}\]</span></p>
+<p>Let’s now use these expressions for <span class="math inline">\(q_u\)</span> to compute the mean and
+variance of <span class="math inline">\(V_j\)</span>.</p>
+<p><span class="math display">\[E(V_j) = q_u \ln u + (1-q_u) \ln d\]</span></p>
+<p>Use (<span class="math display">\[eq:ud\]</span>) to get:</p>
+<p><span class="math display">\[E(V_j) = q_u (2\sigma\sqrt{\Delta t}) + \mu \Delta t - \sigma \sqrt{\Delta t}\]</span></p>
+<p>Substitute <span class="math inline">\(q_u\)</span> by its value (<span class="math display">\[eq:qu\]</span>) to get:</p>
+<p><span class="math display">\[E(V_j) = (r-\frac{1}{2} \sigma^2) \Delta t + O(\Delta t ^{3/2})\]</span></p>
+<p>Similarly,</p>
+<p><span class="math display">\[Var(V_j) = \sigma^2 \Delta t + O(\Delta t^{3/2})\]</span></p>
+<p>The remarkable point of this result is that <span class="math inline">\(\mu\)</span> no longer appears.</p>
+<p>Extending the reasoning of Section <span class="math display">\[subsec:binomial\]</span> to multiple
+periods, we write that under the risk neutral probability <span class="math inline">\(q_u, q_d\)</span>,
+the option value is the discounted expected value of the payoff:</p>
+<p><span class="math display">\[\begin{aligned}
+P(S_0) &amp;=&amp; e^{-rT} E^Q(f(S_T)) \\
+&amp;=&amp; e^{-rT} E^Q(f(S_0e^{\sum_{i=1}^N V_i})) \nonumber
+\label{eq:pso}\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(f(S_T)\)</span> is the payoff at expiry. We next need to compute the
+limit: <span class="math display">\[\lim_{N\to\infty} \sum_{i=1}^N V_i\]</span></p>
+<p>The variables <span class="math inline">\(V_i\)</span> are a function of <span class="math inline">\(N\)</span>, thus the Central Limit
+Theorem cannot be used as such. However, we can invoke Lindeberg’s
+condition to obtain the same result:</p>
+<p><em>(Lindeberg’s Condition)</em> Let <span class="math inline">\(X_k, k \in N\)</span> be independent variables
+with <span class="math inline">\(E(X_k)=\mu_k\)</span> and <span class="math inline">\(V(X_k) = \sigma^2_k\)</span>. Let
+<span class="math inline">\(s_n^2 = \sum_i^n \sigma^2_i\)</span>. If the variables satisfy Lindeberg’s
+condition, then
+<span class="math display">\[Z_n = \frac{\sum_{k=1}^n (X_k - \mu_k)}{s_n} \rightarrow N(0, 1)\]</span></p>
+<p>To simplify notation, let <span class="math inline">\(E^Q(V_i) = a\)</span>, <span class="math inline">\(Var^Q(V_i) = b\)</span>, Lindeberg’s
+condition yields:</p>
+<p><span class="math display">\[\frac{\sum_i^N V_i - Na }{b \sqrt{N}} \rightarrow N(0,1)\]</span></p>
+<p><span class="math display">\[\frac{\sum_i^N V_i - Na }{b \sqrt{N}} = \frac{\sum_i^N V_i - (r-\frac{1}{2} \sigma^2)T + O(N^{-1/2}) }{\sigma \sqrt{T} + O(N^{-1/2})}\]</span></p>
+<p><span class="math display">\[\frac{\sum_i^N V_i - (r-\frac{1}{2} \sigma^2)T}{\sigma \sqrt{T})} \rightarrow N(0,1)\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[\sum_i^N V_i \rightarrow  N \left( (r-\frac{1}{2} \sigma^2)T, \sigma^2 T \right)\]</span></p>
+<p>Finally, as <span class="math inline">\(N \rightarrow \infty\)</span>, (<span class="math display">\[eq:pso\]</span>) becomes:</p>
+<p><span class="math display">\[P(S_0) = \frac{e^{-rT}}{\sqrt{2\pi}} \int_{-\infty}^{\infty} f(S_0e^{(r-\frac{1}{2} \sigma^2)T + \sigma \sqrt{T}} e^{-\frac{1}{2} u^2} du\]</span></p>
+<p>which is the Black-Scholes valuation formula, as derived by
+<span class="citation">Cox, Ross, and Rubinstein (<label for="tufte-mn-2" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle">1979<span class="marginnote">Cox, J C, Stephen A Ross, and Mark Rubinstein. 1979. <span>“<span class="nocase">Option pricing: a simplified approach</span>.”</span> <em>Journal of Financial Econometrics</em> 7: 229–63.</span>)</span>. Again, the significance of this result is that <span class="math inline">\(\mu\)</span>
+does not appear in the formula.</p>
+<div id="tree-geometry" class="section level3" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> Tree Geometry</h3>
+<p>We now use the result from the previous section to determine the
+geometry of the tree and the risk-neutral transition probabilities,
+consistent with the parameters of the diffusion process.</p>
+<p>Recall from the previous section that <span class="math inline">\(u\)</span> and <span class="math inline">\(d\)</span> are defined by:</p>
+<p><span class="math display">\[\begin{aligned}
+u &amp;=&amp; e^{\mu \Delta t + \sigma \sqrt{\Delta t}} \\
+d &amp;=&amp; e^{\mu \Delta t - \sigma \sqrt{\Delta t}}\end{aligned}\]</span></p>
+<p>Ultimately, <span class="math inline">\(\mu\)</span> does not appear in the valuation formula, it can thus
+be set to an arbitrary value without loss of generality.</p>
+<p>In the original CRR model, <span class="math inline">\(\mu = 0\)</span>, which leads to:</p>
+<p><span class="math display">\[\begin{aligned}
+u &amp;=&amp; e^{\sigma \sqrt{t}} \\
+d &amp;=&amp; e^{-\sigma \sqrt{t}} \\
+q_u &amp;=&amp; \frac{e^{rt} - e^{-\sigma \sqrt{t}}}{e^{\sigma \sqrt{t}} - e^{-\sigma \sqrt{t}}}\end{aligned}\]</span></p>
+<p>There are many other possibilities: a popular choice introduced by
+<span class="citation">Jarrow and Rudd (<label for="tufte-mn-3" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle">1993<span class="marginnote">Jarrow, Robert, and Andrew Rudd. 1993. <em><span class="nocase">Option pricing</span></em>. Richard D. Irwin.</span>)</span> is to set <span class="math inline">\(\mu\)</span> so that transition probabilities are equal
+to <span class="math inline">\(\frac{1}{2}\)</span>. Using (<span class="math display">\[eq:qu-2\]</span>), this involves setting
+<span class="math inline">\(\mu=r-\frac{1}{2}\sigma^2\)</span>, and the branching process is then:
+<span class="math display">\[\begin{aligned}
+u &amp;=&amp; e^{(r-\frac{1}{2} \sigma^2)\Delta t + \sigma \sqrt{\Delta t}} \\
+d &amp;=&amp; e^{(r-\frac{1}{2} \sigma^2)\Delta t -\sigma \sqrt{\Delta t}} \\
+q_u &amp;=&amp; \frac{1}{2}\end{aligned}\]</span></p>
+<p>There are many other possible choices, but no significant differences in
+the convergence rate to the Black-Scholes option value. Most of the
+models, however, suffer from a form of instability which is now
+described.</p>
+
+</div>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="arb-free-pricing.html"><button class="btn btn-default">Previous</button></a>
+<a href="stability-of-the-binomial-model.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

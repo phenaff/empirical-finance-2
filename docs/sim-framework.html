@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="2 The Simulation Framework | Topics in Empirical Finance" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/img/frontCover.pdf" />
+<meta property="og:description" content="An open access textbook on empirical finance" />
+<meta name="github-repo" content="phenaff/empirical-finance-2" />
+
+<meta name="author" content="Patrick Hénaff" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="An open access textbook on empirical finance">
+
+<title>2 The Simulation Framework | Topics in Empirical Finance</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+<!--
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@jweisber" />
+<meta name="twitter:creator" content="@jweisber" />
+<meta name="twitter:title" content="Odds &amp; Ends" />
+<meta name="twitter:description" content="An open access textbook for introductory philosophy courses on probability and inductive logic." />
+<meta name="twitter:image" content="img/social_image.png" />
+-->
+
+
+<!--
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["output/HTML-CSS"],
+  "HTML-CSS": {
+    availableFonts: ["Gyre-Pagella"],
+    preferredFont: "Gyre-Pagella",
+    webFont: "Gyre-Pagella",
+    imageFont: "Gyre-Pagella"
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      extensions: ["color.js"]
+    }
+  });
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="toc.css" type="text/css" />
+<link rel="stylesheet" href="custom.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+<div style="display: none;">
+$$
+  \newcommand{\given}{\mid}
+  \renewcommand{\neg}{\mathbin{\sim}}
+  \renewcommand{\wedge}{\mathbin{\&}}
+  \newcommand{\p}{Pr}
+  \newcommand{\degr}{^{\circ}}
+  \newcommand{\E}{E}
+  \newcommand{\EU}{EU}
+  \newcommand{\u}{U}
+  \newcommand{\pr}{Pr}
+  \newcommand{\po}{Pr^*}
+  \definecolor{bookred}{RGB}{228,6,19}
+  \definecolor{bookblue}{RGB}{0,92,169}
+  \definecolor{bookpurple}{RGB}{114,49,94} 
+$$
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface-to-the-second-edition">Preface to the second edition</a></li>
+<li><a href="preface-to-the-first-edition.html#preface-to-the-first-edition">Preface to the first edition</a></li>
+<li class="part"><span><b>Computational Framework</b></span></li>
+<li class="has-sub"><a href="basic-components.html#basic-components"><span class="toc-section-number">1</span> Basic Components</a>
+<ul>
+<li class="has-sub"><a href="basic-components.html#the-class"><span class="toc-section-number">1.1</span> The Class</a>
+<ul>
+<li><a href="basic-components.html#illustration"><span class="toc-section-number">1.1.1</span> Illustration</a></li>
+<li><a href="basic-components.html#design-and-implementation"><span class="toc-section-number">1.1.2</span> Design and Implementation</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#the-class-1"><span class="toc-section-number">1.2</span> The Class</a>
+<ul>
+<li><a href="basic-components.html#the-model-for-market-data"><span class="toc-section-number">1.2.1</span> The Model for Market Data</a></li>
+<li><a href="basic-components.html#the-search-algorithm"><span class="toc-section-number">1.2.2</span> The Search Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="sim-framework.html#sim-framework"><span class="toc-section-number">2</span> The Simulation Framework</a>
+<ul>
+<li><a href="sim-framework.html#scenario-simulator"><span class="toc-section-number">2.1</span> Scenario Simulator</a></li>
+<li class="has-sub"><a href="sim-framework.html#a-delta-hedging-experiment"><span class="toc-section-number">2.2</span> A Delta Hedging Experiment</a>
+<ul>
+<li><a href="sim-framework.html#design-considerations"><span class="toc-section-number">2.2.1</span> Design Considerations</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Discreet Models</b></span></li>
+<li class="has-sub"><a href="arb-free-pricing.html#arb-free-pricing"><span class="toc-section-number">3</span> Arbitrage-Free Pricing and Risk Neutral Valuation</a>
+<ul>
+<li class="has-sub"><a href="arb-free-pricing.html#arbitrage-free-pricing"><span class="toc-section-number">3.1</span> Arbitrage-free Pricing</a>
+<ul>
+<li><a href="arb-free-pricing.html#arrow-debreu-securities"><span class="toc-section-number">3.1.1</span> Arrow-Debreu Securities</a></li>
+<li><a href="arb-free-pricing.html#the-price-of-traded-securities"><span class="toc-section-number">3.1.2</span> The Price of Traded Securities</a></li>
+<li><a href="arb-free-pricing.html#complete-market"><span class="toc-section-number">3.1.3</span> Complete Market</a></li>
+<li><a href="arb-free-pricing.html#equivalent-probability-measures"><span class="toc-section-number">3.1.4</span> Equivalent Probability Measures</a></li>
+<li><a href="arb-free-pricing.html#the-impact-of-interest-rate"><span class="toc-section-number">3.1.5</span> The Impact of Interest Rate</a></li>
+<li><a href="arb-free-pricing.html#trading-strategy-and-dynamic-completeness"><span class="toc-section-number">3.1.6</span> Trading Strategy and Dynamic Completeness</a></li>
+<li><a href="arb-free-pricing.html#discounted-asset-prices-as-martingales"><span class="toc-section-number">3.1.7</span> Discounted Asset Prices as Martingales</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="binomial.html#binomial"><span class="toc-section-number">4</span> Risk-Neutral Pricing in a Binomial Framework</a>
+<ul>
+<li class="has-sub"><a href="binomial.html#introduction"><span class="toc-section-number">4.1</span> Introduction</a>
+<ul>
+<li><a href="binomial.html#subsec:binomial"><span class="toc-section-number">4.1.1</span> The Binomial Model for Stocks</a></li>
+</ul></li>
+<li><a href="binomial.html#pricing-with-arrow-debreu-securities"><span class="toc-section-number">4.2</span> Pricing With Arrow-Debreu Securities</a></li>
+<li><a href="binomial.html#multi-period-binomial-model"><span class="toc-section-number">4.3</span> Multi-Period Binomial Model</a></li>
+<li><a href="binomial.html#american-exercise"><span class="toc-section-number">4.4</span> American Exercise</a></li>
+<li class="has-sub"><a href="binomial.html#calibration-of-the-binomial-model"><span class="toc-section-number">4.5</span> Calibration of the Binomial Model</a>
+<ul>
+<li><a href="binomial.html#tree-geometry"><span class="toc-section-number">4.5.1</span> Tree Geometry</a></li>
+</ul></li>
+</ul></li>
+<li><a href="stability-of-the-binomial-model.html#stability-of-the-binomial-model"><span class="toc-section-number">5</span> Stability of the Binomial Model</a></li>
+<li class="has-sub"><a href="sec:trinomial.html#sec:trinomial"><span class="toc-section-number">6</span> Trinomial Models</a>
+<ul>
+<li><a href="sec:trinomial.html#the-trinomial-tree"><span class="toc-section-number">6.1</span> The Trinomial Tree</a></li>
+</ul></li>
+<li class="part"><span><b>Derivatives in the Black-Scholes Framework</b></span></li>
+<li class="has-sub"><a href="pricing-with-black-scholes.html#pricing-with-black-scholes"><span class="toc-section-number">7</span> Pricing with Black-Scholes</a>
+<ul>
+<li><a href="pricing-with-black-scholes.html#relationships-among-greeks"><span class="toc-section-number">7.1</span> Relationships Among Greeks</a></li>
+</ul></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#applicability-of-the-black-scholes-model"><span class="toc-section-number">8</span> Applicability of the Black-Scholes Model</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#self-financing-replicating-portfolio"><span class="toc-section-number">8.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging"><span class="toc-section-number">8.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#error-due-to-unknown-volatility"><span class="toc-section-number">8.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#second-order-hedging"><span class="toc-section-number">8.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#gamma-smoothing"><span class="toc-section-number">8.4.1</span> Gamma Smoothing</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#dynamic-delta-gamma-hedge"><span class="toc-section-number">8.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#price-and-greeks-in-the-black-scholes-model"><span class="toc-section-number">9</span> Price and Greeks in the Black-Scholes Model</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#solving-the-pricing-equation"><span class="toc-section-number">9.1</span> Solving the Pricing Equation</a></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#an-option-dashboard"><span class="toc-section-number">9.2</span> An Option Dashboard</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#vanilla-option"><span class="toc-section-number">9.2.1</span> Vanilla Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#binary-option"><span class="toc-section-number">9.2.2</span> Binary Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#barrier-option"><span class="toc-section-number">9.2.3</span> Barrier Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#asian-option"><span class="toc-section-number">9.2.4</span> Asian Option</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-hedging-with-the-black-scholes-model"><span class="toc-section-number">10</span> Dynamic Hedging with the Black-Scholes Model</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#self-financing-replicating-portfolio-1"><span class="toc-section-number">10.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging-1"><span class="toc-section-number">10.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#error-due-to-unknown-volatility-1"><span class="toc-section-number">10.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#second-order-hedging-1"><span class="toc-section-number">10.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#gamma-smoothing-1"><span class="toc-section-number">10.4.1</span> Gamma Smoothing</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-delta-gamma-hedge-1"><span class="toc-section-number">10.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#dynamic-hedging-in-the-black-scholes-framework"><span class="toc-section-number">11</span> Dynamic Hedging in the Black-Scholes Framework</a>
+<ul>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#self-financing-replicating-portfolio-2"><span class="toc-section-number">11.1</span> Self-Financing Replicating Portfolio</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#continuous-rebalancing"><span class="toc-section-number">11.1.1</span> Continuous rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#discreet-rebalancing"><span class="toc-section-number">11.1.2</span> Discreet rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#illustration-1"><span class="toc-section-number">11.1.3</span> Illustration</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#a-more-realistic-example"><span class="toc-section-number">11.1.4</span> A More Realistic Example</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-discrete-hedging-2"><span class="toc-section-number">11.2</span> Hedging Error due to Discrete Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test"><span class="toc-section-number">11.2.1</span> Empirical Test</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-transaction-cost"><span class="toc-section-number">11.3</span> Hedging Error due to Transaction Cost</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test-1"><span class="toc-section-number">11.3.1</span> Empirical Test</a></li>
+</ul></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-unknown-volatility"><span class="toc-section-number">11.4</span> Hedging Error due to Unknown Volatility</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#conclusion"><span class="toc-section-number">11.5</span> Conclusion</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#second-order-hedging-2"><span class="toc-section-number">11.6</span> Second-Order Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-implied-volatility.html#the-implied-volatility"><span class="toc-section-number">12</span> The implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#market-data"><span class="toc-section-number">12.1</span> Market Data</a></li>
+<li class="has-sub"><a href="the-implied-volatility.html#calculation-of-implied-volatility"><span class="toc-section-number">12.2</span> Calculation of implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#newtons-method"><span class="toc-section-number">12.2.1</span> Newton’s method</a></li>
+<li><a href="the-implied-volatility.html#implied-volatility-by-newtons-method"><span class="toc-section-number">12.2.2</span> Implied Volatility by Newton’s Method</a></li>
+<li><a href="the-implied-volatility.html#secant-method"><span class="toc-section-number">12.2.3</span> Secant Method</a></li>
+<li><a href="the-implied-volatility.html#jaeckels-method"><span class="toc-section-number">12.2.4</span> Jaeckel’s method</a></li>
+<li><a href="the-implied-volatility.html#normalized-call-price-as-a-function-of-sigma"><span class="toc-section-number">12.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></a></li>
+<li><a href="the-implied-volatility.html#transformed-objective-function"><span class="toc-section-number">12.2.6</span> Transformed objective function</a></li>
+<li><a href="the-implied-volatility.html#impact-of-dividends"><span class="toc-section-number">12.2.7</span> Impact of Dividends</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-pricing-and-hedging"><span class="toc-section-number">13</span> Vanna-Volga Pricing and Hedging</a>
+<ul>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#principle"><span class="toc-section-number">13.1</span> Principle</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging"><span class="toc-section-number">13.1.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#implementation"><span class="toc-section-number">13.2</span> Implementation</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging-1"><span class="toc-section-number">13.2.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#illustrations"><span class="toc-section-number">13.3</span> Illustrations</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#volatility-interpolation"><span class="toc-section-number">13.3.1</span> Volatility Interpolation</a></li>
+<li><a href="vanna-volga-pricing-and-hedging.html#pricing-a-binary-option"><span class="toc-section-number">13.3.2</span> Pricing a Binary Option</a></li>
+</ul></li>
+</ul></li>
+<li><a href="bibliography.html#bibliography"><span class="toc-section-number">14</span> Bibliography</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="sim-framework" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> The Simulation Framework</h1>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="sim-framework.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fInstrument)</span>
+<span id="cb21-2"><a href="sim-framework.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(empfin)</span>
+<span id="cb21-3"><a href="sim-framework.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DynamicSimulation)</span>
+<span id="cb21-4"><a href="sim-framework.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code></pre></div>
+<p><code>{r tufte::newthought("The")}</code> simulation framework has two main components:</p>
+<ol style="list-style-type: decimal">
+<li><p>A simulator, which can generate paths for the variables of interest
+(price of a asset, implied volatility, term structure of interest
+rate, etc.), according to a model that relates the variables to
+stochastic risk factors.</p></li>
+<li><p>A framework for expressing trading strategies, and in particular
+dynamic hedging policies.</p></li>
+</ol>
+<p>This is again best explained by an example, and we describe next the use
+of this framework for running a delta-hedging experiment. The main
+elements of the design are discussed afterwards.</p>
+<div id="scenario-simulator" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Scenario Simulator</h2>
+<p>Assume that you want to simulate 500 price paths over a period of one
+year, with 100 time steps. The price process will be log-normal with
+annual volatility of <span class="math inline">\(30\%\)</span>, starting from an initial value of <span class="math inline">\(\$100\)</span>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="sim-framework.html#cb22-1" aria-hidden="true" tabindex="-1"></a>dtStart <span class="ot">&lt;-</span> <span class="fu">myDate</span>(<span class="st">&quot;01jan2010&quot;</span>)</span>
+<span id="cb22-2"><a href="sim-framework.html#cb22-2" aria-hidden="true" tabindex="-1"></a>dtEnd <span class="ot">&lt;-</span> <span class="fu">myDate</span>(<span class="st">&quot;01jan2011&quot;</span>)</span>
+<span id="cb22-3"><a href="sim-framework.html#cb22-3" aria-hidden="true" tabindex="-1"></a>nbSteps <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb22-4"><a href="sim-framework.html#cb22-4" aria-hidden="true" tabindex="-1"></a>nbPaths <span class="ot">&lt;-</span> <span class="dv">500</span></span></code></pre></div>
+<p>Next, define the sequence of simulation dates and the volatility of the simulated log-normal process:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="sim-framework.html#cb23-1" aria-hidden="true" tabindex="-1"></a>dtSim <span class="ot">&lt;-</span> <span class="fu">seq</span>(dtStart, dtEnd, <span class="at">length.out =</span> nbSteps <span class="sc">+</span></span>
+<span id="cb23-2"><a href="sim-framework.html#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>)</span>
+<span id="cb23-3"><a href="sim-framework.html#cb23-3" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fl">0.3</span></span></code></pre></div>
+<p>Use a sobol sequence as random number generator, with antithetic variates, standardized to unit variance:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="sim-framework.html#cb24-1" aria-hidden="true" tabindex="-1"></a>tSpot <span class="ot">&lt;-</span> <span class="fu">pathSimulator</span>(<span class="at">dtSim =</span> dtSim, <span class="at">nbPaths =</span> nbPaths,</span>
+<span id="cb24-2"><a href="sim-framework.html#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">innovations.gen =</span> sobolInnovations, <span class="at">path.gen =</span> logNormal,</span>
+<span id="cb24-3"><a href="sim-framework.html#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">path.param =</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">0</span>, <span class="at">sigma =</span> sigma), <span class="at">S0 =</span> <span class="dv">100</span>,</span>
+<span id="cb24-4"><a href="sim-framework.html#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">antithetic =</span> <span class="cn">FALSE</span>, <span class="at">standardization =</span> <span class="cn">TRUE</span>, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-5"><a href="sim-framework.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(tSpot[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]))</span></code></pre></div>
+<pre><code>## GMT 
+##                         TS.1      TS.2
+## 2010-01-01 00:00:00 100.0000 100.00000
+## 2010-01-04 15:36:00 102.6500  96.17777
+## 2010-01-08 07:12:00 104.7294  98.86367
+## 2010-01-11 22:48:00 111.5401  98.42921
+## 2010-01-15 14:24:00 106.2866  98.45289
+## 2010-01-19 06:00:00 105.6459  93.62580</code></pre>
+<p>The output of the path simulator is a . A plot of the first few paths is
+displayed in figure <a href="sim-framework.html#fig:price-plot">2.1</a>. The function can generate simulated
+values acording to various statistical processes; this is documented in
+the vignette of the package.</p>
+<p>
+<span class="marginnote shownote">
+<!--
+<div class="figure">--><span style="display:block;" id="fig:price-plot"></span>
+<img src="103-simSimulationFramework_files/figure-html/price-plot-1.png" alt="Simulated price paths under a log-normal diffusion process" width="672"  />
+<!--
+<p class="caption marginnote">-->Figure 2.1: Simulated price paths under a log-normal diffusion process<!--</p>-->
+<!--</div>--></span>
+</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="sim-framework.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tSpot[, <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>], <span class="at">plot.type =</span> <span class="st">&quot;single&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Price&quot;</span>,</span>
+<span id="cb26-2"><a href="sim-framework.html#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">&quot;%b %d&quot;</span>)</span></code></pre></div>
+</div>
+<div id="a-delta-hedging-experiment" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> A Delta Hedging Experiment</h2>
+<p>Having generated some scenarios for the stock price, let’s now simulate
+the dynamic hedging of a European call option written on this stock,
+using the Black-Scholes pricing model, with the implied volatility and
+interest rate held constant.</p>
+<p>Fist, we define the instrument to be hedged:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="sim-framework.html#cb27-1" aria-hidden="true" tabindex="-1"></a>dtExpiry <span class="ot">&lt;-</span> dtEnd</span>
+<span id="cb27-2"><a href="sim-framework.html#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="sim-framework.html#cb27-3" aria-hidden="true" tabindex="-1"></a>underlying <span class="ot">&lt;-</span> <span class="st">&quot;IBM&quot;</span></span>
+<span id="cb27-4"><a href="sim-framework.html#cb27-4" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb27-5"><a href="sim-framework.html#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="sim-framework.html#cb27-6" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">fInstrumentFactory</span>(<span class="st">&quot;vanilla&quot;</span>, <span class="at">quantity =</span> <span class="dv">1</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">cp =</span> <span class="st">&quot;c&quot;</span>,</span>
+<span id="cb27-7"><a href="sim-framework.html#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">strike =</span> K, <span class="at">dtExpiry =</span> dtExpiry, <span class="at">underlying =</span> underlying,</span>
+<span id="cb27-8"><a href="sim-framework.html#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">discountRef =</span> <span class="st">&quot;USD.LIBOR&quot;</span>, <span class="at">trace =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<p>Next, we define the market data that will be held constant during the
+simulation, and insert it in a :</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="sim-framework.html#cb28-1" aria-hidden="true" tabindex="-1"></a>base.env <span class="ot">&lt;-</span> <span class="fu">DataProvider</span>()</span>
+<span id="cb28-2"><a href="sim-framework.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;Price&quot;</span>, dtStart, <span class="dv">100</span>)</span>
+<span id="cb28-3"><a href="sim-framework.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;DivYield&quot;</span>, dtStart,</span>
+<span id="cb28-4"><a href="sim-framework.html#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.02</span>)</span>
+<span id="cb28-5"><a href="sim-framework.html#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;ATMVol&quot;</span>, dtStart, sigma)</span>
+<span id="cb28-6"><a href="sim-framework.html#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;discountRef&quot;</span>, dtStart,</span>
+<span id="cb28-7"><a href="sim-framework.html#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;USD.LIBOR&quot;</span>)</span>
+<span id="cb28-8"><a href="sim-framework.html#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, <span class="st">&quot;USD.LIBOR&quot;</span>, <span class="st">&quot;Yield&quot;</span>, dtStart, <span class="fl">0.02</span>)</span></code></pre></div>
+<p>At this stage, we can price the asset as of the start date of the
+simulation:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="sim-framework.html#cb29-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">getValue</span>(a, <span class="st">&quot;Price&quot;</span>, dtStart, base.env)</span></code></pre></div>
+<p>which gives a value of <span class="math inline">\(p = 12.82\)</span>.</p>
+<p>Next, define the simulation parameters: we want to simulate a dynamic
+hedging policy over 500 paths, and 100 time steps per path:</p>
+<p>We use a child to store the simulated paths. Data not found in the child
+will be searched for (and found) in the parent .</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="sim-framework.html#cb30-1" aria-hidden="true" tabindex="-1"></a>sce.env <span class="ot">&lt;-</span> <span class="fu">DataProvider</span>(<span class="at">parent =</span> base.env)</span>
+<span id="cb30-2"><a href="sim-framework.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(sce.env, underlying, <span class="st">&quot;Price&quot;</span>, <span class="fu">time</span>(tSpot),</span>
+<span id="cb30-3"><a href="sim-framework.html#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.matrix</span>(tSpot))</span></code></pre></div>
+<p>We can now run the delta-hedge strategy along each path:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="sim-framework.html#cb31-1" aria-hidden="true" tabindex="-1"></a>assets <span class="ot">=</span> <span class="fu">list</span>(a)</span>
+<span id="cb31-2"><a href="sim-framework.html#cb31-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">deltaHedge</span>(assets, sce.env, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">dtSim =</span> <span class="fu">time</span>(tSpot),</span>
+<span id="cb31-3"><a href="sim-framework.html#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">transaction.cost =</span> <span class="dv">0</span>), <span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>The result is a data structure that contains the residual wealth
+(hedging error) per scenario and time step. The distribution of hedging
+error at expiry is shown in Figure <a href="sim-framework.html#fig:delta-hedge-41">2.2</a>.</p>
+<p>
+<span class="marginnote shownote">
+<!--
+<div class="figure">--><span style="display:block;" id="fig:delta-hedge-41"></span>
+<img src="103-simSimulationFramework_files/figure-html/delta-hedge-41-1.png" alt="Distribution of residual wealth at expiry: delta hedge of a 1 year call option" width="672"  />
+<!--
+<p class="caption marginnote">-->Figure 2.2: Distribution of residual wealth at expiry: delta hedge of a 1 year call option<!--</p>-->
+<!--</div>--></span>
+</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="sim-framework.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">tail</span>(res<span class="sc">$</span>wealth, <span class="dv">1</span>), <span class="dv">50</span>, <span class="at">xlab =</span> <span class="st">&quot;Residual wealth at expiry&quot;</span>,</span>
+<span id="cb32-2"><a href="sim-framework.html#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p>To better illustrate the hedging policy, let’s run a toy example with
+few time steps. The function produces a detailed log of the hedging
+policy, which is presented in Table <a href="#tab:delta-hedge-few-samples"><strong>??</strong></a>. For each time step,
+the table show:</p>
+<ul>
+<li><p>The stock price,</p></li>
+<li><p>the option delta,</p></li>
+<li><p>the option value,</p></li>
+<li><p>the value of the replicating portfolio and the short bond position in that portfolio.</p></li>
+</ul>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="sim-framework.html#cb33-1" aria-hidden="true" tabindex="-1"></a>dtSim <span class="ot">&lt;-</span> <span class="fu">time</span>(tSpot)[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">dim</span>(tSpot)[<span class="dv">1</span>], <span class="dv">10</span>)]</span>
+<span id="cb33-2"><a href="sim-framework.html#cb33-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">deltaHedge</span>(assets, sce.env, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">dtSim =</span> dtSim,</span>
+<span id="cb33-3"><a href="sim-framework.html#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">transaction.cost =</span> <span class="dv">0</span>), <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb33-4"><a href="sim-framework.html#cb33-4" aria-hidden="true" tabindex="-1"></a>sim.table <span class="ot">&lt;-</span> <span class="fu">makeTable</span>(<span class="dv">1</span>, res)</span></code></pre></div>
+<div id="design-considerations" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Design Considerations</h3>
+<p>Two design features are worth mentioning.</p>
+<p>The generation of the scenarios is independent from the expression of
+the dynamic trading strategies. Remember that every data element stored
+in a is a . Since all the calculations on are vectorized, there is no
+difference between performing a calculation on a scalar, or performing a
+simulation on multiple scenarios.</p>
+<p>The second aspect is the use of parent/child relationships among
+objects. All the market data that is held constant in the simulation is
+stored in the parent . The data that changes from simulation to
+simulation is stored in the child , and this is the object that is
+passed to the simulator. When a piece of data is requested from the
+child , the following logic is applied:</p>
+<ol style="list-style-type: decimal">
+<li><p>First look for the data in the current (the object passed as
+argument to the simulator)</p></li>
+<li><p>if not found, look for the data in the parent .</p></li>
+<li><p>and so forth: the logic is recursive.</p></li>
+</ol>
+<p>This behavior is inherited from the built-in .</p>
+
+</div>
+</div>
+</div>
+
+
+
+</div>
+<p style="text-align: center;">
+<a href="basic-components.html"><button class="btn btn-default">Previous</button></a>
+<a href="arb-free-pricing.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="3 Arbitrage-Free Pricing and Risk Neutral Valuation | Topics in Empirical Finance" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/img/frontCover.pdf" />
+<meta property="og:description" content="An open access textbook on empirical finance" />
+<meta name="github-repo" content="phenaff/empirical-finance-2" />
+
+<meta name="author" content="Patrick Hénaff" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="An open access textbook on empirical finance">
+
+<title>3 Arbitrage-Free Pricing and Risk Neutral Valuation | Topics in Empirical Finance</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+<!--
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@jweisber" />
+<meta name="twitter:creator" content="@jweisber" />
+<meta name="twitter:title" content="Odds &amp; Ends" />
+<meta name="twitter:description" content="An open access textbook for introductory philosophy courses on probability and inductive logic." />
+<meta name="twitter:image" content="img/social_image.png" />
+-->
+
+
+<!--
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["output/HTML-CSS"],
+  "HTML-CSS": {
+    availableFonts: ["Gyre-Pagella"],
+    preferredFont: "Gyre-Pagella",
+    webFont: "Gyre-Pagella",
+    imageFont: "Gyre-Pagella"
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      extensions: ["color.js"]
+    }
+  });
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="toc.css" type="text/css" />
+<link rel="stylesheet" href="custom.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+<div style="display: none;">
+$$
+  \newcommand{\given}{\mid}
+  \renewcommand{\neg}{\mathbin{\sim}}
+  \renewcommand{\wedge}{\mathbin{\&}}
+  \newcommand{\p}{Pr}
+  \newcommand{\degr}{^{\circ}}
+  \newcommand{\E}{E}
+  \newcommand{\EU}{EU}
+  \newcommand{\u}{U}
+  \newcommand{\pr}{Pr}
+  \newcommand{\po}{Pr^*}
+  \definecolor{bookred}{RGB}{228,6,19}
+  \definecolor{bookblue}{RGB}{0,92,169}
+  \definecolor{bookpurple}{RGB}{114,49,94} 
+$$
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface-to-the-second-edition">Preface to the second edition</a></li>
+<li><a href="preface-to-the-first-edition.html#preface-to-the-first-edition">Preface to the first edition</a></li>
+<li class="part"><span><b>Computational Framework</b></span></li>
+<li class="has-sub"><a href="basic-components.html#basic-components"><span class="toc-section-number">1</span> Basic Components</a>
+<ul>
+<li class="has-sub"><a href="basic-components.html#the-class"><span class="toc-section-number">1.1</span> The Class</a>
+<ul>
+<li><a href="basic-components.html#illustration"><span class="toc-section-number">1.1.1</span> Illustration</a></li>
+<li><a href="basic-components.html#design-and-implementation"><span class="toc-section-number">1.1.2</span> Design and Implementation</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#the-class-1"><span class="toc-section-number">1.2</span> The Class</a>
+<ul>
+<li><a href="basic-components.html#the-model-for-market-data"><span class="toc-section-number">1.2.1</span> The Model for Market Data</a></li>
+<li><a href="basic-components.html#the-search-algorithm"><span class="toc-section-number">1.2.2</span> The Search Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="sim-framework.html#sim-framework"><span class="toc-section-number">2</span> The Simulation Framework</a>
+<ul>
+<li><a href="sim-framework.html#scenario-simulator"><span class="toc-section-number">2.1</span> Scenario Simulator</a></li>
+<li class="has-sub"><a href="sim-framework.html#a-delta-hedging-experiment"><span class="toc-section-number">2.2</span> A Delta Hedging Experiment</a>
+<ul>
+<li><a href="sim-framework.html#design-considerations"><span class="toc-section-number">2.2.1</span> Design Considerations</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Discreet Models</b></span></li>
+<li class="has-sub"><a href="arb-free-pricing.html#arb-free-pricing"><span class="toc-section-number">3</span> Arbitrage-Free Pricing and Risk Neutral Valuation</a>
+<ul>
+<li class="has-sub"><a href="arb-free-pricing.html#arbitrage-free-pricing"><span class="toc-section-number">3.1</span> Arbitrage-free Pricing</a>
+<ul>
+<li><a href="arb-free-pricing.html#arrow-debreu-securities"><span class="toc-section-number">3.1.1</span> Arrow-Debreu Securities</a></li>
+<li><a href="arb-free-pricing.html#the-price-of-traded-securities"><span class="toc-section-number">3.1.2</span> The Price of Traded Securities</a></li>
+<li><a href="arb-free-pricing.html#complete-market"><span class="toc-section-number">3.1.3</span> Complete Market</a></li>
+<li><a href="arb-free-pricing.html#equivalent-probability-measures"><span class="toc-section-number">3.1.4</span> Equivalent Probability Measures</a></li>
+<li><a href="arb-free-pricing.html#the-impact-of-interest-rate"><span class="toc-section-number">3.1.5</span> The Impact of Interest Rate</a></li>
+<li><a href="arb-free-pricing.html#trading-strategy-and-dynamic-completeness"><span class="toc-section-number">3.1.6</span> Trading Strategy and Dynamic Completeness</a></li>
+<li><a href="arb-free-pricing.html#discounted-asset-prices-as-martingales"><span class="toc-section-number">3.1.7</span> Discounted Asset Prices as Martingales</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="binomial.html#binomial"><span class="toc-section-number">4</span> Risk-Neutral Pricing in a Binomial Framework</a>
+<ul>
+<li class="has-sub"><a href="binomial.html#introduction"><span class="toc-section-number">4.1</span> Introduction</a>
+<ul>
+<li><a href="binomial.html#subsec:binomial"><span class="toc-section-number">4.1.1</span> The Binomial Model for Stocks</a></li>
+</ul></li>
+<li><a href="binomial.html#pricing-with-arrow-debreu-securities"><span class="toc-section-number">4.2</span> Pricing With Arrow-Debreu Securities</a></li>
+<li><a href="binomial.html#multi-period-binomial-model"><span class="toc-section-number">4.3</span> Multi-Period Binomial Model</a></li>
+<li><a href="binomial.html#american-exercise"><span class="toc-section-number">4.4</span> American Exercise</a></li>
+<li class="has-sub"><a href="binomial.html#calibration-of-the-binomial-model"><span class="toc-section-number">4.5</span> Calibration of the Binomial Model</a>
+<ul>
+<li><a href="binomial.html#tree-geometry"><span class="toc-section-number">4.5.1</span> Tree Geometry</a></li>
+</ul></li>
+</ul></li>
+<li><a href="stability-of-the-binomial-model.html#stability-of-the-binomial-model"><span class="toc-section-number">5</span> Stability of the Binomial Model</a></li>
+<li class="has-sub"><a href="sec:trinomial.html#sec:trinomial"><span class="toc-section-number">6</span> Trinomial Models</a>
+<ul>
+<li><a href="sec:trinomial.html#the-trinomial-tree"><span class="toc-section-number">6.1</span> The Trinomial Tree</a></li>
+</ul></li>
+<li class="part"><span><b>Derivatives in the Black-Scholes Framework</b></span></li>
+<li class="has-sub"><a href="pricing-with-black-scholes.html#pricing-with-black-scholes"><span class="toc-section-number">7</span> Pricing with Black-Scholes</a>
+<ul>
+<li><a href="pricing-with-black-scholes.html#relationships-among-greeks"><span class="toc-section-number">7.1</span> Relationships Among Greeks</a></li>
+</ul></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#applicability-of-the-black-scholes-model"><span class="toc-section-number">8</span> Applicability of the Black-Scholes Model</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#self-financing-replicating-portfolio"><span class="toc-section-number">8.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging"><span class="toc-section-number">8.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#error-due-to-unknown-volatility"><span class="toc-section-number">8.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#second-order-hedging"><span class="toc-section-number">8.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#gamma-smoothing"><span class="toc-section-number">8.4.1</span> Gamma Smoothing</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#dynamic-delta-gamma-hedge"><span class="toc-section-number">8.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#price-and-greeks-in-the-black-scholes-model"><span class="toc-section-number">9</span> Price and Greeks in the Black-Scholes Model</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#solving-the-pricing-equation"><span class="toc-section-number">9.1</span> Solving the Pricing Equation</a></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#an-option-dashboard"><span class="toc-section-number">9.2</span> An Option Dashboard</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#vanilla-option"><span class="toc-section-number">9.2.1</span> Vanilla Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#binary-option"><span class="toc-section-number">9.2.2</span> Binary Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#barrier-option"><span class="toc-section-number">9.2.3</span> Barrier Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#asian-option"><span class="toc-section-number">9.2.4</span> Asian Option</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-hedging-with-the-black-scholes-model"><span class="toc-section-number">10</span> Dynamic Hedging with the Black-Scholes Model</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#self-financing-replicating-portfolio-1"><span class="toc-section-number">10.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging-1"><span class="toc-section-number">10.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#error-due-to-unknown-volatility-1"><span class="toc-section-number">10.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#second-order-hedging-1"><span class="toc-section-number">10.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#gamma-smoothing-1"><span class="toc-section-number">10.4.1</span> Gamma Smoothing</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-delta-gamma-hedge-1"><span class="toc-section-number">10.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#dynamic-hedging-in-the-black-scholes-framework"><span class="toc-section-number">11</span> Dynamic Hedging in the Black-Scholes Framework</a>
+<ul>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#self-financing-replicating-portfolio-2"><span class="toc-section-number">11.1</span> Self-Financing Replicating Portfolio</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#continuous-rebalancing"><span class="toc-section-number">11.1.1</span> Continuous rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#discreet-rebalancing"><span class="toc-section-number">11.1.2</span> Discreet rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#illustration-1"><span class="toc-section-number">11.1.3</span> Illustration</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#a-more-realistic-example"><span class="toc-section-number">11.1.4</span> A More Realistic Example</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-discrete-hedging-2"><span class="toc-section-number">11.2</span> Hedging Error due to Discrete Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test"><span class="toc-section-number">11.2.1</span> Empirical Test</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-transaction-cost"><span class="toc-section-number">11.3</span> Hedging Error due to Transaction Cost</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test-1"><span class="toc-section-number">11.3.1</span> Empirical Test</a></li>
+</ul></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-unknown-volatility"><span class="toc-section-number">11.4</span> Hedging Error due to Unknown Volatility</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#conclusion"><span class="toc-section-number">11.5</span> Conclusion</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#second-order-hedging-2"><span class="toc-section-number">11.6</span> Second-Order Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-implied-volatility.html#the-implied-volatility"><span class="toc-section-number">12</span> The implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#market-data"><span class="toc-section-number">12.1</span> Market Data</a></li>
+<li class="has-sub"><a href="the-implied-volatility.html#calculation-of-implied-volatility"><span class="toc-section-number">12.2</span> Calculation of implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#newtons-method"><span class="toc-section-number">12.2.1</span> Newton’s method</a></li>
+<li><a href="the-implied-volatility.html#implied-volatility-by-newtons-method"><span class="toc-section-number">12.2.2</span> Implied Volatility by Newton’s Method</a></li>
+<li><a href="the-implied-volatility.html#secant-method"><span class="toc-section-number">12.2.3</span> Secant Method</a></li>
+<li><a href="the-implied-volatility.html#jaeckels-method"><span class="toc-section-number">12.2.4</span> Jaeckel’s method</a></li>
+<li><a href="the-implied-volatility.html#normalized-call-price-as-a-function-of-sigma"><span class="toc-section-number">12.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></a></li>
+<li><a href="the-implied-volatility.html#transformed-objective-function"><span class="toc-section-number">12.2.6</span> Transformed objective function</a></li>
+<li><a href="the-implied-volatility.html#impact-of-dividends"><span class="toc-section-number">12.2.7</span> Impact of Dividends</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-pricing-and-hedging"><span class="toc-section-number">13</span> Vanna-Volga Pricing and Hedging</a>
+<ul>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#principle"><span class="toc-section-number">13.1</span> Principle</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging"><span class="toc-section-number">13.1.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#implementation"><span class="toc-section-number">13.2</span> Implementation</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging-1"><span class="toc-section-number">13.2.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#illustrations"><span class="toc-section-number">13.3</span> Illustrations</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#volatility-interpolation"><span class="toc-section-number">13.3.1</span> Volatility Interpolation</a></li>
+<li><a href="vanna-volga-pricing-and-hedging.html#pricing-a-binary-option"><span class="toc-section-number">13.3.2</span> Pricing a Binary Option</a></li>
+</ul></li>
+</ul></li>
+<li><a href="bibliography.html#bibliography"><span class="toc-section-number">14</span> Bibliography</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="arb-free-pricing" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Arbitrage-Free Pricing and Risk Neutral Valuation</h1>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="arb-free-pricing.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fBasics)</span>
+<span id="cb34-2"><a href="arb-free-pricing.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xtable)</span>
+<span id="cb34-3"><a href="arb-free-pricing.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(empfin)</span>
+<span id="cb34-4"><a href="arb-free-pricing.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magick)</span>
+<span id="cb34-5"><a href="arb-free-pricing.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tufte)</span>
+<span id="cb34-6"><a href="arb-free-pricing.html#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb34-7"><a href="arb-free-pricing.html#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb34-8"><a href="arb-free-pricing.html#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggforce)</span>
+<span id="cb34-9"><a href="arb-free-pricing.html#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(png)</span>
+<span id="cb34-10"><a href="arb-free-pricing.html#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
+<span id="cb34-11"><a href="arb-free-pricing.html#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb34-12"><a href="arb-free-pricing.html#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code></pre></div>
+<p><span class="newthought">We</span> are exclusively concerned about the pricing of redundant securities,
+i.e. relative value pricing. Financial economics tries to explain the
+pricing of underlying securities, mathematical finance is about the
+relative value pricing of derivatives securities.</p>
+<div id="arbitrage-free-pricing" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Arbitrage-free Pricing</h2>
+<p>Consider three produce baskets of apples and oranges.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Basket</th>
+<th align="center">Apples</th>
+<th align="center">Oranges</th>
+<th align="center">Price (€)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">B1</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="center">B2</td>
+<td align="center">3</td>
+<td align="center">2</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="center">B3</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">?</td>
+</tr>
+</tbody>
+</table>
+<p>Is € 3.5 a fair price for basket B3? The answer is no: I can buy 5
+baskets B3 and sell 2 baskets B1 and 2 baskets B1 for a riskless profit
+of €0.5. The fair price for B3 is 3.6 €. We have determined the
+arbitrage-free price for B3 by constructing a replication out of baskets
+B1 and B2. This is the essence of derivatives pricing.</p>
+<div id="arrow-debreu-securities" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Arrow-Debreu Securities</h3>
+<p>Imagine an economy that can evolve between time <span class="math inline">\(t=0\)</span> and <span class="math inline">\(t=1\)</span> to take
+one out of 3 possible states. There is a consensus to attribute
+probability <span class="math inline">\(p_i\)</span> to the occurence of state <span class="math inline">\(i\)</span>. The interest rate is null.</p>
+<p>We next define 3 securities; each one pays a certain pattern of cashflow
+according to the future state, as pictured below:</p>
+<p><img src="201-ArbFreePricing_files/figure-html/unnamed-chunk-1-1.png" width="80%"  /></p>
+<p>Assume that prices at time <span class="math inline">\(t=0\)</span> are: <span class="math inline">\(S_1 = 1.3\)</span>, <span class="math inline">\(S_2 = 1.25\)</span>,
+<span class="math inline">\(S_3 = 1.3\)</span>. The price of these securities is determined by several
+factors:</p>
+<ol style="list-style-type: decimal">
+<li><p>the preference of market participants for earning a payoff in one
+state versus another: in a risk-adverse economy, earning 1 euro when
+the aggregate wealth is low is more valuable than earning the same
+amount when the aggregate wealth is high</p></li>
+<li><p>the preference for holding money today rather than at time <span class="math inline">\(T\)</span></p></li>
+<li><p>the likelihood of each state</p></li>
+</ol>
+<p>We are now interested in the price of securities that pays 1 euro if
+state <span class="math inline">\(i\)</span> is realized, and nothing otherwise. Such securities are called
+Arrow-Debreu securities, and can be represented by a vector giving the
+value of such security in each future state of the world.</p>
+<p>The value of the first Arrow-Debreu security is determined by solving
+the following system:</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+    0 &amp; 1 &amp; 1 \\
+    3 &amp; 2 &amp; 0 \\
+    1 &amp; 1 &amp; 2
+\end{pmatrix} W_1 =
+\begin{pmatrix}
+1 \\
+0 \\
+0
+\end{pmatrix}
+\]</span></p>
+<p>which yields</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="arb-free-pricing.html#cb35-1" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>), <span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb35-2"><a href="arb-free-pricing.html#cb35-2" aria-hidden="true" tabindex="-1"></a>A1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb35-3"><a href="arb-free-pricing.html#cb35-3" aria-hidden="true" tabindex="-1"></a>W1 <span class="ot">&lt;-</span> <span class="fu">inv</span>(P) <span class="sc">%*%</span> A1</span>
+<span id="cb35-4"><a href="arb-free-pricing.html#cb35-4" aria-hidden="true" tabindex="-1"></a>W1</span></code></pre></div>
+<pre><code>##      [,1]
+## [1,] -0.8
+## [2,]  1.2
+## [3,] -0.2</code></pre>
+<p>The value of the first Arrow-Debreu security is thus:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="arb-free-pricing.html#cb37-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">1.3</span>, <span class="fl">1.25</span>, <span class="fl">1.3</span>), <span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb37-2"><a href="arb-free-pricing.html#cb37-2" aria-hidden="true" tabindex="-1"></a>a1 <span class="ot">&lt;-</span> <span class="fu">t</span>(W1) <span class="sc">%*%</span> S</span>
+<span id="cb37-3"><a href="arb-free-pricing.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(a1[<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div>
+<pre><code>## [1] 0.2</code></pre>
+<p>Similarly, the prices <span class="math inline">\(a_2\)</span> and <span class="math inline">\(a_3\)</span> of the other two Arrow-Debreu
+securities are computed by:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="arb-free-pricing.html#cb39-1" aria-hidden="true" tabindex="-1"></a>W2 <span class="ot">&lt;-</span> <span class="fu">inv</span>(P) <span class="sc">%*%</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb39-2"><a href="arb-free-pricing.html#cb39-2" aria-hidden="true" tabindex="-1"></a>a2 <span class="ot">&lt;-</span> <span class="fu">t</span>(W2) <span class="sc">%*%</span> S</span>
+<span id="cb39-3"><a href="arb-free-pricing.html#cb39-3" aria-hidden="true" tabindex="-1"></a>W3 <span class="ot">&lt;-</span> <span class="fu">inv</span>(P) <span class="sc">%*%</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb39-4"><a href="arb-free-pricing.html#cb39-4" aria-hidden="true" tabindex="-1"></a>a3 <span class="ot">&lt;-</span> <span class="fu">t</span>(W3) <span class="sc">%*%</span> S</span></code></pre></div>
+<p>The replicating portfolios and prices of the 3 A-D assets are summarized
+below.</p>
+% latex table generated in R 4.2.2 by xtable 1.8-4 package
+% Sun Jan 15 22:56:47 2023
+<p>A portfolio made of the three Arrow-Debreu securities guarantees a
+payoff of 1 euro. Therefore, this collection can be priced at time <span class="math inline">\(t=0\)</span>
+by discounting the payoff at the risk-free rate (0 for now). Thus, we
+must have:</p>
+<p><span class="math display">\[\sum a_i = 1\]</span></p>
+<p>Which is indeed the case:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="arb-free-pricing.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(a1 <span class="sc">+</span> a2 <span class="sc">+</span> a3)</span></code></pre></div>
+<pre><code>##      [,1]
+## [1,]    1</code></pre>
+</div>
+<div id="the-price-of-traded-securities" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> The Price of Traded Securities</h3>
+<p>The price of Arrow-Debreu securities is determined by the price of
+traded securities. We now consider how these price are determined.</p>
+<p>The current price of an asset depends on the future payoffs, and on the
+states in which these payoffs occur: if the payoffs of an asset are
+positively correlated with the aggregate market value, it will be worth
+less, everything else being equal, than an asset whose payoffs are
+negatively correlated with the aggregate market value. The capital asset
+pricing model formalizes this observation. Let</p>
+<dl>
+<dt><span class="math inline">\(S_t\)</span></dt>
+<dd>
+<p>Asset price at time <span class="math inline">\(t\)</span></p>
+</dd>
+<dt><span class="math inline">\(M_t\)</span></dt>
+<dd>
+<p>Aggregate market wealth at time <span class="math inline">\(t\)</span></p>
+</dd>
+<dt><span class="math inline">\(R_s\)</span></dt>
+<dd>
+<p>Return on asset: <span class="math inline">\(S_T/S_0\)</span></p>
+</dd>
+<dt><span class="math inline">\(R_m\)</span></dt>
+<dd>
+<p>Market return: <span class="math inline">\(M_T/M_0\)</span></p>
+</dd>
+<dt><span class="math inline">\(R_f\)</span></dt>
+<dd>
+<p>Risk-free return: <span class="math inline">\(1+r\)</span></p>
+</dd>
+</dl>
+<p>The model relates the expected return of a security to the beta value:</p>
+<p><span class="math display">\[E(R_s) = R_f + \beta [ E(R_m) - R_f ]\]</span></p>
+<p>where</p>
+<p><span class="math display">\[\beta = \frac{\mbox{Cov}(R_s, R_m)}{\mbox{Var}(R_m)}\]</span></p>
+<p>In that framework, it can be shown that <span class="math inline">\(S_0\)</span>, the current asset price,
+is given by:</p>
+<p><span class="math display" id="eq:capm1">\[S_0 = \frac{E(S_T)-\lambda \mbox{Cov}(S_T, M_T)}{R_f}
+    \tag{3.1}\]</span></p>
+<p>where <span class="math inline">\(\lambda\)</span> is the market price of risk times the current market
+value <span class="math inline">\(M_0\)</span>:</p>
+<p><span class="math display">\[\lambda = \frac{M_0 [ E(R_m)-R_f ]}{\mbox{Var}(M_T)}\]</span></p>
+<p>In a complete market, the asset and the market portfolio can be
+expressed in terms of Arrow-Debreu securities:</p>
+<p><span class="math display">\[S_0 = \sum_i V_i a_i\]</span></p>
+<p><span class="math display">\[M_0 = \sum_i U_i a_i\]</span></p>
+<p>Assume that the states are ordered in order of increasing aggregate
+wealth. We have:</p>
+<p><span class="math display">\[\begin{aligned}
+    E(S_T) &amp; = &amp; \sum_i V_i p_i \\
+    E(M_T) &amp; = &amp; \sum_i U_i p_i \\
+    E(S_T M_T) &amp; = &amp; \sum_i U_i V_i p_i\end{aligned}\]</span></p>
+<p>Substitute in <a href="arb-free-pricing.html#eq:capm1">(3.1)</a> to get:</p>
+<p><span class="math display">\[S_0 = \sum_i V_i d_i p_i\]</span></p>
+<p>where the discount factor <span class="math inline">\(d_i\)</span> is given by:</p>
+<p><span class="math display">\[d_i = \frac{1-\lambda(U_i - E(M_T))}{R_f}
+    \label{eq:capm2}\]</span></p>
+<p>Equation <a href="#eq:capm2">(<strong>??</strong>)</a> shows that as aggregate wealth <span class="math inline">\(U_i\)</span> increases,
+the discount factor decreases. An asset is more valuable, everything
+else being equal, if its payoffs occur in the states where <span class="math inline">\(U_i\)</span> is low,
+and therefore where the discount factor is high.</p>
+<p>To generalize: any factor that affects supply and demand for traded
+securities, and the market price of risk, will have a direct influence
+on the Arrow-Debreu prices and therefore on the risk neutral
+probabilities.</p>
+<p>As noted by Derman and Taleb(<span class="citation">(<a href="#ref-Derman2005" role="doc-biblioref"><strong>Derman2005?</strong></a>)</span>),</p>
+<blockquote>
+<p>The Nobel committee upon granting the Bank of Sweden Prize in honour
+of Alfred Nobel, provided the following citation: “Black, Merton and
+Scholes made a vital contribution by showing that it is in fact not
+necessary to use any risk premium when valuing an option. This does
+not mean that the risk premium disappears; instead it is already
+included in the stock price.” It is for having removed the effect of
+<span class="math inline">\(\mu\)</span> <span class="math display">\[the stock drift\]</span> on the value of the option, and not for
+rendering the option a deterministic and riskless security, that their
+work is cited.</p>
+</blockquote>
+</div>
+<div id="complete-market" class="section level3" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> Complete Market</h3>
+<p>A complete market is a market where all Arrow-Debreu securities can be
+traded, and therefore any payoff profile can be replicated as a
+portfolio of Arrow-Debreu securities. The existence of this replicating
+portfolio imposes a unique arbitrage-free price for any payoff. Going
+back to the elementary example above, consider now a new security that
+has the payoff profile illustrated in figure <span class="math display">\[fig:new-sec\]</span>.</p>
+<p><span class="math display">\[grow’=right,sibling distance=1cm\]</span> child <span>node <span>1</span></span> child <span>node
+<span>-0.5</span></span> child <span>node <span>1</span></span>;</p>
+<p><span class="math display">\[grow’=right,sibling distance=1cm\]</span> child <span>node <span>1</span></span> child <span>node
+<span>-0.5</span></span> child <span>node <span>1</span></span>;</p>
+<p>This security is equivalent to a portfolio of three Arrow-Debreu
+securities, and is worth</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="arb-free-pricing.html#cb42-1" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> a1 <span class="sc">-</span> <span class="fl">0.5</span> <span class="sc">*</span> a2 <span class="sc">+</span> a3</span></code></pre></div>
+<p>If its market price of <span class="math inline">\(S_4\)</span> is less than <span class="math inline">\(V=0.62\)</span>, you
+can earn a riskless profit by buying a unit of <span class="math inline">\(S_4\)</span> and selling the
+portfolio <span class="math inline">\(P\)</span>.</p>
+<p>In general, a security with payoff <span class="math inline">\(X_i\)</span> in state <span class="math inline">\(i\)</span> is worth:</p>
+<p><span class="math display">\[\sum_i a_i X_i\]</span></p>
+<p>with</p>
+<p><span class="math display">\[\sum_i a_i = 1\]</span></p>
+<p>and</p>
+<p><span class="math display">\[a_i &gt;0, \ \ \forall i\]</span></p>
+<p>and we can interpret the Arrow-Debreu prices as probabilities. Since
+preferences no longer play a role, we call them “risk-neutral”
+probabilities.</p>
+</div>
+<div id="equivalent-probability-measures" class="section level3" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> Equivalent Probability Measures</h3>
+<p>Two probability measures <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are equivalent if they are
+consistent with respect to possible and impossible outcome:</p>
+<p><span class="math display">\[p_i &gt;0 \Leftrightarrow q_i &gt;0\]</span></p>
+<p>Let <span class="math inline">\(p\)</span> be the real probability measure and <span class="math inline">\(q\)</span> be the risk-neutral
+measure. It is easy to show that the two measures must be equivalent.</p>
+<p>Consider a state <span class="math inline">\(i\)</span> such that <span class="math inline">\(p_i = 0\)</span>. then the corresponding
+Arrow-Debreu security cannot cost anything, or a riskless profit could
+be gained by selling this security. Thus, <span class="math inline">\(q_i=0\)</span>. A similar argument
+applies for the case <span class="math inline">\(p_i&gt;0\)</span>.</p>
+</div>
+<div id="the-impact-of-interest-rate" class="section level3" number="3.1.5">
+<h3><span class="header-section-number">3.1.5</span> The Impact of Interest Rate</h3>
+<p>What happens to Arrow-Debreu prices and risk-neutral probabilities when
+interest rate is not null? In the presence of interest rate, the value
+of a complete set of Arrow-Debreu securities must be</p>
+<p><span class="math display">\[\sum_i a_i = e^{-rT}\]</span></p>
+<p>The risk-neutral probabilities are now defined as:</p>
+<p><span class="math display">\[q_i = a_i e^{rT}\]</span></p>
+<p>so that we still have <span class="math inline">\(\sum_i q_i = 1\)</span>. As before, an arbitrary security
+with payoff <span class="math inline">\(X_i\)</span> in state <span class="math inline">\(i\)</span> is worth,</p>
+<p><span class="math display">\[P(X) = e^{-rT} \sum_i X_i q_i\]</span></p>
+<p>or,</p>
+<p><span class="math display">\[P(X) = e^{-rT} E^Q[X]\]</span></p>
+<p>Risk-neutral probabilities are compounded Arrow-Debreu prices. Here, for
+expository purpose, we have derived risk-neutral probabilities from
+state prices, but in practice, we will do the opposite: to obtain state
+prices from risk-neutral probabilities.</p>
+</div>
+<div id="trading-strategy-and-dynamic-completeness" class="section level3" number="3.1.6">
+<h3><span class="header-section-number">3.1.6</span> Trading Strategy and Dynamic Completeness</h3>
+<p>Let’s now consider an economy where decisions can be made at various
+stages. This economy is illustrated in Figure <span class="math display">\[fig:bin-tree-0\]</span>. At the
+second time step, we have 3 distinct states, i.e. 3 Arrow-Debreu
+securities. If we only had one time step, we would need 3 linearly
+independent assets to construct these securities. Now, because of the
+intermediate trading opportunity, we may be able to construct the
+Arrow-Debreu securities with fewer (i.e. two) underlying assets. A
+market in which every Arrow-Debreu security can be constructed with a
+self-financing trading strategy is called dynamically complete.</p>
+</div>
+<div id="discounted-asset-prices-as-martingales" class="section level3" number="3.1.7">
+<h3><span class="header-section-number">3.1.7</span> Discounted Asset Prices as Martingales</h3>
+<p>Let’s consider again a two-stage economy. What can we say at time 0
+about the expected value of a derivative at a future time <span class="math inline">\(t\)</span>?</p>
+<p><span class="math display">\[E_0^Q[P_t(X)], \forall t \geq 0\]</span></p>
+<p><span class="math display">\[E_0^Q[P_t(X)] = e^{-2r}E_0^Q[X]\]</span></p>
+<p>Now let’s consider the expected price at <span class="math inline">\(t=1\)</span>:</p>
+<p><span class="math display">\[\begin{aligned}
+E_0^Q[P_1(X)] &amp; = &amp; E_0^Q[e^{-r}E_1^Q[X]] \\
+E_0^Q[P_1(X)] &amp; = &amp; E_0^Q[e^{-r}E_0^Q[X]] \\
+E_0^Q[P_1(X)] &amp; = &amp; e^{-r} E_0^Q[X]\end{aligned}\]</span></p>
+<p>Similarly,</p>
+<p><span class="math display">\[\begin{aligned}
+E_0^Q[P_2(X)] &amp; = &amp; E_0^Q[E_2^Q[X]] \\
+E_0^Q[P_2(X)] &amp; = &amp; E_0^Q[X]\end{aligned}\]</span></p>
+<p>The price of each state-dependent payoff grows at the risk-free rate,
+simply because this growth rate is incorporated in the definition of
+each risk-neutral probability with which we weight the state-dependent
+payoffs.</p>
+<p>The expected price of any asset (as seen from time <span class="math inline">\(t=0\)</span>) grows at the
+risk-free rate. Not the price, but the expectation of the price.
+Generalizing, we have:</p>
+<p><span class="math display">\[P_0(X) = e^{-rt}E_0[P_t(X)], \ \forall t&gt;0\]</span></p>
+
+</div>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="sim-framework.html"><button class="btn btn-default">Previous</button></a>
+<a href="binomial.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>
