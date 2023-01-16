@@ -1,6 +1,15 @@
 # Applicability of the Black-Scholes Model
 
-In this section, we investigate the effectiveness of various hedging
+```{r setup, echo=FALSE, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dev.args = list(bg = "transparent"),
+  tidy=TRUE,
+  tidy.opts=list(width.cutoff=45)
+)
+```
+
+`r tufte::newthought("In")` this section, we investigate the effectiveness of various hedging
 strategies in the Black-Scholes framework. Indeed, the ultimate measure
 of risk is the quality of the dynamic replicating strategy, and the
 distribution of the residual wealth after expiry of the option.
@@ -8,8 +17,7 @@ Throughout this section, we place ourselves in the situation of a
 financial institution that sell a derivative and dynamically hedges the
 risk.
 
-Self-Financing Replicating Portfolio
-------------------------------------
+## Self-Financing Replicating Portfolio
 
 Consider the self-financing replicating portfolio defined by:
 
@@ -28,8 +36,7 @@ As $t_i-t_{i-1} = \Delta t \rightarrow 0$,
 
 $$dV_t = (V_t - \delta_t S_t) r dt + \delta_t dS_t$$
 
-Hedging Error due to Discrete Hedging
--------------------------------------
+## Hedging Error due to Discrete Hedging
 
 We first consider the risk related to discreet hedging.
 
@@ -61,8 +68,7 @@ This expression highlights the following points:
 
 2.  The variance is directly related to the magnitude of $\Gamma$
 
-Error due to Unknown Volatility
--------------------------------
+## Error due to Unknown Volatility
 
 To simplify the notation, assume now that hedging is done continuously,
 but that the volatility of the underlying asset is unknown. The dynamic
@@ -118,8 +124,7 @@ in which case the basic Black-Scholes model is adapted or not:
 
   : Fitness of the Black-Scholes Model
 
-Second-Order Hedging
---------------------
+## Second-Order Hedging
 
 In the previous section, we have determined that hedging error is
 determined by three factors:
@@ -164,43 +169,6 @@ $$\begin{aligned}
 
 Illustration: Residual risk of delta hedge vs. delta-gamma hedge.
 
-Hedging Volatility risk
------------------------
-
-In this section, we investigate strategies for mitigating two risks:
-
-1.  the volatility is unknown
-
-2.  the implied volatility is a function of strike and time to maturity
-
-### The nature of volatility risk
-
-See the part “Stylized Facts” for a description of the volatility smile.
-
-### Sticky strike and sticky delta
-
-### Model-free hedging of smile risk
-
-Butterfly
-
-:   $\frac{\sigma_+ - \sigma_-}{\sigma_0}$
-
-Risk Reversal
-
-:   $\sigma_+ - \sigma_-$
-
-$$\begin{aligned}
-    \sigma_+ &=& \sigma_0 + BF + \frac{1}{2} RR \\
-    \sigma_- &=& \sigma_0 + BF - \frac{1}{2} RR \\\end{aligned}$$
-
-Example:
-
-1.  Assume a quadratic smile:
-
-<!-- -->
-
-1.  hedge instruments
-
 We can summarize this study of the Black-Scholes model as follows:
 
 1.  assuming a delta hedged position, the residual risk is a function of
@@ -211,7 +179,7 @@ We can summarize this study of the Black-Scholes model as follows:
 
 3.  when the gamma changes sign, the Black-Scholes model is no longer an
     appropriate risk-management tool. The gamma of the position should
-    be shoothed with a partial static hedge before using the
+    be smoothed with a partial static hedge before using the
     Black-Scholes model for risk management.
 
 

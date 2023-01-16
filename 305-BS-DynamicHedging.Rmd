@@ -1,5 +1,14 @@
 # Dynamic Hedging in the Black-Scholes Framework
 
+```{r setup, echo=FALSE, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dev.args = list(bg = "transparent"),
+  tidy=TRUE,
+  tidy.opts=list(width.cutoff=45)
+)
+```
+
 ```{r, label=load-DynamicHedging, results='hide'}
   library(fInstrument)
   library(DynamicSimulation)

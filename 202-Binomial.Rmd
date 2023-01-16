@@ -174,6 +174,11 @@ we want to price a call option struck at 40€. The two-period tree is
 represented in figure \[fig:2-per-bin\], with stock price in black and
 the option exercise value in red.
 
+```{r, echo=FALSE, engine='tikz', out.width='60%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
+
+\usetikzlibrary{shapes.multipart}
+\usetikzlibrary{shapes}
+
 \begin{tikzpicture}[level distance=2.5cm]
     \tikzstyle{level 0}=[rectangle, draw]
     \tikzstyle{level 1}=[rectangle, draw]
@@ -200,6 +205,7 @@ the option exercise value in red.
              edge from parent node[blank,below left] {$q_d$}
             };
 \end{tikzpicture}
+```
 
 The risk-neutral probabilities are identical at all nodes:
 

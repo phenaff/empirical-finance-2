@@ -1,11 +1,13 @@
----
-editor_options:
-  markdown:
-    wrap: 72
-output: pdf_document
----
-
 # Price and Greeks in the Black-Scholes Model
+
+```{r setup, echo=FALSE, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dev.args = list(bg = "transparent"),
+  tidy=TRUE,
+  tidy.opts=list(width.cutoff=45)
+)
+```
 
 ```{r, label=load-BS-Study,echo=FALSE,results='hide'}
   library(fOptions)

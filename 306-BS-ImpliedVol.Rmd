@@ -8,20 +8,17 @@
   data(cl_opt_042109)
 ```
 
-Listed options are quoted in price. Implied volatility is the volatility
+`r tufte::newthought("Listed")` options are quoted in price. Implied volatility is the volatility
 that recovers that quoted price, using the Black-Scholes model.
 Computing implied volatility amounts to inverting the BS formula, given
 an option price. This chapter discusses the issues involved in such
 calculation, and how to represent the result.
 
-Market Data
------------
+## Market Data
 
 Option settlement prices are published every day by exchanges.
 Figure \[fig:iv-data\] shows a sample of the data file published every
 day by the NYMEX.
-
-### Option data: Settlement prices of options on the Feb09 futures contract
 
 ``` {fontsize="\tiny"}
                 NEW YORK MERCANTILE EXCHANGE
@@ -55,8 +52,7 @@ is necessary in order to compute margin calls on open positions. The
 exchange uses an interpolation method for estimating these settlement
 prices in the absence of actual transactions.
 
-Calculation of implied volatility
----------------------------------
+## Calculation of implied volatility
 
 Given an observed price $C^*$, compute the volatility $\sigma$ such
 that:
@@ -293,9 +289,9 @@ $$b = \theta \left[ e^{x/2} \Phi \left(\theta \left[ \frac{x}{\sigma} + \frac{\s
 
 ### Normalized Call price as a function of $\sigma$
 
-![image](Graphics/iv-1.pdf){width=".7\textwidth"}
+![image](img/iv-1.pdf){width=".7\textwidth"}
 
-![image](Graphics/iv-1.pdf)
+![image](img/iv-1.pdf)
 
 As in the previous section, the normalized price function changes
 convexity at $\sigma_c = \sqrt{|x|}$
@@ -327,9 +323,9 @@ volatility problem amounts to solving: $$f(\sigma) = 0$$
 
 ### Transformed objective function
 
-![image](Graphics/iv-2.pdf){width=".7\textwidth"}
+![image](img/iv-2.pdf){width=".7\textwidth"}
 
-![image](Graphics/iv-2.pdf)
+![image](img/iv-2.pdf)
 
 ### Impact of Dividends
 

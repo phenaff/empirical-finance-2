@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-A natural extension of the binomial model is a trinomial model, that is,
+`r tufte::newthought("A natural extension")` of the binomial model is a trinomial model, that is,
 a model with three possible future states at each time step and current
 state.
 

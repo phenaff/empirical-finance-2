@@ -18,6 +18,20 @@ link-citations: yes
 
 # Preface to the second edition {-}
 
+`r tufte::newthought("Ten")` years after the first edition, it is time to
+revisit this text, not only to update the data sets, but also the add material
+that didn't make it the first time around.
+
+So much has taken place since the 2011. Publishing open source
+material has become dramatically simpler with the development of the \package{bookdown}
+package \@ref() and the possibility of generating an online version of the
+text.
+Alas, there was also a tragedy. In 2016 Diethelm Wurtz and his wife Barbara
+were involved in a fatal accident. ,
+
+We hold fond memories of the wonderful workshops organized by Diethelm in
+Meielisalp, and this second edition is dedicated to the memory of Barbara and Diethelm.
+
 # Preface to the first edition {-}
 
 ```{r setup, echo=FALSE, include=FALSE, cache=FALSE}

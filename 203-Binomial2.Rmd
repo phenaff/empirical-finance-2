@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   library(empfin)
 ```
 
-```{r tufte::newthought("We")}``` would like to verify the convergence of the Cox-Ross model to the
+`r tufte::newthought("We")` would like to verify the convergence of the Cox-Ross model to the
 Black-Scholes price as the number of steps $N$ increases. This can be
 investigated with the following script:
 
@@ -237,5 +237,5 @@ the price of a substantial increase in computation time.
 ```
 
 ```{r, label=fig-CRRWithBS,echo=FALSE, fig.width=5, fig.height=4}
-  <<CRRWithBS-plot>>
+<<CRRWithBS-plot>>
 ```

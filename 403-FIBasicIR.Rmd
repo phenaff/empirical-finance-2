@@ -98,7 +98,7 @@ vehicules:
 In addition, Government Bond Futures, to be considered in the next
 chapter, provide a vehicule for locking a long term future yield.
 
-![image](Graphics/IR-Futures.pdf)
+![image](img/IR-Futures.pdf)
 
 \[fig:zc-2\]
 

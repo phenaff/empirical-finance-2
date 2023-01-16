@@ -1,9 +1,6 @@
 # Deterministic Time-Varying Volatility
 
-```{r, echo=FALSE,results='hide'}
-```
-
-In some markets, the term structure of volatility has a specific
+`r tufte::newthought("In")` some markets, the term structure of volatility has a specific
 pattern. Many commodities have a seasonal pattern: Natural gas, for
 example, is in high demand in the winter, but its supply is limited by
 the capacity of the pipeline network, and this increases price
@@ -14,9 +11,9 @@ estimate models that are suited to such markets.
 
 Dynamics of forward prices
 
-![image](Graphics/wti-fwd-surface){width=".9\textwidth"}
+![image](img/wti-fwd-surface){width=".9\textwidth"}
 
-![image](Graphics/wti-fwd-surface)
+![image](img/wti-fwd-surface)
 
 Let $F(t, T)$ be the value at time $t$ of a futures contract expiring at
 $T$. Assume a two factor model for the dynamic of the futures prices:
@@ -44,13 +41,13 @@ $$\begin{array}{ll}
 
 Hybrid Calibration
 
-![image](Graphics/wti-atm-fit-fixed){width=".7\textwidth"}
+![image](img/wti-atm-fit-fixed){width=".7\textwidth"}
 
 Estimate $\rho$ and $\sigma_L$ historically ($\rho = .87$,
 $\sigma_L = .12$), calibrate $\sigma_S$ and $\beta$ to implied ATM
 volatility.
 
-![image](Graphics/wti-atm-fit-fixed) \[fig:rho-fixed\]
+![image](img/wti-atm-fit-fixed) \[fig:rho-fixed\]
 
 Forward Volatility by Contract
 

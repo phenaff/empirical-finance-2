@@ -1,9 +1,15 @@
 # Pricing with Black-Scholes
 
-Solving the Pricing Equation
-----------------------------
+```{r setup, echo=FALSE, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dev.args = list(bg = "transparent"),
+  tidy=TRUE,
+  tidy.opts=list(width.cutoff=45)
+)
+```
 
-Recall from the previous section that under the risk-neutral
+`r tufte::newthought("Recall")` from the previous section that under the risk-neutral
 probability, the discounted value is a martingale:
 
 $$S_0 = e^{-rT} E^Q(S_T)$$
@@ -12,7 +18,9 @@ where $S_T$ is a log-normal variable that follows the process:
 
 $$S_T = S_0 e^{(r-\frac{\sigma^2}{2})T + \sigma \sqrt{T}Y}$$
 
-with $Y ~ N(0,1)$. The value of any derivative is the discounted
+with $Y ~ N(0,1)$. In a seminal paper, F. Black and M. Scholes provided an arbitrage-free analytical expression for the value of a European option.
+
+The value of any derivative is the discounted
 expected payoff. For a call option, we have:
 
 $$\begin{aligned}

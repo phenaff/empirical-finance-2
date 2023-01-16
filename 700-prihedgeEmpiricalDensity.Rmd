@@ -1,6 +1,6 @@
 # Pricing under an Objective Density
 
-In this part, we consider methods for pricing derivatives under a
+In this chapter, we consider methods for pricing derivatives under a
 historical density for the underlying asset.
 
 The goal is to lift the Black-Scholes hypothesis that states that the
@@ -9,11 +9,11 @@ that better matches the empirical evidences.
 
 Can we transform an empirical density into a density that:
 
-1.  is risk-neutral
+1.  is risk-neutral,
 
-2.  is consistent with current market observations
+2.  is consistent with current market observations, and
 
-3.  retains the stylized facts of the historical density
+3.  retains the stylized facts of the historical density?
 
 There is a abundant literature on the subject of derivative pricing
 under empirical densities. See, for example, the review article of
@@ -255,7 +255,7 @@ difference reflects the cost of transporting gas from East to West, say
 disruption in supply and the price differential jumps to \$3 or \$5. In
 that context, what is the price of a call option struck at \$2?
 
-![image](Graphics/lotteryTicket.pdf) \[fig:socal\]
+![image](img/lotteryTicket.pdf) \[fig:socal\]
 
 ### A Lottery Ticket...
 
@@ -266,7 +266,7 @@ Figure \[fig:atm-straddle\] shows the result of the minimum entropy
 adjustment to the sample distribution to match both the forward price
 and the value of at-the-money straddles.
 
-![image](Graphics/Straddle.pdf) \[fig:atm-straddle\]
+![image](img/Straddle.pdf) \[fig:atm-straddle\]
 
 &lt;beamer&gt;[Calibration to ATM Straddle]{}
 ![image](pic/Straddle){width=".7\textwidth"}
