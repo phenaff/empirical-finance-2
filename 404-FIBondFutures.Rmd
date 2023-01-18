@@ -1,6 +1,6 @@
 ---
-editor_options: 
-  markdown: 
+editor_options:
+  markdown:
     wrap: 72
 ---
 
@@ -173,7 +173,7 @@ the futures contract. The price of the Futures is linked to the IRR by
 the following relation:
 
 $$F_t c + ai_T =  P^d_t \left( 1+ IRR \frac{n_1}{n_2} \right)
-    \label{eq:irr}$$
+    (\#eq:irr)$$
 
 Table [] shows the calculation for each deliverable bond, and confirms
 that Bund 374 is the cheapest to deliver.

@@ -18,7 +18,7 @@ Dynamics of forward prices
 Let $F(t, T)$ be the value at time $t$ of a futures contract expiring at
 $T$. Assume a two factor model for the dynamic of the futures prices:
 
-$$\label{eq:gabillon}
+$$(\#eq:gabillon)
 \frac{dF(t,T)}{F(t,T)} = B(t,T) \sigma_S dW_S + (1-B(t,T)) \sigma_L dW_L$$
 
 with $$\begin{aligned}
@@ -47,7 +47,7 @@ Estimate $\rho$ and $\sigma_L$ historically ($\rho = .87$,
 $\sigma_L = .12$), calibrate $\sigma_S$ and $\beta$ to implied ATM
 volatility.
 
-![image](img/wti-atm-fit-fixed) \[fig:rho-fixed\]
+![image](img/wti-atm-fit-fixed) \@ref(fig:rho-fixed)
 
 Forward Volatility by Contract
 

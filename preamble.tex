@@ -30,12 +30,12 @@
 \newcommand{\RR}{\textsf{R}}
 \newcommand{\Rmetrics}{Rmetrics}
 
-\newcommand{\Rfun}[1]{\texttt{#1()}\index{R~functions@\RR~functions!#1}}
-\newcommand{\class}[1]{\texttt{#1}}
-%\newcommand{\class}[1]{\texttt{#1}\index{R~classes@\RR~classes!#1}}
-\newcommand{\pkg}[1]{\texttt{#1}\index{R~packages@\RR~packages!#1}}
-\newcommand{\dataset}[1]{\texttt{#1}\index{R~data@\RR~data!#1}}
-\newcommand{\code}[1]{\texttt{#1}\index{#1}}
+%\newcommand{`r to_index("", "functions")`}[1]{\texttt{#1()}\index{R~functions@\RR~functions!#1}}
+%\newcommand{`r to_index("", "classes")`}[1]{\texttt{#1}}
+%\newcommand{`r to_index("", "classes")`}[1]{\texttt{#1}\index{R~classes@\RR~classes!#1}}
+%\newcommand{\pkg}[1]{\texttt{#1}\index{R~packages@\RR~packages!#1}}
+%\newcommand{\dataset}[1]{\texttt{#1}\index{R~data@\RR~data!#1}}
+%\newcommand{\code}[1]{\texttt{#1}\index{#1}}
 
 % Preamble from VIP
 
@@ -56,7 +56,7 @@
 
 \newenvironment{epigraph}%
 {
-\begin{flushright}    
+\begin{flushright}
 \begin{minipage}{20em}
 \begin{flushright}
 \itshape
@@ -69,7 +69,7 @@
 \newenvironment{problem}{\begin{quote}\normalsize}{\end{quote}}
 \newenvironment{puzzle}{\begin{quote}\normalsize}{\end{quote}}
 \def\argument{\list{}{\leftmargin3em}\item[]}
-\let\endargument=\endlist 
+\let\endargument=\endlist
 \usepackage{fontawesome}
 \newenvironment{warning}{\begin{itemize}\item[\faBan]}{\end{itemize}}
 \usepackage{marvosym}
@@ -104,9 +104,9 @@
 % Jesse Rosenthal's code from https://groups.google.com/forum/#!topic/pandoc-discuss/wCF78X6SvwY
 % Avoid new pagraph/indent after lists, quotes, etc.
 \makeatletter
-\newcommand{\gobblepars}{% 
-    \@ifnextchar\par% 
-        {\expandafter\gobblepars\@gobble}% 
+\newcommand{\gobblepars}{%
+    \@ifnextchar\par%
+        {\expandafter\gobblepars\@gobble}%
         {}}
 \newcommand{\eatpar}{\@ifnextchar\par{\@gobble}{}}
 \newcommand{\forcepar}{\par}

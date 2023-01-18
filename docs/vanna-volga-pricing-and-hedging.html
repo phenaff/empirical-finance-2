@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="13 Vanna-Volga Pricing and Hedging | Topics in Empirical Finance" />
+<meta property="og:title" content="15 Vanna-Volga Pricing and Hedging | Topics in Empirical Finance" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/img/frontCover.pdf" />
 <meta property="og:description" content="An open access textbook on empirical finance" />
@@ -23,36 +23,12 @@ MathJax.Hub.Config({
 
 <meta name="description" content="An open access textbook on empirical finance">
 
-<title>13 Vanna-Volga Pricing and Hedging | Topics in Empirical Finance</title>
+<title>15 Vanna-Volga Pricing and Hedging | Topics in Empirical Finance</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
-<!--
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content="@jweisber" />
-<meta name="twitter:creator" content="@jweisber" />
-<meta name="twitter:title" content="Odds &amp; Ends" />
-<meta name="twitter:description" content="An open access textbook for introductory philosophy courses on probability and inductive logic." />
-<meta name="twitter:image" content="img/social_image.png" />
--->
-
-
-<!--
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  jax: ["output/HTML-CSS"],
-  "HTML-CSS": {
-    availableFonts: ["Gyre-Pagella"],
-    preferredFont: "Gyre-Pagella",
-    webFont: "Gyre-Pagella",
-    imageFont: "Gyre-Pagella"
-  }
-});
-</script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
--->
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
@@ -187,158 +163,265 @@ $$
 <li><a href="index.html#preface-to-the-second-edition">Preface to the second edition</a></li>
 <li><a href="preface-to-the-first-edition.html#preface-to-the-first-edition">Preface to the first edition</a></li>
 <li class="part"><span><b>Computational Framework</b></span></li>
-<li class="has-sub"><a href="basic-components.html#basic-components"><span class="toc-section-number">1</span> Basic Components</a>
+<li><a href="introduction.html#introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li class="has-sub"><a href="ch:data-sources.html#ch:data-sources"><span class="toc-section-number">2</span> Data Sources</a>
 <ul>
-<li class="has-sub"><a href="basic-components.html#the-class"><span class="toc-section-number">1.1</span> The Class</a>
-<ul>
-<li><a href="basic-components.html#illustration"><span class="toc-section-number">1.1.1</span> Illustration</a></li>
-<li><a href="basic-components.html#design-and-implementation"><span class="toc-section-number">1.1.2</span> Design and Implementation</a></li>
+<li><a href="ch:data-sources.html#commodities-data"><span class="toc-section-number">2.1</span> Commodities Data</a></li>
+<li><a href="ch:data-sources.html#libor-rates"><span class="toc-section-number">2.2</span> Libor Rates</a></li>
+<li><a href="ch:data-sources.html#sovereign-yield-curves"><span class="toc-section-number">2.3</span> Sovereign Yield Curves</a></li>
+<li><a href="ch:data-sources.html#equities-data"><span class="toc-section-number">2.4</span> Equities Data</a></li>
 </ul></li>
-<li class="has-sub"><a href="basic-components.html#the-class-1"><span class="toc-section-number">1.2</span> The Class</a>
+<li class="has-sub"><a href="basic-components.html#basic-components"><span class="toc-section-number">3</span> Basic Components</a>
 <ul>
-<li><a href="basic-components.html#the-model-for-market-data"><span class="toc-section-number">1.2.1</span> The Model for Market Data</a></li>
-<li><a href="basic-components.html#the-search-algorithm"><span class="toc-section-number">1.2.2</span> The Search Algorithm</a></li>
+<li class="has-sub"><a href="basic-components.html#the-finstrument-class"><span class="toc-section-number">3.1</span> The <idx>fInstrument</idx> Class</a>
+<ul>
+<li><a href="basic-components.html#design-and-implementation"><span class="toc-section-number">3.1.1</span> Design and Implementation</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#the-dataprovider-class"><span class="toc-section-number">3.2</span> The <idx>DataProvider</idx> Class</a>
+<ul>
+<li><a href="basic-components.html#the-model-for-market-data"><span class="toc-section-number">3.2.1</span> The Model for Market Data</a></li>
+<li><a href="basic-components.html#the-search-algorithm"><span class="toc-section-number">3.2.2</span> The Search Algorithm</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="sim-framework.html#sim-framework"><span class="toc-section-number">2</span> The Simulation Framework</a>
+<li class="has-sub"><a href="sim-framework.html#sim-framework"><span class="toc-section-number">4</span> The Simulation Framework</a>
 <ul>
-<li><a href="sim-framework.html#scenario-simulator"><span class="toc-section-number">2.1</span> Scenario Simulator</a></li>
-<li class="has-sub"><a href="sim-framework.html#a-delta-hedging-experiment"><span class="toc-section-number">2.2</span> A Delta Hedging Experiment</a>
+<li><a href="sim-framework.html#scenario-simulator"><span class="toc-section-number">4.1</span> Scenario Simulator</a></li>
+<li class="has-sub"><a href="sim-framework.html#a-delta-hedging-experiment"><span class="toc-section-number">4.2</span> A Delta Hedging Experiment</a>
 <ul>
-<li><a href="sim-framework.html#design-considerations"><span class="toc-section-number">2.2.1</span> Design Considerations</a></li>
+<li><a href="sim-framework.html#design-considerations"><span class="toc-section-number">4.2.1</span> Design Considerations</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>Discreet Models</b></span></li>
-<li class="has-sub"><a href="arb-free-pricing.html#arb-free-pricing"><span class="toc-section-number">3</span> Arbitrage-Free Pricing and Risk Neutral Valuation</a>
+<li class="has-sub"><a href="arb-free-pricing.html#arb-free-pricing"><span class="toc-section-number">5</span> Arbitrage-Free Pricing and Risk Neutral Valuation</a>
 <ul>
-<li class="has-sub"><a href="arb-free-pricing.html#arbitrage-free-pricing"><span class="toc-section-number">3.1</span> Arbitrage-free Pricing</a>
+<li class="has-sub"><a href="arb-free-pricing.html#arbitrage-free-pricing"><span class="toc-section-number">5.1</span> Arbitrage-free Pricing</a>
 <ul>
-<li><a href="arb-free-pricing.html#arrow-debreu-securities"><span class="toc-section-number">3.1.1</span> Arrow-Debreu Securities</a></li>
-<li><a href="arb-free-pricing.html#the-price-of-traded-securities"><span class="toc-section-number">3.1.2</span> The Price of Traded Securities</a></li>
-<li><a href="arb-free-pricing.html#complete-market"><span class="toc-section-number">3.1.3</span> Complete Market</a></li>
-<li><a href="arb-free-pricing.html#equivalent-probability-measures"><span class="toc-section-number">3.1.4</span> Equivalent Probability Measures</a></li>
-<li><a href="arb-free-pricing.html#the-impact-of-interest-rate"><span class="toc-section-number">3.1.5</span> The Impact of Interest Rate</a></li>
-<li><a href="arb-free-pricing.html#trading-strategy-and-dynamic-completeness"><span class="toc-section-number">3.1.6</span> Trading Strategy and Dynamic Completeness</a></li>
-<li><a href="arb-free-pricing.html#discounted-asset-prices-as-martingales"><span class="toc-section-number">3.1.7</span> Discounted Asset Prices as Martingales</a></li>
+<li><a href="arb-free-pricing.html#arrow-debreu-securities"><span class="toc-section-number">5.1.1</span> Arrow-Debreu Securities</a></li>
+<li><a href="arb-free-pricing.html#the-price-of-traded-securities"><span class="toc-section-number">5.1.2</span> The Price of Traded Securities</a></li>
+<li><a href="arb-free-pricing.html#complete-market"><span class="toc-section-number">5.1.3</span> Complete Market</a></li>
+<li><a href="arb-free-pricing.html#equivalent-probability-measures"><span class="toc-section-number">5.1.4</span> Equivalent Probability Measures</a></li>
+<li><a href="arb-free-pricing.html#the-impact-of-interest-rate"><span class="toc-section-number">5.1.5</span> The Impact of Interest Rate</a></li>
+<li><a href="arb-free-pricing.html#trading-strategy-and-dynamic-completeness"><span class="toc-section-number">5.1.6</span> Trading Strategy and Dynamic Completeness</a></li>
+<li><a href="arb-free-pricing.html#discounted-asset-prices-as-martingales"><span class="toc-section-number">5.1.7</span> Discounted Asset Prices as Martingales</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="binomial.html#binomial"><span class="toc-section-number">4</span> Risk-Neutral Pricing in a Binomial Framework</a>
+<li class="has-sub"><a href="binomial.html#binomial"><span class="toc-section-number">6</span> Risk-Neutral Pricing in a Binomial Framework</a>
 <ul>
-<li class="has-sub"><a href="binomial.html#introduction"><span class="toc-section-number">4.1</span> Introduction</a>
+<li class="has-sub"><a href="binomial.html#introduction-1"><span class="toc-section-number">6.1</span> Introduction</a>
 <ul>
-<li><a href="binomial.html#subsec:binomial"><span class="toc-section-number">4.1.1</span> The Binomial Model for Stocks</a></li>
+<li><a href="binomial.html#subsec:binomial"><span class="toc-section-number">6.1.1</span> The Binomial Model for Stocks</a></li>
 </ul></li>
-<li><a href="binomial.html#pricing-with-arrow-debreu-securities"><span class="toc-section-number">4.2</span> Pricing With Arrow-Debreu Securities</a></li>
-<li><a href="binomial.html#multi-period-binomial-model"><span class="toc-section-number">4.3</span> Multi-Period Binomial Model</a></li>
-<li><a href="binomial.html#american-exercise"><span class="toc-section-number">4.4</span> American Exercise</a></li>
-<li class="has-sub"><a href="binomial.html#calibration-of-the-binomial-model"><span class="toc-section-number">4.5</span> Calibration of the Binomial Model</a>
+<li><a href="binomial.html#pricing-with-arrow-debreu-securities"><span class="toc-section-number">6.2</span> Pricing With Arrow-Debreu Securities</a></li>
+<li><a href="binomial.html#multi-period-binomial-model"><span class="toc-section-number">6.3</span> Multi-Period Binomial Model</a></li>
+<li><a href="binomial.html#american-exercise"><span class="toc-section-number">6.4</span> American Exercise</a></li>
+<li class="has-sub"><a href="binomial.html#calibration-of-the-binomial-model"><span class="toc-section-number">6.5</span> Calibration of the Binomial Model</a>
 <ul>
-<li><a href="binomial.html#tree-geometry"><span class="toc-section-number">4.5.1</span> Tree Geometry</a></li>
+<li><a href="binomial.html#tree-geometry"><span class="toc-section-number">6.5.1</span> Tree Geometry</a></li>
 </ul></li>
 </ul></li>
-<li><a href="stability-of-the-binomial-model.html#stability-of-the-binomial-model"><span class="toc-section-number">5</span> Stability of the Binomial Model</a></li>
-<li class="has-sub"><a href="sec:trinomial.html#sec:trinomial"><span class="toc-section-number">6</span> Trinomial Models</a>
+<li><a href="stability-of-the-binomial-model.html#stability-of-the-binomial-model"><span class="toc-section-number">7</span> Stability of the Binomial Model</a></li>
+<li class="has-sub"><a href="sec:trinomial.html#sec:trinomial"><span class="toc-section-number">8</span> Trinomial Models</a>
 <ul>
-<li><a href="sec:trinomial.html#the-trinomial-tree"><span class="toc-section-number">6.1</span> The Trinomial Tree</a></li>
+<li><a href="sec:trinomial.html#the-trinomial-tree"><span class="toc-section-number">8.1</span> The Trinomial Tree</a></li>
 </ul></li>
 <li class="part"><span><b>Derivatives in the Black-Scholes Framework</b></span></li>
-<li class="has-sub"><a href="pricing-with-black-scholes.html#pricing-with-black-scholes"><span class="toc-section-number">7</span> Pricing with Black-Scholes</a>
+<li class="has-sub"><a href="pricing-with-black-scholes.html#pricing-with-black-scholes"><span class="toc-section-number">9</span> Pricing with Black-Scholes</a>
 <ul>
-<li><a href="pricing-with-black-scholes.html#relationships-among-greeks"><span class="toc-section-number">7.1</span> Relationships Among Greeks</a></li>
+<li><a href="pricing-with-black-scholes.html#relationships-among-greeks"><span class="toc-section-number">9.1</span> Relationships Among Greeks</a></li>
 </ul></li>
-<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#applicability-of-the-black-scholes-model"><span class="toc-section-number">8</span> Applicability of the Black-Scholes Model</a>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#applicability-of-the-black-scholes-model"><span class="toc-section-number">10</span> Applicability of the Black-Scholes Model</a>
 <ul>
-<li><a href="applicability-of-the-black-scholes-model.html#self-financing-replicating-portfolio"><span class="toc-section-number">8.1</span> Self-Financing Replicating Portfolio</a></li>
-<li><a href="applicability-of-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging"><span class="toc-section-number">8.2</span> Hedging Error due to Discrete Hedging</a></li>
-<li><a href="applicability-of-the-black-scholes-model.html#error-due-to-unknown-volatility"><span class="toc-section-number">8.3</span> Error due to Unknown Volatility</a></li>
-<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#second-order-hedging"><span class="toc-section-number">8.4</span> Second-Order Hedging</a>
+<li><a href="applicability-of-the-black-scholes-model.html#self-financing-replicating-portfolio"><span class="toc-section-number">10.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging"><span class="toc-section-number">10.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#error-due-to-unknown-volatility"><span class="toc-section-number">10.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#second-order-hedging"><span class="toc-section-number">10.4</span> Second-Order Hedging</a>
 <ul>
-<li><a href="applicability-of-the-black-scholes-model.html#gamma-smoothing"><span class="toc-section-number">8.4.1</span> Gamma Smoothing</a></li>
-<li><a href="applicability-of-the-black-scholes-model.html#dynamic-delta-gamma-hedge"><span class="toc-section-number">8.4.2</span> Dynamic Delta-Gamma hedge</a></li>
-</ul></li>
-</ul></li>
-<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#price-and-greeks-in-the-black-scholes-model"><span class="toc-section-number">9</span> Price and Greeks in the Black-Scholes Model</a>
-<ul>
-<li><a href="price-and-greeks-in-the-black-scholes-model.html#solving-the-pricing-equation"><span class="toc-section-number">9.1</span> Solving the Pricing Equation</a></li>
-<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#an-option-dashboard"><span class="toc-section-number">9.2</span> An Option Dashboard</a>
-<ul>
-<li><a href="price-and-greeks-in-the-black-scholes-model.html#vanilla-option"><span class="toc-section-number">9.2.1</span> Vanilla Option</a></li>
-<li><a href="price-and-greeks-in-the-black-scholes-model.html#binary-option"><span class="toc-section-number">9.2.2</span> Binary Option</a></li>
-<li><a href="price-and-greeks-in-the-black-scholes-model.html#barrier-option"><span class="toc-section-number">9.2.3</span> Barrier Option</a></li>
-<li><a href="price-and-greeks-in-the-black-scholes-model.html#asian-option"><span class="toc-section-number">9.2.4</span> Asian Option</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#gamma-smoothing"><span class="toc-section-number">10.4.1</span> Gamma Smoothing</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#dynamic-delta-gamma-hedge"><span class="toc-section-number">10.4.2</span> Dynamic Delta-Gamma hedge</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-hedging-with-the-black-scholes-model"><span class="toc-section-number">10</span> Dynamic Hedging with the Black-Scholes Model</a>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#price-and-greeks-in-the-black-scholes-model"><span class="toc-section-number">11</span> Price and Greeks in the Black-Scholes Model</a>
 <ul>
-<li><a href="dynamic-hedging-with-the-black-scholes-model.html#self-financing-replicating-portfolio-1"><span class="toc-section-number">10.1</span> Self-Financing Replicating Portfolio</a></li>
-<li><a href="dynamic-hedging-with-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging-1"><span class="toc-section-number">10.2</span> Hedging Error due to Discrete Hedging</a></li>
-<li><a href="dynamic-hedging-with-the-black-scholes-model.html#error-due-to-unknown-volatility-1"><span class="toc-section-number">10.3</span> Error due to Unknown Volatility</a></li>
-<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#second-order-hedging-1"><span class="toc-section-number">10.4</span> Second-Order Hedging</a>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#solving-the-pricing-equation"><span class="toc-section-number">11.1</span> Solving the Pricing Equation</a></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#an-option-dashboard"><span class="toc-section-number">11.2</span> An Option Dashboard</a>
 <ul>
-<li><a href="dynamic-hedging-with-the-black-scholes-model.html#gamma-smoothing-1"><span class="toc-section-number">10.4.1</span> Gamma Smoothing</a></li>
-<li><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-delta-gamma-hedge-1"><span class="toc-section-number">10.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#vanilla-option"><span class="toc-section-number">11.2.1</span> Vanilla Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#binary-option"><span class="toc-section-number">11.2.2</span> Binary Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#barrier-option"><span class="toc-section-number">11.2.3</span> Barrier Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#asian-option"><span class="toc-section-number">11.2.4</span> Asian Option</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#dynamic-hedging-in-the-black-scholes-framework"><span class="toc-section-number">11</span> Dynamic Hedging in the Black-Scholes Framework</a>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-hedging-with-the-black-scholes-model"><span class="toc-section-number">12</span> Dynamic Hedging with the Black-Scholes Model</a>
 <ul>
-<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#self-financing-replicating-portfolio-2"><span class="toc-section-number">11.1</span> Self-Financing Replicating Portfolio</a>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#self-financing-replicating-portfolio-1"><span class="toc-section-number">12.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging-1"><span class="toc-section-number">12.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#error-due-to-unknown-volatility-1"><span class="toc-section-number">12.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#second-order-hedging-1"><span class="toc-section-number">12.4</span> Second-Order Hedging</a>
 <ul>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#continuous-rebalancing"><span class="toc-section-number">11.1.1</span> Continuous rebalancing</a></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#discreet-rebalancing"><span class="toc-section-number">11.1.2</span> Discreet rebalancing</a></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#illustration-1"><span class="toc-section-number">11.1.3</span> Illustration</a></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#a-more-realistic-example"><span class="toc-section-number">11.1.4</span> A More Realistic Example</a></li>
-</ul></li>
-<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-discrete-hedging-2"><span class="toc-section-number">11.2</span> Hedging Error due to Discrete Hedging</a>
-<ul>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test"><span class="toc-section-number">11.2.1</span> Empirical Test</a></li>
-</ul></li>
-<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-transaction-cost"><span class="toc-section-number">11.3</span> Hedging Error due to Transaction Cost</a>
-<ul>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test-1"><span class="toc-section-number">11.3.1</span> Empirical Test</a></li>
-</ul></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-unknown-volatility"><span class="toc-section-number">11.4</span> Hedging Error due to Unknown Volatility</a></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#conclusion"><span class="toc-section-number">11.5</span> Conclusion</a></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#second-order-hedging-2"><span class="toc-section-number">11.6</span> Second-Order Hedging</a></li>
-</ul></li>
-<li class="has-sub"><a href="the-implied-volatility.html#the-implied-volatility"><span class="toc-section-number">12</span> The implied volatility</a>
-<ul>
-<li><a href="the-implied-volatility.html#market-data"><span class="toc-section-number">12.1</span> Market Data</a></li>
-<li class="has-sub"><a href="the-implied-volatility.html#calculation-of-implied-volatility"><span class="toc-section-number">12.2</span> Calculation of implied volatility</a>
-<ul>
-<li><a href="the-implied-volatility.html#newtons-method"><span class="toc-section-number">12.2.1</span> Newton’s method</a></li>
-<li><a href="the-implied-volatility.html#implied-volatility-by-newtons-method"><span class="toc-section-number">12.2.2</span> Implied Volatility by Newton’s Method</a></li>
-<li><a href="the-implied-volatility.html#secant-method"><span class="toc-section-number">12.2.3</span> Secant Method</a></li>
-<li><a href="the-implied-volatility.html#jaeckels-method"><span class="toc-section-number">12.2.4</span> Jaeckel’s method</a></li>
-<li><a href="the-implied-volatility.html#normalized-call-price-as-a-function-of-sigma"><span class="toc-section-number">12.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></a></li>
-<li><a href="the-implied-volatility.html#transformed-objective-function"><span class="toc-section-number">12.2.6</span> Transformed objective function</a></li>
-<li><a href="the-implied-volatility.html#impact-of-dividends"><span class="toc-section-number">12.2.7</span> Impact of Dividends</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#gamma-smoothing-1"><span class="toc-section-number">12.4.1</span> Gamma Smoothing</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-delta-gamma-hedge-1"><span class="toc-section-number">12.4.2</span> Dynamic Delta-Gamma hedge</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-pricing-and-hedging"><span class="toc-section-number">13</span> Vanna-Volga Pricing and Hedging</a>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#dynamic-hedging-in-the-black-scholes-framework"><span class="toc-section-number">13</span> Dynamic Hedging in the Black-Scholes Framework</a>
 <ul>
-<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#principle"><span class="toc-section-number">13.1</span> Principle</a>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#self-financing-replicating-portfolio-2"><span class="toc-section-number">13.1</span> Self-Financing Replicating Portfolio</a>
 <ul>
-<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging"><span class="toc-section-number">13.1.1</span> Vanna-Volga Dynamic Hedging</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#continuous-rebalancing"><span class="toc-section-number">13.1.1</span> Continuous rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#discreet-rebalancing"><span class="toc-section-number">13.1.2</span> Discreet rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#illustration"><span class="toc-section-number">13.1.3</span> Illustration</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#a-more-realistic-example"><span class="toc-section-number">13.1.4</span> A More Realistic Example</a></li>
 </ul></li>
-<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#implementation"><span class="toc-section-number">13.2</span> Implementation</a>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-discrete-hedging-2"><span class="toc-section-number">13.2</span> Hedging Error due to Discrete Hedging</a>
 <ul>
-<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging-1"><span class="toc-section-number">13.2.1</span> Vanna-Volga Dynamic Hedging</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test"><span class="toc-section-number">13.2.1</span> Empirical Test</a></li>
 </ul></li>
-<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#illustrations"><span class="toc-section-number">13.3</span> Illustrations</a>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-transaction-cost"><span class="toc-section-number">13.3</span> Hedging Error due to Transaction Cost</a>
 <ul>
-<li><a href="vanna-volga-pricing-and-hedging.html#volatility-interpolation"><span class="toc-section-number">13.3.1</span> Volatility Interpolation</a></li>
-<li><a href="vanna-volga-pricing-and-hedging.html#pricing-a-binary-option"><span class="toc-section-number">13.3.2</span> Pricing a Binary Option</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test-1"><span class="toc-section-number">13.3.1</span> Empirical Test</a></li>
+</ul></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-unknown-volatility"><span class="toc-section-number">13.4</span> Hedging Error due to Unknown Volatility</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#conclusion"><span class="toc-section-number">13.5</span> Conclusion</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#second-order-hedging-2"><span class="toc-section-number">13.6</span> Second-Order Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-implied-volatility.html#the-implied-volatility"><span class="toc-section-number">14</span> The implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#market-data"><span class="toc-section-number">14.1</span> Market Data</a></li>
+<li class="has-sub"><a href="the-implied-volatility.html#calculation-of-implied-volatility"><span class="toc-section-number">14.2</span> Calculation of implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#newtons-method"><span class="toc-section-number">14.2.1</span> Newton’s method</a></li>
+<li><a href="the-implied-volatility.html#implied-volatility-by-newtons-method"><span class="toc-section-number">14.2.2</span> Implied Volatility by Newton’s Method</a></li>
+<li><a href="the-implied-volatility.html#secant-method"><span class="toc-section-number">14.2.3</span> Secant Method</a></li>
+<li><a href="the-implied-volatility.html#jaeckels-method"><span class="toc-section-number">14.2.4</span> Jaeckel’s method</a></li>
+<li><a href="the-implied-volatility.html#normalized-call-price-as-a-function-of-sigma"><span class="toc-section-number">14.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></a></li>
+<li><a href="the-implied-volatility.html#transformed-objective-function"><span class="toc-section-number">14.2.6</span> Transformed objective function</a></li>
+<li><a href="the-implied-volatility.html#impact-of-dividends"><span class="toc-section-number">14.2.7</span> Impact of Dividends</a></li>
 </ul></li>
 </ul></li>
-<li><a href="bibliography.html#bibliography"><span class="toc-section-number">14</span> Bibliography</a></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-pricing-and-hedging"><span class="toc-section-number">15</span> Vanna-Volga Pricing and Hedging</a>
+<ul>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#principle"><span class="toc-section-number">15.1</span> Principle</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging"><span class="toc-section-number">15.1.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#implementation"><span class="toc-section-number">15.2</span> Implementation</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging-1"><span class="toc-section-number">15.2.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#illustrations"><span class="toc-section-number">15.3</span> Illustrations</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#volatility-interpolation"><span class="toc-section-number">15.3.1</span> Volatility Interpolation</a></li>
+<li><a href="vanna-volga-pricing-and-hedging.html#pricing-a-binary-option"><span class="toc-section-number">15.3.2</span> Pricing a Binary Option</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Fixed Income</b></span></li>
+<li class="has-sub"><a href="fi:elementary.html#fi:elementary"><span class="toc-section-number">16</span> Elementary Fixed Income Calculations</a>
+<ul>
+<li><a href="fi:elementary.html#bond-pricing"><span class="toc-section-number">16.1</span> Bond Pricing</a></li>
+<li><a href="fi:elementary.html#the-price-yield-curves"><span class="toc-section-number">16.2</span> The Price-Yield Curves</a></li>
+<li class="has-sub"><a href="fi:elementary.html#basic-measures-of-interest-rate-risk"><span class="toc-section-number">16.3</span> Basic Measures of Interest Rate Risk</a>
+<ul>
+<li><a href="fi:elementary.html#variation"><span class="toc-section-number">16.3.1</span> Variation</a></li>
+<li><a href="fi:elementary.html#approximate-portfolio-yield"><span class="toc-section-number">16.3.2</span> Approximate Portfolio Yield</a></li>
+<li><a href="fi:elementary.html#sensitivity"><span class="toc-section-number">16.3.3</span> Sensitivity</a></li>
+<li><a href="fi:elementary.html#modified-duration-of-a-portfolio"><span class="toc-section-number">16.3.4</span> Modified Duration of a Portfolio</a></li>
+<li><a href="fi:elementary.html#duration"><span class="toc-section-number">16.3.5</span> Duration</a></li>
+<li><a href="fi:elementary.html#sec:duration-of-a-portfolio"><span class="toc-section-number">16.3.6</span> Duration of a Portfolio</a></li>
+</ul></li>
+<li><a href="fi:elementary.html#bond-clean-and-dirty-price"><span class="toc-section-number">16.4</span> Bond Clean and Dirty Price</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-term-structure-of-interest-rates.html#the-term-structure-of-interest-rates"><span class="toc-section-number">17</span> The Term Structure of Interest Rates</a>
+<ul>
+<li><a href="the-term-structure-of-interest-rates.html#term-structure-shapes"><span class="toc-section-number">17.1</span> Term Structure Shapes</a></li>
+<li><a href="the-term-structure-of-interest-rates.html#building-a-zero-coupon-bond-curve"><span class="toc-section-number">17.2</span> Building a Zero-Coupon Bond Curve</a></li>
+<li><a href="the-term-structure-of-interest-rates.html#functional-forms-for-the-zero-coupon-curve"><span class="toc-section-number">17.3</span> Functional forms for the zero-coupon curve</a></li>
+</ul></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#simple-interest-rate-derivatives"><span class="toc-section-number">18</span> Simple Interest Rate Derivatives</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#spot-and-forward-interest-rates"><span class="toc-section-number">18.1</span> Spot and Forward Interest Rates</a></li>
+<li><a href="simple-interest-rate-derivatives.html#forward-rate-agreement-fra"><span class="toc-section-number">18.2</span> Forward Rate Agreement (FRA)</a></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#t-bill-futures"><span class="toc-section-number">18.3</span> T-Bill Futures</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#arbitrage"><span class="toc-section-number">18.3.1</span> Arbitrage</a></li>
+<li><a href="simple-interest-rate-derivatives.html#quotes"><span class="toc-section-number">18.3.2</span> Quotes</a></li>
+</ul></li>
+<li><a href="simple-interest-rate-derivatives.html#euro-currency-futures"><span class="toc-section-number">18.4</span> Euro-Currency Futures</a></li>
+<li><a href="simple-interest-rate-derivatives.html#eurodollar-rate-versus-forward-rate"><span class="toc-section-number">18.5</span> Eurodollar Rate Versus Forward Rate</a></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#convexity-adjustment"><span class="toc-section-number">18.6</span> Convexity Adjustment</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#special-case-of-natural-time-lag"><span class="toc-section-number">18.6.1</span> Special Case of Natural Time Lag</a></li>
+<li><a href="simple-interest-rate-derivatives.html#convexity-adjustment-examples"><span class="toc-section-number">18.6.2</span> Convexity Adjustment Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="bond-futures.html#bond-futures"><span class="toc-section-number">19</span> Bond Futures</a>
+<ul>
+<li><a href="bond-futures.html#forward-price"><span class="toc-section-number">19.1</span> Forward Price</a></li>
+<li><a href="bond-futures.html#delivery-against-the-futures-contract"><span class="toc-section-number">19.2</span> Delivery against the Futures contract</a></li>
+<li><a href="bond-futures.html#the-conversion-factor"><span class="toc-section-number">19.3</span> The Conversion Factor</a></li>
+<li><a href="bond-futures.html#determination-of-the-cheapest-to-deliver"><span class="toc-section-number">19.4</span> Determination of the Cheapest to Deliver</a></li>
+<li><a href="bond-futures.html#implied-repo-rate"><span class="toc-section-number">19.5</span> Implied Repo Rate</a></li>
+<li><a href="bond-futures.html#the-delivery-option"><span class="toc-section-number">19.6</span> The Delivery Option</a></li>
+<li><a href="bond-futures.html#ir-sensitivity-of-bund-futures"><span class="toc-section-number">19.7</span> IR sensitivity of Bund Futures</a></li>
+<li><a href="bond-futures.html#cash-carry-arbitrage"><span class="toc-section-number">19.8</span> Cash-Carry Arbitrage</a></li>
+<li><a href="bond-futures.html#hedging-a-bond-with-a-euro-bund-contract"><span class="toc-section-number">19.9</span> Hedging a Bond with a Euro-Bund Contract</a></li>
+</ul></li>
+<li class="has-sub"><a href="libor-swaps.html#libor-swaps"><span class="toc-section-number">20</span> Libor Swaps</a>
+<ul>
+<li><a href="libor-swaps.html#ir-swap-pricing"><span class="toc-section-number">20.1</span> IR Swap Pricing</a></li>
+</ul></li>
+<li class="has-sub"><a href="fixed-income-risk-management.html#fixed-income-risk-management"><span class="toc-section-number">21</span> Fixed Income Risk Management</a>
+<ul>
+<li><a href="fixed-income-risk-management.html#immunization"><span class="toc-section-number">21.1</span> Immunization</a></li>
+<li><a href="fixed-income-risk-management.html#dedication"><span class="toc-section-number">21.2</span> Dedication</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-vasicek-model.html#the-vasicek-model"><span class="toc-section-number">22</span> The Vasicek Model</a>
+<ul>
+<li><a href="the-vasicek-model.html#derivatives-with-non-traded-underlying-asset"><span class="toc-section-number">22.1</span> Derivatives with Non Traded Underlying Asset</a></li>
+<li><a href="the-vasicek-model.html#the-market-price-of-interest-rate-risk"><span class="toc-section-number">22.2</span> The Market Price of Interest Rate Risk</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-model-of-hull-white.html#the-model-of-hull-white"><span class="toc-section-number">23</span> The Model of Hull &amp; White</a>
+<ul>
+<li><a href="the-model-of-hull-white.html#moments-of-x_t-under-a-ou-process"><span class="toc-section-number">23.1</span> Moments of <span class="math inline">\(x_t\)</span> under a OU Process</a></li>
+<li class="has-sub"><a href="the-model-of-hull-white.html#the-hull-white-trinomial-model"><span class="toc-section-number">23.2</span> The Hull &amp; White Trinomial Model</a>
+<ul>
+<li><a href="the-model-of-hull-white.html#step-1"><span class="toc-section-number">23.2.1</span> Step 1</a></li>
+<li><a href="the-model-of-hull-white.html#step-2"><span class="toc-section-number">23.2.2</span> Step 2</a></li>
+</ul></li>
+<li><a href="the-model-of-hull-white.html#generalization"><span class="toc-section-number">23.3</span> Generalization</a></li>
+</ul></li>
+<li class="has-sub"><a href="deterministic-time-varying-volatility.html#deterministic-time-varying-volatility"><span class="toc-section-number">24</span> Deterministic Time-Varying Volatility</a>
+<ul>
+<li><a href="deterministic-time-varying-volatility.html#gabillons-model"><span class="toc-section-number">24.1</span> Gabillon’s Model</a></li>
+<li><a href="deterministic-time-varying-volatility.html#deterministic-volatility-in-a-seasonal-market"><span class="toc-section-number">24.2</span> Deterministic Volatility in a Seasonal Market</a></li>
+</ul></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#pricing-under-an-objective-density"><span class="toc-section-number">25</span> Pricing under an Objective Density</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#conditional-entropy"><span class="toc-section-number">25.1</span> Conditional Entropy</a></li>
+<li><a href="pricing-under-an-objective-density.html#relative-entropy-of-uniform-densities"><span class="toc-section-number">25.2</span> Relative Entropy of Uniform Densities</a></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#computation-of-a-risk-neutral-density"><span class="toc-section-number">25.3</span> Computation of a Risk-neutral Density</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#calculation-of-risk-neutral-density-p"><span class="toc-section-number">25.3.1</span> Calculation of Risk-Neutral Density <span class="math inline">\(P\)</span></a></li>
+<li><a href="pricing-under-an-objective-density.html#matching-market-data"><span class="toc-section-number">25.3.2</span> Matching Market Data</a></li>
+<li><a href="pricing-under-an-objective-density.html#solution"><span class="toc-section-number">25.3.3</span> Solution</a></li>
+<li><a href="pricing-under-an-objective-density.html#solution-1"><span class="toc-section-number">25.3.4</span> Solution</a></li>
+<li><a href="pricing-under-an-objective-density.html#illustration-1"><span class="toc-section-number">25.3.5</span> Illustration</a></li>
+<li><a href="pricing-under-an-objective-density.html#a-lottery-ticket"><span class="toc-section-number">25.3.6</span> A Lottery Ticket…</a></li>
+</ul></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#monte-carlo-pricing-with-historical-paths"><span class="toc-section-number">25.4</span> Monte-Carlo Pricing with Historical Paths</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#sec:model"><span class="toc-section-number">25.4.1</span> The Model</a></li>
+<li><a href="pricing-under-an-objective-density.html#incorporation-of-bid-ask-spread"><span class="toc-section-number">25.4.2</span> Incorporation of bid-ask spread</a></li>
+<li><a href="pricing-under-an-objective-density.html#extension-to-arbitrary-cash-flows"><span class="toc-section-number">25.4.3</span> Extension to arbitrary cash flows</a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references">References</a></li>
 </ul>
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="vanna-volga-pricing-and-hedging" class="section level1" number="13">
-<h1><span class="header-section-number">13</span> Vanna-Volga Pricing and Hedging</h1>
+<div id="vanna-volga-pricing-and-hedging" class="section level1" number="15">
+<h1><span class="header-section-number">15</span> Vanna-Volga Pricing and Hedging</h1>
 <pre><code>## Loading required package: timeDate</code></pre>
 <pre><code>## Loading required package: timeSeries</code></pre>
 <pre><code>## Loading required package: fBasics</code></pre>
@@ -384,8 +467,8 @@ very popular for Foreign Exchange derivatives, but beyond that it
 illustrates an important principle of asset pricing, which is to relate
 the price of a complex derivative to the known price of simpler, liquid
 instruments.</p>
-<div id="principle" class="section level2" number="13.1">
-<h2><span class="header-section-number">13.1</span> Principle</h2>
+<div id="principle" class="section level2" number="15.1">
+<h2><span class="header-section-number">15.1</span> Principle</h2>
 <p>Assume a Ito dynamic for volatility, and consider a derivative security
 <span class="math inline">\(O(t)\)</span>, which is now subject to two sources of randomness: the
 underlying asset <span class="math inline">\(S_t\)</span> and the volatility <span class="math inline">\(\sigma_t\)</span>. An extended
@@ -420,10 +503,10 @@ have, for all securities function of <span class="math inline">\(S_t\)</span>:</
 <p>For each asset, <span class="math inline">\(\frac{\partial f}{\partial S}=0\)</span>, and we get:</p>
 <p><span class="math display">\[\frac{\partial f}{\partial t} dt + \frac{1}{2} \frac{\partial^2 f}{\partial S^2} = rf dt\]</span></p>
 <p>The hedged portfolio is thus riskless:</p>
-<p><span class="math display">\[\begin{aligned}
+<p><span class="math display" id="eq:vv-1">\[\begin{aligned}
   \lefteqn{dO(t,K) - \Delta_t dS_t - \sum_{i=1}^3 x_i dC_i(t,K_i) =} \nonumber \\
   &amp;&amp; r \left[ O(t,K) - \sum_i x_i C_i(t,K_i) \right] dt
-\label{eq:vv-1}\end{aligned}\]</span></p>
+\tag{15.1}\end{aligned}\]</span></p>
 <p>In summary, we can still have a locally perfect hedge when volatility is
 stochastic, as long as the prices <span class="math inline">\(O(t,K)\)</span> and <span class="math inline">\(C_I(t,K_i)\)</span> follow the
 Black-Scholes equation.</p>
@@ -437,15 +520,15 @@ volatility <span class="math inline">\(\sigma_t\)</span>. In practice, we observ
 <span class="math inline">\(C_i^M(t,K_i)\)</span> that differ from the theoretical Black-Scholes prices
 <span class="math inline">\(C_i(t,K_i)\)</span>. The hedge described above must be implemented with options
 traded at market price. What are the implications for the price
-<span class="math inline">\(O(t,K)\)</span>? An approximate argument is presented below; see <span class="citation">Shkolnikov (<label for="tufte-mn-9" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-9" class="margin-toggle">2009<span class="marginnote">Shkolnikov, Yuriy. 2009. <span>“<span class="nocase">Generalized Vanna-Volga Method and its Applications</span>.”</span> <em>NumeriX Research Paper</em>. <a href="http://ssrn.com/abstract=1186383">http://ssrn.com/abstract=1186383</a>.</span>)</span>
+<span class="math inline">\(O(t,K)\)</span>? An approximate argument is presented below; see <span class="citation">Shkolnikov (<label for="tufte-mn-10" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-10" class="margin-toggle">2009<span class="marginnote">Shkolnikov, Yuriy. 2009. <span>“<span class="nocase">Generalized Vanna-Volga Method and its Applications</span>.”</span> <em>NumeriX Research Paper</em>. <a href="http://ssrn.com/abstract=1186383">http://ssrn.com/abstract=1186383</a>.</span>)</span>
 for a rigorous treatment.</p>
 <p>Consider a hedged position at time <span class="math inline">\(T-\delta t\)</span>: long the exotic
 derivative <span class="math inline">\(O\)</span> with market value <span class="math inline">\(O^M(t)\)</span> and short the hedge portfolio.
 The value of the hedged position at expiry is:</p>
 <p><span class="math display">\[W_T = O(T) - \Delta_t S_T - \sum_i x_i C_i(T) - r \left(O^M(t) - \sum_i x_i C^M_i(t) - \Delta S_t \right) \delta t\]</span></p>
 <p>Set
-<span class="math display">\[O^M(t,K) = O(t,K) + \sum_i x_i \left[ C^M_i(t,K_i) - C_i(t,K_i) \right]
-\label{eq:vv-2}\]</span></p>
+<span class="math display" id="eq:vv-2">\[O^M(t,K) = O(t,K) + \sum_i x_i \left[ C^M_i(t,K_i) - C_i(t,K_i) \right]
+\tag{15.2}\]</span></p>
 <p>to obtain <span class="math inline">\(W_T = 0\)</span>.</p>
 <p>In summary, if we have a wealth <span class="math inline">\(O^M(t,K)\)</span> defined by <span class="math display">\[eq:vv-2\]</span> at
 time <span class="math inline">\(T-\delta t\)</span>, then we can replicate the payoff <span class="math inline">\(O(T,K)\)</span> at expiry,
@@ -455,8 +538,8 @@ interval until <span class="math inline">\(t=0\)</span>.</p>
 <p>We have both a hedging strategy and a process for adjusting the price of
 any derivative to account for the smile. let’s now consider some
 implementation details.</p>
-<div id="vanna-volga-dynamic-hedging" class="section level3" number="13.1.1">
-<h3><span class="header-section-number">13.1.1</span> Vanna-Volga Dynamic Hedging</h3>
+<div id="vanna-volga-dynamic-hedging" class="section level3" number="15.1.1">
+<h3><span class="header-section-number">15.1.1</span> Vanna-Volga Dynamic Hedging</h3>
 <p><span class="math display">\[\begin{aligned}
 O(T,K) &amp;= &amp;O^M(t,K) + \Delta_t (S_T-S_t) \\
 &amp;+&amp; \sum_i x_i \left[C_i(T, K_i) - C_i^M(t, K_i) \right] \\
@@ -465,8 +548,8 @@ O(T,K) &amp;= &amp;O^M(t,K) + \Delta_t (S_T-S_t) \\
 the payoff <span class="math inline">\(O(T,K)\)</span> at expiry, with a hedge at market price.</p>
 </div>
 </div>
-<div id="implementation" class="section level2" number="13.2">
-<h2><span class="header-section-number">13.2</span> Implementation</h2>
+<div id="implementation" class="section level2" number="15.2">
+<h2><span class="header-section-number">15.2</span> Implementation</h2>
 <p>The weights <span class="math inline">\(x_i\)</span> are obtained by solving the system of linear
 equations:</p>
 <p><span class="math display">\[\begin{aligned}
@@ -474,7 +557,7 @@ equations:</p>
 \frac{\partial^2 O}{\partial \sigma^2} &amp;=&amp; \sum_i x_i \frac{\partial^2 C_i}{\partial \sigma^2} \\
 \frac{\partial^2 O}{\partial S \partial \sigma} &amp;=&amp; \sum_i x_i \frac{\partial^2 C_i}{\partial S \partial \sigma}\end{aligned}\]</span></p>
 <p>or, <span class="math display">\[b = Ax
-\label{eq:A-matrix}\]</span></p>
+(\#eq:A-matrix)\]</span></p>
 <p>Since the result of the previous section holds for any derivative that
 verifies the Black-Scholes equation, we can choose the benchmark
 securities <span class="math inline">\(C_i(t,K_i)\)</span> as we see fit.</p>
@@ -513,11 +596,11 @@ smile cost into account, are as follows:</p>
 <li><p>solve for <span class="math inline">\(x\)</span>: <span class="math display">\[b = Ax\]</span></p></li>
 <li><p>the corrected price for <span class="math inline">\(O\)</span> is:
 <span class="math display" id="eq:vv-4">\[O^M(t,K) = O^{BS}(t,K) + \sum_{i=2}^3 x_i \left( C_i^M(t) - C_i^{BS}(t) \right)
-        \tag{13.1}\]</span>
+        \tag{15.3}\]</span>
 where <span class="math inline">\(C^M_i(t)\)</span> is the market price and
 <span class="math inline">\(C^{BS}_i(t)\)</span> the Black-Scholes price (i.e. with flat volatility).</p></li>
 </ol>
-<p>The term in <span class="math inline">\(x_1\)</span> is omitted in <a href="vanna-volga-pricing-and-hedging.html#eq:vv-4">(13.1)</a> since, by definition,
+<p>The term in <span class="math inline">\(x_1\)</span> is omitted in <a href="vanna-volga-pricing-and-hedging.html#eq:vv-4">(15.3)</a> since, by definition,
 the Black-Scholes price and market price of an ATM straddle are
 identical.</p>
 <p>Neglecting the off diagonal terms in <span class="math inline">\(A\)</span>, a simplified procedure is to
@@ -525,8 +608,8 @@ estimate <span class="math inline">\(x_i\)</span> by: <span class="math display"
   x_2 &amp;=&amp; \frac{\frac{\partial^2 O}{\partial \sigma^2}}{\frac{\partial^2 C_2}{\partial \sigma^2}} \\
   x_3 &amp;=&amp;  \frac{\frac{\partial^2 O}{\partial \sigma \partial S}}{\frac{\partial^2 C_3}{\partial \sigma \partial S}}\end{aligned}\]</span></p>
 <p>In practice, the weights <span class="math inline">\(x_i\)</span> are scaled to better fit market prices.</p>
-<div id="vanna-volga-dynamic-hedging-1" class="section level3" number="13.2.1">
-<h3><span class="header-section-number">13.2.1</span> Vanna-Volga Dynamic Hedging</h3>
+<div id="vanna-volga-dynamic-hedging-1" class="section level3" number="15.2.1">
+<h3><span class="header-section-number">15.2.1</span> Vanna-Volga Dynamic Hedging</h3>
 <p>Neglecting the off diagonal terms in <span class="math inline">\(A\)</span>, a simplified procedure is to
 estimate <span class="math inline">\(x_i\)</span> by: <span class="math display">\[\begin{aligned}
   x_2 &amp;=&amp; \frac{\frac{\partial^2 O}{\partial \sigma^2}}{\frac{\partial^2 C_2}{\partial \sigma^2}} \\
@@ -534,10 +617,10 @@ estimate <span class="math inline">\(x_i\)</span> by: <span class="math display"
 <p>In practice, the weights <span class="math inline">\(x_i\)</span> are scaled to better fit market prices.</p>
 </div>
 </div>
-<div id="illustrations" class="section level2" number="13.3">
-<h2><span class="header-section-number">13.3</span> Illustrations</h2>
-<div id="volatility-interpolation" class="section level3" number="13.3.1">
-<h3><span class="header-section-number">13.3.1</span> Volatility Interpolation</h3>
+<div id="illustrations" class="section level2" number="15.3">
+<h2><span class="header-section-number">15.3</span> Illustrations</h2>
+<div id="volatility-interpolation" class="section level3" number="15.3.1">
+<h3><span class="header-section-number">15.3.1</span> Volatility Interpolation</h3>
 <p>The simplest use of this method is volality interpolation. Given the ATM
 volatility and at two other strikes, we want to determine the volatility
 at an arbitrary strike <span class="math inline">\(K\)</span>.</p>
@@ -567,185 +650,185 @@ Interest rate is set to 0 for simplicity.</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="vanna-volga-pricing-and-hedging.html#cb192-1" aria-hidden="true" tabindex="-1"></a>  T <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb192-2"><a href="vanna-volga-pricing-and-hedging.html#cb192-2" aria-hidden="true" tabindex="-1"></a>  Spot <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb192-3"><a href="vanna-volga-pricing-and-hedging.html#cb192-3" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb192-4"><a href="vanna-volga-pricing-and-hedging.html#cb192-4" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb192-5"><a href="vanna-volga-pricing-and-hedging.html#cb192-5" aria-hidden="true" tabindex="-1"></a>  eps <span class="ot">&lt;-</span> .<span class="dv">001</span></span>
-<span id="cb192-6"><a href="vanna-volga-pricing-and-hedging.html#cb192-6" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
-<span id="cb192-7"><a href="vanna-volga-pricing-and-hedging.html#cb192-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb192-8"><a href="vanna-volga-pricing-and-hedging.html#cb192-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Benchmark data: (strike, volatility)</span></span>
-<span id="cb192-9"><a href="vanna-volga-pricing-and-hedging.html#cb192-9" aria-hidden="true" tabindex="-1"></a>  VolData <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">80</span>, .<span class="dv">32</span>), <span class="fu">c</span>(<span class="dv">100</span>, .<span class="dv">30</span>), <span class="fu">c</span>(<span class="dv">120</span>, .<span class="dv">315</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="vanna-volga-pricing-and-hedging.html#cb204-1" aria-hidden="true" tabindex="-1"></a>  T <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb204-2"><a href="vanna-volga-pricing-and-hedging.html#cb204-2" aria-hidden="true" tabindex="-1"></a>  Spot <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb204-3"><a href="vanna-volga-pricing-and-hedging.html#cb204-3" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb204-4"><a href="vanna-volga-pricing-and-hedging.html#cb204-4" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb204-5"><a href="vanna-volga-pricing-and-hedging.html#cb204-5" aria-hidden="true" tabindex="-1"></a>  eps <span class="ot">&lt;-</span> .<span class="dv">001</span></span>
+<span id="cb204-6"><a href="vanna-volga-pricing-and-hedging.html#cb204-6" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
+<span id="cb204-7"><a href="vanna-volga-pricing-and-hedging.html#cb204-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb204-8"><a href="vanna-volga-pricing-and-hedging.html#cb204-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Benchmark data: (strike, volatility)</span></span>
+<span id="cb204-9"><a href="vanna-volga-pricing-and-hedging.html#cb204-9" aria-hidden="true" tabindex="-1"></a>  VolData <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">80</span>, .<span class="dv">32</span>), <span class="fu">c</span>(<span class="dv">100</span>, .<span class="dv">30</span>), <span class="fu">c</span>(<span class="dv">120</span>, .<span class="dv">315</span>))</span></code></pre></div>
 <p>Define an array of pricing functions for the three benchmark
 instruments:</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="vanna-volga-pricing-and-hedging.html#cb193-1" aria-hidden="true" tabindex="-1"></a>  C <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb193-2"><a href="vanna-volga-pricing-and-hedging.html#cb193-2" aria-hidden="true" tabindex="-1"></a>         <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>VolData[[<span class="dv">1</span>]][<span class="dv">1</span>], <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price,</span>
-<span id="cb193-3"><a href="vanna-volga-pricing-and-hedging.html#cb193-3" aria-hidden="true" tabindex="-1"></a>         <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>VolData[[<span class="dv">2</span>]][<span class="dv">1</span>], <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price,</span>
-<span id="cb193-4"><a href="vanna-volga-pricing-and-hedging.html#cb193-4" aria-hidden="true" tabindex="-1"></a>         <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>VolData[[<span class="dv">3</span>]][<span class="dv">1</span>], <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price)</span></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="vanna-volga-pricing-and-hedging.html#cb205-1" aria-hidden="true" tabindex="-1"></a>  C <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb205-2"><a href="vanna-volga-pricing-and-hedging.html#cb205-2" aria-hidden="true" tabindex="-1"></a>         <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>VolData[[<span class="dv">1</span>]][<span class="dv">1</span>], <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price,</span>
+<span id="cb205-3"><a href="vanna-volga-pricing-and-hedging.html#cb205-3" aria-hidden="true" tabindex="-1"></a>         <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>VolData[[<span class="dv">2</span>]][<span class="dv">1</span>], <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price,</span>
+<span id="cb205-4"><a href="vanna-volga-pricing-and-hedging.html#cb205-4" aria-hidden="true" tabindex="-1"></a>         <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>VolData[[<span class="dv">3</span>]][<span class="dv">1</span>], <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price)</span></code></pre></div>
 <p>Next, define utility functions to compute the risk indicators, all by
 finite difference:</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="vanna-volga-pricing-and-hedging.html#cb194-1" aria-hidden="true" tabindex="-1"></a>  Vega <span class="ot">&lt;-</span> <span class="cf">function</span>(f, vol, <span class="at">spot=</span>Spot) (<span class="fu">f</span>(vol<span class="sc">+</span>eps, spot)<span class="sc">-</span><span class="fu">f</span>(vol<span class="sc">-</span>eps, spot))<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>eps)</span>
-<span id="cb194-2"><a href="vanna-volga-pricing-and-hedging.html#cb194-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb194-3"><a href="vanna-volga-pricing-and-hedging.html#cb194-3" aria-hidden="true" tabindex="-1"></a>  Vanna <span class="ot">&lt;-</span> <span class="cf">function</span>(f, vol, <span class="at">spot=</span>Spot) {</span>
-<span id="cb194-4"><a href="vanna-volga-pricing-and-hedging.html#cb194-4" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">Vega</span>(f, vol, spot<span class="sc">+</span><span class="dv">1</span>)<span class="sc">-</span><span class="fu">Vega</span>(f, vol, spot<span class="dv">-1</span>))<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb194-5"><a href="vanna-volga-pricing-and-hedging.html#cb194-5" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb194-6"><a href="vanna-volga-pricing-and-hedging.html#cb194-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb194-7"><a href="vanna-volga-pricing-and-hedging.html#cb194-7" aria-hidden="true" tabindex="-1"></a>  Volga <span class="ot">&lt;-</span> <span class="cf">function</span>(f, vol) {</span>
-<span id="cb194-8"><a href="vanna-volga-pricing-and-hedging.html#cb194-8" aria-hidden="true" tabindex="-1"></a>      (<span class="fu">Vega</span>(f,vol<span class="sc">+</span>eps)<span class="sc">-</span><span class="fu">Vega</span>(f,vol<span class="sc">-</span>eps))<span class="sc">/</span>(eps)</span>
-<span id="cb194-9"><a href="vanna-volga-pricing-and-hedging.html#cb194-9" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="vanna-volga-pricing-and-hedging.html#cb206-1" aria-hidden="true" tabindex="-1"></a>  Vega <span class="ot">&lt;-</span> <span class="cf">function</span>(f, vol, <span class="at">spot=</span>Spot) (<span class="fu">f</span>(vol<span class="sc">+</span>eps, spot)<span class="sc">-</span><span class="fu">f</span>(vol<span class="sc">-</span>eps, spot))<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>eps)</span>
+<span id="cb206-2"><a href="vanna-volga-pricing-and-hedging.html#cb206-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-3"><a href="vanna-volga-pricing-and-hedging.html#cb206-3" aria-hidden="true" tabindex="-1"></a>  Vanna <span class="ot">&lt;-</span> <span class="cf">function</span>(f, vol, <span class="at">spot=</span>Spot) {</span>
+<span id="cb206-4"><a href="vanna-volga-pricing-and-hedging.html#cb206-4" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">Vega</span>(f, vol, spot<span class="sc">+</span><span class="dv">1</span>)<span class="sc">-</span><span class="fu">Vega</span>(f, vol, spot<span class="dv">-1</span>))<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb206-5"><a href="vanna-volga-pricing-and-hedging.html#cb206-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb206-6"><a href="vanna-volga-pricing-and-hedging.html#cb206-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-7"><a href="vanna-volga-pricing-and-hedging.html#cb206-7" aria-hidden="true" tabindex="-1"></a>  Volga <span class="ot">&lt;-</span> <span class="cf">function</span>(f, vol) {</span>
+<span id="cb206-8"><a href="vanna-volga-pricing-and-hedging.html#cb206-8" aria-hidden="true" tabindex="-1"></a>      (<span class="fu">Vega</span>(f,vol<span class="sc">+</span>eps)<span class="sc">-</span><span class="fu">Vega</span>(f,vol<span class="sc">-</span>eps))<span class="sc">/</span>(eps)</span>
+<span id="cb206-9"><a href="vanna-volga-pricing-and-hedging.html#cb206-9" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
 <p>Finally, the following function computes the Vanna-Volga adjustment to
 the Black-Scholes price, and the corresponding implied volatility:</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="vanna-volga-pricing-and-hedging.html#cb195-1" aria-hidden="true" tabindex="-1"></a>  VVVol <span class="ot">&lt;-</span> <span class="cf">function</span>(X) {</span>
-<span id="cb195-2"><a href="vanna-volga-pricing-and-hedging.html#cb195-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb195-3"><a href="vanna-volga-pricing-and-hedging.html#cb195-3" aria-hidden="true" tabindex="-1"></a>  O <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot,</span>
-<span id="cb195-4"><a href="vanna-volga-pricing-and-hedging.html#cb195-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">X=</span>X, <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price</span>
-<span id="cb195-5"><a href="vanna-volga-pricing-and-hedging.html#cb195-5" aria-hidden="true" tabindex="-1"></a>  TV.BS <span class="ot">&lt;-</span> <span class="fu">O</span>()</span>
-<span id="cb195-6"><a href="vanna-volga-pricing-and-hedging.html#cb195-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb195-7"><a href="vanna-volga-pricing-and-hedging.html#cb195-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># risk indicators for benchmark instruments</span></span>
-<span id="cb195-8"><a href="vanna-volga-pricing-and-hedging.html#cb195-8" aria-hidden="true" tabindex="-1"></a>  B.vega <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) <span class="fu">Vega</span>(C[[i]], sigma))</span>
-<span id="cb195-9"><a href="vanna-volga-pricing-and-hedging.html#cb195-9" aria-hidden="true" tabindex="-1"></a>  B.vanna <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) <span class="fu">Vanna</span>(C[[i]], sigma))</span>
-<span id="cb195-10"><a href="vanna-volga-pricing-and-hedging.html#cb195-10" aria-hidden="true" tabindex="-1"></a>  B.volga <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) <span class="fu">Volga</span>(C[[i]], sigma))</span>
-<span id="cb195-11"><a href="vanna-volga-pricing-and-hedging.html#cb195-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb195-12"><a href="vanna-volga-pricing-and-hedging.html#cb195-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># risk indicators for new option</span></span>
-<span id="cb195-13"><a href="vanna-volga-pricing-and-hedging.html#cb195-13" aria-hidden="true" tabindex="-1"></a>  O.vega <span class="ot">&lt;-</span> <span class="fu">Vega</span>(O, sigma)</span>
-<span id="cb195-14"><a href="vanna-volga-pricing-and-hedging.html#cb195-14" aria-hidden="true" tabindex="-1"></a>  O.vanna <span class="ot">&lt;-</span> <span class="fu">Vanna</span>(O, sigma)</span>
-<span id="cb195-15"><a href="vanna-volga-pricing-and-hedging.html#cb195-15" aria-hidden="true" tabindex="-1"></a>  O.volga <span class="ot">&lt;-</span> <span class="fu">Volga</span>(O, sigma)</span>
-<span id="cb195-16"><a href="vanna-volga-pricing-and-hedging.html#cb195-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb195-17"><a href="vanna-volga-pricing-and-hedging.html#cb195-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Benchmark costs</span></span>
-<span id="cb195-18"><a href="vanna-volga-pricing-and-hedging.html#cb195-18" aria-hidden="true" tabindex="-1"></a>  B.cost <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) C[[i]](VolData[[i]][<span class="dv">2</span>]) <span class="sc">-</span> C[[i]](sigma))</span>
-<span id="cb195-19"><a href="vanna-volga-pricing-and-hedging.html#cb195-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb195-20"><a href="vanna-volga-pricing-and-hedging.html#cb195-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculation of price adjustment</span></span>
-<span id="cb195-21"><a href="vanna-volga-pricing-and-hedging.html#cb195-21" aria-hidden="true" tabindex="-1"></a>  A <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(B.vega, B.vanna, B.volga),  <span class="at">nrow=</span><span class="dv">3</span>))</span>
-<span id="cb195-22"><a href="vanna-volga-pricing-and-hedging.html#cb195-22" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(O.vega, O.vanna, O.volga), <span class="at">nrow=</span><span class="dv">3</span>)</span>
-<span id="cb195-23"><a href="vanna-volga-pricing-and-hedging.html#cb195-23" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> <span class="fu">solve</span>(A, x)</span>
-<span id="cb195-24"><a href="vanna-volga-pricing-and-hedging.html#cb195-24" aria-hidden="true" tabindex="-1"></a>  CF <span class="ot">&lt;-</span> <span class="fu">t</span>(w) <span class="sc">%*%</span> <span class="fu">matrix</span>(B.cost, <span class="at">nrow=</span><span class="dv">3</span>)</span>
-<span id="cb195-25"><a href="vanna-volga-pricing-and-hedging.html#cb195-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb195-26"><a href="vanna-volga-pricing-and-hedging.html#cb195-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># implied volatility</span></span>
-<span id="cb195-27"><a href="vanna-volga-pricing-and-hedging.html#cb195-27" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">GBSVolatility</span>(TV.BS<span class="sc">+</span>CF, <span class="st">&#39;c&#39;</span>, Spot, X, T, r, b, <span class="dv">1</span>.e<span class="dv">-5</span>)</span>
-<span id="cb195-28"><a href="vanna-volga-pricing-and-hedging.html#cb195-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb195-29"><a href="vanna-volga-pricing-and-hedging.html#cb195-29" aria-hidden="true" tabindex="-1"></a>  v}</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="vanna-volga-pricing-and-hedging.html#cb207-1" aria-hidden="true" tabindex="-1"></a>  VVVol <span class="ot">&lt;-</span> <span class="cf">function</span>(X) {</span>
+<span id="cb207-2"><a href="vanna-volga-pricing-and-hedging.html#cb207-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-3"><a href="vanna-volga-pricing-and-hedging.html#cb207-3" aria-hidden="true" tabindex="-1"></a>  O <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot,</span>
+<span id="cb207-4"><a href="vanna-volga-pricing-and-hedging.html#cb207-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">X=</span>X, <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price</span>
+<span id="cb207-5"><a href="vanna-volga-pricing-and-hedging.html#cb207-5" aria-hidden="true" tabindex="-1"></a>  TV.BS <span class="ot">&lt;-</span> <span class="fu">O</span>()</span>
+<span id="cb207-6"><a href="vanna-volga-pricing-and-hedging.html#cb207-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-7"><a href="vanna-volga-pricing-and-hedging.html#cb207-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># risk indicators for benchmark instruments</span></span>
+<span id="cb207-8"><a href="vanna-volga-pricing-and-hedging.html#cb207-8" aria-hidden="true" tabindex="-1"></a>  B.vega <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) <span class="fu">Vega</span>(C[[i]], sigma))</span>
+<span id="cb207-9"><a href="vanna-volga-pricing-and-hedging.html#cb207-9" aria-hidden="true" tabindex="-1"></a>  B.vanna <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) <span class="fu">Vanna</span>(C[[i]], sigma))</span>
+<span id="cb207-10"><a href="vanna-volga-pricing-and-hedging.html#cb207-10" aria-hidden="true" tabindex="-1"></a>  B.volga <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) <span class="fu">Volga</span>(C[[i]], sigma))</span>
+<span id="cb207-11"><a href="vanna-volga-pricing-and-hedging.html#cb207-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-12"><a href="vanna-volga-pricing-and-hedging.html#cb207-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># risk indicators for new option</span></span>
+<span id="cb207-13"><a href="vanna-volga-pricing-and-hedging.html#cb207-13" aria-hidden="true" tabindex="-1"></a>  O.vega <span class="ot">&lt;-</span> <span class="fu">Vega</span>(O, sigma)</span>
+<span id="cb207-14"><a href="vanna-volga-pricing-and-hedging.html#cb207-14" aria-hidden="true" tabindex="-1"></a>  O.vanna <span class="ot">&lt;-</span> <span class="fu">Vanna</span>(O, sigma)</span>
+<span id="cb207-15"><a href="vanna-volga-pricing-and-hedging.html#cb207-15" aria-hidden="true" tabindex="-1"></a>  O.volga <span class="ot">&lt;-</span> <span class="fu">Volga</span>(O, sigma)</span>
+<span id="cb207-16"><a href="vanna-volga-pricing-and-hedging.html#cb207-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-17"><a href="vanna-volga-pricing-and-hedging.html#cb207-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Benchmark costs</span></span>
+<span id="cb207-18"><a href="vanna-volga-pricing-and-hedging.html#cb207-18" aria-hidden="true" tabindex="-1"></a>  B.cost <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) C[[i]](VolData[[i]][<span class="dv">2</span>]) <span class="sc">-</span> C[[i]](sigma))</span>
+<span id="cb207-19"><a href="vanna-volga-pricing-and-hedging.html#cb207-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-20"><a href="vanna-volga-pricing-and-hedging.html#cb207-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculation of price adjustment</span></span>
+<span id="cb207-21"><a href="vanna-volga-pricing-and-hedging.html#cb207-21" aria-hidden="true" tabindex="-1"></a>  A <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(B.vega, B.vanna, B.volga),  <span class="at">nrow=</span><span class="dv">3</span>))</span>
+<span id="cb207-22"><a href="vanna-volga-pricing-and-hedging.html#cb207-22" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(O.vega, O.vanna, O.volga), <span class="at">nrow=</span><span class="dv">3</span>)</span>
+<span id="cb207-23"><a href="vanna-volga-pricing-and-hedging.html#cb207-23" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> <span class="fu">solve</span>(A, x)</span>
+<span id="cb207-24"><a href="vanna-volga-pricing-and-hedging.html#cb207-24" aria-hidden="true" tabindex="-1"></a>  CF <span class="ot">&lt;-</span> <span class="fu">t</span>(w) <span class="sc">%*%</span> <span class="fu">matrix</span>(B.cost, <span class="at">nrow=</span><span class="dv">3</span>)</span>
+<span id="cb207-25"><a href="vanna-volga-pricing-and-hedging.html#cb207-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-26"><a href="vanna-volga-pricing-and-hedging.html#cb207-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># implied volatility</span></span>
+<span id="cb207-27"><a href="vanna-volga-pricing-and-hedging.html#cb207-27" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">GBSVolatility</span>(TV.BS<span class="sc">+</span>CF, <span class="st">&#39;c&#39;</span>, Spot, X, T, r, b, <span class="dv">1</span>.e<span class="dv">-5</span>)</span>
+<span id="cb207-28"><a href="vanna-volga-pricing-and-hedging.html#cb207-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-29"><a href="vanna-volga-pricing-and-hedging.html#cb207-29" aria-hidden="true" tabindex="-1"></a>  v}</span></code></pre></div>
 <p>We finally use the vanna-volga interpolating function to construct the
 interpolated smile curve.</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="vanna-volga-pricing-and-hedging.html#cb196-1" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq</span>(<span class="dv">70</span>, <span class="dv">130</span>, <span class="dv">2</span>), VVVol)</span>
-<span id="cb196-2"><a href="vanna-volga-pricing-and-hedging.html#cb196-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">70</span>, <span class="dv">130</span>,<span class="dv">2</span>), v, <span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">xlab=</span><span class="st">&#39;Strike&#39;</span>, <span class="at">ylab=</span><span class="st">&#39;Implied Volatility&#39;</span>)</span>
-<span id="cb196-3"><a href="vanna-volga-pricing-and-hedging.html#cb196-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(<span class="fu">sapply</span>(VolData, <span class="cf">function</span>(v) v[<span class="dv">1</span>]),</span>
-<span id="cb196-4"><a href="vanna-volga-pricing-and-hedging.html#cb196-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sapply</span>(VolData, <span class="cf">function</span>(v) v[<span class="dv">2</span>]), <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">&#39;red&#39;</span>)</span></code></pre></div>
-<p>The result is shown in Figure <span class="math display">\[fig:vv-1\]</span>.</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="vanna-volga-pricing-and-hedging.html#cb208-1" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq</span>(<span class="dv">70</span>, <span class="dv">130</span>, <span class="dv">2</span>), VVVol)</span>
+<span id="cb208-2"><a href="vanna-volga-pricing-and-hedging.html#cb208-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">70</span>, <span class="dv">130</span>,<span class="dv">2</span>), v, <span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">xlab=</span><span class="st">&#39;Strike&#39;</span>, <span class="at">ylab=</span><span class="st">&#39;Implied Volatility&#39;</span>)</span>
+<span id="cb208-3"><a href="vanna-volga-pricing-and-hedging.html#cb208-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(<span class="fu">sapply</span>(VolData, <span class="cf">function</span>(v) v[<span class="dv">1</span>]),</span>
+<span id="cb208-4"><a href="vanna-volga-pricing-and-hedging.html#cb208-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sapply</span>(VolData, <span class="cf">function</span>(v) v[<span class="dv">2</span>]), <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">&#39;red&#39;</span>)</span></code></pre></div>
+<p>The result is shown in Figure <a href="#fig:vv-1"><strong>??</strong></a>.</p>
 <p><img src="307-BS-VannaVolga_files/figure-html/vv-plot-1-1.png" width="672"  /></p>
 </div>
-<div id="pricing-a-binary-option" class="section level3" number="13.3.2">
-<h3><span class="header-section-number">13.3.2</span> Pricing a Binary Option</h3>
+<div id="pricing-a-binary-option" class="section level3" number="15.3.2">
+<h3><span class="header-section-number">15.3.2</span> Pricing a Binary Option</h3>
 <p>Consider a one-year binary call, struck at the money. Assume that the
 smile is quadratic. Again, we assume a null interest rate for
 simplicity.</p>
 <p>This time, we use the traditional benchmark instruments of the FX
 market: straddle, risk-reversal and butterfly, and compute the price of
 the binary option, adjusted for the smile effect.</p>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="vanna-volga-pricing-and-hedging.html#cb197-1" aria-hidden="true" tabindex="-1"></a>  T <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb197-2"><a href="vanna-volga-pricing-and-hedging.html#cb197-2" aria-hidden="true" tabindex="-1"></a>  Spot <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb197-3"><a href="vanna-volga-pricing-and-hedging.html#cb197-3" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb197-4"><a href="vanna-volga-pricing-and-hedging.html#cb197-4" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb197-5"><a href="vanna-volga-pricing-and-hedging.html#cb197-5" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> r<span class="sc">-</span>d</span>
-<span id="cb197-6"><a href="vanna-volga-pricing-and-hedging.html#cb197-6" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> <span class="dv">30</span><span class="sc">/</span><span class="dv">100</span></span>
-<span id="cb197-7"><a href="vanna-volga-pricing-and-hedging.html#cb197-7" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fl">110.50</span></span>
-<span id="cb197-8"><a href="vanna-volga-pricing-and-hedging.html#cb197-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb197-9"><a href="vanna-volga-pricing-and-hedging.html#cb197-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># smile function</span></span>
-<span id="cb197-10"><a href="vanna-volga-pricing-and-hedging.html#cb197-10" aria-hidden="true" tabindex="-1"></a>  smile <span class="ot">&lt;-</span> <span class="cf">function</span>(X) (<span class="sc">-</span>(<span class="dv">0</span><span class="sc">/</span><span class="dv">20</span>)<span class="sc">*</span>(X<span class="sc">-</span>Spot) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">300</span>)<span class="sc">*</span>(X<span class="sc">-</span>Spot)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">100</span></span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="vanna-volga-pricing-and-hedging.html#cb209-1" aria-hidden="true" tabindex="-1"></a>  T <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb209-2"><a href="vanna-volga-pricing-and-hedging.html#cb209-2" aria-hidden="true" tabindex="-1"></a>  Spot <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb209-3"><a href="vanna-volga-pricing-and-hedging.html#cb209-3" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb209-4"><a href="vanna-volga-pricing-and-hedging.html#cb209-4" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb209-5"><a href="vanna-volga-pricing-and-hedging.html#cb209-5" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> r<span class="sc">-</span>d</span>
+<span id="cb209-6"><a href="vanna-volga-pricing-and-hedging.html#cb209-6" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> <span class="dv">30</span><span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb209-7"><a href="vanna-volga-pricing-and-hedging.html#cb209-7" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fl">110.50</span></span>
+<span id="cb209-8"><a href="vanna-volga-pricing-and-hedging.html#cb209-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-9"><a href="vanna-volga-pricing-and-hedging.html#cb209-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># smile function</span></span>
+<span id="cb209-10"><a href="vanna-volga-pricing-and-hedging.html#cb209-10" aria-hidden="true" tabindex="-1"></a>  smile <span class="ot">&lt;-</span> <span class="cf">function</span>(X) (<span class="sc">-</span>(<span class="dv">0</span><span class="sc">/</span><span class="dv">20</span>)<span class="sc">*</span>(X<span class="sc">-</span>Spot) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">300</span>)<span class="sc">*</span>(X<span class="sc">-</span>Spot)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">100</span></span></code></pre></div>
 <p>The strikes corresponding to a <span class="math inline">\(25\Delta\)</span> call and put are computed by
 inverting the formulae for the Delta of European options. Recall that
 for a call, the Delta is given by:</p>
 <p><span class="math display">\[\Delta = e^{-dT} N(d_1)\]</span></p>
 <p>The strike corresponding to a <span class="math inline">\(25\Delta\)</span> call is therefore:</p>
 <p><span class="math display">\[K_{25\Delta} = S e^{- \left( \sigma \sqrt{T} N^{-1}(e^{dT}.25) -(r-d+\frac{\sigma^2}{2})T \right)}\]</span></p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="vanna-volga-pricing-and-hedging.html#cb198-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># strikes at +/- 25 deltas</span></span>
-<span id="cb198-2"><a href="vanna-volga-pricing-and-hedging.html#cb198-2" aria-hidden="true" tabindex="-1"></a>  alpha <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">qnorm</span>(.<span class="dv">25</span><span class="sc">*</span><span class="fu">exp</span>(d<span class="sc">*</span>T))</span>
-<span id="cb198-3"><a href="vanna-volga-pricing-and-hedging.html#cb198-3" aria-hidden="true" tabindex="-1"></a>  Kp <span class="ot">&lt;-</span> Spot<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span>alpha <span class="sc">*</span> sigma <span class="sc">*</span> <span class="fu">sqrt</span>(T)<span class="sc">+</span>(r<span class="sc">-</span>d<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>sigma<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>T)</span>
-<span id="cb198-4"><a href="vanna-volga-pricing-and-hedging.html#cb198-4" aria-hidden="true" tabindex="-1"></a>  Kc <span class="ot">&lt;-</span> Spot<span class="sc">*</span><span class="fu">exp</span>(alpha <span class="sc">*</span> sigma <span class="sc">*</span> <span class="fu">sqrt</span>(T)<span class="sc">+</span>(r<span class="sc">-</span>d<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>sigma<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>T)</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="vanna-volga-pricing-and-hedging.html#cb210-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># strikes at +/- 25 deltas</span></span>
+<span id="cb210-2"><a href="vanna-volga-pricing-and-hedging.html#cb210-2" aria-hidden="true" tabindex="-1"></a>  alpha <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">qnorm</span>(.<span class="dv">25</span><span class="sc">*</span><span class="fu">exp</span>(d<span class="sc">*</span>T))</span>
+<span id="cb210-3"><a href="vanna-volga-pricing-and-hedging.html#cb210-3" aria-hidden="true" tabindex="-1"></a>  Kp <span class="ot">&lt;-</span> Spot<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span>alpha <span class="sc">*</span> sigma <span class="sc">*</span> <span class="fu">sqrt</span>(T)<span class="sc">+</span>(r<span class="sc">-</span>d<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>sigma<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>T)</span>
+<span id="cb210-4"><a href="vanna-volga-pricing-and-hedging.html#cb210-4" aria-hidden="true" tabindex="-1"></a>  Kc <span class="ot">&lt;-</span> Spot<span class="sc">*</span><span class="fu">exp</span>(alpha <span class="sc">*</span> sigma <span class="sc">*</span> <span class="fu">sqrt</span>(T)<span class="sc">+</span>(r<span class="sc">-</span>d<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>sigma<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>T)</span></code></pre></div>
 <p>Define a wrapper function to facilitate calculations on the binary
 option:</p>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="vanna-volga-pricing-and-hedging.html#cb199-1" aria-hidden="true" tabindex="-1"></a>  O <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">CashOrNothingOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot,</span>
-<span id="cb199-2"><a href="vanna-volga-pricing-and-hedging.html#cb199-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">X=</span>X, <span class="at">K=</span><span class="dv">100</span>, <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="vanna-volga-pricing-and-hedging.html#cb211-1" aria-hidden="true" tabindex="-1"></a>  O <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">CashOrNothingOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot,</span>
+<span id="cb211-2"><a href="vanna-volga-pricing-and-hedging.html#cb211-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">X=</span>X, <span class="at">K=</span><span class="dv">100</span>, <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price</span></code></pre></div>
 <p>The Black-Scholes value, using ATM volatility is:</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="vanna-volga-pricing-and-hedging.html#cb200-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Theoretical BS value</span></span>
-<span id="cb200-2"><a href="vanna-volga-pricing-and-hedging.html#cb200-2" aria-hidden="true" tabindex="-1"></a>  TV.BS <span class="ot">&lt;-</span> <span class="fu">O</span>()</span>
-<span id="cb200-3"><a href="vanna-volga-pricing-and-hedging.html#cb200-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&#39;BS value:&#39;</span>, <span class="fu">round</span>(TV.BS,<span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="vanna-volga-pricing-and-hedging.html#cb212-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Theoretical BS value</span></span>
+<span id="cb212-2"><a href="vanna-volga-pricing-and-hedging.html#cb212-2" aria-hidden="true" tabindex="-1"></a>  TV.BS <span class="ot">&lt;-</span> <span class="fu">O</span>()</span>
+<span id="cb212-3"><a href="vanna-volga-pricing-and-hedging.html#cb212-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&#39;BS value:&#39;</span>, <span class="fu">round</span>(TV.BS,<span class="dv">2</span>)))</span></code></pre></div>
 <pre><code>## [1] &quot;BS value: 31.46&quot;</code></pre>
 <p>For comparison, we can approximate the binary option with a call spread,
 giving a value of:</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="vanna-volga-pricing-and-hedging.html#cb202-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replication value with call spread</span></span>
-<span id="cb202-2"><a href="vanna-volga-pricing-and-hedging.html#cb202-2" aria-hidden="true" tabindex="-1"></a>  N <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb202-3"><a href="vanna-volga-pricing-and-hedging.html#cb202-3" aria-hidden="true" tabindex="-1"></a>  TV.CS <span class="ot">&lt;-</span> N<span class="sc">*</span>(<span class="fu">GBSOption</span>(<span class="st">&#39;c&#39;</span>, Spot, X<span class="dv">-100</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>N), T, r, b, sigma<span class="sc">+</span><span class="fu">smile</span>(X<span class="dv">-100</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>N)))<span class="sc">@</span>price <span class="sc">-</span></span>
-<span id="cb202-4"><a href="vanna-volga-pricing-and-hedging.html#cb202-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">GBSOption</span>(<span class="st">&#39;c&#39;</span>, Spot, X<span class="sc">+</span><span class="dv">100</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>N), T, r, b, sigma<span class="sc">+</span><span class="fu">smile</span>(X<span class="sc">+</span><span class="dv">100</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>N)))<span class="sc">@</span>price)</span>
-<span id="cb202-5"><a href="vanna-volga-pricing-and-hedging.html#cb202-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb202-6"><a href="vanna-volga-pricing-and-hedging.html#cb202-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&#39;Value, approximated by a call spread:&#39;</span>, <span class="fu">round</span>(TV.BS,<span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="vanna-volga-pricing-and-hedging.html#cb214-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replication value with call spread</span></span>
+<span id="cb214-2"><a href="vanna-volga-pricing-and-hedging.html#cb214-2" aria-hidden="true" tabindex="-1"></a>  N <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb214-3"><a href="vanna-volga-pricing-and-hedging.html#cb214-3" aria-hidden="true" tabindex="-1"></a>  TV.CS <span class="ot">&lt;-</span> N<span class="sc">*</span>(<span class="fu">GBSOption</span>(<span class="st">&#39;c&#39;</span>, Spot, X<span class="dv">-100</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>N), T, r, b, sigma<span class="sc">+</span><span class="fu">smile</span>(X<span class="dv">-100</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>N)))<span class="sc">@</span>price <span class="sc">-</span></span>
+<span id="cb214-4"><a href="vanna-volga-pricing-and-hedging.html#cb214-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">GBSOption</span>(<span class="st">&#39;c&#39;</span>, Spot, X<span class="sc">+</span><span class="dv">100</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>N), T, r, b, sigma<span class="sc">+</span><span class="fu">smile</span>(X<span class="sc">+</span><span class="dv">100</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>N)))<span class="sc">@</span>price)</span>
+<span id="cb214-5"><a href="vanna-volga-pricing-and-hedging.html#cb214-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb214-6"><a href="vanna-volga-pricing-and-hedging.html#cb214-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&#39;Value, approximated by a call spread:&#39;</span>, <span class="fu">round</span>(TV.BS,<span class="dv">2</span>)))</span></code></pre></div>
 <pre><code>## [1] &quot;Value, approximated by a call spread: 31.46&quot;</code></pre>
 <p>We next define the benchmark instruments:</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="vanna-volga-pricing-and-hedging.html#cb204-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Put</span></span>
-<span id="cb204-2"><a href="vanna-volga-pricing-and-hedging.html#cb204-2" aria-hidden="true" tabindex="-1"></a>  P <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;p&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>Kp,</span>
-<span id="cb204-3"><a href="vanna-volga-pricing-and-hedging.html#cb204-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price</span>
-<span id="cb204-4"><a href="vanna-volga-pricing-and-hedging.html#cb204-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-5"><a href="vanna-volga-pricing-and-hedging.html#cb204-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Call</span></span>
-<span id="cb204-6"><a href="vanna-volga-pricing-and-hedging.html#cb204-6" aria-hidden="true" tabindex="-1"></a>  C <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>Kc,</span>
-<span id="cb204-7"><a href="vanna-volga-pricing-and-hedging.html#cb204-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price</span>
-<span id="cb204-8"><a href="vanna-volga-pricing-and-hedging.html#cb204-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-9"><a href="vanna-volga-pricing-and-hedging.html#cb204-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Straddle</span></span>
-<span id="cb204-10"><a href="vanna-volga-pricing-and-hedging.html#cb204-10" aria-hidden="true" tabindex="-1"></a>  S <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) {</span>
-<span id="cb204-11"><a href="vanna-volga-pricing-and-hedging.html#cb204-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>Spot, <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price <span class="sc">+</span></span>
-<span id="cb204-12"><a href="vanna-volga-pricing-and-hedging.html#cb204-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;p&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>Spot, <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price</span>
-<span id="cb204-13"><a href="vanna-volga-pricing-and-hedging.html#cb204-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb204-14"><a href="vanna-volga-pricing-and-hedging.html#cb204-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-15"><a href="vanna-volga-pricing-and-hedging.html#cb204-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Risk Reversal</span></span>
-<span id="cb204-16"><a href="vanna-volga-pricing-and-hedging.html#cb204-16" aria-hidden="true" tabindex="-1"></a>  RR <span class="ot">&lt;-</span> <span class="cf">function</span>(vol, <span class="at">spot=</span>Spot) {</span>
-<span id="cb204-17"><a href="vanna-volga-pricing-and-hedging.html#cb204-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">P</span>(vol, spot)<span class="sc">-</span><span class="fu">C</span>(vol, spot)</span>
-<span id="cb204-18"><a href="vanna-volga-pricing-and-hedging.html#cb204-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb204-19"><a href="vanna-volga-pricing-and-hedging.html#cb204-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-20"><a href="vanna-volga-pricing-and-hedging.html#cb204-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Butterfly</span></span>
-<span id="cb204-21"><a href="vanna-volga-pricing-and-hedging.html#cb204-21" aria-hidden="true" tabindex="-1"></a>  BF <span class="ot">&lt;-</span> <span class="cf">function</span>(vol, <span class="at">spot=</span>Spot, <span class="at">beta=</span><span class="dv">1</span>) {</span>
-<span id="cb204-22"><a href="vanna-volga-pricing-and-hedging.html#cb204-22" aria-hidden="true" tabindex="-1"></a>    beta<span class="sc">*</span>(<span class="fu">P</span>(vol, spot)<span class="sc">+</span><span class="fu">C</span>(vol, spot))<span class="sc">-</span><span class="fu">S</span>(vol,spot)</span>
-<span id="cb204-23"><a href="vanna-volga-pricing-and-hedging.html#cb204-23" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="vanna-volga-pricing-and-hedging.html#cb216-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Put</span></span>
+<span id="cb216-2"><a href="vanna-volga-pricing-and-hedging.html#cb216-2" aria-hidden="true" tabindex="-1"></a>  P <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;p&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>Kp,</span>
+<span id="cb216-3"><a href="vanna-volga-pricing-and-hedging.html#cb216-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price</span>
+<span id="cb216-4"><a href="vanna-volga-pricing-and-hedging.html#cb216-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-5"><a href="vanna-volga-pricing-and-hedging.html#cb216-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Call</span></span>
+<span id="cb216-6"><a href="vanna-volga-pricing-and-hedging.html#cb216-6" aria-hidden="true" tabindex="-1"></a>  C <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>Kc,</span>
+<span id="cb216-7"><a href="vanna-volga-pricing-and-hedging.html#cb216-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price</span>
+<span id="cb216-8"><a href="vanna-volga-pricing-and-hedging.html#cb216-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-9"><a href="vanna-volga-pricing-and-hedging.html#cb216-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Straddle</span></span>
+<span id="cb216-10"><a href="vanna-volga-pricing-and-hedging.html#cb216-10" aria-hidden="true" tabindex="-1"></a>  S <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">vol=</span>sigma, <span class="at">spot=</span>Spot) {</span>
+<span id="cb216-11"><a href="vanna-volga-pricing-and-hedging.html#cb216-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;c&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>Spot, <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price <span class="sc">+</span></span>
+<span id="cb216-12"><a href="vanna-volga-pricing-and-hedging.html#cb216-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">GBSOption</span>(<span class="at">TypeFlag=</span><span class="st">&#39;p&#39;</span>, <span class="at">S=</span>spot, <span class="at">X=</span>Spot, <span class="at">Time=</span>T, <span class="at">r=</span>r, <span class="at">b=</span>b, <span class="at">sigma=</span>vol)<span class="sc">@</span>price</span>
+<span id="cb216-13"><a href="vanna-volga-pricing-and-hedging.html#cb216-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb216-14"><a href="vanna-volga-pricing-and-hedging.html#cb216-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-15"><a href="vanna-volga-pricing-and-hedging.html#cb216-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Risk Reversal</span></span>
+<span id="cb216-16"><a href="vanna-volga-pricing-and-hedging.html#cb216-16" aria-hidden="true" tabindex="-1"></a>  RR <span class="ot">&lt;-</span> <span class="cf">function</span>(vol, <span class="at">spot=</span>Spot) {</span>
+<span id="cb216-17"><a href="vanna-volga-pricing-and-hedging.html#cb216-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">P</span>(vol, spot)<span class="sc">-</span><span class="fu">C</span>(vol, spot)</span>
+<span id="cb216-18"><a href="vanna-volga-pricing-and-hedging.html#cb216-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb216-19"><a href="vanna-volga-pricing-and-hedging.html#cb216-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-20"><a href="vanna-volga-pricing-and-hedging.html#cb216-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Butterfly</span></span>
+<span id="cb216-21"><a href="vanna-volga-pricing-and-hedging.html#cb216-21" aria-hidden="true" tabindex="-1"></a>  BF <span class="ot">&lt;-</span> <span class="cf">function</span>(vol, <span class="at">spot=</span>Spot, <span class="at">beta=</span><span class="dv">1</span>) {</span>
+<span id="cb216-22"><a href="vanna-volga-pricing-and-hedging.html#cb216-22" aria-hidden="true" tabindex="-1"></a>    beta<span class="sc">*</span>(<span class="fu">P</span>(vol, spot)<span class="sc">+</span><span class="fu">C</span>(vol, spot))<span class="sc">-</span><span class="fu">S</span>(vol,spot)</span>
+<span id="cb216-23"><a href="vanna-volga-pricing-and-hedging.html#cb216-23" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
 <p>The butterfly must be vega-neutral. This is obtained by solving for
 <span class="math inline">\(\beta\)</span>:</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="vanna-volga-pricing-and-hedging.html#cb205-1" aria-hidden="true" tabindex="-1"></a>  BF.V <span class="ot">&lt;-</span> <span class="cf">function</span>(vol, beta) {</span>
-<span id="cb205-2"><a href="vanna-volga-pricing-and-hedging.html#cb205-2" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">BF</span>(vol<span class="sc">+</span>eps, <span class="at">beta=</span>beta)<span class="sc">-</span><span class="fu">BF</span>(vol<span class="sc">-</span>eps, <span class="at">beta=</span>beta))<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>eps)</span>
-<span id="cb205-3"><a href="vanna-volga-pricing-and-hedging.html#cb205-3" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb205-4"><a href="vanna-volga-pricing-and-hedging.html#cb205-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb205-5"><a href="vanna-volga-pricing-and-hedging.html#cb205-5" aria-hidden="true" tabindex="-1"></a>  beta <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(<span class="cf">function</span>(b) <span class="fu">BF.V</span>(sigma, b), <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.5</span>))<span class="sc">$</span>root</span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="vanna-volga-pricing-and-hedging.html#cb217-1" aria-hidden="true" tabindex="-1"></a>  BF.V <span class="ot">&lt;-</span> <span class="cf">function</span>(vol, beta) {</span>
+<span id="cb217-2"><a href="vanna-volga-pricing-and-hedging.html#cb217-2" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">BF</span>(vol<span class="sc">+</span>eps, <span class="at">beta=</span>beta)<span class="sc">-</span><span class="fu">BF</span>(vol<span class="sc">-</span>eps, <span class="at">beta=</span>beta))<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>eps)</span>
+<span id="cb217-3"><a href="vanna-volga-pricing-and-hedging.html#cb217-3" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb217-4"><a href="vanna-volga-pricing-and-hedging.html#cb217-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb217-5"><a href="vanna-volga-pricing-and-hedging.html#cb217-5" aria-hidden="true" tabindex="-1"></a>  beta <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(<span class="cf">function</span>(b) <span class="fu">BF.V</span>(sigma, b), <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.5</span>))<span class="sc">$</span>root</span></code></pre></div>
 <p>Next, we compute the risk indicators for the binary option:</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="vanna-volga-pricing-and-hedging.html#cb206-1" aria-hidden="true" tabindex="-1"></a>  O.vega <span class="ot">&lt;-</span> <span class="fu">Vega</span>(O, sigma)</span>
-<span id="cb206-2"><a href="vanna-volga-pricing-and-hedging.html#cb206-2" aria-hidden="true" tabindex="-1"></a>  O.vanna <span class="ot">&lt;-</span> <span class="fu">Vanna</span>(O, sigma)</span>
-<span id="cb206-3"><a href="vanna-volga-pricing-and-hedging.html#cb206-3" aria-hidden="true" tabindex="-1"></a>  O.volga <span class="ot">&lt;-</span> <span class="fu">Volga</span>(O, sigma)</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="vanna-volga-pricing-and-hedging.html#cb218-1" aria-hidden="true" tabindex="-1"></a>  O.vega <span class="ot">&lt;-</span> <span class="fu">Vega</span>(O, sigma)</span>
+<span id="cb218-2"><a href="vanna-volga-pricing-and-hedging.html#cb218-2" aria-hidden="true" tabindex="-1"></a>  O.vanna <span class="ot">&lt;-</span> <span class="fu">Vanna</span>(O, sigma)</span>
+<span id="cb218-3"><a href="vanna-volga-pricing-and-hedging.html#cb218-3" aria-hidden="true" tabindex="-1"></a>  O.volga <span class="ot">&lt;-</span> <span class="fu">Volga</span>(O, sigma)</span></code></pre></div>
 <p>and for the benchmark instruments:</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="vanna-volga-pricing-and-hedging.html#cb207-1" aria-hidden="true" tabindex="-1"></a>  S.vega <span class="ot">&lt;-</span> <span class="fu">Vega</span>(S, sigma)</span>
-<span id="cb207-2"><a href="vanna-volga-pricing-and-hedging.html#cb207-2" aria-hidden="true" tabindex="-1"></a>  S.vanna <span class="ot">&lt;-</span> <span class="fu">Vanna</span>(S, sigma)</span>
-<span id="cb207-3"><a href="vanna-volga-pricing-and-hedging.html#cb207-3" aria-hidden="true" tabindex="-1"></a>  S.volga <span class="ot">&lt;-</span> <span class="fu">Volga</span>(S, sigma)</span>
-<span id="cb207-4"><a href="vanna-volga-pricing-and-hedging.html#cb207-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb207-5"><a href="vanna-volga-pricing-and-hedging.html#cb207-5" aria-hidden="true" tabindex="-1"></a>  RR.vega <span class="ot">&lt;-</span> <span class="fu">Vega</span>(RR, sigma)</span>
-<span id="cb207-6"><a href="vanna-volga-pricing-and-hedging.html#cb207-6" aria-hidden="true" tabindex="-1"></a>  RR.vanna <span class="ot">&lt;-</span> <span class="fu">Vanna</span>(RR, sigma)</span>
-<span id="cb207-7"><a href="vanna-volga-pricing-and-hedging.html#cb207-7" aria-hidden="true" tabindex="-1"></a>  RR.volga <span class="ot">&lt;-</span> <span class="fu">Volga</span>(RR, sigma)</span>
-<span id="cb207-8"><a href="vanna-volga-pricing-and-hedging.html#cb207-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb207-9"><a href="vanna-volga-pricing-and-hedging.html#cb207-9" aria-hidden="true" tabindex="-1"></a>  BF.vega <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb207-10"><a href="vanna-volga-pricing-and-hedging.html#cb207-10" aria-hidden="true" tabindex="-1"></a>  BF.vanna <span class="ot">&lt;-</span> <span class="fu">Vanna</span>(BF, sigma)</span>
-<span id="cb207-11"><a href="vanna-volga-pricing-and-hedging.html#cb207-11" aria-hidden="true" tabindex="-1"></a>  BF.volga <span class="ot">&lt;-</span> <span class="fu">Volga</span>(BF, sigma)</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="vanna-volga-pricing-and-hedging.html#cb219-1" aria-hidden="true" tabindex="-1"></a>  S.vega <span class="ot">&lt;-</span> <span class="fu">Vega</span>(S, sigma)</span>
+<span id="cb219-2"><a href="vanna-volga-pricing-and-hedging.html#cb219-2" aria-hidden="true" tabindex="-1"></a>  S.vanna <span class="ot">&lt;-</span> <span class="fu">Vanna</span>(S, sigma)</span>
+<span id="cb219-3"><a href="vanna-volga-pricing-and-hedging.html#cb219-3" aria-hidden="true" tabindex="-1"></a>  S.volga <span class="ot">&lt;-</span> <span class="fu">Volga</span>(S, sigma)</span>
+<span id="cb219-4"><a href="vanna-volga-pricing-and-hedging.html#cb219-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-5"><a href="vanna-volga-pricing-and-hedging.html#cb219-5" aria-hidden="true" tabindex="-1"></a>  RR.vega <span class="ot">&lt;-</span> <span class="fu">Vega</span>(RR, sigma)</span>
+<span id="cb219-6"><a href="vanna-volga-pricing-and-hedging.html#cb219-6" aria-hidden="true" tabindex="-1"></a>  RR.vanna <span class="ot">&lt;-</span> <span class="fu">Vanna</span>(RR, sigma)</span>
+<span id="cb219-7"><a href="vanna-volga-pricing-and-hedging.html#cb219-7" aria-hidden="true" tabindex="-1"></a>  RR.volga <span class="ot">&lt;-</span> <span class="fu">Volga</span>(RR, sigma)</span>
+<span id="cb219-8"><a href="vanna-volga-pricing-and-hedging.html#cb219-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-9"><a href="vanna-volga-pricing-and-hedging.html#cb219-9" aria-hidden="true" tabindex="-1"></a>  BF.vega <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb219-10"><a href="vanna-volga-pricing-and-hedging.html#cb219-10" aria-hidden="true" tabindex="-1"></a>  BF.vanna <span class="ot">&lt;-</span> <span class="fu">Vanna</span>(BF, sigma)</span>
+<span id="cb219-11"><a href="vanna-volga-pricing-and-hedging.html#cb219-11" aria-hidden="true" tabindex="-1"></a>  BF.volga <span class="ot">&lt;-</span> <span class="fu">Volga</span>(BF, sigma)</span></code></pre></div>
 <p>By definition the smile cost of the straddle is zero, since it is priced
 with ATM volatility. For the other two benchmark instruments, the smile
 cost is the difference between the price with the smile effect and the
 price at the ATM volatility:</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="vanna-volga-pricing-and-hedging.html#cb208-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># RR and BF cost</span></span>
-<span id="cb208-2"><a href="vanna-volga-pricing-and-hedging.html#cb208-2" aria-hidden="true" tabindex="-1"></a>  RR.cost <span class="ot">&lt;-</span> (<span class="fu">P</span>(sigma<span class="sc">+</span><span class="fu">smile</span>(Kp))<span class="sc">-</span><span class="fu">C</span>(sigma<span class="sc">+</span><span class="fu">smile</span>(Kc)))<span class="sc">-</span>(<span class="fu">P</span>(sigma)<span class="sc">-</span><span class="fu">C</span>(sigma))</span>
-<span id="cb208-3"><a href="vanna-volga-pricing-and-hedging.html#cb208-3" aria-hidden="true" tabindex="-1"></a>  BF.cost <span class="ot">&lt;-</span> beta<span class="sc">*</span>(<span class="fu">P</span>(sigma<span class="sc">+</span><span class="fu">smile</span>(Kp))<span class="sc">+</span><span class="fu">C</span>(sigma<span class="sc">+</span><span class="fu">smile</span>(Kc)))<span class="sc">-</span> beta<span class="sc">*</span>(<span class="fu">P</span>(sigma)<span class="sc">+</span><span class="fu">C</span>(sigma))</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="vanna-volga-pricing-and-hedging.html#cb220-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># RR and BF cost</span></span>
+<span id="cb220-2"><a href="vanna-volga-pricing-and-hedging.html#cb220-2" aria-hidden="true" tabindex="-1"></a>  RR.cost <span class="ot">&lt;-</span> (<span class="fu">P</span>(sigma<span class="sc">+</span><span class="fu">smile</span>(Kp))<span class="sc">-</span><span class="fu">C</span>(sigma<span class="sc">+</span><span class="fu">smile</span>(Kc)))<span class="sc">-</span>(<span class="fu">P</span>(sigma)<span class="sc">-</span><span class="fu">C</span>(sigma))</span>
+<span id="cb220-3"><a href="vanna-volga-pricing-and-hedging.html#cb220-3" aria-hidden="true" tabindex="-1"></a>  BF.cost <span class="ot">&lt;-</span> beta<span class="sc">*</span>(<span class="fu">P</span>(sigma<span class="sc">+</span><span class="fu">smile</span>(Kp))<span class="sc">+</span><span class="fu">C</span>(sigma<span class="sc">+</span><span class="fu">smile</span>(Kc)))<span class="sc">-</span> beta<span class="sc">*</span>(<span class="fu">P</span>(sigma)<span class="sc">+</span><span class="fu">C</span>(sigma))</span></code></pre></div>
 <p>We can now compute the price correction for the binary option. First the
 approximate method, ignoring the off-diagonal terms in matrix <span class="math inline">\(A\)</span>:</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="vanna-volga-pricing-and-hedging.html#cb209-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># approximate method</span></span>
-<span id="cb209-2"><a href="vanna-volga-pricing-and-hedging.html#cb209-2" aria-hidden="true" tabindex="-1"></a>  CA <span class="ot">&lt;-</span> RR.cost <span class="sc">*</span> (O.vanna<span class="sc">/</span>RR.vanna) <span class="sc">+</span> BF.cost<span class="sc">*</span>(O.volga<span class="sc">/</span>BF.volga)</span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="vanna-volga-pricing-and-hedging.html#cb221-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># approximate method</span></span>
+<span id="cb221-2"><a href="vanna-volga-pricing-and-hedging.html#cb221-2" aria-hidden="true" tabindex="-1"></a>  CA <span class="ot">&lt;-</span> RR.cost <span class="sc">*</span> (O.vanna<span class="sc">/</span>RR.vanna) <span class="sc">+</span> BF.cost<span class="sc">*</span>(O.volga<span class="sc">/</span>BF.volga)</span></code></pre></div>
 <p>then the more accurate method, solving the <span class="math inline">\(3\times3\)</span> linear system:</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="vanna-volga-pricing-and-hedging.html#cb210-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># full calculation</span></span>
-<span id="cb210-2"><a href="vanna-volga-pricing-and-hedging.html#cb210-2" aria-hidden="true" tabindex="-1"></a>  A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(S.vega, S.vanna, S.volga,</span>
-<span id="cb210-3"><a href="vanna-volga-pricing-and-hedging.html#cb210-3" aria-hidden="true" tabindex="-1"></a>                RR.vega, RR.vanna, RR.volga,</span>
-<span id="cb210-4"><a href="vanna-volga-pricing-and-hedging.html#cb210-4" aria-hidden="true" tabindex="-1"></a>                BF.vega, BF.vanna, BF.volga), <span class="at">nrow=</span><span class="dv">3</span>)</span>
-<span id="cb210-5"><a href="vanna-volga-pricing-and-hedging.html#cb210-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb210-6"><a href="vanna-volga-pricing-and-hedging.html#cb210-6" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(O.vega, O.vanna, O.volga), <span class="at">nrow=</span><span class="dv">3</span>)</span>
-<span id="cb210-7"><a href="vanna-volga-pricing-and-hedging.html#cb210-7" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> <span class="fu">solve</span>(A, x)</span>
-<span id="cb210-8"><a href="vanna-volga-pricing-and-hedging.html#cb210-8" aria-hidden="true" tabindex="-1"></a>  CF <span class="ot">&lt;-</span> <span class="fu">t</span>(w) <span class="sc">%*%</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, RR.cost, BF.cost), <span class="at">nrow=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="vanna-volga-pricing-and-hedging.html#cb222-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># full calculation</span></span>
+<span id="cb222-2"><a href="vanna-volga-pricing-and-hedging.html#cb222-2" aria-hidden="true" tabindex="-1"></a>  A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(S.vega, S.vanna, S.volga,</span>
+<span id="cb222-3"><a href="vanna-volga-pricing-and-hedging.html#cb222-3" aria-hidden="true" tabindex="-1"></a>                RR.vega, RR.vanna, RR.volga,</span>
+<span id="cb222-4"><a href="vanna-volga-pricing-and-hedging.html#cb222-4" aria-hidden="true" tabindex="-1"></a>                BF.vega, BF.vanna, BF.volga), <span class="at">nrow=</span><span class="dv">3</span>)</span>
+<span id="cb222-5"><a href="vanna-volga-pricing-and-hedging.html#cb222-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb222-6"><a href="vanna-volga-pricing-and-hedging.html#cb222-6" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(O.vega, O.vanna, O.volga), <span class="at">nrow=</span><span class="dv">3</span>)</span>
+<span id="cb222-7"><a href="vanna-volga-pricing-and-hedging.html#cb222-7" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> <span class="fu">solve</span>(A, x)</span>
+<span id="cb222-8"><a href="vanna-volga-pricing-and-hedging.html#cb222-8" aria-hidden="true" tabindex="-1"></a>  CF <span class="ot">&lt;-</span> <span class="fu">t</span>(w) <span class="sc">%*%</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, RR.cost, BF.cost), <span class="at">nrow=</span><span class="dv">3</span>)</span></code></pre></div>
 <p>In summary, we get:</p>
 <ul>
 <li><p>Black-Scholes price: <span class="math inline">\(31.46\)</span></p></li>
@@ -758,8 +841,8 @@ approximate method, ignoring the off-diagonal terms in matrix <span class="math 
 <p>It is worth noting that a naive calculation, where one would plug the
 ATM volatility plus smile into the binary option pricing model would
 yield a very inaccurate result:</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="vanna-volga-pricing-and-hedging.html#cb211-1" aria-hidden="true" tabindex="-1"></a>  P.smile <span class="ot">&lt;-</span> <span class="fu">O</span>(<span class="at">vol=</span>sigma<span class="sc">+</span><span class="fu">smile</span>(X))</span></code></pre></div>
-<p>which yields a value of <span class="math inline">\(31.54\)</span>. Figure <span class="math display">\[fig:vv-6\]</span>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="vanna-volga-pricing-and-hedging.html#cb223-1" aria-hidden="true" tabindex="-1"></a>  P.smile <span class="ot">&lt;-</span> <span class="fu">O</span>(<span class="at">vol=</span>sigma<span class="sc">+</span><span class="fu">smile</span>(X))</span></code></pre></div>
+<p>which yields a value of <span class="math inline">\(31.54\)</span>. Figure <a href="#fig:vv-6"><strong>??</strong></a>
 compares the values of binary options for a range of strikes, computed
 with four methods. :</p>
 <p><img src="307-BS-VannaVolga_files/figure-html/unnamed-chunk-19-1.png" width="672"  /></p>
@@ -767,9 +850,13 @@ with four methods. :</p>
 </div>
 </div>
 </div>
+
+
+
+</div>
 <p style="text-align: center;">
 <a href="the-implied-volatility.html"><button class="btn btn-default">Previous</button></a>
-<a href="bibliography.html"><button class="btn btn-default">Next</button></a>
+<a href="fi:elementary.html"><button class="btn btn-default">Next</button></a>
 </p>
 </div>
 </div>

@@ -18,22 +18,6 @@ link-citations: yes
 
 # Preface to the second edition {-}
 
-`r tufte::newthought("Ten")` years after the first edition, it is time to
-revisit this text, not only to update the data sets, but also the add material
-that didn't make it the first time around.
-
-So much has taken place since the 2011. Publishing open source
-material has become dramatically simpler with the development of the \package{bookdown}
-package \@ref() and the possibility of generating an online version of the
-text.
-Alas, there was also a tragedy. In 2016 Diethelm Wurtz and his wife Barbara
-were involved in a fatal accident. ,
-
-We hold fond memories of the wonderful workshops organized by Diethelm in
-Meielisalp, and this second edition is dedicated to the memory of Barbara and Diethelm.
-
-# Preface to the first edition {-}
-
 ```{r setup, echo=FALSE, include=FALSE, cache=FALSE}
 knitr::opts_chunk$set(
   cache = TRUE,
@@ -46,7 +30,7 @@ if (knitr:::is_latex_output()) {
   knitr::opts_chunk$set(dpi = 300)
 }
 if (knitr:::is_html_output()) {
-  knitr::include_graphics('img/frontCover.pdf', dpi = NA)
+  knitr::include_graphics('img/phare-small.jpg', dpi = NA)
 }
 
 library(tufte)
@@ -63,17 +47,42 @@ bookred <- rgb(228, 6, 19, maxColorValue = 255)
 bookblue <- rgb(0, 92, 169, maxColorValue = 255)
 bookpurple <- rgb(114, 49, 94, maxColorValue = 255)
 bookgreen <- rgb(26, 179, 22, maxColorValue = 255)
+
+source("formatters.R", local=knitr::knit_global())
+```
+
+`r tufte::newthought("Ten")` years after the first edition, it is time to
+revisit this text, not only to update the data sets, but also the add material
+that didn't make it the first time around.
+
+So much has taken place since the 2011. Publishing open source
+material has become dramatically simpler with the development of the
+`r to_index("bookdown", "packages")` package and the possibility of generating an online version of the
+text.
+
+Alas, there was also tragedy. In 2016 Diethelm Wurtz and his wife Barbara
+were involved in a fatal accident. Diethelm was the founder of the Rmetrics association,
+the author of the Rmetrics suite of packages, and the organizer of the
+R/Rmetrics Summer Schools and Workshops.
+We hold fond memories of these wonderful workshops organized in
+Meielisalp, and this second edition is dedicated to the memory of Barbara and Diethelm.
+
+# Preface to the first edition {-}
+
+```{block, type='epigraph'}
+Une totale soumission aux données de l'expérience \
+est la règle d'or qui domine toute discipline, \
+toute activité valable. \
+---Maurice Allais
 ```
 
 `r newthought("This")` textbook is about empirical finance, and focusses on the pricing and risk management of financial assets: bonds, futures contracts, and other derivative securities.
 
 The emphasis of this text is empirical. We present models, and verify their relevance by testing them of real data. We emphasize:
 
-\begin{itemize}
-\item an incremental approach to model building, starting from simple models, and building upon that foundation to construct more complex models, as needed,
-\item a data-driven approach: we will implement all the models that are presented, using the R statistical package and the Rmetrics libraries,
-\item the systematic use of simulation as a way of validating modeling decisions.
-\end{itemize}
+- an incremental approach to model building, starting from simple models, and building upon that foundation to construct more complex models, as needed,
+- a data-driven approach: we will implement all the models that are presented, using the R statistical package and the Rmetrics libraries,
+- the systematic use of simulation as a way of validating modeling decisions.
 
 Last but not least, a particular attention is given to model estimation, in order to measure the tradeoff between model complexity and the challenges of a robust calibration.
 

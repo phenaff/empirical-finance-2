@@ -1,6 +1,6 @@
 # Fixed Income Risk Management
 
-```{r 410-init-1,echo=TRUE,results='hide'}
+```{r 410-init-1,echo=TRUE,results='hide', message=FALSE}
   library(linprog)
   library(xtable)
   library(empfin)
@@ -49,10 +49,11 @@ V_T &=& \sum_i F_i (1+r)^{T-T_i} \end{aligned}$$
 
 and must be equal to $L_T$. Let’s compute the Variation of $V_T$:
 
-$$\begin{aligned}
+\begin{align}
   \frac{\partial V_T}{\partial r} &=& \sum_i F_i (T-T_i)(1+r)^{T-T_i-1} \\
   &=& \left[ \sum_i F_i T (1+r)^{-T_i} - \sum_i F_i T_i (1+r)^{T_i} \right](1+r)^{T-1} \\
-  &=& V_T \left[ T \frac{\sum_i F_i (1+r)^{-T_i}}{V_T} - \frac{\sum_i F_i T_i (1+r)^{T_i}}{V_T} \right](1+r)^{T-1} \end{aligned}$$
+  &=& V_T \left[ T \frac{\sum_i F_i (1+r)^{-T_i}}{V_T} - \frac{\sum_i F_i T_i (1+r)^{T_i}}{V_T} \right](1+r)^{T-1}
+\end{align}
 
 In the last expression, we recognize the definition of Duration
 (\@ref(eq:macaulay)), so that the Variation of $V_T$ is finally:
@@ -71,13 +72,18 @@ immunization.
 
 How to construct the assets portfolio is described next. Let the
 liability $V_T=100$, $T=5, V_0 = V_T (1+r)^{-T}$. Current yield is
-$r=.05$. The investment portfolio will be made of two bonds described in
-Table \[tab:bonds-ab\]
+$r=.05$. The investment portfolio will be made of two bonds described below:
 
-  Bond   Coupon     Maturity
-  ------ -------- ----------
-  A      .05               3
-  B      .06               7
+```{r immu-bonds, echo=FALSE}
+df <- data.frame(
+  "Coupon" = c(0.05, 0.06),
+  "Maturity" = c(3,7)
+)
+
+colnames(df) <- c("Coupon", "Maturity")
+rownames(df) <- c("A", "B")
+knitr::kable(df, align="c", caption="Bonds available for immunization")
+```
 
 We next determine the quantities $q_A$ and $q_B$ of each bond in the
 investment portfolio, so that the present value and the Duration of the
@@ -87,9 +93,10 @@ weighted average of the Durations of the bonds in the portfolio.
 
 We express these two conditions by the following equations:
 
-$$\begin{aligned}
+\begin{align}
 V_0 & = & q_A P_A + q_B P_B \\
-T & = & q_A \frac{P_A D_A}{V_0} + q_B \frac{P_B D_B}{V_0}\end{aligned}$$
+T & = & q_A \frac{P_A D_A}{V_0} + q_B \frac{P_B D_B}{V_0}
+\end{align}
 
 or, using matrix notation:
 
@@ -97,8 +104,8 @@ $$A Q = b$$
 
 with
 
-$$A = \begin{pmatrix} P_A & P_B \\ 
-                    \frac{P_A D_A}{V_0}  & \frac{P_B D_B}{V_0} \end{pmatrix} 
+$$A = \begin{pmatrix} P_A & P_B \\
+                    \frac{P_A D_A}{V_0}  & \frac{P_B D_B}{V_0} \end{pmatrix}
 Q = \begin{pmatrix} q_A \\ q_B
 \end{pmatrix}
 b = \begin{pmatrix} V_0 \\ T
@@ -180,15 +187,15 @@ $L(t), t=1, \ldots, 5$ summarized in Table \@ref(tab:410-liability). In order
 to meet this liability, you can invest in a portfolio of 5 bonds
 described in table \@ref(tab:410-bonds).
 
-Table: (\#tab:410-liability) Liability per year.
-  Year     Liability
-  ------ -----------
-  1              100
-  2              200
-  3              150
-  4              400
-  5              300
+```{r liability, echo=FALSE}
+df <- data.frame(
+  "Year" = c(1,2,3,4,5),
+  "Liability" = c(100,200,150,400,300)
+)
 
+colnames(df) <- c("Year", "Liability")
+knitr::kable(df, align="c", caption="Liability per year")
+```
 Table: (\#tab:410-bonds) Bonds available for dedication
 
    Bond   Maturity   Coupon   Yield
@@ -206,19 +213,15 @@ construct the cheapest portfolio that will match the liability.
 To formalize the strategy, we will use the following notation:
 
 $q_i$
-
 :   quantity of bond $i$, purchased at time $t=0$
 
 $C(t)$
-
 :   cash balance at time $t$
 
 $F_i(t)$
-
 :   cash flow from 1 unit of bond $i$ at time $t$.
 
 $P_i$
-
 :   current price of bond $i$
 
 The cash balance at each period is the compounded value of the cash
@@ -231,32 +234,30 @@ The objective is to determine $q_i, i=1, \ldots, 5$ and the initial cash
 balance $C(0)$, so that:
 
 -   The cost of the initial portfolio is minimized
-
 -   The portfolio is long assets ($q_i >= 0$)
-
 -   The cash balance is always positive
 
 The investment strategy can be determined by solving the following
 linear program:
 
 \begin{align}
-    \mbox{min} & \sum_i q_i P_i \label{eq:objective} \\
-    \mbox{s.t.} & \nonumber \\
-    & (1+r) C(t-1) + \sum_i q_i F_i(t) -C(t) = L(t) \label{eq:cf} \\
-    & q_i >= 0, i=1, \ldots, n \nonumber \\
-    & C(t) >= 0, t=1, \ldots, 5 \nonumber
+    \mbox{min} & \sum_i q_i P_i (\#eq:objective) \\
+    \mbox{s.t.} & \notag \\
+    & (1+r) C(t-1) + \sum_i q_i F_i(t) -C(t) = L(t) (\#eq:cf) \\
+    & q_i >= 0, i=1, \ldots, n \notag \\
+    & C(t) >= 0, t=1, \ldots, 5 \notag
   \end{align}
 
 There is no need to define an initial cash balance because there is
 already a one-year bond in the investment portfolio. It is convenient to
 express the problem in matrix notation:
 
-$$\begin{aligned}
+\begin{align}
     \mbox{min} & P^T x \\
-    \mbox{s.t.} & \nonumber \\
-    & A x = b \nonumber \\
-    & x >= 0 \nonumber
-   \end{aligned}$$
+    \mbox{s.t.} & \notag \\
+    & A x = b \notag \\
+    & x >= 0 \notag
+   \end{align}
 
 where the column vector $x$ represents the variables of the problem:
 $$x = (q_1, \ldots, q_5, c_1, \ldots , c_5)^T$$
@@ -289,7 +290,7 @@ The program is set up as follows:
                c(0, 0, 0,   0, 108, 0,   0,   0, 1+r, -1))
 ```
 
-The right hand side of \[eq:cf\]:
+The right hand side of \@ref(eq:cf):
 
 ```{r, label=fi-rm-4, echo=TRUE}
   bvec = c(100, 200, 150, 400, 300)
@@ -304,7 +305,7 @@ The vector $P$, the cost of assets at time $t=0$:
            SimpleBondPrice(.07, 2, yield=y),
            SimpleBondPrice(.06, 3, yield=y),
            SimpleBondPrice(.05, 4, yield=y),
-           SimpleBondPrice(.08, 5, yield=y), 
+           SimpleBondPrice(.08, 5, yield=y),
            0, 0, 0, 0, 0)
   names(cvec) <- c('B1', 'B2', 'B3', 'B4', 'B5', 'C1', 'C2', 'C3', 'C4', 'C5');
 ```
@@ -315,17 +316,14 @@ The program is solved by
   lp.sol <- solveLP(cvec, bvec, Amat, const.dir=rep('>=', length(bvec)))
 ```
 
-The optimal portfolio composition is shown in Table \[tab:sol1\].
+The optimal portfolio composition is shown in Table \@ref(tab:sol1).
 
-```{r, label=fi-rm-7, results='asis',echo=F,fig=F}
+```{r sol1, echo=FALSE}
   z <- as.matrix(lp.sol$solution[1:5])
   colnames(z) <- c('Quantity')
-  xres<-xtable(z, digits=2)
+  knitr::kable(z, align="c", digits=2, caption="Dedicated portfolio")
 ```
 
-```{r, label=fi-rm-8, results='asis',echo=F,fig=F}
-  print.xb(xres, include.colnames=T)
-```
 
 Since we can have as many bonds as time period, and that the $A$ matrix
 is full row-rank, we have a perfect match between the generated cash
@@ -349,48 +347,30 @@ construct the dedicated portfolio (bond 3 is deleted from the set):
                c(0, 0, 5, 8,   0, 1+r, -1, 0, 0),
                c(0, 0, 105, 8,   0,   0, 1+r, -1, 0),
                c(0, 0, 0, 108, 0,   0,   0, 1+r, -1))
-               
+
   cvec = c(SimpleBondPrice(.05, 1, yield=y),
            SimpleBondPrice(.07, 2, yield=y),
            SimpleBondPrice(.05, 4, yield=y),
-           SimpleBondPrice(.08, 5, yield=y), 
+           SimpleBondPrice(.08, 5, yield=y),
            0, 0, 0, 0, 0)
   names(cvec) <- c('B1', 'B2', 'B4', 'B5', 'C1', 'C2', 'C3', 'C4', 'C5');
 
   res2 <- solveLP(cvec, bvec, Amat, const.dir=rep('>=', length(bvec)))
 ```
 
-The optimal portfolio is displayed in table \[tab:sol3\]. We no longer
+The optimal portfolio is displayed in table \@ref(tab:sol3). We no longer
 have a perfect match, and some cash must be reinvested from period to
-period, as shown in table \[tab:sol2\]: a cash balance is re-invested
+period, as shown in table \@ref(tab:sol2): a cash balance is re-invested
 from period 2 to period 3.
 
-```{r, label=fi-rm-11, results='asis',echo=F,fig=F}
+```{r sol2, echo=FALSE}
   z <- as.matrix(cbind((1:5), res2$solution[5:9]))
   colnames(z) <- c('Period', 'Cash Balance')
-  xres<-xtable(z, digits=2)
+  knitr::kable(z, align="c", digits=2, caption="Dedicated portfolio")
 ```
 
-```{r, label=fi-rm-12, results='asis', echo=F, fig=F}
-  print.xb(xres, include.colnames=T)
-```
-
-```{r, label=dedication-sol-2, results='asis',echo=F,fig=F}
-  z <- as.matrix(res2$solution[1:4])
-  colnames(z) <- c('Quantity')
-  xres<-xtable(z, digits=2)
-```
-
-```{r, label=fi-rm-13, results='asis', echo=F, fig=F}
-  print.xb(xres, include.colnames=T)
-```
-
-```{r, label=fi-rm-14, echo=TRUE}
-  print(paste('dedication cost:', round(res2$opt,2), 'PV of liability:', round(PV,2)))
-```
-
-The dedication cost is naturally higher than the present value of the
-liability, since the solution involves reinvesting cash from the second
+The dedication cost (\$ `r round(res2$opt,2)`) is naturally higher than the present value of the
+liability (\$ `r round(PV,2)`), since the solution involves reinvesting cash from the second
 to the third period, at a rate that is lower than the current yield.
 
 Cash-flow matching is a popular strategy for managing short-term

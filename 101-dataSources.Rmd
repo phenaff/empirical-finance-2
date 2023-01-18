@@ -7,6 +7,7 @@ knitr::opts_chunk$set(
   tidy=TRUE,
   tidy.opts=list(width.cutoff=45)
 )
+source("formatters.R", local=knitr::knit_global())
 ```
 
 ```{r, 101-setup, echo=TRUE, message=FALSE, results='hide', prompt=TRUE, size='tiny'}
@@ -39,7 +40,7 @@ and futures traded on the NYMEX.
 
 ```{r, 101-100, eval=FALSE, echo=TRUE}
   getNymexData <- function(type) {
-    
+
   url <- 'ftp://ftp.cmegroup.com/pub/settle/'
   filename <- paste('nymex_', type, '.csv', sep='')
   fn <- paste(url, filename, sep='')
@@ -65,7 +66,7 @@ and futures traded on the NYMEX.
 
     goodNames <- c('Symbol', 'Month', 'Year', 'Contract',
                    'Description', 'Settle', 'Volume', 'TradeDate')
-    
+
   }
 
   if(type == 'option') {
@@ -83,7 +84,7 @@ and futures traded on the NYMEX.
                    'Settle', 'Volume', 'TradeDate')
     }
   tmp <- tmp[,goodColumns]
-  colnames(tmp) <- goodNames 
+  colnames(tmp) <- goodNames
   tmp
   }
 ```
@@ -122,12 +123,12 @@ head(tmp[,c('Month', 'Year', 'Contract', 'Settle')])
 ```
 
 The U.S. Energy Information Administration (www.eia.gov) publishes
-historical data on spot and future prices. The data set in package \pkg{empfin} was
+historical data on spot and future prices. The data set in package `r to_index("empfin")` was
 obtained from that source.
 
 ## Libor Rates
 
-The package \pkg{empfin} also contains a data set of USD libor and swap rates
+The package `r to_index("empfin")` also contains a data set of USD libor and swap rates
 obtained from the US Federal Reserve archive (www.federalreserve.gov), which provides a data download program for table H15 at https://www.federalreserve.gov/datadownload/Choose.aspx?rel=H15.
 
 The time series can be downloaded from a web browser, but can also be
@@ -142,16 +143,16 @@ available deposit and swap rates included.
 
       # Federal Reserve Board URL
       # Construct this URL at 'http://www.federalreserve.gov/datadownload
-      
+
       url.1 <- paste(
       'https://www.federalreserve.gov/datadownload/Output.aspx?',
       'rel=H15&series=0b30e7214e1df1ba738a199d707702f1',
       '&lastobs=', sep='')
       url.2 <- '&filetype=csv&label=include&layout=seriescolumn'
       url.2 <- '&filetype=csv&label=include&layout=seriescolumn'
-      url <- paste(url.1, 
+      url <- paste(url.1,
       '&from=', as.character(dtStart, format='%m/%d/%Y'),
-      '&to=',as.character(dtEnd, format='%m/%d/%Y'), 
+      '&to=',as.character(dtEnd, format='%m/%d/%Y'),
       url.2, sep='')
       url
       }
@@ -185,10 +186,10 @@ observations and 11 columns, with deposit rates of maturities 1, 3, and
     good.row <- function(x) length(grep('NC|ND', x)) == 0
 
     url <- get.frb.url(dtStart, dtEnd)
-    
+
     curl <- getCurlHandle(ftp.use.epsv=FALSE)
     x <-  getURL(url, curl=curl)
-    
+
     csv <- strsplit(x, '\n')[[1]]
 
     # skip 5 header rows at start of file
@@ -199,14 +200,14 @@ observations and 11 columns, with deposit rates of maturities 1, 3, and
 
     ncol <- dim(csv)[2]
     indx <- apply(csv, 1, good.row)
-    
+
     dt <- as.Date(csv$Time.Period[indx])
     vx <- data.frame(csv[indx,2:ncol])
     for(i in seq(ncol-1)) vx[,i] = as.numeric(vx[,i])
 
     colNames = unlist(sapply(names(vx), function(x) columns.dic[[x]]),
                       use.names=FALSE)
-    timeSeries(vx, dt, format='%Y-%m-%d', zone='GMT', FinCenter='GMT', 
+    timeSeries(vx, dt, format='%Y-%m-%d', zone='GMT', FinCenter='GMT',
     units=colNames)
   }
 ```
@@ -244,7 +245,7 @@ institution’s statistical data warehouse (sdw.ecb.europa.eu). The
 following script read, parse and display the par AAA euro government
 yield curve for a set of dates.
 
-```{r, 101-read-ecb, cache=TRUE}
+```{r, 101-read-ecb, eval=FALSE, cache=TRUE}
   # read, keep only par yield data
   ecb.file <- fread('./data/ecb-data.csv',
                     select=c('DATA_TYPE_FM',
@@ -285,7 +286,7 @@ Plotting a few curves let us measure the sharp increase in interest rate during 
   nbSample <- length(indx)
 
   dtMat = dtObs[1] + months(sort.mat$x)
-  plot(dtMat, YC[1,],type='l', ylim=c(-1,4), 
+  plot(dtMat, YC[1,],type='l', ylim=c(-1,4),
        xlim=c(dtObs[1], dtObs[nbSample]+months(last(sort.mat$x))),
        bty='n',
        col=1, lwd=2, ylab='Euro AAA Govt Yield', xlab='Maturity date')
@@ -296,11 +297,11 @@ Plotting a few curves let us measure the sharp increase in interest rate during 
     lines(dtMat, YC[i,],type='l', col=i, lwd=2)
     text.legend <- append(text.legend, list(format(dtObs[i], "%D")))
   }
-  
+
   legend(x="topleft",legend=text.legend, lty=1, col=seq(nbSample), cex=1.0, box.lty=0)
 ```
 
-```{r 101-fig-plot-ecb,fig=T, echo=F}
+```{r 101-fig-plot-ecb,fig=T, echo=FALSE, eval=FALSE}
 <<101-plot-ecb>>
 ```
 

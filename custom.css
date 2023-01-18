@@ -7,6 +7,12 @@ body {
   font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif; 
 }*/
 
+idx {
+  font-family: Lucida Console;
+  font-style: monospace;
+  font-size: 80%;
+}
+
 dt {
   text-indent: 1rem;
   font-size: 1.4rem;

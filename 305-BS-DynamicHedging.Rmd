@@ -28,8 +28,7 @@ distribution of the residual wealth at expiry of the option. Throughout
 this chapter, we place ourselves in the situation of a financial
 institution that sells a derivative and dynamically hedges the risk.
 
-Self-Financing Replicating Portfolio
-------------------------------------
+## Self-Financing Replicating Portfolio
 
 ### Continuous rebalancing
 
@@ -47,7 +46,7 @@ portfolio $P$ is made of $\alpha_t$ shares and a notional amount
 $\beta_t$ of risk-free bond. The portfolio value is thus:
 
 $$P_t = \alpha_t S_t + \beta_t B_t
-\label{eq:portfolio-1}$$
+(\#eq:portfolio-1)$$
 
 where $B_t$ is the price of the risk-free bond at time $t$:
 
@@ -83,9 +82,9 @@ therefore,
 
 $$\begin{aligned}
 d V_t &=& r \Pi_t dt + \beta_t r B dt \nonumber \\
-&=& r V_t dt \label{eq:ct-1}\end{aligned}$$
+&=& r V_t dt (\#eq:ct-1)\end{aligned}$$
 
-Since $V_0 = 0$, equation \[eq:ct-1\] has a unique solution which is:
+Since $V_0 = 0$, equation \@ref(eq:ct-1) has a unique solution which is:
 
 $$V_t = 0, \ 0 \leq t \leq T$$
 
@@ -131,24 +130,19 @@ the case of the delta-hedging strategy the rule will be:
 To describe the process step by step, we use the following notation:
 
 $C_t$
-
 :   Value of derivative at time $t$
 
 $V_t$
-
 :   Value of hedge portfolio
 
 $B_t$
-
 :   Value of a pure discount bond maturing at T
 
 $\alpha_t$
-
 :   Delta of derivative, also the quantity of risky asset in the
     replicating portfolio
 
 $\beta_t$
-
 :   Quantity of riskless asset in hedge.
 
 At $t = 0$, the derivative is sold at price $C_0$ and the proceeds are
@@ -196,7 +190,7 @@ more often). Interest rate is $2\%$ and volatility $30\%$.
    S0 <- 100
    K <- 100
    sigma <- 0.3
-   
+
    p <- GBSOption(TypeFlag = "c", S = S0, X = K, Time = T, r = r,
    b = r, sigma)@price
    delta <- GBSGreeks("delta", TypeFlag = "c", S = S0, X = K, Time = T,
@@ -216,7 +210,7 @@ The initial hedge portfolio is constructed as follows:
     $\alpha_0 \times 100 = `r round(delta*100, 2) `$.
 
 -   this position is funded by a riskless borrowing of
-    $\beta_0 B = P_0 - 100 \alpha_0 = 
+    $\beta_0 B = P_0 - 100 \alpha_0 =
       -48.48$.
 
 -   Since the zero-coupon bond is worth $B_0 = e^{-rT} = 0.997$, we get
@@ -290,11 +284,11 @@ We can now run the delta-hedge strategy along each path:
 The result is a data structure that containts the residual wealth
 (hedging error) per scenario.
 
-Tables \[tab:dyn-sim-1\] and \[tab:dyn-sim-2\] illustrate how the hedge
+Tables \@ref(tab:dyn-sim-1) and \@ref(tab:dyn-sim-2) illustrate how the hedge
 portfolios evolve over time, based on the path of the underlying asset.
-In Table \[tab:dyn-sim-2\], the option expires out of the money, and the
+In Table \@ref(tab:dyn-sim-2), the option expires out of the money, and the
 hedge portfolio ends up being exclusively cash. In
-Table \[tab:dyn-sim-1\], the option expires in the money, and the hedge
+Table \@ref(tab:dyn-sim-1), the option expires in the money, and the hedge
 portfolio holds at expiry one unit of stock. Note the amount of leverage
 required by delta hedging when the option expires in the money: the
 option payoff is 45 cents, and this is replicated by a portfolio holding
@@ -337,7 +331,7 @@ the distribution of residual wealth. The next experiment uses the
 parameters of the previous section, with 200 time steps and 1000
 sceanrios.
 
-Figure \[fig:paths-2\] displays a few simulated paths for the underlying
+Figure \@ref(fig:paths-2) displays a few simulated paths for the underlying
 asset, and an histogram of the residual wealth.
 
 ```{r, sim-setup-10, cache=TRUE, warning=FALSE}
@@ -384,20 +378,17 @@ With this simulation tool, we will now consider the effect on hedging
 effectiveness of:
 
 -   discrete rather than continuous hedging,
-
 -   transaction costs, and
-
 -   unknown and stochastic volatility.
 
-Hedging Error due to Discrete Hedging
--------------------------------------
+## Hedging Error due to Discrete Hedging
 
 We first consider the risk related to discreet hedging. The dynamic of
 the replicating portfolio, $V_t$ rebalanced at times
 $t_i, i= 1, \ldots, N$. For $t \in [t_i, t_{i+1})$ is:
 
 $$dV_t = \frac{\partial C(t_i, S_{t_i})}{\partial S} dS_t
-\label{eq:dV}$$
+(\#eq:dV)$$
 
 The dynamic of the option price is:
 
@@ -425,7 +416,6 @@ This expression highlights the following points:
 
 1.  The variance of the hedging is inversely related to the hedging
     frequency, and
-
 2.  is directly related to the magnitude of
     $\frac{\partial^2 C(S_u, u)}{\partial S^2}$, which is the Gamma of
     the option.
@@ -447,7 +437,7 @@ First, define the derivative to be dynamically hedged:
   K<-100
   a <- fInstrumentFactory("vanilla", quantity=1,
                     params=list(cp='c', strike=K,
-                      dtExpiry=dtExpiry, 
+                      dtExpiry=dtExpiry,
                       underlying=underlying,
                       discountRef='USD.LIBOR', trace=FALSE))
 ```
@@ -484,10 +474,10 @@ the number of time steps.
   dtSim <- seq(as.timeDate(dtStart), as.timeDate(dtExpiry),
                length.out=nbSteps+1)
 
-  # price paths 
-  tSpot <- pathSimulator(dtSim = dtSim, nbPaths=nbPaths, 
-      innovations.gen=sobolInnovations, path.gen=logNormal, 
-      path.param = list(mu=0, sigma=sigma), S0=100, antithetic = F, 
+  # price paths
+  tSpot <- pathSimulator(dtSim = dtSim, nbPaths=nbPaths,
+      innovations.gen=sobolInnovations, path.gen=logNormal,
+      path.param = list(mu=0, sigma=sigma), S0=100, antithetic = F,
       standardization = TRUE, trace = FALSE)
 
   # derived environment for scenario analysis
@@ -506,11 +496,11 @@ the number of time steps.
   expiry.error <- tail(res$wealth,1)
 
   mean.error[i] <- mean(expiry.error)
-  sd.error[i] <- sd(as.vector(expiry.error)) 
+  sd.error[i] <- sd(as.vector(expiry.error))
   }
 ```
 
-Figure \[fig:delta-steps\] illustrates the mean and standard deviation
+Figure \@ref(fig:delta-steps) illustrates the mean and standard deviation
 of the hedging error as a function of the number of rehedging dates. The
 figure also shows the curve $$y = a + b \frac{1}{\sqrt{N}}$$
 
@@ -519,9 +509,9 @@ predicts that the standard deviation of the hedging error is
 proportional to $\frac{1}{\sqrt{N}}$, where $N$ is the number of
 re-hedging dates.
 
-```{r, label=Delta-Hedge, echo=TRUE}
-  plotCI(x=nb.range, y=mean.error, uiw=sd.error/2, liw=sd.error/2, ylim=c(min(mean.error-sd.error/2), 
-         max(mean.error+sd.error/2)), 
+```{r, Delta-Hedge, echo=TRUE, eval=FALSE}
+  plotCI(x=nb.range, y=mean.error, uiw=sd.error/2, liw=sd.error/2, ylim=c(min(mean.error-sd.error/2),
+         max(mean.error+sd.error/2)),
          xlab='Nb of rebalancings', ylab='Hedging error')
 
   q <- lm((mean.error+sd.error/2) ~ sqrt(1/nb.range))
@@ -530,10 +520,9 @@ re-hedging dates.
   lines(yy, lwd=2, col='red')
 ```
 
-```{r, label=fig-Delta-Hedge, echo=FALSE, fig.width=5, fig.height=5}
-  <<Delta-Hedge>>
+```{r, label=fig-Delta-Hedge, echo=FALSE, fig.width=5, fig.height=5, eval=FALSE}
+<<Delta-Hedge>>
 ```
-
 
 To investigate the effect of gamma on hedging error, we will compare the
 effectiveness of delta hedging, applied to two options that initially
@@ -566,7 +555,7 @@ The strike of the European option is set to $K=130$.
   K <- 130
   op.eu <- fInstrumentFactory("vanilla", quantity=1,
                     params=list(cp='c', strike=K,
-                      dtExpiry=dtExpiry, 
+                      dtExpiry=dtExpiry,
                       underlying=underlying,
                       discountRef='USD.LIBOR', trace=FALSE))
 
@@ -586,18 +575,18 @@ strike). These equations are solved by means of the following function:
   price.delta.error <- function(x, base.env) {
    Q <- x[1]
    K.b <- x[2]
-   
+
    op.bi <- fInstrumentFactory("binary", quantity=Q,
                     params=list(cp='c', strike=K.b,
-                      dtExpiry=dtExpiry, 
+                      dtExpiry=dtExpiry,
                       underlying=underlying,
                       discountRef='USD.LIBOR', trace=FALSE))
 
    Pa <- getValue(op.bi, 'Price', dtStart, base.env)
    Da <- getValue(op.bi, 'Delta', dtStart, base.env)
 
-   f <- rep(NA, 2) 
-   f[1] <- (P-Pa) 
+   f <- rep(NA, 2)
+   f[1] <- (P-Pa)
    f[2] <- (D-Da)
    f
   }
@@ -614,7 +603,7 @@ strike $K=`r round(K.b,2) `$.
 ```{r, label=op.bi, echo=TRUE}
   op.bi <- fInstrumentFactory("binary", quantity=Q,
                     params=list(cp='c', strike=K.b,
-                      dtExpiry=dtExpiry, 
+                      dtExpiry=dtExpiry,
                       underlying=underlying,
                       discountRef='USD.LIBOR', trace=FALSE))
 
@@ -627,7 +616,7 @@ others: $`r round(G.eu, 4) `$ for European option,
 $`r round(G.bi,4) `$ for the binary option.
 
 To illustrate the similarity between the two derivatives, we plot in
-Figure\[fig:eu-vanilla-binary\] the prices of both options for a range
+Figure\@ref(fig:eu-vanilla-binary) the prices of both options for a range
 of underlying values, with a zoom around the current spot price.
 
 ```{r, label=VanillaBinary, echo=TRUE}
@@ -654,11 +643,11 @@ of underlying values, with a zoom around the current spot price.
   par(mfrow=c(1,2))
   plot(sce.1, p.eu.1, ylim=c(min(c(p.eu.1, p.bi.1)), max(c(p.eu.1, p.bi.1))),
        type='l', lwd=2, ylab='Price', xlab='Spot', col='green')
-  lines(sce.1, p.bi.1, type='l', lwd=2, col='red') 
+  lines(sce.1, p.bi.1, type='l', lwd=2, col='red')
 
   plot(sce.2, p.eu.2, ylim=c(min(c(p.eu.2, p.bi.2)), max(c(p.eu.2, p.bi.2))),
        type='l', lwd=2, ylab='Price', xlab='Spot', col='green')
-  lines(sce.2, p.bi.2, type='l', lwd=2, col='red') 
+  lines(sce.2, p.bi.2, type='l', lwd=2, col='red')
   par(mfrow=c(1,1))
 
 ```
@@ -675,10 +664,10 @@ A delta hedging strategy is next simulated for both derivatives, using
 ```
 
 ```{r, label=va-bi-sim-2, echo=TRUE, cache=TRUE, warning=FALSE}
-  # price paths 
-  tSpot <- pathSimulator(dtSim = dtSim, nbPaths=nbPaths, 
-      innovations.gen=sobolInnovations, path.gen=logNormal, 
-      path.param = list(mu=0, sigma=sigma), S0=100, antithetic = F, 
+  # price paths
+  tSpot <- pathSimulator(dtSim = dtSim, nbPaths=nbPaths,
+      innovations.gen=sobolInnovations, path.gen=logNormal,
+      path.param = list(mu=0, sigma=sigma), S0=100, antithetic = F,
       standardization = TRUE, trace = FALSE)
 
   # derived environment for scenario analysis
@@ -697,7 +686,7 @@ A delta hedging strategy is next simulated for both derivatives, using
                     transaction.cost=0), trace=FALSE)
 ```
 
-Figure \[fig:vanilla-binary-error\] displays the histograms of residual
+Figure \@ref(fig:vanilla-binary-error) displays the histograms of residual
 errors.
 
 ```{r, label=VB-Histo, echo=T, eval=FALSE}
@@ -773,10 +762,10 @@ ranging from $0$ to $1\%$. The simulation is performed as follows:
 
   dt <- as.double(dtExpiry-dtStart)/(365*nbSteps)
 
-  # price paths 
-  tSpot <- pathSimulator(dtSim = dtSim, nbPaths=nbPaths, 
-      innovations.gen=sobolInnovations, path.gen=logNormal, 
-      path.param = list(mu=0, sigma=sigma), S0=100, antithetic = FALSE, 
+  # price paths
+  tSpot <- pathSimulator(dtSim = dtSim, nbPaths=nbPaths,
+      innovations.gen=sobolInnovations, path.gen=logNormal,
+      path.param = list(mu=0, sigma=sigma), S0=100, antithetic = FALSE,
       standardization = TRUE, trace = FALSE)
 
   # derived environment for scenario analysis
@@ -799,7 +788,7 @@ ranging from $0$ to $1\%$. The simulation is performed as follows:
   expiry.error <- tail(res$wealth,1)
 
   mean.error[i] <- mean(expiry.error)
-  sd.error[i] <- sd(as.vector(expiry.error)) 
+  sd.error[i] <- sd(as.vector(expiry.error))
   }
 ```
 
@@ -818,14 +807,14 @@ where $P(\sigma)$ is the price of the option with volatility $\sigma$.
   sigma.sim <- sigma - mean.error/vega
 ```
 
-The results are presented in Figure \[fig:delta-leland\]. We find very
+The results are presented in Figure \@ref(fig:delta-leland). We find very
 good agreement between the empirical result and Leland’s formula.
 
 ```{r, label=Leland-plot, echo=FALSE}
   par(mfrow=c(1,2))
 
-  plotCI(x=tr.range, y=mean.error, uiw=sd.error/2, liw=sd.error/2, 
-  ylim=c(min(mean.error-sd.error/2), max(mean.error+sd.error/2)), 
+  plotCI(x=tr.range, y=mean.error, uiw=sd.error/2, liw=sd.error/2,
+  ylim=c(min(mean.error-sd.error/2), max(mean.error+sd.error/2)),
   xlab='Round trip cost', ylab='Hedging error')
 
   plot(x=tr.range, y=sigma.leland, type="b", pch=22, col="blue", lty=2, xlab="Round trip cost", ylab="Volatility")

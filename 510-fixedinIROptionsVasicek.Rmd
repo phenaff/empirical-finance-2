@@ -1,6 +1,6 @@
 # The Vasicek Model
 
-```{r, setup-vasicek,echo=TRUE,results='hide'}
+```{r, setup-vasicek,echo=TRUE,results='hide', message=FALSE}
   library(fBasics)
   library(empfin)
 ```
@@ -23,14 +23,15 @@ Consider next two derivatives whose price dynamic is function of the non
 traded risk factor:
 
 $$\frac{d P_i}{P_i} = \mu_i(x, t) dt + \sigma_i(x, t) dz, i = 1, \ldots, 2
-\label{eq:nta}$$
+(\#eq:nta)$$
 
 Consider the portfolio made of $\sigma_2 P_2$ units of asset 1 and
 $\sigma_1 P_1$ units of asset 2. Its total change in value is:
 
 $$\begin{aligned}
 \Delta \Pi &=& \sigma_2 P_2 \Delta P_1 + \sigma_1 P_1 \Delta P_2 \\
-&=& (\sigma_2 P_2) (\mu_1 P_1 \Delta t + \sigma_1 P_1  \Delta z) + (P_1 + \sigma_1 P_1) (\mu_2 P_2 \Delta t + \sigma_2 P_2  \Delta z) \\
+&=& (\sigma_2 P_2) (\mu_1 P_1 \Delta t + \sigma_1 P_1  \Delta z) + \\
+ && (P_1 + \sigma_1 P_1) (\mu_2 P_2 \Delta t + \sigma_2 P_2  \Delta z) \\
 &=& (\mu_1 \sigma_2 P_1 P_2 - \mu_2 \sigma_1 P_1 P_2) \Delta t
 \end{aligned}$$
 
@@ -56,9 +57,9 @@ $$dx = m dt + \sigma_x dz$$
 Apply Ito’s Lemma to $P$:
 
 $$dP = \left( \frac{\partial P}{\partial t} + m \frac{\partial P}{\partial x} + \frac{1}{2} \sigma_x^2 \frac{\partial^2 P}{\partial x^2} \right) dt + \frac{\partial P}{\partial x} \sigma_x dz
-\label{eq:nta-ito}$$
+(\#eq:nta-ito)$$
 
-Matching terms in @ref(eq:nta) and @ref(eq:nta-ito) we get:
+Matching terms in \@ref(eq:nta) and \@ref(eq:nta-ito) we get:
 
 $$\begin{aligned}
     P\mu &=& \frac{\partial P}{\partial t} + m \frac{\partial P}{\partial x} + \frac{1}{2} \sigma_x^2 \frac{\partial^2 P}{\partial x^2} \\
@@ -90,18 +91,15 @@ to this risk factor.
 
 ## The Market Price of Interest Rate Risk
 
-We expect the interest rate market price of risk to be negative.
+We expect the interest rate market price of risk to be negative. Said otherwise, we expect the forward rate to be greater than the expected future spot rate.
 
-The forward rate is greater that the expected future spot rate.
-
-Economic interpretation: Liquidity preference. Everything else being
-equal:
+This can be justified by the agents' preference for liquidity: 
+everything else being equal:
 
 1.  Investors prefer liquid, short term investments
-
 2.  Borrowers prefer fixed rate, long term financing.
 
-Banks provide intermediation between the two classes of agents. By
+Banks provide intermediation between these two classes of agents. By
 lending at a forward rate that is greater than the expected spot rate,
 they provide an incentive for borrowers to borrow at a shorter term, and
 for investors to accept long term comitments.

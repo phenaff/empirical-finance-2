@@ -21,7 +21,7 @@ Black-Scholes price as the number of steps $N$ increases. This can be
 investigated with the following script:
 
 ```{r, label=Binomial-price, echo=TRUE}
-  Strike <- 100; Spot <- 100; T1 <- 1/4 
+  Strike <- 100; Spot <- 100; T1 <- 1/4
   r <- .05; b <- .05; sigma <- .3
 
   NN <- seq(20, 100, 1)
@@ -30,23 +30,23 @@ investigated with the following script:
   bs <- rep(0,2)
 
   # The Black-Scholes price
-  bs[1] <- GBSOption(TypeFlag='c', S=Spot, X=Strike, 
+  bs[1] <- GBSOption(TypeFlag='c', S=Spot, X=Strike,
       Time=T1, r=r, b=b, sigma=sigma)@price
-  bs[2] <- GBSOption(TypeFlag='c', S=Spot, X=Strike+10, 
+  bs[2] <- GBSOption(TypeFlag='c', S=Spot, X=Strike+10,
       Time=T1, r=r, b=b, sigma=sigma)@price
 
   # Binomial price, function of number of steps
   res[, 1] <- sapply(NN, function(n) CRRBinomialTreeOption(
-          TypeFlag='ce', S=Spot, X=Strike, Time=T1, 
+          TypeFlag='ce', S=Spot, X=Strike, Time=T1,
           r=r, b=b, sigma=sigma, n)@price)
 
   res[, 2] <- sapply(NN, function(n) CRRBinomialTreeOption(
-          TypeFlag='ce', S=Spot, X=Strike+10, Time=T1, 
+          TypeFlag='ce', S=Spot, X=Strike+10, Time=T1,
           r=r, b=b, sigma=sigma, n)@price)
 ```
 
 A plot of the prices as a function of the number of steps
-(Figure \[fig:bin-conv\]) shows an oscillating pattern:
+(Figure \@ref(fig:bin-conv) shows an oscillating pattern:
 
 ```{r, binomial-plot, fig=FALSE, echo=T, eval=FALSE}
   par(mfrow=c(1, 2))
@@ -63,15 +63,15 @@ A plot of the prices as a function of the number of steps
 ```
 
 Other binomial algorithms, such as Tian’s, exhibit a similar pattern, as
-evidenced in Figure \[fig:bin-conv-2\]. The horizontal line marks the
+evidenced in Figure \@ref(fig:bin-conv-2). The horizontal line marks the
 Black-Scholes price.
 
 ```{r,tian-price, echo=FALSE}
   res[, 1] <- sapply(NN, function(n) TIANBinomialTreeOption(
-          TypeFlag='ce', S=Spot, X=Strike, Time=T1, 
+          TypeFlag='ce', S=Spot, X=Strike, Time=T1,
           r=r, b=b, sigma=sigma, n)@price)
   res[, 2] <- sapply(NN, function(n) TIANBinomialTreeOption(
-          TypeFlag='ce', S=Spot, X=Strike+10, Time=T1, 
+          TypeFlag='ce', S=Spot, X=Strike+10, Time=T1,
           r=r, b=b, sigma=sigma, n)@price)
 ```
 
@@ -90,8 +90,8 @@ Black-Scholes price.
 ```
 
 This sawtooth pattern is due to the position of the strike relative to
-the sequence of nodes at expiry; 
-we describe below some computational strategies 
+the sequence of nodes at expiry;
+we describe below some computational strategies
 for smoothing these oscillations and speeding up the convergence of
 binomial trees. See
 @Joshi2007 for an extensive survey of binomial models with
@@ -107,24 +107,24 @@ The resulting tree is centered on $K$ in log space. The pricing method
 is implemented as follows:
 
 ```{r, label=CoxRossWithBS, echo=T}
-  CRRWithDrift <- function (TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, 
-      mu, sigma, n) 
+  CRRWithDrift <- function (TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r,
+      mu, sigma, n)
   {
       TypeFlag = TypeFlag[1]
       z = NA
       if (TypeFlag == "ce" || TypeFlag == "ca")
           z = +1
-      if (TypeFlag == "pe" || TypeFlag == "pa") 
+      if (TypeFlag == "pe" || TypeFlag == "pa")
           z = -1
-      if (is.na(z)) 
+      if (is.na(z))
           stop("TypeFlag misspecified: ce|ca|pe|pa")
       dt = Time/n
       u = exp(mu*dt + sigma*sqrt(dt))
       d = exp(mu*dt - sigma*sqrt(dt))
-      
+
       p = (exp(r * dt) - d)/(u - d)
       Df = exp(-r * dt)
-     
+
       # underlying asset at step N-1
       ST <- S*(d^(n-1))*cumprod(c(1, rep((u/d), n-1)))
       # at step (n-1), value an European option of maturity dt
@@ -133,10 +133,10 @@ is implemented as follows:
 
       if (TypeFlag == "ce" || TypeFlag == "pe") {
           for (j in seq(from = n - 2, to = 0, by = -1))
-            OptionValue <- (p*OptionValue[2:(j+2)] + 
+            OptionValue <- (p*OptionValue[2:(j+2)] +
                             (1-p)*OptionValue[1:(j+1)])*Df
       }
-      
+
       if (TypeFlag == "ca" || TypeFlag == "pa") {
           for (j in seq(from = n - 2, to = 0, by = -1)) {
             ContValue <- (p*OptionValue[2:(j+2)] + (1-p)*OptionValue[1:(j+1)])*Df
@@ -150,15 +150,15 @@ is implemented as follows:
 ```
 
 Convergence of the model as $N$ increases is significantly improved, as
-evidenced by the graphs in Figure \[fig:CRRWithDrift\].
+evidenced by the graphs in Figure \@ref(fig:CRRWithDrift).
 
 ```{r, label=CRRWithDrift-plot-calc, echo=FALSE}
   mu = (1/T1) * log(Strike/Spot)
   res[, 1] <- sapply(NN, function(n) CRRWithDrift(
-          TypeFlag='ce', S=Spot, X=Strike, Time=T1, 
+          TypeFlag='ce', S=Spot, X=Strike, Time=T1,
           r=r, mu=mu, sigma=sigma, n))
   res[, 2] <- sapply(NN, function(n) CRRWithDrift(
-          TypeFlag='ce', S=Spot, X=Strike+10, Time=T1, 
+          TypeFlag='ce', S=Spot, X=Strike+10, Time=T1,
           r=r, mu=mu, sigma=sigma, n))
 ```
 
@@ -181,26 +181,26 @@ been exercised at step $N-1$, the option is now European, and can be
 priced at these nodes with the Black-Scholes model, rather than with the
 backward recursion from step $N$ (the expiry date). This simple
 modification smooths the option value at step $N-1$ and cancels the
-oscillations, as illustrated in figure \[fig:bin-conv-crr-bs\], but at
+oscillations, as illustrated in figure \@ref(fig:bin-conv-crr-bs) but at
 the price of a substantial increase in computation time.
 
 ```{r, label=CoxRossWithBS-2, echo=T}
-  CRRWithBS <- function (TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, 
-      b, sigma, n) 
+  CRRWithBS <- function (TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r,
+      b, sigma, n)
   {
       TypeFlag = TypeFlag[1]
       z = NA
       if (TypeFlag == "ce" || TypeFlag == "ca")
           z = +1
-      if (TypeFlag == "pe" || TypeFlag == "pa") 
+      if (TypeFlag == "pe" || TypeFlag == "pa")
           z = -1
-      if (is.na(z)) 
+      if (is.na(z))
           stop("TypeFlag misspecified: ce|ca|pe|pa")
       dt = Time/n
       u = exp(sigma * sqrt(dt)); d = 1/u
       p = (exp(b * dt) - d)/(u - d)
       Df = exp(-r * dt)
-     
+
       # underlying asset at step N-1
       ST <- S*(d^(n-1))*cumprod(c(1, rep((u/d), n-1)))
       # at step (n-1), value an European option of maturity dt
@@ -209,10 +209,10 @@ the price of a substantial increase in computation time.
 
       if (TypeFlag == "ce" || TypeFlag == "pe") {
           for (j in seq(from = n - 2, to = 0, by = -1))
-            OptionValue <- (p*OptionValue[2:(j+2)] + 
+            OptionValue <- (p*OptionValue[2:(j+2)] +
                             (1-p)*OptionValue[1:(j+1)])*Df
       }
-      
+
       if (TypeFlag == "ca" || TypeFlag == "pa") {
           for (j in seq(from = n - 2, to = 0, by = -1)) {
             ContValue <- (p*OptionValue[2:(j+2)] + (1-p)*OptionValue[1:(j+1)])*Df
@@ -232,7 +232,7 @@ the price of a substantial increase in computation time.
   plot(NN, res[,1], type='l', xlab='Number of steps', ylab='price', col='blue')
   abline(h=bs[1], lwd=2, col='red')
   lines(NN, y=res[,2], type='l', lwd=2, col='green')
-  # legend('topright', c("Cox-Ross", "BS", "Cox-Ross+BS step"), lty=c(1,1), 
+  # legend('topright', c("Cox-Ross", "BS", "Cox-Ross+BS step"), lty=c(1,1),
   #         col=c('blue', 'red', 'green'),bg="gray90")
 ```
 

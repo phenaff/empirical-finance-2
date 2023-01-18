@@ -73,7 +73,7 @@ where $N(x)$ is the cumulative normal distribution. Using the identity
 $N(x)+N(-x)=1$, one gets the Black-Scholes formula in its standard form.
 
 $$C_{\mbox{BS}}(S,0) = S_0N(d_1) - Ke^{-rT}N(d_2) \,
-\label{eq:bs-call}$$
+(\#eq:bs-call)$$
 
 with
 
@@ -138,7 +138,7 @@ to low volatility conditions.
     print("price")
     print(p)
     }
-  
+
   old.par <- par(no.readonly = TRUE)
   par(mfrow=c(2,2),oma=c(5,0,0,0),mar=c(2,2,2,1))
 
@@ -379,7 +379,7 @@ following script:
   ba <- fInstrumentFactory("asian", quantity=1,
                    params=list(cp='c', strike=Strike,
                    dtExpiry=dtExpiry, dtStart=dtCalc,
-                   dtEnd=dtExpiry, 
+                   dtEnd=dtExpiry,
                    underlying=underlying,
                    discountRef='USD.LIBOR', trace=FALSE))
 

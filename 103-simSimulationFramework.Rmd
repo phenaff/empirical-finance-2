@@ -7,6 +7,7 @@ knitr::opts_chunk$set(
   tidy=TRUE,
   tidy.opts=list(width.cutoff=50)
 )
+source("formatters.R", local=knitr::knit_global())
 ```
 
 ```{r, echo=TRUE,results='hide', message=FALSE}
@@ -59,7 +60,7 @@ Use a sobol sequence as random number generator, with antithetic variates, stand
   print(head(tSpot[,1:2]))
 ```
 
-The output of the path simulator is a \class{timeSeries}. A plot of the first few paths is
+The output of the path simulator is a `r to_index("timeSeries", "classes")`. A plot of the first few paths is
 displayed in figure \@ref(fig:price-plot). The function can generate simulated
 values acording to various statistical processes; this is documented in
 the vignette of the package.
@@ -90,7 +91,7 @@ Fist, we define the instrument to be hedged:
 ```
 
 Next, we define the market data that will be held constant during the
-simulation, and insert it in a \class{DataProvider}:
+simulation, and insert it in a `r to_index("DataProvider")`:
 
 ```{r, delta-hedge-2, echo=T, tidy=TRUE}
   base.env <- DataProvider()
@@ -113,8 +114,8 @@ which gives a value of $p = `r round(p,2) `$.
 Next, define the simulation parameters: we want to simulate a dynamic
 hedging policy over 500 paths, and 100 time steps per path:
 
-We use a child \class{DataProvider} to store the simulated paths. Data not found in the child \class{DataProvider}
-will be searched for (and found) in the parent \code{base.env}.
+We use a child `r to_index("DataProvider")` to store the simulated paths. Data not found in the child `r to_index("DataProvider")`
+will be searched for (and found) in the parent `r to_index("base.env")`.
 
 ```{r, delta-hedge-3, echo=T}
   sce.env <- DataProvider(parent=base.env)
@@ -139,16 +140,13 @@ error at expiry is shown in Figure \@ref(fig:delta-hedge-41).
 ```
 
 To better illustrate the hedging policy, let’s run a toy example with
-few time steps. The function \Rfun{deltaHedge} produces a detailed log of the hedging
+few time steps. The function `r to_index("deltaHedge", "functions")` produces a detailed log of the hedging
 policy, which is presented in Table \@ref(tab:delta-hedge-few-samples). For each time step,
 the table show:
 
 -   The stock price,
-
 -   the option delta,
-
 -   the option value,
-
 -   the value of the replicating portfolio and the short bond position in that portfolio.
 
 ```{r, echo=T}
@@ -160,7 +158,7 @@ the table show:
 ```
 
 ```{r, label=delta-hedge-few-samples, echo=FALSE}
-  kable(sim.table, "latex", booktabs=T, 
+  kable(sim.table, "latex", booktabs=T,
         digits=c(0,2,3,2,2,2),
         caption="Simulated value of a call option and its hedge portfolio over time")
 ```
@@ -171,22 +169,21 @@ Two design features are worth mentioning.
 
 The generation of the scenarios is independent from the expression of
 the dynamic trading strategies. Remember that every data element stored
-in a \class{DataProvider} is a \class{timeSeries}. Since all the calculations on \class{fInstrument} are vectorized, there is no
+in a `r to_index("DataProvider")` is a `r to_index("timeSeries")`. Since all the calculations on `r to_index("fInstrument")`
+are vectorized, there is no
 difference between performing a calculation on a scalar, or performing a
 simulation on multiple scenarios.
 
 The second aspect is the use of parent/child relationships among
-\class{DataProvider} objects. All the market data that is held constant in the simulation is
-stored in the parent \class{DataProvider}. The data that changes from simulation to
-simulation is stored in the child \class{DataProvider}, and this is the object that is
+`r to_index("DataProvider")` objects. All the market data that is held constant in the simulation is
+stored in the parent `r to_index("DataProvider", "classes")`. The data that changes from simulation to
+simulation is stored in the child `r to_index("DataProvider", "classes")`, and this is the object that is
 passed to the simulator. When a piece of data is requested from the
-child \class{DataProvider}, the following logic is applied:
+child `r to_index("DataProvider", "classes")`, the following logic is applied:
 
-1.  First look for the data in the current \class{DataProvider} (the object passed as
+1.  First look for the data in the current `r to_index("DataProvider", "classes")` (the object passed as
     argument to the simulator)
-
-2.  if not found, look for the data in the parent \class{DataProvider}.
-
+2.  if not found, look for the data in the parent `r to_index("DataProvider", "classes")`.
 3.  and so forth: the logic is recursive.
 
-This behavior is inherited from the built-in \class{environment}.
+This behavior is inherited from the built-in `r to_index("environment")`.

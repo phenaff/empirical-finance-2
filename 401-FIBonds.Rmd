@@ -8,7 +8,7 @@
 
 ```{block, type="epigraph"}
 An honest man’s word is as good as his bond
---- Miguel de Cervantes 
+--- Miguel de Cervantes
 ```
 
 `r newthought("This")` chapter provides a elementary survey of fixed income calculations,
@@ -20,7 +20,7 @@ between the price and the yield of fixed income instruments.
 In a simplified framework with even intervals between payments, the
 present value of a bond with coupon rate $c$ and maturing in $n$ years
 is given by $$P(r) = \sum_{i=1}^n \frac{cN}{(1+r)^i} + \frac{N}{(1+r)^n}
-\label{eq:fixedinBonds-1}$$
+(\#eq:fixedinBonds-1)$$
 
 where:
 
@@ -59,7 +59,7 @@ or $P = `r round(P,2) `$.
 
 ## The Price-Yield Curves
 
-Figure \[fig:PY-Coupon\] represents the price-yield relationship for 20
+Figure \@ref(fig:PY-Coupon) represents the price-yield relationship for 20
 year bonds with coupons ranging from 0 to 15%. In addition to the
 obvious non-linear nature of the price-yield relationship, it is worth
 noting that the convexity of the price-yield curve increases with the
@@ -87,7 +87,7 @@ coupon rate.
   <<PY-Coupon>>
 ```
 
-Figure \[fig:PY-Maturity\] represents the price-yield relationship for
+Figure \@ref(fig:PY-Maturity) represents the price-yield relationship for
 10% bonds with maturities ranging from 3 to 30 years. Regardless of
 maturity, the bonds are worth 100 when the yield is identical to the
 coupon. This can be easily established by writing equation
@@ -133,7 +133,7 @@ V &=& -\frac{\partial P(r)}{\partial r} \\
 
 ```{r, }
   Variation <- function(coupon, n, N=100, yield) {
-    100*sum(sapply(1:n, function(i) ifelse(i<n, i*coupon/(1 + yield)^(i+1), 
+    100*sum(sapply(1:n, function(i) ifelse(i<n, i*coupon/(1 + yield)^(i+1),
                                            n*(1+coupon)/(1+yield)^(n+1))))
   }
 ```
@@ -149,7 +149,7 @@ portfolio, given the yield of each bond. Consider two bonds with prices
 $P_1(r_1)$ and $P_2(r_2)$ and variations $V_1(r_1)$ and $V_2(r_2)$. We
 look for the common yield $r^*$ such that:
 $$P = a_1 P_1(r^*) + a_2 P_2(r^*)
-\label{eq:fixedinBonds-2}$$
+(\#eq:fixedinBonds-2)$$
 
 Use a first-order Taylor’s expansion of price $P_i(r)$ at $r_i$:
 $$P_i(r^*) = P_i(r_i) + (r^*-r_i) V_i(r_i)$$
@@ -222,7 +222,7 @@ $$\begin{aligned}
   &=& \frac{1}{P} \sum_i q_i \frac{P_i}{P_i}\frac{\partial P_i}{\partial r} \nonumber \\
   &=& \frac{1}{P} \sum_i q_i P_i S_i \nonumber \\
   &=& \sum_i \frac{q_i P_i}{P}   S_i
-\label{eq:mod-duration}\end{aligned}$$
+(\#eq:mod-duration)\end{aligned}$$
 
 The modified duration of a portfolio is the weighted average of the
 modified durations of the bonds. The weight associated with each bond is
@@ -235,7 +235,7 @@ this risk measure), can be interpreted as the average maturity, weighted
 by the present value of the cash flow at each payment date.
 
 $$D = \sum_{i=1}^n \frac{i F_i}{P (1+r)^i}
-\label{eq:macaulay}$$
+(\#eq:macaulay)$$
 
 The Macaulay Duration is closely related to Sensitivity:
 
@@ -243,7 +243,7 @@ $$S =  \frac{1}{(1+r)} D$$
 
 ```{r, }
   SimpleDuration <- function(coupon, n, yield) {
-    100*sum(sapply(1:n, function(i) ifelse(i<n, i*coupon/(1 + yield)^i, 
+    100*sum(sapply(1:n, function(i) ifelse(i<n, i*coupon/(1 + yield)^i,
                         n*(1+coupon)/(1+yield)^n)))/SimpleBondPrice(coupon,n,yield=yield)
   }
 ```
@@ -285,7 +285,7 @@ computes the duration of bonds of varying maturities and coupon rates.
     }
 ```
 
-The resulting values are plotted in Figure  \[fig:dur-mat\]. As
+The resulting values are plotted in Figure  \@ref(fig:dur-mat). As
 expected, the duration of the zero-coupon bond is identical to its
 maturity. For all other bonds, the duration converges to a constant as
 maturity increases, regardless of coupon rate.
@@ -342,7 +342,7 @@ multiplying both sides of equation \[eq:mod-duration\] by $(1+r)$
 yields:
 
 $$D =  \sum_i \frac{q_i P_i}{P} D_i
-\label{eq:portfolio-duration}$$
+(\#eq:portfolio-duration)$$
 
 ## Bond Clean and Dirty Price
 
@@ -350,7 +350,7 @@ Bonds prices are quoted in “flat” or “clean” price, and not in net
 present value. The clean price being the net present value less the
 accrued interest. Therefore, the bond quoted price is not the amount
 that the buyer disburses when she buys a bond. The reason for this
-apparent complication is illustrated in Figure \[fig:cd-1\], which plots
+apparent complication is illustrated in Figure \@ref(fig:cd-1) which plots
 the change over time of a bond clean price and present value, with yield
 held constant. Quoting a bond by net present value would be impractical,
 because of the discontinuity around the coupon payment date. The clean
@@ -381,13 +381,13 @@ The plots are obtained as follows, using the function of package :
 ```
 
 ```{r, par-bond,echo=FALSE, fig.width=3, fig.height=3}
-  plot(dt, bc1$p, type='l', lwd=2, xlab='', 
+  plot(dt, bc1$p, type='l', lwd=2, xlab='',
        ylab='Price', col='red', ylim=c(98, max(bc2$p)))
   lines(dt, bc1$cp, type='l', lwd=2, col='blue')
 ```
 
 ```{r, premium-bond, echo=FALSE,fig.width=3, fig.height=3}
-  plot(dt, bc2$p, type='l', lwd=2, xlab='Settlement date', ylab='', 
+  plot(dt, bc2$p, type='l', lwd=2, xlab='Settlement date', ylab='',
   col='red', ylim=c(98, max(bc2$p)))
   lines(dt, bc2$cp, type='l', lwd=2, col='blue')
 ```

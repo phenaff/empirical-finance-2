@@ -99,7 +99,7 @@ $$\begin{aligned}
 Rewrite:
 
 $$c_0 = \frac{1}{\rho} \left(q_u c_T^u + q_d c_T^d \right)
-\label{eq:cox-ross-1}$$
+(\#eq:cox-ross-1)$$
 
 One can observe that $0<q_u, q_d<1$ and that $q_u+q_d=1$, and therefore
 interpret $q_u$ and $q_d$ as probabilities associated with the events
@@ -171,7 +171,7 @@ The calculation process in a multi-period tree is best explained through
 an example. Consider a stock priced at 45.45€. At each period, the stock
 may appreciate or depreciate by $10\%$. The riskless rate is $5\%$, and
 we want to price a call option struck at 40€. The two-period tree is
-represented in figure \[fig:2-per-bin\], with stock price in black and
+represented in figure \@ref(fig:2-per-bin) with stock price in black and
 the option exercise value in red.
 
 ```{r, echo=FALSE, engine='tikz', out.width='60%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
@@ -214,7 +214,7 @@ $$\begin{aligned}
     q_d &=& .25\end{aligned}$$
 
 Using these values, the option value one step prior to expiry can be
-computed using (\[eq:cox-ross-1\]):
+computed using (\@ref(eq:cox-ross-1)):
 
 $$\begin{aligned}
 C_{1,1} &=& \frac{1}{\rho}(q_u C_{2,2} + q_d C_{2,1}) = 11.90  \\
@@ -226,7 +226,7 @@ thus:
 
 $$C_{0,0} = \frac{1}{\rho}(q_u C_{1,1} + q_d C_{1,0}) = 9.35$$
 
-The process is pictured in Figure \[fig:bin-tree-3\].
+The process is pictured in Figure \@ref(fig:bin-tree-3).
 
 
 ## American Exercise
@@ -248,7 +248,7 @@ C^i_t  &=& \max(S^i_t - K, V^i_t) \\
 
 Starting from the data of the previous section, we now assume that the
 stock pays a dividend of 3 € in period 2. The modified tree is
-represented in figure \[fig:bin-tree-4\].
+represented in figure \@ref(fig:bin-tree-4).
 
 We price an American call struck at 40€ in this tree. Exercise values in
 period 2 are computed as before, giving the following values:
@@ -310,12 +310,12 @@ The solution is:
 $$\begin{aligned}
 u &=& e^{\mu \Delta t + \sigma \sqrt{\Delta t}} \nonumber \\
 d &=& e^{\mu \Delta t - \sigma \sqrt{\Delta t}}
-\label{eq:ud}\end{aligned}$$
+(\#eq:ud)\end{aligned}$$
 
 The corresponding value of the risk-neutral up probability, $q_u$ is
 
 $$q_u = \frac{e^{r\Delta t} - e^{\mu \Delta t - \sigma \sqrt{\Delta t}}}{e^{\mu \Delta t + \sigma \sqrt{\Delta t}} - e^{\mu \Delta t - \sigma \sqrt{\Delta t}}}
-\label{eq:qu}$$
+(\#eq:qu)$$
 
 This is the single-period risk-neutral probability, not the objective
 probability $p$. We next compute the limit of $q_u$ as
@@ -338,7 +338,7 @@ Combining these approximations with (\[eq:qu\]) yields,
 $$\begin{aligned}
 q_u &=& \frac{\sigma \sqrt{\Delta t} + (r-\frac{1}{2} \sigma^2 - \mu) \Delta t + O(\Delta t ^{3/2})}{2 \sigma \sqrt{\Delta t} + O(\Delta t ^{3/2})}  \nonumber \\
 &=& \frac{1}{2} + \frac{r-\frac{1}{2} \sigma^2 - \mu}{2 \sigma} \sqrt{\Delta t}  + O(\Delta t)
-\label{eq:qu-2}\end{aligned}$$
+(\#eq:qu-2)\end{aligned}$$
 
 Let’s now use these expressions for $q_u$ to compute the mean and
 variance of $V_j$.
@@ -366,7 +366,7 @@ the option value is the discounted expected value of the payoff:
 $$\begin{aligned}
 P(S_0) &=& e^{-rT} E^Q(f(S_T)) \\
  &=& e^{-rT} E^Q(f(S_0e^{\sum_{i=1}^N V_i})) \nonumber
-\label{eq:pso}\end{aligned}$$
+(\#eq:pso)\end{aligned}$$
 
 where $f(S_T)$ is the payoff at expiry. We next need to compute the
 limit: $$\lim_{N\to\infty} \sum_{i=1}^N V_i$$

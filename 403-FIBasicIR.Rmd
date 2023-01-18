@@ -72,7 +72,7 @@ Using these spot rates (continuously compounded), we can compute the
   fr <- c(sr[1], -log(B[2:5]/B[1:4]))
 ```
 
-The resulting forward rate curve is shown in figure \[fig:zc-2\].
+The resulting forward rate curve is shown in figure \@ref(fig:zc-2).
 
 ```{r, label=ZC-2, echo=F, results='hide'}
   plot(t, fr, type='l', xlab='Time (year)', ylab='Rate', lwd=2, col='blue')
@@ -100,7 +100,7 @@ chapter, provide a vehicule for locking a long term future yield.
 
 ![image](img/IR-Futures.pdf)
 
-\[fig:zc-2\]
+\@ref(fig:zc-2\]
 
 ## Forward Rate Agreement (FRA)
 

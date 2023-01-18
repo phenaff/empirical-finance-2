@@ -17,24 +17,24 @@ calculation, and how to represent the result.
 ## Market Data
 
 Option settlement prices are published every day by exchanges.
-Figure \[fig:iv-data\] shows a sample of the data file published every
+Figure \@ref(fig:iv-data) shows a sample of the data file published every
 day by the NYMEX.
 
 ``` {fontsize="\tiny"}
                 NEW YORK MERCANTILE EXCHANGE
           NYMEX OPTIONS CONTRACT LISTING FOR 12/29/2008
 
-                           TODAY'S  PREVIOUS  ESTIMATED   
---------CONTRACT--------    SETTLE    SETTLE     VOLUME   
-LC    02 09    P   30.00       .53       .85          0    
-LC    02 09    P   35.00      1.58      2.28          0    
-LC    02 09    P   37.50      2.44      3.45          0    
-LC    02 09    C   40.00      3.65      2.61         10    
-LC    02 09    P   40.00      3.63      4.90          0    
-LC    02 09    P   42.00      4.78      6.23          0    
-LC    02 09    C   42.50      2.61      1.80          0    
-LC    02 09    C   43.00      2.43      1.66          0    
-LC    02 09    P   43.00      5.41      6.95        100    
+                           TODAY'S  PREVIOUS  ESTIMATED
+--------CONTRACT--------    SETTLE    SETTLE     VOLUME
+LC    02 09    P   30.00       .53       .85          0
+LC    02 09    P   35.00      1.58      2.28          0
+LC    02 09    P   37.50      2.44      3.45          0
+LC    02 09    C   40.00      3.65      2.61         10
+LC    02 09    P   40.00      3.63      4.90          0
+LC    02 09    P   42.00      4.78      6.23          0
+LC    02 09    C   42.50      2.61      1.80          0
+LC    02 09    C   43.00      2.43      1.66          0
+LC    02 09    P   43.00      5.41      6.95        100
 ```
 
 NEW YORK MERCANTILE EXCHANGE NYMEX OPTIONS CONTRACT LISTING FOR
@@ -205,7 +205,7 @@ It implementation is straight-forward:
   sMax <- max(sBounds)
   pMin <- GBSOption(TypeFlag, S, X, Time, r, b, sMin)@price
   pMax <- GBSOption(TypeFlag, S, X, Time, r, b, sMax)@price
-   
+
   not_converged <- abs(pMin-pMax) > tol
   i <- 1
 
@@ -225,7 +225,7 @@ It implementation is straight-forward:
   }
 
   (sMin+sMax)/2
-  }   
+  }
 
   t3 <- function(n=100) {
   for (i in 1:n) {

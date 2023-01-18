@@ -58,19 +58,19 @@ according to the future state, as pictured below:
 ```{r, echo=FALSE, engine='tikz', out.width='80%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
 \begin{tikzpicture}
 \begin{scope}
-\node (S1) {$S_1$}[grow' =right,sibling distance=1cm] 
+\node (S1) {$S_1$}[grow' =right,sibling distance=1cm]
 child {node {0}} child {node{3}} child {node {1}};
-\node [below=35pt, at=(S1.east)] {Asset 1}; 
+\node [below=35pt, at=(S1.east)] {Asset 1};
 \end{scope}
 \begin{scope}[xshift=3cm]
-\node (S2) {$S_2$}[grow' =right,sibling distance=1cm] 
+\node (S2) {$S_2$}[grow' =right,sibling distance=1cm]
 child {node {1}} child {node{2}} child {node {1}};
-\node [below=35pt, at=(S2.east)] {Asset 2}; 
+\node [below=35pt, at=(S2.east)] {Asset 2};
 \end{scope}
 \begin{scope}[xshift=6cm]
-\node (S3) {$S_3$}[grow' =right,sibling distance=1cm] 
+\node (S3) {$S_3$}[grow' =right,sibling distance=1cm]
 child {node {1}} child {node{0}} child {node {2}};
-\node [below=35pt, at=(S3.east)] {Asset 3}; 
+\node [below=35pt, at=(S3.east)] {Asset 3};
 \end{scope}
 \end{tikzpicture}
 ```
@@ -236,7 +236,7 @@ $$S_0 = \sum_i V_i d_i p_i$$
 where the discount factor $d_i$ is given by:
 
 $$d_i = \frac{1-\lambda(U_i - E(M_T))}{R_f}
-    \label{eq:capm2}$$
+    (\#eq:capm2)$$
 
 Equation \@ref(eq:capm2) shows that as aggregate wealth $U_i$ increases,
 the discount factor decreases. An asset is more valuable, everything
@@ -267,7 +267,7 @@ traded, and therefore any payoff profile can be replicated as a
 portfolio of Arrow-Debreu securities. The existence of this replicating
 portfolio imposes a unique arbitrage-free price for any payoff. Going
 back to the elementary example above, consider now a new security that
-has the payoff profile illustrated in figure \[fig:new-sec\].
+has the payoff profile illustrated in figure \@ref(fig:new-sec).
 
 \[grow’=right,sibling distance=1cm\] child [node [1]{}]{} child [node
 [-0.5]{}]{} child [node [1]{}]{};
@@ -347,7 +347,7 @@ prices from risk-neutral probabilities.
 ### Trading Strategy and Dynamic Completeness
 
 Let’s now consider an economy where decisions can be made at various
-stages. This economy is illustrated in Figure \[fig:bin-tree-0\]. At the
+stages. This economy is illustrated in Figure \@ref(fig:bin-tree-0). At the
 second time step, we have 3 distinct states, i.e. 3 Arrow-Debreu
 securities. If we only had one time step, we would need 3 linearly
 independent assets to construct these securities. Now, because of the

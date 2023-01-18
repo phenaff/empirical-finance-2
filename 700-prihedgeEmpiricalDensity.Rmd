@@ -10,9 +10,7 @@ that better matches the empirical evidences.
 Can we transform an empirical density into a density that:
 
 1.  is risk-neutral,
-
 2.  is consistent with current market observations, and
-
 3.  retains the stylized facts of the historical density?
 
 There is a abundant literature on the subject of derivative pricing
@@ -53,9 +51,10 @@ Let $P$ and $Q$ be two random variables. The relative entropy of $P$ and
 $Q$ measures the closeness between probability distributions over the
 same set:
 
-$$\begin{align}
+\begin{align}
     S(P,Q) & =  E_Q\left\{\log Q - \log P\right\} \nonumber \\
-    & =  \sum_x Q(x) \log \left(\frac{Q(x)}{P(x)}\right)\end{align}$$
+    & =  \sum_x Q(x) \log \left(\frac{Q(x)}{P(x)}\right)
+\end{align}
 
 ```{r, label=plotpq, echo=FALSE, results='hide'}
   x <- seq(0,10,length=1000)
@@ -90,14 +89,14 @@ the set $X_N = (x_i, i=1, \ldots, N)$ and the distribution $Q$, also
 uniform over a subset $X_M \in X_N$ of size $M$:
 
 $$q(x_i) =
-    \left\{ 
+    \left\{
         \begin{array}{rl}
              \frac{1}{M} & \mbox{if $x_i \in X_M$} \\
              0 & \mbox{otherwise}
         \end{array}
     \right.$$
 
-The distributions are represented in figure \[fig:pq-dist\]. Then
+The distributions are represented in figure \@ref(fig:pq-dist). Then
 
 $$S(Q,P) = \ln(N) - \ln(M)$$
 
@@ -150,29 +149,29 @@ risk-neutral density to match a variety of market information.
 
 To match a given at-the-money volatility ($\sigma$), set:
 
-$$\begin{align}
+\begin{align}
     A_j(x) & =  x^2 \nonumber \\
-    b_j & =  \sigma^2 + \bar{x}^2\end{align}$$
+    b_j & =  \sigma^2 + \bar{x}^2\end{align}
 
 To match the price $s$ of a straddle, set:
 
-$$\begin{align}
+\begin{align}
     A_j(x) &= \mid x-K \mid \nonumber \\
-    b_j &= s e^{r(T-t)}\end{align}$$
+    b_j &= s e^{r(T-t)}\end{align}
 
 ### Matching Market Data
 
 To match a given at-the-money volatility ($\sigma$), set:
 
-$$\begin{align}
+\begin{align}
     A_j(x) & =  x^2 \nonumber \\
-    b_j & =  \sigma^2 + \bar{x}^2\end{align}$$
+    b_j & =  \sigma^2 + \bar{x}^2\end{align}
 
 To match the price $s$ of a straddle, set:
 
-$$\begin{align*}
+\begin{align}
     A_j(x) &= \mid x-K \mid \\
-    b_j &= s e^{r(T-t)}\end{align*}$$
+    b_j &= s e^{r(T-t)}\end{align}
 
 This formulation may be applied to an arbitrary set of options.
 
@@ -183,11 +182,11 @@ $$L = - \sum_i p_i \log \frac{p_i}{q_i} + \sum_j \lambda_j (y_j - \sum_i p_i
 
 The first-order conditions are:
 
-$$\begin{align}
+\begin{align}
   \frac{\partial L}{\partial p_i} &= -\ln(\frac{p_i}{q_i}) - 1 -\sum_j \lambda_j A_j(x_i) -\mu = 0 (\#eq:foc-1) \\
   \frac{\partial L}{\partial \lambda_j} &= y_j - \sum_i p_i A_j(x_i) = 0 (\#eq:foc-2) \\
   \frac{\partial L}{\partial \mu} &= 1-\sum_i p_i = 0 (\#eq:foc-3)
-  \end{align}$$
+  \end{align}
 
 ### Solution
 
@@ -198,21 +197,21 @@ $$L = - \sum_i p_i \log \frac{p_i}{q_i} + \sum_j \lambda_j (y_j - \sum_i p_i
 
 The first-order conditions are:
 
-$$\begin{align*}
+\begin{align}
   \frac{\partial L}{\partial p_i} &= -\ln(\frac{p_i}{q_i}) - 1 -\sum_j \lambda_j A_j(x_i) -\mu = 0  \\
   \frac{\partial L}{\partial \lambda_j} &= y_j - \sum_i p_i A_j(x_i) = 0  \\
-  \frac{\partial L}{\partial \mu} &= 1-\sum_i p_i = 0 
-  \end{align*}$$
+  \frac{\partial L}{\partial \mu} &= 1-\sum_i p_i = 0
+  \end{align}
 
-Using \[eqn:foc-1\], we obtain,
+Using \@ref(eqn:foc-1), we obtain,
 
 $$p_i = q_i e^{(-1-\sum_j \lambda_j A_j(x_i) -\mu)}$$
 
 Divide by $\sum_i p_i$ to eliminate $\mu$ and a constant term:
 
-$$\begin{align}
+\begin{align}
     p_i &=& \frac{q_i e^{(-\sum_j \lambda_j A_j(x_i) -\mu)}}{\sum_k q_k e^{(-1-\sum_j \lambda_j A_j(x_k) -\mu)}} \\
-    &=& \frac{q_i e^{(-\sum_j \lambda_j A_j(x_i))}}{\sum_k q_k e^{(-1-\sum_j \lambda_j A_j(x_k))}}\end{align}$$
+    &=& \frac{q_i e^{(-\sum_j \lambda_j A_j(x_i))}}{\sum_k q_k e^{(-1-\sum_j \lambda_j A_j(x_k))}}\end{align}
 
 To calculate $\lambda_j$, we use \[eqn:foc-2\]:
 
@@ -246,7 +245,7 @@ e^{-\sum_j \lambda_j A_j(x_i)}}, j=1, \ldots, m$$
 ### Illustration
 
 The method outlined above is sometimes the only practical alternative.
-Figure \[fig:socal\] represents the distribution of price for the “SoCal
+Figure \@ref(fig:socal) represents the distribution of price for the “SoCal
 basis”. This is the difference between the price of natural gas at Henry
 Hub (the delivery point in Southern Louisiana for the NYMEX Futures
 contract), and the price in Southern California. In general, the price
@@ -255,23 +254,19 @@ difference reflects the cost of transporting gas from East to West, say
 disruption in supply and the price differential jumps to \$3 or \$5. In
 that context, what is the price of a call option struck at \$2?
 
-![image](img/lotteryTicket.pdf) \[fig:socal\]
+![image](img/lotteryTicket.pdf) \@ref(fig:socal)
 
 ### A Lottery Ticket...
 
-![image](pic/lotteryTicket){width=".7\textwidth"}
+![image](img/lotteryTicket){width=".7\textwidth"}
 
 The density can be further calibrated to available market information.
-Figure \[fig:atm-straddle\] shows the result of the minimum entropy
+Figure \@ref(fig:atm-straddle) shows the result of the minimum entropy
 adjustment to the sample distribution to match both the forward price
 and the value of at-the-money straddles.
 
-![image](img/Straddle.pdf) \[fig:atm-straddle\]
+![image](img/Straddle.pdf) \@ref(fig:atm-straddle)
 
-&lt;beamer&gt;[Calibration to ATM Straddle]{}
-![image](pic/Straddle){width=".7\textwidth"}
-
-[Calibration to OTM option]{} ![image](pic/Call){width=".7\textwidth"}
 
 ## Monte-Carlo Pricing with Historical Paths
 
@@ -284,15 +279,12 @@ Potters, Bouchaud and Sestovic [@Marc2001].
 Let’s first introduce some notation:
 
 $x_k$
-
 :   value of underlying asset at step $k$
 
 $\phi_k(x_k)$
-
 :   hedge quantity
 
 $C_k(x_k)$
-
 :   value of derivative
 
 Define the local risk $R_k$ as:
@@ -308,9 +300,9 @@ hedging risk.
 The functions $C(x)$ and $\phi(x)$ are decomposed over an appropriate
 set of basis functions:
 
-$$\begin{align}
+\begin{align}
     C_k(x) &=& \sum_{a=1}^M \gamma_a^k C_a(x) \\
-    \phi_k(x) &=& \sum_{a=1}^M \gamma_a^k \frac{\partial C_a(x)}{\partial x}\end{align}$$
+    \phi_k(x) &=& \sum_{a=1}^M \gamma_a^k \frac{\partial C_a(x)}{\partial x}\end{align}
 
 Splines provide a convenient set of basis functions. Given a set of
 knots $t_i, i = 1 \ldots, k$, the spline function for polynomials of
@@ -323,28 +315,25 @@ Thus, a spline of degree $n$ with $k$ knots is a linear combination of
 $(k+1)(n+1)$ basis functions. The derivative of $C(x)$ with respect to
 $x$ is readily computed. To simplify notation, let:
 
-$$\begin{align}
+\begin{align}
     C(x) &=& \sum_{a=1}^m \beta_a F_a(x) \nonumber \\
-    C'(x) &=& \sum_{a=1}^m \beta_a F'_a(x) \nonumber\end{align}$$
+    C'(x) &=& \sum_{a=1}^m \beta_a F'_a(x) \nonumber\end{align}
 
 where $F_a(x)$ defined as above. At each step $t$ in the hedged
 Monte-Carlo simulation, we obtain the price function by solving for
 $\beta$ the following optimization problem (formulation for a call):
 
-$$\begin{align}
-    \mbox{min} & \sum_{l=1}^N  e^{-\rho} C_{t+1}(x^l_{t+1})  \\
-    & \sum_{a=1}^M \beta_a ( F_a(x_t^l) + F'_a(x_t^l) (x^l_{t+1} e^{-\rho} - x^l_t))]^2\end{align}$$
-
-$$
-    \begin{array}{ll}
-        \mbox{min} & \sum_{l=1}^N  [e^{-\rho} C_{t+1}(x^l_{t+1}) - \\
+<!--
+\begin{align}
+\mbox{min} & \sum_{l=1}^N  [e^{-\rho} C_{t+1}(x^l_{t+1}) - \\
         & \sum_{a=1}^M \beta_a ( F_a(x_t^l) + F'_a(x_t^l) (x^l_{t+1} e^{-\rho} - x^l_t))]^2 \\
 
-        \mbox{such that}   \nonumber \\
-        & \sum_{a=1}^M \beta_a  F_a(x_t^l) >=  I(x_t^l) \nonumber \\
+        \mbox{such that}  &  \notag \\
+        & \sum_{a=1}^M \beta_a  F_a(x_t^l) >=  I(x_t^l) \notag \\
         & \sum_{a=1}^M \beta_a ( F_a(x_t^l) - F_a(x_t^{l-1})) sgn(x_t^l -
-        x_t^{l-1}) >= 0
-    \end{array}$$
+        x_t^{l-1}) >= 0 \notag
+\end{align}
+-->
 
 where $I(x)$ is the intrinsic value of the derivative being priced. The
 second constraint enforces the basic non-arbitrage condition that the

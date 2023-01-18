@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="1 Basic Components | Topics in Empirical Finance" />
+<meta property="og:title" content="3 Basic Components | Topics in Empirical Finance" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/img/frontCover.pdf" />
 <meta property="og:description" content="An open access textbook on empirical finance" />
@@ -23,36 +23,12 @@ MathJax.Hub.Config({
 
 <meta name="description" content="An open access textbook on empirical finance">
 
-<title>1 Basic Components | Topics in Empirical Finance</title>
+<title>3 Basic Components | Topics in Empirical Finance</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
-<!--
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content="@jweisber" />
-<meta name="twitter:creator" content="@jweisber" />
-<meta name="twitter:title" content="Odds &amp; Ends" />
-<meta name="twitter:description" content="An open access textbook for introductory philosophy courses on probability and inductive logic." />
-<meta name="twitter:image" content="img/social_image.png" />
--->
-
-
-<!--
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  jax: ["output/HTML-CSS"],
-  "HTML-CSS": {
-    availableFonts: ["Gyre-Pagella"],
-    preferredFont: "Gyre-Pagella",
-    webFont: "Gyre-Pagella",
-    imageFont: "Gyre-Pagella"
-  }
-});
-</script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
--->
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
@@ -187,298 +163,428 @@ $$
 <li><a href="index.html#preface-to-the-second-edition">Preface to the second edition</a></li>
 <li><a href="preface-to-the-first-edition.html#preface-to-the-first-edition">Preface to the first edition</a></li>
 <li class="part"><span><b>Computational Framework</b></span></li>
-<li class="has-sub"><a href="basic-components.html#basic-components"><span class="toc-section-number">1</span> Basic Components</a>
+<li><a href="introduction.html#introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li class="has-sub"><a href="ch:data-sources.html#ch:data-sources"><span class="toc-section-number">2</span> Data Sources</a>
 <ul>
-<li class="has-sub"><a href="basic-components.html#the-class"><span class="toc-section-number">1.1</span> The Class</a>
-<ul>
-<li><a href="basic-components.html#illustration"><span class="toc-section-number">1.1.1</span> Illustration</a></li>
-<li><a href="basic-components.html#design-and-implementation"><span class="toc-section-number">1.1.2</span> Design and Implementation</a></li>
+<li><a href="ch:data-sources.html#commodities-data"><span class="toc-section-number">2.1</span> Commodities Data</a></li>
+<li><a href="ch:data-sources.html#libor-rates"><span class="toc-section-number">2.2</span> Libor Rates</a></li>
+<li><a href="ch:data-sources.html#sovereign-yield-curves"><span class="toc-section-number">2.3</span> Sovereign Yield Curves</a></li>
+<li><a href="ch:data-sources.html#equities-data"><span class="toc-section-number">2.4</span> Equities Data</a></li>
 </ul></li>
-<li class="has-sub"><a href="basic-components.html#the-class-1"><span class="toc-section-number">1.2</span> The Class</a>
+<li class="has-sub"><a href="basic-components.html#basic-components"><span class="toc-section-number">3</span> Basic Components</a>
 <ul>
-<li><a href="basic-components.html#the-model-for-market-data"><span class="toc-section-number">1.2.1</span> The Model for Market Data</a></li>
-<li><a href="basic-components.html#the-search-algorithm"><span class="toc-section-number">1.2.2</span> The Search Algorithm</a></li>
+<li class="has-sub"><a href="basic-components.html#the-finstrument-class"><span class="toc-section-number">3.1</span> The <idx>fInstrument</idx> Class</a>
+<ul>
+<li><a href="basic-components.html#design-and-implementation"><span class="toc-section-number">3.1.1</span> Design and Implementation</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#the-dataprovider-class"><span class="toc-section-number">3.2</span> The <idx>DataProvider</idx> Class</a>
+<ul>
+<li><a href="basic-components.html#the-model-for-market-data"><span class="toc-section-number">3.2.1</span> The Model for Market Data</a></li>
+<li><a href="basic-components.html#the-search-algorithm"><span class="toc-section-number">3.2.2</span> The Search Algorithm</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="sim-framework.html#sim-framework"><span class="toc-section-number">2</span> The Simulation Framework</a>
+<li class="has-sub"><a href="sim-framework.html#sim-framework"><span class="toc-section-number">4</span> The Simulation Framework</a>
 <ul>
-<li><a href="sim-framework.html#scenario-simulator"><span class="toc-section-number">2.1</span> Scenario Simulator</a></li>
-<li class="has-sub"><a href="sim-framework.html#a-delta-hedging-experiment"><span class="toc-section-number">2.2</span> A Delta Hedging Experiment</a>
+<li><a href="sim-framework.html#scenario-simulator"><span class="toc-section-number">4.1</span> Scenario Simulator</a></li>
+<li class="has-sub"><a href="sim-framework.html#a-delta-hedging-experiment"><span class="toc-section-number">4.2</span> A Delta Hedging Experiment</a>
 <ul>
-<li><a href="sim-framework.html#design-considerations"><span class="toc-section-number">2.2.1</span> Design Considerations</a></li>
+<li><a href="sim-framework.html#design-considerations"><span class="toc-section-number">4.2.1</span> Design Considerations</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>Discreet Models</b></span></li>
-<li class="has-sub"><a href="arb-free-pricing.html#arb-free-pricing"><span class="toc-section-number">3</span> Arbitrage-Free Pricing and Risk Neutral Valuation</a>
+<li class="has-sub"><a href="arb-free-pricing.html#arb-free-pricing"><span class="toc-section-number">5</span> Arbitrage-Free Pricing and Risk Neutral Valuation</a>
 <ul>
-<li class="has-sub"><a href="arb-free-pricing.html#arbitrage-free-pricing"><span class="toc-section-number">3.1</span> Arbitrage-free Pricing</a>
+<li class="has-sub"><a href="arb-free-pricing.html#arbitrage-free-pricing"><span class="toc-section-number">5.1</span> Arbitrage-free Pricing</a>
 <ul>
-<li><a href="arb-free-pricing.html#arrow-debreu-securities"><span class="toc-section-number">3.1.1</span> Arrow-Debreu Securities</a></li>
-<li><a href="arb-free-pricing.html#the-price-of-traded-securities"><span class="toc-section-number">3.1.2</span> The Price of Traded Securities</a></li>
-<li><a href="arb-free-pricing.html#complete-market"><span class="toc-section-number">3.1.3</span> Complete Market</a></li>
-<li><a href="arb-free-pricing.html#equivalent-probability-measures"><span class="toc-section-number">3.1.4</span> Equivalent Probability Measures</a></li>
-<li><a href="arb-free-pricing.html#the-impact-of-interest-rate"><span class="toc-section-number">3.1.5</span> The Impact of Interest Rate</a></li>
-<li><a href="arb-free-pricing.html#trading-strategy-and-dynamic-completeness"><span class="toc-section-number">3.1.6</span> Trading Strategy and Dynamic Completeness</a></li>
-<li><a href="arb-free-pricing.html#discounted-asset-prices-as-martingales"><span class="toc-section-number">3.1.7</span> Discounted Asset Prices as Martingales</a></li>
+<li><a href="arb-free-pricing.html#arrow-debreu-securities"><span class="toc-section-number">5.1.1</span> Arrow-Debreu Securities</a></li>
+<li><a href="arb-free-pricing.html#the-price-of-traded-securities"><span class="toc-section-number">5.1.2</span> The Price of Traded Securities</a></li>
+<li><a href="arb-free-pricing.html#complete-market"><span class="toc-section-number">5.1.3</span> Complete Market</a></li>
+<li><a href="arb-free-pricing.html#equivalent-probability-measures"><span class="toc-section-number">5.1.4</span> Equivalent Probability Measures</a></li>
+<li><a href="arb-free-pricing.html#the-impact-of-interest-rate"><span class="toc-section-number">5.1.5</span> The Impact of Interest Rate</a></li>
+<li><a href="arb-free-pricing.html#trading-strategy-and-dynamic-completeness"><span class="toc-section-number">5.1.6</span> Trading Strategy and Dynamic Completeness</a></li>
+<li><a href="arb-free-pricing.html#discounted-asset-prices-as-martingales"><span class="toc-section-number">5.1.7</span> Discounted Asset Prices as Martingales</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="binomial.html#binomial"><span class="toc-section-number">4</span> Risk-Neutral Pricing in a Binomial Framework</a>
+<li class="has-sub"><a href="binomial.html#binomial"><span class="toc-section-number">6</span> Risk-Neutral Pricing in a Binomial Framework</a>
 <ul>
-<li class="has-sub"><a href="binomial.html#introduction"><span class="toc-section-number">4.1</span> Introduction</a>
+<li class="has-sub"><a href="binomial.html#introduction-1"><span class="toc-section-number">6.1</span> Introduction</a>
 <ul>
-<li><a href="binomial.html#subsec:binomial"><span class="toc-section-number">4.1.1</span> The Binomial Model for Stocks</a></li>
+<li><a href="binomial.html#subsec:binomial"><span class="toc-section-number">6.1.1</span> The Binomial Model for Stocks</a></li>
 </ul></li>
-<li><a href="binomial.html#pricing-with-arrow-debreu-securities"><span class="toc-section-number">4.2</span> Pricing With Arrow-Debreu Securities</a></li>
-<li><a href="binomial.html#multi-period-binomial-model"><span class="toc-section-number">4.3</span> Multi-Period Binomial Model</a></li>
-<li><a href="binomial.html#american-exercise"><span class="toc-section-number">4.4</span> American Exercise</a></li>
-<li class="has-sub"><a href="binomial.html#calibration-of-the-binomial-model"><span class="toc-section-number">4.5</span> Calibration of the Binomial Model</a>
+<li><a href="binomial.html#pricing-with-arrow-debreu-securities"><span class="toc-section-number">6.2</span> Pricing With Arrow-Debreu Securities</a></li>
+<li><a href="binomial.html#multi-period-binomial-model"><span class="toc-section-number">6.3</span> Multi-Period Binomial Model</a></li>
+<li><a href="binomial.html#american-exercise"><span class="toc-section-number">6.4</span> American Exercise</a></li>
+<li class="has-sub"><a href="binomial.html#calibration-of-the-binomial-model"><span class="toc-section-number">6.5</span> Calibration of the Binomial Model</a>
 <ul>
-<li><a href="binomial.html#tree-geometry"><span class="toc-section-number">4.5.1</span> Tree Geometry</a></li>
+<li><a href="binomial.html#tree-geometry"><span class="toc-section-number">6.5.1</span> Tree Geometry</a></li>
 </ul></li>
 </ul></li>
-<li><a href="stability-of-the-binomial-model.html#stability-of-the-binomial-model"><span class="toc-section-number">5</span> Stability of the Binomial Model</a></li>
-<li class="has-sub"><a href="sec:trinomial.html#sec:trinomial"><span class="toc-section-number">6</span> Trinomial Models</a>
+<li><a href="stability-of-the-binomial-model.html#stability-of-the-binomial-model"><span class="toc-section-number">7</span> Stability of the Binomial Model</a></li>
+<li class="has-sub"><a href="sec:trinomial.html#sec:trinomial"><span class="toc-section-number">8</span> Trinomial Models</a>
 <ul>
-<li><a href="sec:trinomial.html#the-trinomial-tree"><span class="toc-section-number">6.1</span> The Trinomial Tree</a></li>
+<li><a href="sec:trinomial.html#the-trinomial-tree"><span class="toc-section-number">8.1</span> The Trinomial Tree</a></li>
 </ul></li>
 <li class="part"><span><b>Derivatives in the Black-Scholes Framework</b></span></li>
-<li class="has-sub"><a href="pricing-with-black-scholes.html#pricing-with-black-scholes"><span class="toc-section-number">7</span> Pricing with Black-Scholes</a>
+<li class="has-sub"><a href="pricing-with-black-scholes.html#pricing-with-black-scholes"><span class="toc-section-number">9</span> Pricing with Black-Scholes</a>
 <ul>
-<li><a href="pricing-with-black-scholes.html#relationships-among-greeks"><span class="toc-section-number">7.1</span> Relationships Among Greeks</a></li>
+<li><a href="pricing-with-black-scholes.html#relationships-among-greeks"><span class="toc-section-number">9.1</span> Relationships Among Greeks</a></li>
 </ul></li>
-<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#applicability-of-the-black-scholes-model"><span class="toc-section-number">8</span> Applicability of the Black-Scholes Model</a>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#applicability-of-the-black-scholes-model"><span class="toc-section-number">10</span> Applicability of the Black-Scholes Model</a>
 <ul>
-<li><a href="applicability-of-the-black-scholes-model.html#self-financing-replicating-portfolio"><span class="toc-section-number">8.1</span> Self-Financing Replicating Portfolio</a></li>
-<li><a href="applicability-of-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging"><span class="toc-section-number">8.2</span> Hedging Error due to Discrete Hedging</a></li>
-<li><a href="applicability-of-the-black-scholes-model.html#error-due-to-unknown-volatility"><span class="toc-section-number">8.3</span> Error due to Unknown Volatility</a></li>
-<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#second-order-hedging"><span class="toc-section-number">8.4</span> Second-Order Hedging</a>
+<li><a href="applicability-of-the-black-scholes-model.html#self-financing-replicating-portfolio"><span class="toc-section-number">10.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging"><span class="toc-section-number">10.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#error-due-to-unknown-volatility"><span class="toc-section-number">10.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#second-order-hedging"><span class="toc-section-number">10.4</span> Second-Order Hedging</a>
 <ul>
-<li><a href="applicability-of-the-black-scholes-model.html#gamma-smoothing"><span class="toc-section-number">8.4.1</span> Gamma Smoothing</a></li>
-<li><a href="applicability-of-the-black-scholes-model.html#dynamic-delta-gamma-hedge"><span class="toc-section-number">8.4.2</span> Dynamic Delta-Gamma hedge</a></li>
-</ul></li>
-</ul></li>
-<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#price-and-greeks-in-the-black-scholes-model"><span class="toc-section-number">9</span> Price and Greeks in the Black-Scholes Model</a>
-<ul>
-<li><a href="price-and-greeks-in-the-black-scholes-model.html#solving-the-pricing-equation"><span class="toc-section-number">9.1</span> Solving the Pricing Equation</a></li>
-<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#an-option-dashboard"><span class="toc-section-number">9.2</span> An Option Dashboard</a>
-<ul>
-<li><a href="price-and-greeks-in-the-black-scholes-model.html#vanilla-option"><span class="toc-section-number">9.2.1</span> Vanilla Option</a></li>
-<li><a href="price-and-greeks-in-the-black-scholes-model.html#binary-option"><span class="toc-section-number">9.2.2</span> Binary Option</a></li>
-<li><a href="price-and-greeks-in-the-black-scholes-model.html#barrier-option"><span class="toc-section-number">9.2.3</span> Barrier Option</a></li>
-<li><a href="price-and-greeks-in-the-black-scholes-model.html#asian-option"><span class="toc-section-number">9.2.4</span> Asian Option</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#gamma-smoothing"><span class="toc-section-number">10.4.1</span> Gamma Smoothing</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#dynamic-delta-gamma-hedge"><span class="toc-section-number">10.4.2</span> Dynamic Delta-Gamma hedge</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-hedging-with-the-black-scholes-model"><span class="toc-section-number">10</span> Dynamic Hedging with the Black-Scholes Model</a>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#price-and-greeks-in-the-black-scholes-model"><span class="toc-section-number">11</span> Price and Greeks in the Black-Scholes Model</a>
 <ul>
-<li><a href="dynamic-hedging-with-the-black-scholes-model.html#self-financing-replicating-portfolio-1"><span class="toc-section-number">10.1</span> Self-Financing Replicating Portfolio</a></li>
-<li><a href="dynamic-hedging-with-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging-1"><span class="toc-section-number">10.2</span> Hedging Error due to Discrete Hedging</a></li>
-<li><a href="dynamic-hedging-with-the-black-scholes-model.html#error-due-to-unknown-volatility-1"><span class="toc-section-number">10.3</span> Error due to Unknown Volatility</a></li>
-<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#second-order-hedging-1"><span class="toc-section-number">10.4</span> Second-Order Hedging</a>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#solving-the-pricing-equation"><span class="toc-section-number">11.1</span> Solving the Pricing Equation</a></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#an-option-dashboard"><span class="toc-section-number">11.2</span> An Option Dashboard</a>
 <ul>
-<li><a href="dynamic-hedging-with-the-black-scholes-model.html#gamma-smoothing-1"><span class="toc-section-number">10.4.1</span> Gamma Smoothing</a></li>
-<li><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-delta-gamma-hedge-1"><span class="toc-section-number">10.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#vanilla-option"><span class="toc-section-number">11.2.1</span> Vanilla Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#binary-option"><span class="toc-section-number">11.2.2</span> Binary Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#barrier-option"><span class="toc-section-number">11.2.3</span> Barrier Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#asian-option"><span class="toc-section-number">11.2.4</span> Asian Option</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#dynamic-hedging-in-the-black-scholes-framework"><span class="toc-section-number">11</span> Dynamic Hedging in the Black-Scholes Framework</a>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-hedging-with-the-black-scholes-model"><span class="toc-section-number">12</span> Dynamic Hedging with the Black-Scholes Model</a>
 <ul>
-<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#self-financing-replicating-portfolio-2"><span class="toc-section-number">11.1</span> Self-Financing Replicating Portfolio</a>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#self-financing-replicating-portfolio-1"><span class="toc-section-number">12.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging-1"><span class="toc-section-number">12.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#error-due-to-unknown-volatility-1"><span class="toc-section-number">12.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#second-order-hedging-1"><span class="toc-section-number">12.4</span> Second-Order Hedging</a>
 <ul>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#continuous-rebalancing"><span class="toc-section-number">11.1.1</span> Continuous rebalancing</a></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#discreet-rebalancing"><span class="toc-section-number">11.1.2</span> Discreet rebalancing</a></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#illustration-1"><span class="toc-section-number">11.1.3</span> Illustration</a></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#a-more-realistic-example"><span class="toc-section-number">11.1.4</span> A More Realistic Example</a></li>
-</ul></li>
-<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-discrete-hedging-2"><span class="toc-section-number">11.2</span> Hedging Error due to Discrete Hedging</a>
-<ul>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test"><span class="toc-section-number">11.2.1</span> Empirical Test</a></li>
-</ul></li>
-<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-transaction-cost"><span class="toc-section-number">11.3</span> Hedging Error due to Transaction Cost</a>
-<ul>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test-1"><span class="toc-section-number">11.3.1</span> Empirical Test</a></li>
-</ul></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-unknown-volatility"><span class="toc-section-number">11.4</span> Hedging Error due to Unknown Volatility</a></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#conclusion"><span class="toc-section-number">11.5</span> Conclusion</a></li>
-<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#second-order-hedging-2"><span class="toc-section-number">11.6</span> Second-Order Hedging</a></li>
-</ul></li>
-<li class="has-sub"><a href="the-implied-volatility.html#the-implied-volatility"><span class="toc-section-number">12</span> The implied volatility</a>
-<ul>
-<li><a href="the-implied-volatility.html#market-data"><span class="toc-section-number">12.1</span> Market Data</a></li>
-<li class="has-sub"><a href="the-implied-volatility.html#calculation-of-implied-volatility"><span class="toc-section-number">12.2</span> Calculation of implied volatility</a>
-<ul>
-<li><a href="the-implied-volatility.html#newtons-method"><span class="toc-section-number">12.2.1</span> Newton’s method</a></li>
-<li><a href="the-implied-volatility.html#implied-volatility-by-newtons-method"><span class="toc-section-number">12.2.2</span> Implied Volatility by Newton’s Method</a></li>
-<li><a href="the-implied-volatility.html#secant-method"><span class="toc-section-number">12.2.3</span> Secant Method</a></li>
-<li><a href="the-implied-volatility.html#jaeckels-method"><span class="toc-section-number">12.2.4</span> Jaeckel’s method</a></li>
-<li><a href="the-implied-volatility.html#normalized-call-price-as-a-function-of-sigma"><span class="toc-section-number">12.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></a></li>
-<li><a href="the-implied-volatility.html#transformed-objective-function"><span class="toc-section-number">12.2.6</span> Transformed objective function</a></li>
-<li><a href="the-implied-volatility.html#impact-of-dividends"><span class="toc-section-number">12.2.7</span> Impact of Dividends</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#gamma-smoothing-1"><span class="toc-section-number">12.4.1</span> Gamma Smoothing</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-delta-gamma-hedge-1"><span class="toc-section-number">12.4.2</span> Dynamic Delta-Gamma hedge</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-pricing-and-hedging"><span class="toc-section-number">13</span> Vanna-Volga Pricing and Hedging</a>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#dynamic-hedging-in-the-black-scholes-framework"><span class="toc-section-number">13</span> Dynamic Hedging in the Black-Scholes Framework</a>
 <ul>
-<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#principle"><span class="toc-section-number">13.1</span> Principle</a>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#self-financing-replicating-portfolio-2"><span class="toc-section-number">13.1</span> Self-Financing Replicating Portfolio</a>
 <ul>
-<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging"><span class="toc-section-number">13.1.1</span> Vanna-Volga Dynamic Hedging</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#continuous-rebalancing"><span class="toc-section-number">13.1.1</span> Continuous rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#discreet-rebalancing"><span class="toc-section-number">13.1.2</span> Discreet rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#illustration"><span class="toc-section-number">13.1.3</span> Illustration</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#a-more-realistic-example"><span class="toc-section-number">13.1.4</span> A More Realistic Example</a></li>
 </ul></li>
-<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#implementation"><span class="toc-section-number">13.2</span> Implementation</a>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-discrete-hedging-2"><span class="toc-section-number">13.2</span> Hedging Error due to Discrete Hedging</a>
 <ul>
-<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging-1"><span class="toc-section-number">13.2.1</span> Vanna-Volga Dynamic Hedging</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test"><span class="toc-section-number">13.2.1</span> Empirical Test</a></li>
 </ul></li>
-<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#illustrations"><span class="toc-section-number">13.3</span> Illustrations</a>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-transaction-cost"><span class="toc-section-number">13.3</span> Hedging Error due to Transaction Cost</a>
 <ul>
-<li><a href="vanna-volga-pricing-and-hedging.html#volatility-interpolation"><span class="toc-section-number">13.3.1</span> Volatility Interpolation</a></li>
-<li><a href="vanna-volga-pricing-and-hedging.html#pricing-a-binary-option"><span class="toc-section-number">13.3.2</span> Pricing a Binary Option</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test-1"><span class="toc-section-number">13.3.1</span> Empirical Test</a></li>
+</ul></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-unknown-volatility"><span class="toc-section-number">13.4</span> Hedging Error due to Unknown Volatility</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#conclusion"><span class="toc-section-number">13.5</span> Conclusion</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#second-order-hedging-2"><span class="toc-section-number">13.6</span> Second-Order Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-implied-volatility.html#the-implied-volatility"><span class="toc-section-number">14</span> The implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#market-data"><span class="toc-section-number">14.1</span> Market Data</a></li>
+<li class="has-sub"><a href="the-implied-volatility.html#calculation-of-implied-volatility"><span class="toc-section-number">14.2</span> Calculation of implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#newtons-method"><span class="toc-section-number">14.2.1</span> Newton’s method</a></li>
+<li><a href="the-implied-volatility.html#implied-volatility-by-newtons-method"><span class="toc-section-number">14.2.2</span> Implied Volatility by Newton’s Method</a></li>
+<li><a href="the-implied-volatility.html#secant-method"><span class="toc-section-number">14.2.3</span> Secant Method</a></li>
+<li><a href="the-implied-volatility.html#jaeckels-method"><span class="toc-section-number">14.2.4</span> Jaeckel’s method</a></li>
+<li><a href="the-implied-volatility.html#normalized-call-price-as-a-function-of-sigma"><span class="toc-section-number">14.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></a></li>
+<li><a href="the-implied-volatility.html#transformed-objective-function"><span class="toc-section-number">14.2.6</span> Transformed objective function</a></li>
+<li><a href="the-implied-volatility.html#impact-of-dividends"><span class="toc-section-number">14.2.7</span> Impact of Dividends</a></li>
 </ul></li>
 </ul></li>
-<li><a href="bibliography.html#bibliography"><span class="toc-section-number">14</span> Bibliography</a></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-pricing-and-hedging"><span class="toc-section-number">15</span> Vanna-Volga Pricing and Hedging</a>
+<ul>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#principle"><span class="toc-section-number">15.1</span> Principle</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging"><span class="toc-section-number">15.1.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#implementation"><span class="toc-section-number">15.2</span> Implementation</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging-1"><span class="toc-section-number">15.2.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#illustrations"><span class="toc-section-number">15.3</span> Illustrations</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#volatility-interpolation"><span class="toc-section-number">15.3.1</span> Volatility Interpolation</a></li>
+<li><a href="vanna-volga-pricing-and-hedging.html#pricing-a-binary-option"><span class="toc-section-number">15.3.2</span> Pricing a Binary Option</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Fixed Income</b></span></li>
+<li class="has-sub"><a href="fi:elementary.html#fi:elementary"><span class="toc-section-number">16</span> Elementary Fixed Income Calculations</a>
+<ul>
+<li><a href="fi:elementary.html#bond-pricing"><span class="toc-section-number">16.1</span> Bond Pricing</a></li>
+<li><a href="fi:elementary.html#the-price-yield-curves"><span class="toc-section-number">16.2</span> The Price-Yield Curves</a></li>
+<li class="has-sub"><a href="fi:elementary.html#basic-measures-of-interest-rate-risk"><span class="toc-section-number">16.3</span> Basic Measures of Interest Rate Risk</a>
+<ul>
+<li><a href="fi:elementary.html#variation"><span class="toc-section-number">16.3.1</span> Variation</a></li>
+<li><a href="fi:elementary.html#approximate-portfolio-yield"><span class="toc-section-number">16.3.2</span> Approximate Portfolio Yield</a></li>
+<li><a href="fi:elementary.html#sensitivity"><span class="toc-section-number">16.3.3</span> Sensitivity</a></li>
+<li><a href="fi:elementary.html#modified-duration-of-a-portfolio"><span class="toc-section-number">16.3.4</span> Modified Duration of a Portfolio</a></li>
+<li><a href="fi:elementary.html#duration"><span class="toc-section-number">16.3.5</span> Duration</a></li>
+<li><a href="fi:elementary.html#sec:duration-of-a-portfolio"><span class="toc-section-number">16.3.6</span> Duration of a Portfolio</a></li>
+</ul></li>
+<li><a href="fi:elementary.html#bond-clean-and-dirty-price"><span class="toc-section-number">16.4</span> Bond Clean and Dirty Price</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-term-structure-of-interest-rates.html#the-term-structure-of-interest-rates"><span class="toc-section-number">17</span> The Term Structure of Interest Rates</a>
+<ul>
+<li><a href="the-term-structure-of-interest-rates.html#term-structure-shapes"><span class="toc-section-number">17.1</span> Term Structure Shapes</a></li>
+<li><a href="the-term-structure-of-interest-rates.html#building-a-zero-coupon-bond-curve"><span class="toc-section-number">17.2</span> Building a Zero-Coupon Bond Curve</a></li>
+<li><a href="the-term-structure-of-interest-rates.html#functional-forms-for-the-zero-coupon-curve"><span class="toc-section-number">17.3</span> Functional forms for the zero-coupon curve</a></li>
+</ul></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#simple-interest-rate-derivatives"><span class="toc-section-number">18</span> Simple Interest Rate Derivatives</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#spot-and-forward-interest-rates"><span class="toc-section-number">18.1</span> Spot and Forward Interest Rates</a></li>
+<li><a href="simple-interest-rate-derivatives.html#forward-rate-agreement-fra"><span class="toc-section-number">18.2</span> Forward Rate Agreement (FRA)</a></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#t-bill-futures"><span class="toc-section-number">18.3</span> T-Bill Futures</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#arbitrage"><span class="toc-section-number">18.3.1</span> Arbitrage</a></li>
+<li><a href="simple-interest-rate-derivatives.html#quotes"><span class="toc-section-number">18.3.2</span> Quotes</a></li>
+</ul></li>
+<li><a href="simple-interest-rate-derivatives.html#euro-currency-futures"><span class="toc-section-number">18.4</span> Euro-Currency Futures</a></li>
+<li><a href="simple-interest-rate-derivatives.html#eurodollar-rate-versus-forward-rate"><span class="toc-section-number">18.5</span> Eurodollar Rate Versus Forward Rate</a></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#convexity-adjustment"><span class="toc-section-number">18.6</span> Convexity Adjustment</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#special-case-of-natural-time-lag"><span class="toc-section-number">18.6.1</span> Special Case of Natural Time Lag</a></li>
+<li><a href="simple-interest-rate-derivatives.html#convexity-adjustment-examples"><span class="toc-section-number">18.6.2</span> Convexity Adjustment Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="bond-futures.html#bond-futures"><span class="toc-section-number">19</span> Bond Futures</a>
+<ul>
+<li><a href="bond-futures.html#forward-price"><span class="toc-section-number">19.1</span> Forward Price</a></li>
+<li><a href="bond-futures.html#delivery-against-the-futures-contract"><span class="toc-section-number">19.2</span> Delivery against the Futures contract</a></li>
+<li><a href="bond-futures.html#the-conversion-factor"><span class="toc-section-number">19.3</span> The Conversion Factor</a></li>
+<li><a href="bond-futures.html#determination-of-the-cheapest-to-deliver"><span class="toc-section-number">19.4</span> Determination of the Cheapest to Deliver</a></li>
+<li><a href="bond-futures.html#implied-repo-rate"><span class="toc-section-number">19.5</span> Implied Repo Rate</a></li>
+<li><a href="bond-futures.html#the-delivery-option"><span class="toc-section-number">19.6</span> The Delivery Option</a></li>
+<li><a href="bond-futures.html#ir-sensitivity-of-bund-futures"><span class="toc-section-number">19.7</span> IR sensitivity of Bund Futures</a></li>
+<li><a href="bond-futures.html#cash-carry-arbitrage"><span class="toc-section-number">19.8</span> Cash-Carry Arbitrage</a></li>
+<li><a href="bond-futures.html#hedging-a-bond-with-a-euro-bund-contract"><span class="toc-section-number">19.9</span> Hedging a Bond with a Euro-Bund Contract</a></li>
+</ul></li>
+<li class="has-sub"><a href="libor-swaps.html#libor-swaps"><span class="toc-section-number">20</span> Libor Swaps</a>
+<ul>
+<li><a href="libor-swaps.html#ir-swap-pricing"><span class="toc-section-number">20.1</span> IR Swap Pricing</a></li>
+</ul></li>
+<li class="has-sub"><a href="fixed-income-risk-management.html#fixed-income-risk-management"><span class="toc-section-number">21</span> Fixed Income Risk Management</a>
+<ul>
+<li><a href="fixed-income-risk-management.html#immunization"><span class="toc-section-number">21.1</span> Immunization</a></li>
+<li><a href="fixed-income-risk-management.html#dedication"><span class="toc-section-number">21.2</span> Dedication</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-vasicek-model.html#the-vasicek-model"><span class="toc-section-number">22</span> The Vasicek Model</a>
+<ul>
+<li><a href="the-vasicek-model.html#derivatives-with-non-traded-underlying-asset"><span class="toc-section-number">22.1</span> Derivatives with Non Traded Underlying Asset</a></li>
+<li><a href="the-vasicek-model.html#the-market-price-of-interest-rate-risk"><span class="toc-section-number">22.2</span> The Market Price of Interest Rate Risk</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-model-of-hull-white.html#the-model-of-hull-white"><span class="toc-section-number">23</span> The Model of Hull &amp; White</a>
+<ul>
+<li><a href="the-model-of-hull-white.html#moments-of-x_t-under-a-ou-process"><span class="toc-section-number">23.1</span> Moments of <span class="math inline">\(x_t\)</span> under a OU Process</a></li>
+<li class="has-sub"><a href="the-model-of-hull-white.html#the-hull-white-trinomial-model"><span class="toc-section-number">23.2</span> The Hull &amp; White Trinomial Model</a>
+<ul>
+<li><a href="the-model-of-hull-white.html#step-1"><span class="toc-section-number">23.2.1</span> Step 1</a></li>
+<li><a href="the-model-of-hull-white.html#step-2"><span class="toc-section-number">23.2.2</span> Step 2</a></li>
+</ul></li>
+<li><a href="the-model-of-hull-white.html#generalization"><span class="toc-section-number">23.3</span> Generalization</a></li>
+</ul></li>
+<li class="has-sub"><a href="deterministic-time-varying-volatility.html#deterministic-time-varying-volatility"><span class="toc-section-number">24</span> Deterministic Time-Varying Volatility</a>
+<ul>
+<li><a href="deterministic-time-varying-volatility.html#gabillons-model"><span class="toc-section-number">24.1</span> Gabillon’s Model</a></li>
+<li><a href="deterministic-time-varying-volatility.html#deterministic-volatility-in-a-seasonal-market"><span class="toc-section-number">24.2</span> Deterministic Volatility in a Seasonal Market</a></li>
+</ul></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#pricing-under-an-objective-density"><span class="toc-section-number">25</span> Pricing under an Objective Density</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#conditional-entropy"><span class="toc-section-number">25.1</span> Conditional Entropy</a></li>
+<li><a href="pricing-under-an-objective-density.html#relative-entropy-of-uniform-densities"><span class="toc-section-number">25.2</span> Relative Entropy of Uniform Densities</a></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#computation-of-a-risk-neutral-density"><span class="toc-section-number">25.3</span> Computation of a Risk-neutral Density</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#calculation-of-risk-neutral-density-p"><span class="toc-section-number">25.3.1</span> Calculation of Risk-Neutral Density <span class="math inline">\(P\)</span></a></li>
+<li><a href="pricing-under-an-objective-density.html#matching-market-data"><span class="toc-section-number">25.3.2</span> Matching Market Data</a></li>
+<li><a href="pricing-under-an-objective-density.html#solution"><span class="toc-section-number">25.3.3</span> Solution</a></li>
+<li><a href="pricing-under-an-objective-density.html#solution-1"><span class="toc-section-number">25.3.4</span> Solution</a></li>
+<li><a href="pricing-under-an-objective-density.html#illustration-1"><span class="toc-section-number">25.3.5</span> Illustration</a></li>
+<li><a href="pricing-under-an-objective-density.html#a-lottery-ticket"><span class="toc-section-number">25.3.6</span> A Lottery Ticket…</a></li>
+</ul></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#monte-carlo-pricing-with-historical-paths"><span class="toc-section-number">25.4</span> Monte-Carlo Pricing with Historical Paths</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#sec:model"><span class="toc-section-number">25.4.1</span> The Model</a></li>
+<li><a href="pricing-under-an-objective-density.html#incorporation-of-bid-ask-spread"><span class="toc-section-number">25.4.2</span> Incorporation of bid-ask spread</a></li>
+<li><a href="pricing-under-an-objective-density.html#extension-to-arbitrary-cash-flows"><span class="toc-section-number">25.4.3</span> Extension to arbitrary cash flows</a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references">References</a></li>
 </ul>
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="basic-components" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Basic Components</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="basic-components.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fOptions)</span>
-<span id="cb1-2"><a href="basic-components.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fExoticOptions)</span>
-<span id="cb1-3"><a href="basic-components.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fInstrument)</span>
-<span id="cb1-4"><a href="basic-components.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DynamicSimulation)</span>
-<span id="cb1-5"><a href="basic-components.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(empfin)</span>
-<span id="cb1-6"><a href="basic-components.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span></code></pre></div>
-<p><code>{r tufte::newthought("This")}</code> chapter provides a tutorial and explains the design of the object framework that has been build on top of the Rmetrics library.
+<div id="basic-components" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Basic Components</h1>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="basic-components.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fOptions)</span>
+<span id="cb13-2"><a href="basic-components.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fExoticOptions)</span>
+<span id="cb13-3"><a href="basic-components.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fInstrument)</span>
+<span id="cb13-4"><a href="basic-components.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DynamicSimulation)</span>
+<span id="cb13-5"><a href="basic-components.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(empfin)</span>
+<span id="cb13-6"><a href="basic-components.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span></code></pre></div>
+<p><span class="newthought">This</span> chapter provides a tutorial and explains the design of the object framework that has been build on top of the Rmetrics library.
 As mentioned earlier, this layer is meant to hide
 most of the implementation details, and allows us to focus on the key features of the
 financial instruments and models.</p>
 <p>The reader is encouraged to work through the examples, but the sections on design and implementation can be skipped.</p>
 <p>The object framework involves two main entities:</p>
 <ul>
-<li>the class models an abstract financial instrument, and exposes
+<li>the <idx>fInstrument</idx> class models an abstract financial instrument, and exposes
 generic methods for computing the net present value (NPV) and the risk
-indicators (the ``greeks’’). With this class, one can perform calculations on portfolio of instruments, without being concerned about the implementation details specific to each type of asset. This will be illustrated below with the detailed description of a delta-hedging algorithm.</li>
-<li>the class is a container for market data, derived from the built-in . It greatly simplifies the signature of pricing functions. Instead of passing as arguments all the necessary market data, we simply pass one argument. The pricing methods fetch the necessary data from the , as needed.</li>
+indicators (the “greek”). With this class, one can perform calculations on portfolio of instruments, without being concerned about the implementation details specific to each type of asset. This will be illustrated below with the detailed description of a delta-hedging algorithm.</li>
+<li>the <idx>DataProvider</idx> class is a container for market data, derived from the built-in
+<idx>environment</idx>. It greatly simplifies the signature of pricing functions. Instead of passing as arguments all the necessary market data, we simply pass one <idx>DataProvider</idx> argument. The pricing methods fetch the necessary data from the <idx>DataProvider</idx>, as needed.</li>
 </ul>
 <p>Each entity is now described and illustrated.</p>
-<div id="the-class" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> The Class</h2>
-<p>As mentioned, the purpose of the class is to create a layer of abstraction over the large variety of pricing models found in Rmetrics. With this class, we can express calculation algorithms in a generic manner. This is best explained by an example.</p>
-<div id="illustration" class="section level3" number="1.1.1">
-<h3><span class="header-section-number">1.1.1</span> Illustration</h3>
-<p>Consider a portfolio made of two options, a vanilla European call and a binary (cash-or-nothing) option, both written on the same underlying asset. We would like to compute the NPV and delta of this portfolio. Let’s contrast the process, first performed with the Rmetrics functions, and then with the class.</p>
+<div id="the-finstrument-class" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> The <idx>fInstrument</idx> Class</h2>
+<p>As mentioned, the purpose of the <idx>fInstrument</idx> class is to create a layer of abstraction over the large variety of pricing models found in Rmetrics. With this class, we can express calculation algorithms in a generic manner. This is best explained by an example.</p>
+<p>Consider a portfolio made of two options, a vanilla European call and a binary (cash-or-nothing) option, both written on the same underlying asset. We would like to compute the NPV and delta of this portfolio. Let’s contrast the process, first performed with the Rmetrics functions, and then with the <idx>fInstrument</idx>.</p>
 <p>Starting with the Rmetrics functions, you first compute the price and delta of the European call:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="basic-components.html#cb2-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">2</span>)</span>
-<span id="cb2-2"><a href="basic-components.html#cb2-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">2</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="basic-components.html#cb3-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">2</span>)</span>
-<span id="cb3-2"><a href="basic-components.html#cb3-2" aria-hidden="true" tabindex="-1"></a>cp <span class="ot">&lt;-</span> <span class="st">&quot;c&quot;</span></span>
-<span id="cb3-3"><a href="basic-components.html#cb3-3" aria-hidden="true" tabindex="-1"></a>Spot <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb3-4"><a href="basic-components.html#cb3-4" aria-hidden="true" tabindex="-1"></a>Strike <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb3-5"><a href="basic-components.html#cb3-5" aria-hidden="true" tabindex="-1"></a>Ttm <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb3-6"><a href="basic-components.html#cb3-6" aria-hidden="true" tabindex="-1"></a>int.rate <span class="ot">&lt;-</span> <span class="fl">0.02</span></span>
-<span id="cb3-7"><a href="basic-components.html#cb3-7" aria-hidden="true" tabindex="-1"></a>div.yield <span class="ot">&lt;-</span> <span class="fl">0.02</span></span>
-<span id="cb3-8"><a href="basic-components.html#cb3-8" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
-<span id="cb3-9"><a href="basic-components.html#cb3-9" aria-hidden="true" tabindex="-1"></a>p[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">GBSOption</span>(<span class="at">TypeFlag =</span> cp, <span class="at">S =</span> Spot, <span class="at">X =</span> Strike,</span>
-<span id="cb3-10"><a href="basic-components.html#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Time =</span> Ttm, <span class="at">r =</span> int.rate, <span class="at">b =</span> int.rate <span class="sc">-</span> div.yield,</span>
-<span id="cb3-11"><a href="basic-components.html#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">sigma =</span> sigma)<span class="sc">@</span>price</span>
-<span id="cb3-12"><a href="basic-components.html#cb3-12" aria-hidden="true" tabindex="-1"></a>d[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">GBSGreeks</span>(<span class="at">Selection =</span> <span class="st">&quot;delta&quot;</span>, <span class="at">TypeFlag =</span> cp,</span>
-<span id="cb3-13"><a href="basic-components.html#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">S =</span> Spot, <span class="at">X =</span> Strike, <span class="at">Time =</span> Ttm, <span class="at">r =</span> int.rate,</span>
-<span id="cb3-14"><a href="basic-components.html#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> int.rate <span class="sc">-</span> div.yield, <span class="at">sigma =</span> sigma)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="basic-components.html#cb14-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">2</span>)</span>
+<span id="cb14-2"><a href="basic-components.html#cb14-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="basic-components.html#cb15-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">2</span>)</span>
+<span id="cb15-2"><a href="basic-components.html#cb15-2" aria-hidden="true" tabindex="-1"></a>cp <span class="ot">&lt;-</span> <span class="st">&quot;c&quot;</span></span>
+<span id="cb15-3"><a href="basic-components.html#cb15-3" aria-hidden="true" tabindex="-1"></a>Spot <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb15-4"><a href="basic-components.html#cb15-4" aria-hidden="true" tabindex="-1"></a>Strike <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb15-5"><a href="basic-components.html#cb15-5" aria-hidden="true" tabindex="-1"></a>Ttm <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb15-6"><a href="basic-components.html#cb15-6" aria-hidden="true" tabindex="-1"></a>int.rate <span class="ot">&lt;-</span> <span class="fl">0.02</span></span>
+<span id="cb15-7"><a href="basic-components.html#cb15-7" aria-hidden="true" tabindex="-1"></a>div.yield <span class="ot">&lt;-</span> <span class="fl">0.02</span></span>
+<span id="cb15-8"><a href="basic-components.html#cb15-8" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb15-9"><a href="basic-components.html#cb15-9" aria-hidden="true" tabindex="-1"></a>p[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">GBSOption</span>(<span class="at">TypeFlag =</span> cp, <span class="at">S =</span> Spot, <span class="at">X =</span> Strike,</span>
+<span id="cb15-10"><a href="basic-components.html#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Time =</span> Ttm, <span class="at">r =</span> int.rate, <span class="at">b =</span> int.rate <span class="sc">-</span> div.yield,</span>
+<span id="cb15-11"><a href="basic-components.html#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">sigma =</span> sigma)<span class="sc">@</span>price</span>
+<span id="cb15-12"><a href="basic-components.html#cb15-12" aria-hidden="true" tabindex="-1"></a>d[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">GBSGreeks</span>(<span class="at">Selection =</span> <span class="st">&quot;delta&quot;</span>, <span class="at">TypeFlag =</span> cp,</span>
+<span id="cb15-13"><a href="basic-components.html#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">S =</span> Spot, <span class="at">X =</span> Strike, <span class="at">Time =</span> Ttm, <span class="at">r =</span> int.rate,</span>
+<span id="cb15-14"><a href="basic-components.html#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> int.rate <span class="sc">-</span> div.yield, <span class="at">sigma =</span> sigma)</span></code></pre></div>
 <p>Perform the same calculation for the binary option. The delta is computed
 by finite difference.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="basic-components.html#cb4-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">2</span>)</span>
-<span id="cb4-2"><a href="basic-components.html#cb4-2" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb4-3"><a href="basic-components.html#cb4-3" aria-hidden="true" tabindex="-1"></a>p[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">CashOrNothingOption</span>(<span class="at">TypeFlag =</span> cp, <span class="at">S =</span> Spot,</span>
-<span id="cb4-4"><a href="basic-components.html#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> Strike, <span class="at">K =</span> K, <span class="at">Time =</span> Ttm, <span class="at">r =</span> int.rate, <span class="at">b =</span> int.rate <span class="sc">-</span></span>
-<span id="cb4-5"><a href="basic-components.html#cb4-5" aria-hidden="true" tabindex="-1"></a>        div.yield, <span class="at">sigma =</span> sigma)<span class="sc">@</span>price</span>
-<span id="cb4-6"><a href="basic-components.html#cb4-6" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> Spot <span class="sc">*</span> <span class="fl">0.001</span></span>
-<span id="cb4-7"><a href="basic-components.html#cb4-7" aria-hidden="true" tabindex="-1"></a>dh <span class="ot">&lt;-</span> <span class="fu">CashOrNothingOption</span>(<span class="at">TypeFlag =</span> cp, <span class="at">S =</span> <span class="fu">c</span>(Spot <span class="sc">+</span></span>
-<span id="cb4-8"><a href="basic-components.html#cb4-8" aria-hidden="true" tabindex="-1"></a>    h, Spot <span class="sc">-</span> h), <span class="at">X =</span> Strike, <span class="at">K =</span> K, <span class="at">Time =</span> Ttm, <span class="at">r =</span> int.rate,</span>
-<span id="cb4-9"><a href="basic-components.html#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> int.rate <span class="sc">-</span> div.yield, <span class="at">sigma =</span> sigma)<span class="sc">@</span>price</span>
-<span id="cb4-10"><a href="basic-components.html#cb4-10" aria-hidden="true" tabindex="-1"></a>d[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">diff</span>(dh)<span class="sc">/</span>(<span class="dv">2</span> <span class="sc">*</span> h)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="basic-components.html#cb16-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">2</span>)</span>
+<span id="cb16-2"><a href="basic-components.html#cb16-2" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb16-3"><a href="basic-components.html#cb16-3" aria-hidden="true" tabindex="-1"></a>p[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">CashOrNothingOption</span>(<span class="at">TypeFlag =</span> cp, <span class="at">S =</span> Spot,</span>
+<span id="cb16-4"><a href="basic-components.html#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> Strike, <span class="at">K =</span> K, <span class="at">Time =</span> Ttm, <span class="at">r =</span> int.rate, <span class="at">b =</span> int.rate <span class="sc">-</span></span>
+<span id="cb16-5"><a href="basic-components.html#cb16-5" aria-hidden="true" tabindex="-1"></a>        div.yield, <span class="at">sigma =</span> sigma)<span class="sc">@</span>price</span>
+<span id="cb16-6"><a href="basic-components.html#cb16-6" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> Spot <span class="sc">*</span> <span class="fl">0.001</span></span>
+<span id="cb16-7"><a href="basic-components.html#cb16-7" aria-hidden="true" tabindex="-1"></a>dh <span class="ot">&lt;-</span> <span class="fu">CashOrNothingOption</span>(<span class="at">TypeFlag =</span> cp, <span class="at">S =</span> <span class="fu">c</span>(Spot <span class="sc">+</span></span>
+<span id="cb16-8"><a href="basic-components.html#cb16-8" aria-hidden="true" tabindex="-1"></a>    h, Spot <span class="sc">-</span> h), <span class="at">X =</span> Strike, <span class="at">K =</span> K, <span class="at">Time =</span> Ttm, <span class="at">r =</span> int.rate,</span>
+<span id="cb16-9"><a href="basic-components.html#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> int.rate <span class="sc">-</span> div.yield, <span class="at">sigma =</span> sigma)<span class="sc">@</span>price</span>
+<span id="cb16-10"><a href="basic-components.html#cb16-10" aria-hidden="true" tabindex="-1"></a>d[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">diff</span>(dh)<span class="sc">/</span>(<span class="dv">2</span> <span class="sc">*</span> h)</span></code></pre></div>
 <p>Finally, sum both vectors to get the portfolio NPV and delta.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="basic-components.html#cb5-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">2</span>)</span>
-<span id="cb5-2"><a href="basic-components.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Price:&quot;</span>, <span class="fu">round</span>(<span class="fu">sum</span>(p), <span class="dv">2</span>), <span class="st">&quot;Delta:&quot;</span>, <span class="fu">round</span>(<span class="fu">sum</span>(d),</span>
-<span id="cb5-3"><a href="basic-components.html#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="basic-components.html#cb17-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">2</span>)</span>
+<span id="cb17-2"><a href="basic-components.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Price:&quot;</span>, <span class="fu">round</span>(<span class="fu">sum</span>(p), <span class="dv">2</span>), <span class="st">&quot;Delta:&quot;</span>, <span class="fu">round</span>(<span class="fu">sum</span>(d),</span>
+<span id="cb17-3"><a href="basic-components.html#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>)))</span></code></pre></div>
 <pre><code>## [1] &quot;Price: 0 Delta: 0.536&quot;</code></pre>
-<p>With the class, the calculation steps are quite different.</p>
-<p>You first create a vanilla instrument with the function:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="basic-components.html#cb7-1" aria-hidden="true" tabindex="-1"></a>dtExpiry <span class="ot">&lt;-</span> <span class="fu">myDate</span>(<span class="st">&quot;01jan2011&quot;</span>)</span>
-<span id="cb7-2"><a href="basic-components.html#cb7-2" aria-hidden="true" tabindex="-1"></a>underlying <span class="ot">&lt;-</span> <span class="st">&quot;IBM&quot;</span></span>
-<span id="cb7-3"><a href="basic-components.html#cb7-3" aria-hidden="true" tabindex="-1"></a>Strike <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb7-4"><a href="basic-components.html#cb7-4" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb7-5"><a href="basic-components.html#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="basic-components.html#cb7-6" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">fInstrumentFactory</span>(<span class="st">&quot;vanilla&quot;</span>, <span class="at">quantity =</span> <span class="dv">1</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">cp =</span> <span class="st">&quot;c&quot;</span>,</span>
-<span id="cb7-7"><a href="basic-components.html#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">strike =</span> Strike, <span class="at">dtExpiry =</span> dtExpiry, <span class="at">underlying =</span> underlying,</span>
-<span id="cb7-8"><a href="basic-components.html#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">discountRef =</span> <span class="st">&quot;USD.LIBOR&quot;</span>, <span class="at">trace =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
-<p>Next, use again the to create the binary option:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="basic-components.html#cb8-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">fInstrumentFactory</span>(<span class="st">&quot;binary&quot;</span>, <span class="at">quantity =</span> <span class="dv">1</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">cp =</span> <span class="st">&quot;c&quot;</span>,</span>
-<span id="cb8-2"><a href="basic-components.html#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">strike =</span> Strike, <span class="at">dtExpiry =</span> dtExpiry, <span class="at">K =</span> K, <span class="at">underlying =</span> underlying,</span>
-<span id="cb8-3"><a href="basic-components.html#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">discountRef =</span> <span class="st">&quot;USD.LIBOR&quot;</span>, <span class="at">trace =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
-<p>Insert the relevant market data into a (this will be explained in the next section):</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="basic-components.html#cb9-1" aria-hidden="true" tabindex="-1"></a>base.env <span class="ot">&lt;-</span> <span class="fu">DataProvider</span>()</span>
-<span id="cb9-2"><a href="basic-components.html#cb9-2" aria-hidden="true" tabindex="-1"></a>dtCalc <span class="ot">&lt;-</span> <span class="fu">myDate</span>(<span class="st">&quot;01jan2010&quot;</span>)</span>
-<span id="cb9-3"><a href="basic-components.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;Price&quot;</span>, dtCalc, <span class="dv">100</span>)</span>
-<span id="cb9-4"><a href="basic-components.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;DivYield&quot;</span>, dtCalc, div.yield)</span>
-<span id="cb9-5"><a href="basic-components.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;ATMVol&quot;</span>, dtCalc, sigma)</span>
-<span id="cb9-6"><a href="basic-components.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, <span class="st">&quot;USD.LIBOR&quot;</span>, <span class="st">&quot;Yield&quot;</span>, dtCalc, int.rate)</span></code></pre></div>
-<p>Construct a portfolio, as a list of objects:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="basic-components.html#cb10-1" aria-hidden="true" tabindex="-1"></a>portfolio <span class="ot">=</span> <span class="fu">c</span>(v, b)</span></code></pre></div>
+<p>With the <idx>fInstrument</idx> class, the calculation steps are quite different.</p>
+<p>You first create a vanilla instrument with the <idx>fInstrumentFactory</idx> function:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="basic-components.html#cb19-1" aria-hidden="true" tabindex="-1"></a>dtExpiry <span class="ot">&lt;-</span> <span class="fu">myDate</span>(<span class="st">&quot;01jan2011&quot;</span>)</span>
+<span id="cb19-2"><a href="basic-components.html#cb19-2" aria-hidden="true" tabindex="-1"></a>underlying <span class="ot">&lt;-</span> <span class="st">&quot;IBM&quot;</span></span>
+<span id="cb19-3"><a href="basic-components.html#cb19-3" aria-hidden="true" tabindex="-1"></a>Strike <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb19-4"><a href="basic-components.html#cb19-4" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb19-5"><a href="basic-components.html#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="basic-components.html#cb19-6" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">fInstrumentFactory</span>(<span class="st">&quot;vanilla&quot;</span>, <span class="at">quantity =</span> <span class="dv">1</span>,</span>
+<span id="cb19-7"><a href="basic-components.html#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(<span class="at">cp =</span> <span class="st">&quot;c&quot;</span>, <span class="at">strike =</span> Strike, <span class="at">dtExpiry =</span> dtExpiry,</span>
+<span id="cb19-8"><a href="basic-components.html#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">underlying =</span> underlying, <span class="at">discountRef =</span> <span class="st">&quot;USD.LIBOR&quot;</span>,</span>
+<span id="cb19-9"><a href="basic-components.html#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">trace =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<p>Next, use again the <idx>fInstrumentfactory</idx> to create the binary option:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="basic-components.html#cb20-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">fInstrumentFactory</span>(<span class="st">&quot;binary&quot;</span>, <span class="at">quantity =</span> <span class="dv">1</span>,</span>
+<span id="cb20-2"><a href="basic-components.html#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(<span class="at">cp =</span> <span class="st">&quot;c&quot;</span>, <span class="at">strike =</span> Strike, <span class="at">dtExpiry =</span> dtExpiry,</span>
+<span id="cb20-3"><a href="basic-components.html#cb20-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">K =</span> K, <span class="at">underlying =</span> underlying, <span class="at">discountRef =</span> <span class="st">&quot;USD.LIBOR&quot;</span>,</span>
+<span id="cb20-4"><a href="basic-components.html#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">trace =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<p>Insert the relevant market data into a <idx>DataProvider</idx> (this will be explained in the next section):</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="basic-components.html#cb21-1" aria-hidden="true" tabindex="-1"></a>base.env <span class="ot">&lt;-</span> <span class="fu">DataProvider</span>()</span>
+<span id="cb21-2"><a href="basic-components.html#cb21-2" aria-hidden="true" tabindex="-1"></a>dtCalc <span class="ot">&lt;-</span> <span class="fu">myDate</span>(<span class="st">&quot;01jan2010&quot;</span>)</span>
+<span id="cb21-3"><a href="basic-components.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;Price&quot;</span>, dtCalc,</span>
+<span id="cb21-4"><a href="basic-components.html#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">100</span>)</span>
+<span id="cb21-5"><a href="basic-components.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;DivYield&quot;</span>, dtCalc,</span>
+<span id="cb21-6"><a href="basic-components.html#cb21-6" aria-hidden="true" tabindex="-1"></a>    div.yield)</span>
+<span id="cb21-7"><a href="basic-components.html#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;ATMVol&quot;</span>, dtCalc,</span>
+<span id="cb21-8"><a href="basic-components.html#cb21-8" aria-hidden="true" tabindex="-1"></a>    sigma)</span>
+<span id="cb21-9"><a href="basic-components.html#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, <span class="st">&quot;USD.LIBOR&quot;</span>, <span class="st">&quot;Yield&quot;</span>, dtCalc,</span>
+<span id="cb21-10"><a href="basic-components.html#cb21-10" aria-hidden="true" tabindex="-1"></a>    int.rate)</span></code></pre></div>
+<p>Construct a portfolio, as a list of <idx>fInstrument</idx> objects:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="basic-components.html#cb22-1" aria-hidden="true" tabindex="-1"></a>portfolio <span class="ot">=</span> <span class="fu">c</span>(v, b)</span></code></pre></div>
 <p>and finally compute the price and delta of the portfolio:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="basic-components.html#cb11-1" aria-hidden="true" tabindex="-1"></a>price <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">sapply</span>(portfolio, <span class="cf">function</span>(a) <span class="fu">getValue</span>(a,</span>
-<span id="cb11-2"><a href="basic-components.html#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Price&quot;</span>, dtCalc, base.env)))</span>
-<span id="cb11-3"><a href="basic-components.html#cb11-3" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">sapply</span>(portfolio, <span class="cf">function</span>(a) <span class="fu">getValue</span>(a,</span>
-<span id="cb11-4"><a href="basic-components.html#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Delta&quot;</span>, dtCalc, base.env)))</span>
-<span id="cb11-5"><a href="basic-components.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Price:&quot;</span>, <span class="fu">round</span>(price, <span class="dv">2</span>), <span class="st">&quot;Delta:&quot;</span>, <span class="fu">round</span>(delta,</span>
-<span id="cb11-6"><a href="basic-components.html#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="basic-components.html#cb23-1" aria-hidden="true" tabindex="-1"></a>price <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">sapply</span>(portfolio, <span class="cf">function</span>(a) <span class="fu">getValue</span>(a,</span>
+<span id="cb23-2"><a href="basic-components.html#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Price&quot;</span>, dtCalc, base.env)))</span>
+<span id="cb23-3"><a href="basic-components.html#cb23-3" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">sapply</span>(portfolio, <span class="cf">function</span>(a) <span class="fu">getValue</span>(a,</span>
+<span id="cb23-4"><a href="basic-components.html#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Delta&quot;</span>, dtCalc, base.env)))</span>
+<span id="cb23-5"><a href="basic-components.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Price:&quot;</span>, <span class="fu">round</span>(price, <span class="dv">2</span>), <span class="st">&quot;Delta:&quot;</span>,</span>
+<span id="cb23-6"><a href="basic-components.html#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(delta, <span class="dv">3</span>)))</span></code></pre></div>
 <pre><code>## [1] &quot;Price: 13.31 Delta: 0.599&quot;</code></pre>
-</div>
-<div id="design-and-implementation" class="section level3" number="1.1.2">
-<h3><span class="header-section-number">1.1.2</span> Design and Implementation</h3>
-objects are instantiated by the class
-method, which takes as argument:
-<p>The method is simply a switch that delegates the
-object instantiation the the concrete subclasses of . The following code fragment is extracted from the file in package :</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="basic-components.html#cb13-1" aria-hidden="true" tabindex="-1"></a>fInstrumentFactory <span class="ot">&lt;-</span> <span class="cf">function</span>(type, quantity, params) {</span>
-<span id="cb13-2"><a href="basic-components.html#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">switch</span>(<span class="fu">toupper</span>(type), <span class="at">VANILLA =</span> <span class="fu">Vanilla</span>(quantity,</span>
-<span id="cb13-3"><a href="basic-components.html#cb13-3" aria-hidden="true" tabindex="-1"></a>        params), <span class="at">BINARY =</span> <span class="fu">Binary</span>(quantity, params),</span>
-<span id="cb13-4"><a href="basic-components.html#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ASIAN =</span> <span class="fu">Asian</span>(quantity, params), <span class="at">STANDARDBARRIER =</span> <span class="fu">StandardBarrier</span>(quantity,</span>
-<span id="cb13-5"><a href="basic-components.html#cb13-5" aria-hidden="true" tabindex="-1"></a>            params))</span>
-<span id="cb13-6"><a href="basic-components.html#cb13-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-There is only one method defined on objects. This method is , and takes as argument:
+<div id="design-and-implementation" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Design and Implementation</h3>
+<p><idx>fInstrument</idx> objects are instantiated by the <idx>fInstrumentfactory</idx> class
+method, which takes as argument:</p>
+<ul>
+<li>the type of instrument being instantiated,</li>
+<li>the quantity or nominal amount of the instrument</li>
+<li>a list of parameters that define the instrument</li>
+</ul>
+<p>The <idx>fInstrumentFactory</idx> method is simply a switch that delegates the
+object instantiation the the concrete subclasses of <idx>fInstrument</idx>. The following code fragment is
+extracted from the file <idx>fInstrument.r</idx> in package <idx>fInstrument</idx>:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="basic-components.html#cb25-1" aria-hidden="true" tabindex="-1"></a>fInstrumentFactory <span class="ot">&lt;-</span> <span class="cf">function</span>(type, quantity,</span>
+<span id="cb25-2"><a href="basic-components.html#cb25-2" aria-hidden="true" tabindex="-1"></a>    params) {</span>
+<span id="cb25-3"><a href="basic-components.html#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">switch</span>(<span class="fu">toupper</span>(type), <span class="at">VANILLA =</span> <span class="fu">Vanilla</span>(quantity,</span>
+<span id="cb25-4"><a href="basic-components.html#cb25-4" aria-hidden="true" tabindex="-1"></a>        params), <span class="at">BINARY =</span> <span class="fu">Binary</span>(quantity, params),</span>
+<span id="cb25-5"><a href="basic-components.html#cb25-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ASIAN =</span> <span class="fu">Asian</span>(quantity, params), <span class="at">STANDARDBARRIER =</span> <span class="fu">StandardBarrier</span>(quantity,</span>
+<span id="cb25-6"><a href="basic-components.html#cb25-6" aria-hidden="true" tabindex="-1"></a>            params))</span>
+<span id="cb25-7"><a href="basic-components.html#cb25-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>There is only one method defined on <idx>fInstrument</idx> objects. This method is <idx>getValue</idx>,
+and takes as argument:</p>
+<ul>
+<li>the kind of calculation being requested (price, delta)</li>
+<li>the calculation date,</li>
+<li>the data container from which the required market data will be fetched.</li>
+</ul>
 <p>Again, this method simply delegates to the concrete classes the requested calculation:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="basic-components.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="at">f =</span> <span class="st">&quot;getValue&quot;</span>, <span class="at">signature =</span> <span class="fu">signature</span>(<span class="st">&quot;fInstrument&quot;</span>),</span>
-<span id="cb14-2"><a href="basic-components.html#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">definition =</span> <span class="cf">function</span>(object, selection, dtCalc,</span>
-<span id="cb14-3"><a href="basic-components.html#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">env =</span> <span class="cn">NULL</span>) {</span>
-<span id="cb14-4"><a href="basic-components.html#cb14-4" aria-hidden="true" tabindex="-1"></a>        res <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb14-5"><a href="basic-components.html#cb14-5" aria-hidden="true" tabindex="-1"></a>        res <span class="ot">&lt;-</span> <span class="cf">switch</span>(<span class="fu">toupper</span>(selection), <span class="at">PRICE =</span> object<span class="sc">@</span><span class="fu">p</span>(dtCalc,</span>
-<span id="cb14-6"><a href="basic-components.html#cb14-6" aria-hidden="true" tabindex="-1"></a>            env), <span class="at">DELTA =</span> object<span class="sc">@</span><span class="fu">d</span>(dtCalc, env), <span class="at">GAMMA =</span> object<span class="sc">@</span><span class="fu">g</span>(dtCalc,</span>
-<span id="cb14-7"><a href="basic-components.html#cb14-7" aria-hidden="true" tabindex="-1"></a>            env), <span class="at">VEGA =</span> object<span class="sc">@</span><span class="fu">v</span>(dtCalc, env))</span>
-<span id="cb14-8"><a href="basic-components.html#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(res <span class="sc">*</span> object<span class="sc">@</span>quantity)</span>
-<span id="cb14-9"><a href="basic-components.html#cb14-9" aria-hidden="true" tabindex="-1"></a>    })</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="basic-components.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="at">f =</span> <span class="st">&quot;getValue&quot;</span>, <span class="at">signature =</span> <span class="fu">signature</span>(<span class="st">&quot;fInstrument&quot;</span>),</span>
+<span id="cb26-2"><a href="basic-components.html#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">definition =</span> <span class="cf">function</span>(object, selection, dtCalc,</span>
+<span id="cb26-3"><a href="basic-components.html#cb26-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">env =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb26-4"><a href="basic-components.html#cb26-4" aria-hidden="true" tabindex="-1"></a>        res <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb26-5"><a href="basic-components.html#cb26-5" aria-hidden="true" tabindex="-1"></a>        res <span class="ot">&lt;-</span> <span class="cf">switch</span>(<span class="fu">toupper</span>(selection), <span class="at">PRICE =</span> object<span class="sc">@</span><span class="fu">p</span>(dtCalc,</span>
+<span id="cb26-6"><a href="basic-components.html#cb26-6" aria-hidden="true" tabindex="-1"></a>            env), <span class="at">DELTA =</span> object<span class="sc">@</span><span class="fu">d</span>(dtCalc, env),</span>
+<span id="cb26-7"><a href="basic-components.html#cb26-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">GAMMA =</span> object<span class="sc">@</span><span class="fu">g</span>(dtCalc, env), <span class="at">VEGA =</span> object<span class="sc">@</span><span class="fu">v</span>(dtCalc,</span>
+<span id="cb26-8"><a href="basic-components.html#cb26-8" aria-hidden="true" tabindex="-1"></a>                env))</span>
+<span id="cb26-9"><a href="basic-components.html#cb26-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(res <span class="sc">*</span> object<span class="sc">@</span>quantity)</span>
+<span id="cb26-10"><a href="basic-components.html#cb26-10" aria-hidden="true" tabindex="-1"></a>    })</span></code></pre></div>
 <p>As an illustration, the price calculation for vanilla options is implemented as follows in
-:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="basic-components.html#cb15-1" aria-hidden="true" tabindex="-1"></a>getP <span class="ot">&lt;-</span> <span class="cf">function</span>(dtCalc, env) {</span>
-<span id="cb15-2"><a href="basic-components.html#cb15-2" aria-hidden="true" tabindex="-1"></a>    Spot <span class="ot">&lt;-</span> <span class="fu">getData</span>(env, Underlying, <span class="st">&quot;Price&quot;</span>, dtCalc)</span>
-<span id="cb15-3"><a href="basic-components.html#cb15-3" aria-hidden="true" tabindex="-1"></a>    s <span class="ot">&lt;-</span> <span class="fu">getData</span>(env, Underlying, <span class="st">&quot;ATMVol&quot;</span>, dtCalc)</span>
-<span id="cb15-4"><a href="basic-components.html#cb15-4" aria-hidden="true" tabindex="-1"></a>    r <span class="ot">&lt;-</span> <span class="fu">getData</span>(env, df, <span class="st">&quot;Yield&quot;</span>, dtCalc)</span>
-<span id="cb15-5"><a href="basic-components.html#cb15-5" aria-hidden="true" tabindex="-1"></a>    b <span class="ot">&lt;-</span> <span class="fu">getData</span>(env, Underlying, <span class="st">&quot;DivYield&quot;</span>, dtCalc)</span>
-<span id="cb15-6"><a href="basic-components.html#cb15-6" aria-hidden="true" tabindex="-1"></a>    t <span class="ot">&lt;-</span> <span class="fu">tDiff</span>(dtCalc, dtExpiry)</span>
-<span id="cb15-7"><a href="basic-components.html#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (trace) {</span>
-<span id="cb15-8"><a href="basic-components.html#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Calling GBSOption with Spot=&quot;</span>,</span>
-<span id="cb15-9"><a href="basic-components.html#cb15-9" aria-hidden="true" tabindex="-1"></a>            Spot, <span class="st">&quot;Strike=&quot;</span>, Strike, <span class="st">&quot;t=&quot;</span>, t, <span class="st">&quot;r=&quot;</span>,</span>
-<span id="cb15-10"><a href="basic-components.html#cb15-10" aria-hidden="true" tabindex="-1"></a>            r, <span class="st">&quot;b=&quot;</span>, b, <span class="st">&quot;sigma=&quot;</span>, s))</span>
-<span id="cb15-11"><a href="basic-components.html#cb15-11" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb15-12"><a href="basic-components.html#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">GBSOption</span>(<span class="at">TypeFlag =</span> cp, <span class="at">S =</span> Spot, <span class="at">X =</span> Strike,</span>
-<span id="cb15-13"><a href="basic-components.html#cb15-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">Time =</span> t, <span class="at">r =</span> r, <span class="at">b =</span> b, <span class="at">sigma =</span> s)<span class="sc">@</span>price</span>
-<span id="cb15-14"><a href="basic-components.html#cb15-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>The actual calculation being performed by the Rmetrics function. The model can be easily extended to accommodate other instruments.</p>
+<idx>Vanilla.r</idx>:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="basic-components.html#cb27-1" aria-hidden="true" tabindex="-1"></a>getP <span class="ot">&lt;-</span> <span class="cf">function</span>(dtCalc, env) {</span>
+<span id="cb27-2"><a href="basic-components.html#cb27-2" aria-hidden="true" tabindex="-1"></a>    Spot <span class="ot">&lt;-</span> <span class="fu">getData</span>(env, Underlying, <span class="st">&quot;Price&quot;</span>,</span>
+<span id="cb27-3"><a href="basic-components.html#cb27-3" aria-hidden="true" tabindex="-1"></a>        dtCalc)</span>
+<span id="cb27-4"><a href="basic-components.html#cb27-4" aria-hidden="true" tabindex="-1"></a>    s <span class="ot">&lt;-</span> <span class="fu">getData</span>(env, Underlying, <span class="st">&quot;ATMVol&quot;</span>, dtCalc)</span>
+<span id="cb27-5"><a href="basic-components.html#cb27-5" aria-hidden="true" tabindex="-1"></a>    r <span class="ot">&lt;-</span> <span class="fu">getData</span>(env, df, <span class="st">&quot;Yield&quot;</span>, dtCalc)</span>
+<span id="cb27-6"><a href="basic-components.html#cb27-6" aria-hidden="true" tabindex="-1"></a>    b <span class="ot">&lt;-</span> <span class="fu">getData</span>(env, Underlying, <span class="st">&quot;DivYield&quot;</span>,</span>
+<span id="cb27-7"><a href="basic-components.html#cb27-7" aria-hidden="true" tabindex="-1"></a>        dtCalc)</span>
+<span id="cb27-8"><a href="basic-components.html#cb27-8" aria-hidden="true" tabindex="-1"></a>    t <span class="ot">&lt;-</span> <span class="fu">tDiff</span>(dtCalc, dtExpiry)</span>
+<span id="cb27-9"><a href="basic-components.html#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (trace) {</span>
+<span id="cb27-10"><a href="basic-components.html#cb27-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Calling GBSOption with Spot=&quot;</span>,</span>
+<span id="cb27-11"><a href="basic-components.html#cb27-11" aria-hidden="true" tabindex="-1"></a>            Spot, <span class="st">&quot;Strike=&quot;</span>, Strike, <span class="st">&quot;t=&quot;</span>, t,</span>
+<span id="cb27-12"><a href="basic-components.html#cb27-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;r=&quot;</span>, r, <span class="st">&quot;b=&quot;</span>, b, <span class="st">&quot;sigma=&quot;</span>, s))</span>
+<span id="cb27-13"><a href="basic-components.html#cb27-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb27-14"><a href="basic-components.html#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">GBSOption</span>(<span class="at">TypeFlag =</span> cp, <span class="at">S =</span> Spot, <span class="at">X =</span> Strike,</span>
+<span id="cb27-15"><a href="basic-components.html#cb27-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">Time =</span> t, <span class="at">r =</span> r, <span class="at">b =</span> b, <span class="at">sigma =</span> s)<span class="sc">@</span>price</span>
+<span id="cb27-16"><a href="basic-components.html#cb27-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The actual calculation being performed by the Rmetrics <idx>GBSOption</idx> function.
+The model can be easily extended to accommodate other instruments.</p>
 </div>
 </div>
-<div id="the-class-1" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> The Class</h2>
-<p>The class is a container of market data, from which the pricing algorithm will fetch the necessary market information, as illustrated in the code fragment above.
-We first describe the representation of market data, then the algorithm for searching data in a .</p>
-<div id="the-model-for-market-data" class="section level3" number="1.2.1">
-<h3><span class="header-section-number">1.2.1</span> The Model for Market Data</h3>
-<p>The model for market data is strongly inspired by M. Folwer <span class="citation">(<label for="tufte-mn-1" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle">1996<span class="marginnote">Fowler, Martin. 1996. <em><span>Analysis Patterns: Reusable Object Models</span></em>. Addison-Wesley.</span>)</span>. To summarize, a piece of market data is modeled as an observed phenomenon on a financial instrument. Therefore, every market data item is identified by three attributes:</p>
+<div id="the-dataprovider-class" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> The <idx>DataProvider</idx> Class</h2>
+<p>The <idx>DataProvider</idx> class is a container of market data, from which the pricing
+algorithm will fetch the necessary market information, as illustrated in the code fragment above.
+We first describe the representation of market data, then the algorithm for searching data in a <idx>DataProvider</idx>.</p>
+<div id="the-model-for-market-data" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> The Model for Market Data</h3>
+<p>The model for market data is strongly inspired by M. Folwer <span class="citation">(<label for="tufte-mn-2" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle">1996<span class="marginnote">Fowler, Martin. 1996. <em><span>Analysis Patterns: Reusable Object Models</span></em>. Addison-Wesley.</span>)</span>. To summarize, a piece of market data
+is modeled as an observed phenomenon on a financial instrument. Therefore, every market data item is identified by three attributes:</p>
 <ul>
 <li>the financial instrument being observed (e.g. a stock)</li>
 <li>item the observed phenomenon (e.g. the implied volatility, or the price)</li>
@@ -486,52 +592,62 @@ We first describe the representation of market data, then the algorithm for sear
 </ul>
 <p>In order to optimize storage, the data is stored in a hash table. The first two attributes are combined to created the key, and the data for all observation dates is stored as a time series, with one column for actual data, and many additional columns when performing a simulation.</p>
 </div>
-<div id="the-search-algorithm" class="section level3" number="1.2.2">
-<h3><span class="header-section-number">1.2.2</span> The Search Algorithm</h3>
-<p>The inherits from the built-in class. In particular, it inherits the parent/child relationship: if a has a parent, the data not found in the child environment is fetched from the parent, if possible, or from the grand-parent, and so forth.</p>
-<p>This is useful when performing a scenario analysis where only a few variables are modified: The data held constant is stored in the parent scenario, and the modified data is stored in the child scenario which is passed as argument. This scheme is illustrated by the following example.</p>
+<div id="the-search-algorithm" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> The Search Algorithm</h3>
+<p>The <idx>DataProvider</idx> inherits from the built-in <idx>environement</idx> class. In particular,
+it inherits the parent/child relationship: if a <idx>DataProvider</idx> has a parent, the data not found in the child
+environment is fetched from the parent, if possible, or from the grand-parent, and so forth.</p>
+<p>This is useful when performing a scenario analysis where only a few variables are modified: The data held
+constant is stored in the parent scenario, and the modified data is stored in the child scenario which
+is passed as argument. This scheme is illustrated by the following example.</p>
 <p>Let’s define a vanilla option:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="basic-components.html#cb16-1" aria-hidden="true" tabindex="-1"></a>dtExpiry <span class="ot">&lt;-</span> <span class="fu">myDate</span>(<span class="st">&quot;01jan2011&quot;</span>)</span>
-<span id="cb16-2"><a href="basic-components.html#cb16-2" aria-hidden="true" tabindex="-1"></a>underlying <span class="ot">&lt;-</span> <span class="st">&quot;IBM&quot;</span></span>
-<span id="cb16-3"><a href="basic-components.html#cb16-3" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb16-4"><a href="basic-components.html#cb16-4" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">fInstrumentFactory</span>(<span class="st">&quot;vanilla&quot;</span>, <span class="at">quantity =</span> <span class="dv">1</span>,</span>
-<span id="cb16-5"><a href="basic-components.html#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(<span class="at">cp =</span> <span class="st">&quot;c&quot;</span>, <span class="at">strike =</span> K, <span class="at">dtExpiry =</span> dtExpiry,</span>
-<span id="cb16-6"><a href="basic-components.html#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">underlying =</span> underlying, <span class="at">discountRef =</span> <span class="st">&quot;USD.LIBOR&quot;</span>,</span>
-<span id="cb16-7"><a href="basic-components.html#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">trace =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="basic-components.html#cb28-1" aria-hidden="true" tabindex="-1"></a>dtExpiry <span class="ot">&lt;-</span> <span class="fu">myDate</span>(<span class="st">&quot;01jan2011&quot;</span>)</span>
+<span id="cb28-2"><a href="basic-components.html#cb28-2" aria-hidden="true" tabindex="-1"></a>underlying <span class="ot">&lt;-</span> <span class="st">&quot;IBM&quot;</span></span>
+<span id="cb28-3"><a href="basic-components.html#cb28-3" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb28-4"><a href="basic-components.html#cb28-4" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">fInstrumentFactory</span>(<span class="st">&quot;vanilla&quot;</span>, <span class="at">quantity =</span> <span class="dv">1</span>,</span>
+<span id="cb28-5"><a href="basic-components.html#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(<span class="at">cp =</span> <span class="st">&quot;c&quot;</span>, <span class="at">strike =</span> K, <span class="at">dtExpiry =</span> dtExpiry,</span>
+<span id="cb28-6"><a href="basic-components.html#cb28-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">underlying =</span> underlying, <span class="at">discountRef =</span> <span class="st">&quot;USD.LIBOR&quot;</span>,</span>
+<span id="cb28-7"><a href="basic-components.html#cb28-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">trace =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
 <p>and populate a DataProvider with the necessary market data:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="basic-components.html#cb17-1" aria-hidden="true" tabindex="-1"></a>base.env <span class="ot">&lt;-</span> <span class="fu">DataProvider</span>()</span>
-<span id="cb17-2"><a href="basic-components.html#cb17-2" aria-hidden="true" tabindex="-1"></a>dtCalc <span class="ot">&lt;-</span> <span class="fu">myDate</span>(<span class="st">&quot;01jan2010&quot;</span>)</span>
-<span id="cb17-3"><a href="basic-components.html#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="basic-components.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;Price&quot;</span>, dtCalc, <span class="dv">100</span>)</span>
-<span id="cb17-5"><a href="basic-components.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;DivYield&quot;</span>, dtCalc, <span class="fl">0.02</span>)</span>
-<span id="cb17-6"><a href="basic-components.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;ATMVol&quot;</span>, dtCalc, <span class="fl">0.3</span>)</span>
-<span id="cb17-7"><a href="basic-components.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, <span class="st">&quot;USD.LIBOR&quot;</span>, <span class="st">&quot;Yield&quot;</span>, dtCalc, <span class="fl">0.02</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="basic-components.html#cb29-1" aria-hidden="true" tabindex="-1"></a>base.env <span class="ot">&lt;-</span> <span class="fu">DataProvider</span>()</span>
+<span id="cb29-2"><a href="basic-components.html#cb29-2" aria-hidden="true" tabindex="-1"></a>dtCalc <span class="ot">&lt;-</span> <span class="fu">myDate</span>(<span class="st">&quot;01jan2010&quot;</span>)</span>
+<span id="cb29-3"><a href="basic-components.html#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="basic-components.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;Price&quot;</span>, dtCalc,</span>
+<span id="cb29-5"><a href="basic-components.html#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">100</span>)</span>
+<span id="cb29-6"><a href="basic-components.html#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;DivYield&quot;</span>, dtCalc,</span>
+<span id="cb29-7"><a href="basic-components.html#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.02</span>)</span>
+<span id="cb29-8"><a href="basic-components.html#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, underlying, <span class="st">&quot;ATMVol&quot;</span>, dtCalc,</span>
+<span id="cb29-9"><a href="basic-components.html#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.3</span>)</span>
+<span id="cb29-10"><a href="basic-components.html#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(base.env, <span class="st">&quot;USD.LIBOR&quot;</span>, <span class="st">&quot;Yield&quot;</span>, dtCalc,</span>
+<span id="cb29-11"><a href="basic-components.html#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.02</span>)</span></code></pre></div>
 <p>The NPV of the derivative is obtained by:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="basic-components.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getValue</span>(a, <span class="st">&quot;Price&quot;</span>, dtCalc, base.env)</span>
-<span id="cb18-2"><a href="basic-components.html#cb18-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">12.82158</span></span></code></pre></div>
-<p>Next, we investigate the relationship between the underlying price and the value of the derivative, by inserting a set of scenarios for the underlying asset price in a child :</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="basic-components.html#cb19-1" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(<span class="fu">seq</span>(<span class="dv">80</span>, <span class="dv">120</span>, <span class="at">length.out =</span> <span class="dv">30</span>)))</span>
-<span id="cb19-2"><a href="basic-components.html#cb19-2" aria-hidden="true" tabindex="-1"></a>sce.env <span class="ot">&lt;-</span> <span class="fu">DataProvider</span>(<span class="at">parent =</span> base.env)</span>
-<span id="cb19-3"><a href="basic-components.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(sce.env, underlying, <span class="st">&quot;Price&quot;</span>, dtCalc, sce)</span></code></pre></div>
-and compute the NPV of the derivative for each scenario. The relationship between the underlying price and the value of the call is illustrated in figure <a href="basic-components.html#fig:102-sce-plot">1.1</a>.
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="basic-components.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getValue</span>(a, <span class="st">&quot;Price&quot;</span>, dtCalc, base.env)</span>
+<span id="cb30-2"><a href="basic-components.html#cb30-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">12.82158</span></span></code></pre></div>
+<p>Next, we investigate the relationship between the underlying price and the value of the derivative,
+by inserting a set of scenarios for the underlying asset price in a child <idx>DataProvider</idx>:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="basic-components.html#cb31-1" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(<span class="fu">seq</span>(<span class="dv">80</span>, <span class="dv">120</span>, <span class="at">length.out =</span> <span class="dv">30</span>)))</span>
+<span id="cb31-2"><a href="basic-components.html#cb31-2" aria-hidden="true" tabindex="-1"></a>sce.env <span class="ot">&lt;-</span> <span class="fu">DataProvider</span>(<span class="at">parent =</span> base.env)</span>
+<span id="cb31-3"><a href="basic-components.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setData</span>(sce.env, underlying, <span class="st">&quot;Price&quot;</span>, dtCalc,</span>
+<span id="cb31-4"><a href="basic-components.html#cb31-4" aria-hidden="true" tabindex="-1"></a>    sce)</span></code></pre></div>
+and compute the NPV of the derivative for each scenario. The relationship between the underlying price and the value of the call is illustrated in figure <a href="basic-components.html#fig:102-sce-plot">3.1</a>.
 <p>
 <span class="marginnote shownote">
 <!--
 <div class="figure">--><span style="display:block;" id="fig:102-sce-plot"></span>
 <img src="102-simBasicClasses_files/figure-html/102-sce-plot-1.png" alt="Call Price as a function of spot value. Strike: 100, maturity: 1 Year" width="672"  />
 <!--
-<p class="caption marginnote">-->Figure 1.1: Call Price as a function of spot value. Strike: 100, maturity: 1 Year<!--</p>-->
+<p class="caption marginnote">-->Figure 3.1: Call Price as a function of spot value. Strike: 100, maturity: 1 Year<!--</p>-->
 <!--</div>--></span>
 </p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="basic-components.html#cb20-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">getValue</span>(a, <span class="st">&quot;Price&quot;</span>, dtCalc, sce.env)</span>
-<span id="cb20-2"><a href="basic-components.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sce, p, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">xlab =</span> <span class="st">&quot;Spot&quot;</span>,</span>
-<span id="cb20-3"><a href="basic-components.html#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Price&quot;</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="basic-components.html#cb32-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">getValue</span>(a, <span class="st">&quot;Price&quot;</span>, dtCalc, sce.env)</span>
+<span id="cb32-2"><a href="basic-components.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sce, p, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">xlab =</span> <span class="st">&quot;Spot&quot;</span>,</span>
+<span id="cb32-3"><a href="basic-components.html#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Price&quot;</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>
 </div>
 <p style="text-align: center;">
-<a href="preface-to-the-first-edition.html"><button class="btn btn-default">Previous</button></a>
+<a href="ch:data-sources.html"><button class="btn btn-default">Previous</button></a>
 <a href="sim-framework.html"><button class="btn btn-default">Next</button></a>
 </p>
 </div>

@@ -1,6 +1,6 @@
 # The Model of Hull & White
 
-```{r, 520-init-1,echo=TRUE,results='hide'}
+```{r, 520-init-1,echo=TRUE,results='hide', message=FALSE}
   library(fBasics)
 ```
 
@@ -43,7 +43,7 @@ x_t &=& x_0 e^{-\theta t} + \mu (1-e^{-\theta t}) +\sigma \int_0^t e^{-\theta (t
 Thus,
 
 $$E(x_t) = x_0 e^{-\theta t} + \mu (1-e^{-\theta t})
-\label{eq:mean-ou}$$
+(\#eq:mean-ou)$$
 
 The variance of $x_t$ is now easily computed:
 
@@ -57,7 +57,7 @@ V(x_t) &=& E\left[ (x_t - E(x_t))^2 \right] \\
 Finally,
 
 $$V(x_t) = \frac{\sigma^2}{2 \theta} (1-e^{-2 \theta t})
-\label{eq:var-ou}$$
+(\#eq:var-ou)$$
 
 ## The Hull & White Trinomial Model
 

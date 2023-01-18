@@ -42,7 +42,7 @@ $$\begin{aligned}
   && + \left[ \frac{\partial O}{\partial \sigma} - \sum_i x_i \frac{\partial C_i}{\partial \sigma}  \right] d\sigma_t \\
   && + \frac{1}{2} \left[ \frac{\partial^2 O}{\partial S^2} - \sum_i x_i \frac{\partial^2 C_i}{\partial S^2}  \right] (dS_t)^2 \\
   && + \frac{1}{2} \left[ \frac{\partial^2 O}{\partial \sigma^2} - \sum_i x_i \frac{\partial^2 C_i}{\partial \sigma^2}  \right] (d\sigma_t)^2  \\
-  && + \left[ \frac{\partial^2 O}{\partial S \partial \sigma} - \sum_i x_i \frac{\partial^2 C_i}{\partial S \partial \sigma}  \right] dS_t d\sigma_t 
+  && + \left[ \frac{\partial^2 O}{\partial S \partial \sigma} - \sum_i x_i \frac{\partial^2 C_i}{\partial S \partial \sigma}  \right] dS_t d\sigma_t
  \end{aligned}$$
 
 
@@ -58,7 +58,7 @@ $$\begin{aligned}
 Using the definition of $dS_t$ and retaining the first-order terms, we
 have, for all securities function of $S_t$:
 
-$$\frac{\partial f}{\partial t} dt + \frac{1}{2} \frac{\partial^2 f}{\partial S^2} = 
+$$\frac{\partial f}{\partial t} dt + \frac{1}{2} \frac{\partial^2 f}{\partial S^2} =
 \left( \frac{\partial f}{\partial t} + \frac{1}{2} \frac{\partial^2 f}{\partial S^2} S_t^2 \sigma^2 \right) dt$$
 
 Moreover, each asset satisfies the Black-Scholes PDE:
@@ -73,7 +73,7 @@ The hedged portfolio is thus riskless:
 $$\begin{aligned}
   \lefteqn{dO(t,K) - \Delta_t dS_t - \sum_{i=1}^3 x_i dC_i(t,K_i) =} \nonumber \\
   && r \left[ O(t,K) - \sum_i x_i C_i(t,K_i) \right] dt
-\label{eq:vv-1}\end{aligned}$$
+(\#eq:vv-1)\end{aligned}$$
 
 
 In summary, we can still have a locally perfect hedge when volatility is
@@ -103,7 +103,7 @@ $$W_T = O(T) - \Delta_t S_T - \sum_i x_i C_i(T) - r \left(O^M(t) - \sum_i x_i C^
 
 Set
 $$O^M(t,K) = O(t,K) + \sum_i x_i \left[ C^M_i(t,K_i) - C_i(t,K_i) \right]
-\label{eq:vv-2}$$
+(\#eq:vv-2)$$
 
 to obtain $W_T = 0$.
 
@@ -139,7 +139,7 @@ $$\begin{aligned}
 \frac{\partial^2 O}{\partial S \partial \sigma} &=& \sum_i x_i \frac{\partial^2 C_i}{\partial S \partial \sigma}\end{aligned}$$
 
 or, $$b = Ax
-\label{eq:A-matrix}$$
+(\#eq:A-matrix)$$
 
 Since the result of the previous section holds for any derivative that
 verifies the Black-Scholes equation, we can choose the benchmark
@@ -175,7 +175,7 @@ smile cost into account, are as follows:
               \frac{\partial^2 O}{\partial \sigma \partial S}
             \end{pmatrix}$$
 
-2.  compute the A matrix $$A = 
+2.  compute the A matrix $$A =
           \begin{pmatrix}
               \frac{\partial C_1}{\partial \sigma} & \ldots & \frac{\partial C_3}{\partial \sigma}\\
               \frac{\partial^2 C_1}{\partial \sigma^2} & \ldots & \frac{\partial^2 C_3}{\partial \sigma^2}  \\
@@ -187,7 +187,7 @@ smile cost into account, are as follows:
 
 4.  the corrected price for $O$ is:
     $$O^M(t,K) = O^{BS}(t,K) + \sum_{i=2}^3 x_i \left( C_i^M(t) - C_i^{BS}(t) \right)
-            (\#eq:vv-4)$$ 
+            (\#eq:vv-4)$$
     where $C^M_i(t)$ is the market price and
     $C^{BS}_i(t)$ the Black-Scholes price (i.e. with flat volatility).
 
@@ -265,7 +265,7 @@ finite difference:
   Vanna <- function(f, vol, spot=Spot) {
     (Vega(f, vol, spot+1)-Vega(f, vol, spot-1))/2
   }
-    
+
   Volga <- function(f, vol) {
       (Vega(f,vol+eps)-Vega(f,vol-eps))/(eps)
   }
@@ -280,7 +280,7 @@ the Black-Scholes price, and the corresponding implied volatility:
   O <- function(vol=sigma, spot=Spot) GBSOption(TypeFlag='c', S=spot,
          X=X, Time=T, r=r, b=b, sigma=vol)@price
   TV.BS <- O()
-    
+
   # risk indicators for benchmark instruments
   B.vega <- sapply(1:3, function(i) Vega(C[[i]], sigma))
   B.vanna <- sapply(1:3, function(i) Vanna(C[[i]], sigma))
@@ -316,7 +316,7 @@ interpolated smile curve.
             sapply(VolData, function(v) v[2]), pch=19, col='red')
 ```
 
-The result is shown in Figure \[fig:vv-1\].
+The result is shown in Figure \@ref(fig:vv-1).
 
 ```{r, label=vv-plot-1, echo=F, fig=T}
   <<vv-vol-curve>>
@@ -505,7 +505,7 @@ yield a very inaccurate result:
   P.smile <- O(vol=sigma+smile(X))
 ```
 
-which yields a value of $`r round(P.smile,2) `$. Figure \[fig:vv-6\]
+which yields a value of $`r round(P.smile,2) `$. Figure \@ref(fig:vv-6)
 compares the values of binary options for a range of strikes, computed
 with four methods. :
 
@@ -541,7 +541,7 @@ with four methods. :
 
   # Approximate cost
   CA <- RR.cost * (O.vanna/RR.vanna) + BF.cost*(O.volga/BF.volga)
-    
+
   # full calculation
   A <- matrix(c(S.vega, S.vanna, S.volga,
                 RR.vega, RR.vanna, RR.volga,

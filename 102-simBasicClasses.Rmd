@@ -5,8 +5,9 @@ knitr::opts_chunk$set(
   cache = TRUE,
   dev.args = list(bg = "transparent"),
   tidy=TRUE,
-  tidy.opts=list(width.cutoff=50)
+  tidy.opts=list(width.cutoff=45)
 )
+source("formatters.R", local=knitr::knit_global())
 ```
 
 ```{r label=load-packages,echo=TRUE,results='hide', message=FALSE}
@@ -18,29 +19,28 @@ library(empfin)
 library(plotly)
 ```
 
-```{r tufte::newthought("This")}``` chapter provides a tutorial and explains the design of the object framework that has been build on top of the Rmetrics library. 
-As mentioned earlier, this layer is meant to hide 
-most of the implementation details, and allows us to focus on the key features of the 
-financial instruments and models. 
+`r tufte::newthought("This")` chapter provides a tutorial and explains the design of the object framework that has been build on top of the Rmetrics library.
+As mentioned earlier, this layer is meant to hide
+most of the implementation details, and allows us to focus on the key features of the
+financial instruments and models.
 
-The reader is encouraged to work through the examples, but the sections on design and implementation can be skipped. 
+The reader is encouraged to work through the examples, but the sections on design and implementation can be skipped.
 
 The object framework involves two main entities:
 
-  * the \class{fInstrument} class models an abstract financial instrument, and exposes 
-    generic methods for computing the net present value (NPV) and the risk 
-    indicators (the ``greeks''). With this class, one can perform calculations on portfolio of instruments, without being concerned about the implementation details specific to each type of asset. This will be illustrated below with the detailed description of a delta-hedging algorithm.
-  * the \class{DataProvider} class is a container for market data, derived from the built-in \RR{} \code{environment}. It greatly simplifies the signature of pricing functions. Instead of passing as arguments all the necessary market data, we simply pass one \class{DataProvider} argument. The pricing methods fetch the necessary data from the \class{DataProvider}, as needed.
+  * the `r to_index("fInstrument")` class models an abstract financial instrument, and exposes
+    generic methods for computing the net present value (NPV) and the risk
+    indicators (the "greek"). With this class, one can perform calculations on portfolio of instruments, without being concerned about the implementation details specific to each type of asset. This will be illustrated below with the detailed description of a delta-hedging algorithm.
+  * the `r to_index('DataProvider')` class is a container for market data, derived from the built-in
+    \RR{} `r to_index("environment")`. It greatly simplifies the signature of pricing functions. Instead of passing as arguments all the necessary market data, we simply pass one `r to_index("DataProvider")` argument. The pricing methods fetch the necessary data from the `r to_index("DataProvider")`, as needed.
 
 Each entity is now described and illustrated.
 
-## The \class{fInstrument} Class
+## The `r to_index("fInstrument", "classes")` Class
 
-As mentioned, the purpose of the \class{fInstrument} class is to create a layer of abstraction over the large variety of pricing models found in Rmetrics. With this class, we can express calculation algorithms in a generic manner. This is best explained by an example. 
+As mentioned, the purpose of the `r to_index("fInstrument")` class is to create a layer of abstraction over the large variety of pricing models found in Rmetrics. With this class, we can express calculation algorithms in a generic manner. This is best explained by an example.
 
-### Illustration
-
-Consider a portfolio made of two options, a vanilla European call and a binary (cash-or-nothing) option, both written on the same underlying asset. We would like to compute the NPV and delta of this portfolio. Let's contrast the process, first performed with the Rmetrics functions, and then with the \class{fInstrument} class. 
+Consider a portfolio made of two options, a vanilla European call and a binary (cash-or-nothing) option, both written on the same underlying asset. We would like to compute the NPV and delta of this portfolio. Let's contrast the process, first performed with the Rmetrics functions, and then with the `r to_index("fInstrument")`.
 
 Starting with the Rmetrics functions, you first compute the price and delta of the European call:
 
@@ -53,25 +53,25 @@ d <- vector(mode='numeric', length=2)
 p <- vector(mode='numeric', length=2)
 cp <- 'c'; Spot <- 100; Strike <- 100; Ttm <- 1
 int.rate <- .02; div.yield <- .02; sigma <- .3
-p[1] <- GBSOption(TypeFlag=cp, S=Spot, X=Strike, Time=Ttm, r=int.rate, b=int.rate-div.yield, 
+p[1] <- GBSOption(TypeFlag=cp, S=Spot, X=Strike, Time=Ttm, r=int.rate, b=int.rate-div.yield,
                   sigma=sigma)@price
-d[1] <- GBSGreeks(Selection="delta", TypeFlag=cp, S=Spot, X=Strike, Time=Ttm, r=int.rate, 
+d[1] <- GBSGreeks(Selection="delta", TypeFlag=cp, S=Spot, X=Strike, Time=Ttm, r=int.rate,
                   b=int.rate-div.yield,
                   sigma=sigma)
 ```
 
-Perform the same calculation for the binary option. The delta is computed 
+Perform the same calculation for the binary option. The delta is computed
 by finite difference.
 
 ```{r 102-ic-2, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
 p <- vector(mode='numeric', length=2)
 K <- 1
-p[2] <- CashOrNothingOption(TypeFlag=cp, S=Spot, X=Strike, K=K, Time=Ttm, r=int.rate, 
+p[2] <- CashOrNothingOption(TypeFlag=cp, S=Spot, X=Strike, K=K, Time=Ttm, r=int.rate,
                             b=int.rate-div.yield,
                             sigma=sigma)@price
 h <- Spot*.001
 dh <- CashOrNothingOption(TypeFlag=cp, S=c(Spot+h, Spot-h), X=Strike, K=K,
-                          Time=Ttm, r=int.rate, b=int.rate-div.yield, 
+                          Time=Ttm, r=int.rate, b=int.rate-div.yield,
                           sigma=sigma)@price
 d[2] <- diff(dh)/(2*h)
 ```
@@ -83,9 +83,9 @@ p <- vector(mode='numeric', length=2)
 print(paste('Price:', round(sum(p),2), 'Delta:', round(sum(d),3)))
 ```
 
-With the \class{fInstrument} class, the calculation steps are quite different.
+With the `r to_index("fInstrument")` class, the calculation steps are quite different.
 
-You first create a vanilla instrument with the \code{fInstrumentFactory} function:
+You first create a vanilla instrument with the `r to_index("fInstrumentFactory")` function:
 ```{r 102-ic-4}
 dtExpiry <- myDate('01jan2011')
 underlying <- 'IBM'; Strike <- 100; K<-1
@@ -97,7 +97,7 @@ b <- fInstrumentFactory("vanilla", quantity=1,
                   discountRef='USD.LIBOR', trace=FALSE))
 ```
 
-Next, use again the \code{fInstrumentfactory} to create the binary option:
+Next, use again the `r to_index("fInstrumentfactory")` to create the binary option:
 ```{r 102-ic-5}
 v <- fInstrumentFactory("binary", quantity=1,
                   params=list(cp='c', strike=Strike,
@@ -106,7 +106,7 @@ v <- fInstrumentFactory("binary", quantity=1,
                   discountRef='USD.LIBOR', trace=FALSE))
 ```
 
-Insert the relevant market data into a \class{DataProvider} (this will be explained in the next section):
+Insert the relevant market data into a `r to_index("DataProvider")` (this will be explained in the next section):
 ```{r 102-ic-6}
 base.env <- DataProvider()
 dtCalc <- myDate('01jan2010')
@@ -116,10 +116,10 @@ setData(base.env, underlying, 'ATMVol', dtCalc, sigma)
 setData(base.env, 'USD.LIBOR', 'Yield', dtCalc, int.rate)
 ```
 
-Construct a portfolio, as a list of \class{fInstrument} objects:
+Construct a portfolio, as a list of `r to_index("fInstrument")` objects:
 ```{r 102-ic-7}
 portfolio = c(v, b)
-``` 
+```
 
 and finally compute the price and delta of the portfolio:
 ```{r, 102-ic-8}
@@ -130,33 +130,33 @@ print(paste('Price:', round(price,2), 'Delta:', round(delta,3)))
 
 ### Design and Implementation
 
-\class{finstrument} objects are instantiated by the \code{fInstrumentfactory} class 
+`r to_index("fInstrument")` objects are instantiated by the `r to_index("fInstrumentfactory")` class
 method, which takes as argument:
-\begin{itemize}
-  \item the type of instrument being instantiated,
-    \item the quantity or nominal amount of the instrument
-    \item a list of parameters that define the instrument
-\end{itemize}
 
-The \code{fInstrumentFactory} method is simply a switch that delegates the 
-object instantiation the the concrete subclasses of \class{fInstrument}. The following code fragment is extracted from the file \code{fInstrument.r} in package \pkg{fInstrument}:
+- the type of instrument being instantiated,
+- the quantity or nominal amount of the instrument
+- a list of parameters that define the instrument
+
+The `r to_index("fInstrumentFactory")` method is simply a switch that delegates the
+object instantiation the the concrete subclasses of `r to_index("fInstrument")`. The following code fragment is
+extracted from the file `r to_index("fInstrument.r")` in package `r to_index("fInstrument")`:
 ```{r 102-ic-9, eval=FALSE, echo=TRUE}
 fInstrumentFactory <- function(type, quantity, params){
 switch(toupper(type),
 VANILLA = Vanilla(quantity, params),
 BINARY = Binary(quantity, params),
-ASIAN = Asian(quantity, params),     
-STANDARDBARRIER = StandardBarrier(quantity, params)     
+ASIAN = Asian(quantity, params),
+STANDARDBARRIER = StandardBarrier(quantity, params)
 )
 }
 ```
 
-There is only one method defined on \class{fInstrument} objects. This method is \code{getValue}, and takes as argument:
-\begin{itemize}
-  \item the kind of calculation being requested (price, delta)
-    \item the calculation date,
-      \item the data container from which the required market data will be fetched.
-        \end{itemize}
+There is only one method defined on `r to_index("fInstrument")` objects. This method is `r to_index("getValue")`,
+and takes as argument:
+
+- the kind of calculation being requested (price, delta)
+- the calculation date,
+- the data container from which the required market data will be fetched.
 
 Again, this method simply delegates to the concrete classes the requested calculation:
 ```{r 102-ic-10, eval=FALSE, echo=TRUE}
@@ -164,7 +164,7 @@ Again, this method simply delegates to the concrete classes the requested calcul
    definition=function(object, selection, dtCalc, env=NULL){
    res <- NULL
    res <- switch(toupper(selection),
-   PRICE = object@p(dtCalc, env), 
+   PRICE = object@p(dtCalc, env),
    DELTA = object@d(dtCalc, env),
    GAMMA = object@g(dtCalc, env),
    VEGA = object@v(dtCalc, env))
@@ -173,7 +173,7 @@ Again, this method simply delegates to the concrete classes the requested calcul
 ```
 
 As an illustration, the price calculation for vanilla options is implemented as follows in
-\code{Vanilla.r}:
+`r to_index("Vanilla.r")`:
 ```{r 102-ic-11, eval=FALSE, echo=TRUE}
 getP <- function(dtCalc, env) {
 Spot <- getData(env, Underlying, 'Price', dtCalc)
@@ -188,16 +188,19 @@ Spot <- getData(env, Underlying, 'Price', dtCalc)
 }
 ```
 
-The actual calculation being performed by the Rmetrics \code{GBSOption} function. The model can be easily extended to accommodate other instruments.
+The actual calculation being performed by the Rmetrics `r to_index("GBSOption", "functions")` function.
+The model can be easily extended to accommodate other instruments.
 
-## The \class{DataProvider} Class
+## The `r to_index("DataProvider", "classes")` Class
 
-The \code{DataProvider} class is a container of market data, from which the pricing algorithm will fetch the necessary market information, as illustrated in the code fragment above.
-We first  describe the representation of market data, then the algorithm for searching data in a \code{DataProvider}.
+The `r to_index("DataProvider")`  class is a container of market data, from which the pricing
+algorithm will fetch the necessary market information, as illustrated in the code fragment above.
+We first  describe the representation of market data, then the algorithm for searching data in a `r to_index("DataProvider")`.
 
 ### The Model for Market Data
 
-The model for market data is strongly inspired by M. Folwer [-@Fowler1996]. To summarize, a piece of market data is modeled as an observed phenomenon on a financial instrument. Therefore, every market data item is identified by three attributes:
+The model for market data is strongly inspired by M. Folwer [-@Fowler1996]. To summarize, a piece of market data
+is modeled as an observed phenomenon on a financial instrument. Therefore, every market data item is identified by three attributes:
 
 -   the financial instrument being observed (e.g. a stock)
 -   item the observed phenomenon (e.g. the implied volatility, or the price)
@@ -207,9 +210,13 @@ In order to optimize storage, the data is stored in a hash table. The first two 
 
 ### The Search Algorithm
 
-The \class{DataProvider} inherits from the built-in \code{environment} class. In particular, it inherits the parent/child relationship: if a \class{DataProvider} has a parent, the data not found in the child environment is fetched from the parent, if possible, or from the grand-parent, and so forth.
+The `r to_index("DataProvider")` inherits from the built-in `r to_index("environement")` class. In particular,
+it inherits the parent/child relationship: if a  `r to_index("DataProvider")` has a parent, the data not found in the child
+environment is fetched from the parent, if possible, or from the grand-parent, and so forth.
 
-This is useful when performing a scenario analysis where only a few variables are modified: The data held constant is stored in the parent scenario, and the modified data is stored in the child scenario which is passed as argument. This scheme is illustrated by the following example.
+This is useful when performing a scenario analysis where only a few variables are modified: The data held
+constant is stored in the parent scenario, and the modified data is stored in the child scenario which
+is passed as argument. This scheme is illustrated by the following example.
 
 Let's define a vanilla option:
 ```{r 102-ic-12, tidy=TRUE, tidy.opts=list(width.cutoff=45)}
@@ -217,7 +224,7 @@ dtExpiry <- myDate('01jan2011'); underlying <- 'IBM'; K<-100
 a <- fInstrumentFactory("vanilla", quantity=1,
                         params=list(cp='c', strike=K,
                   dtExpiry=dtExpiry,
-underlying=underlying,discountRef='USD.LIBOR', 
+underlying=underlying,discountRef='USD.LIBOR',
 trace=FALSE))
 ```
 
@@ -237,7 +244,8 @@ The NPV of the derivative is obtained by:
 getValue(a, 'Price', dtCalc, base.env)
 ```
 
-Next, we investigate the relationship between the underlying price and the value of the derivative, by inserting a set of scenarios for the underlying asset price in a child \class{DataProvider}:
+Next, we investigate the relationship between the underlying price and the value of the derivative,
+by inserting a set of scenarios for the underlying asset price in a child `r to_index("DataProvider")`:
 
 ```{r 102-ic-15}
 sce <- t(as.matrix(seq(80, 120, length.out=30)))
