@@ -1,10 +1,14 @@
+code_background {
+background-color: lightblue;
+}
+
 body {
   background-color: #fefefe;
   /* font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif; */
 }
 
-/*.numeral, .sidenote-number { 
-  font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif; 
+/*.numeral, .sidenote-number {
+  font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
 }*/
 
 idx {
@@ -64,7 +68,7 @@ div.argument {
 button {
   background: none!important;
   color: inherit;
-  border: none; 
+  border: none;
   padding: 1!important;
   font: inherit;
   cursor: pointer;
@@ -91,7 +95,7 @@ ol ol, ol ul, ul ol, ul ul, ol table, ul table, ol hr, ul hr {
   width: 91%;
 }
 
-@media screen and (max-width: 760px) { 
+@media screen and (max-width: 760px) {
   ol, ul { width: 90%; }
   ul { width: 85%; }
 }
@@ -103,3 +107,4 @@ div.proof:after {
   font-size: 1.4rem;
   content: "∎";
 }
+

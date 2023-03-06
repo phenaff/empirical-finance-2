@@ -1,0 +1,827 @@
+\documentclass[]{tufte-book}
+
+% ams
+\usepackage{amssymb,amsmath}
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \makeatletter
+  \@ifpackageloaded{fontspec}{}{\usepackage{fontspec}}
+  \makeatother
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \makeatletter
+  \@ifpackageloaded{soul}{
+     \renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+     \renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
+   }{}
+  \makeatother
+
+\fi
+
+% graphix
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+
+% booktabs
+\usepackage{booktabs}
+
+% url
+\usepackage{url}
+
+% hyperref
+\usepackage{hyperref}
+
+% units.
+\usepackage{units}
+
+
+\setcounter{secnumdepth}{2}
+
+% citations
+
+
+% pandoc syntax highlighting
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+
+% table with pandoc
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+
+% multiplecol
+\usepackage{multicol}
+
+% strikeout
+\usepackage[normalem]{ulem}
+
+% morefloats
+\usepackage{morefloats}
+
+
+% tightlist macro required by pandoc >= 1.14
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% title / author / date
+\date{}
+
+% Preamble from Rmetrics
+
+\usepackage{booktabs}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+% Index
+\usepackage{makeidx}
+\makeindex
+
+% binomial trees
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{shapes.multipart}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes}
+\usetikzlibrary{external}
+\usepgfplotslibrary{external}
+\usetikzlibrary{positioning}
+\pgfplotsset{compat=1.18}
+
+% R and other languages
+
+\newcommand{\RR}{\textsf{R}}
+\newcommand{\Rmetrics}{Rmetrics}
+
+%\newcommand{`r to_index("", "functions")`}[1]{\texttt{#1()}\index{R~functions@\RR~functions!#1}}
+%\newcommand{`r to_index("", "classes")`}[1]{\texttt{#1}}
+%\newcommand{`r to_index("", "classes")`}[1]{\texttt{#1}\index{R~classes@\RR~classes!#1}}
+%\newcommand{\pkg}[1]{\texttt{#1}\index{R~packages@\RR~packages!#1}}
+%\newcommand{\dataset}[1]{\texttt{#1}\index{R~data@\RR~data!#1}}
+%\newcommand{\code}[1]{\texttt{#1}\index{#1}}
+
+% Preamble from VIP
+
+\newcommand{\given}{\mid}
+\renewcommand{\neg}{\mathbin{\sim}}
+\renewcommand{\wedge}{\mathbin{\&}}
+\renewcommand{\u}{U}
+\newcommand{\gt}{>}
+\newcommand{\p}{Pr}
+\newcommand{\E}{E}
+\newcommand{\EU}{EU}
+\newcommand{\pr}{Pr}
+\newcommand{\po}{Pr^*}
+\newcommand{\degr}{^{\circ}}
+\definecolor{bookred}{RGB}{228,6,19}
+\definecolor{bookblue}{RGB}{0,92,169}
+\definecolor{bookpurple}{RGB}{114,49,94}
+
+\newenvironment{epigraph}%
+{
+\begin{flushright}
+\begin{minipage}{20em}
+\begin{flushright}
+\itshape
+}%
+{
+\end{flushright}
+\end{minipage}
+\end{flushright}
+}
+\newenvironment{problem}{\begin{quote}\normalsize}{\end{quote}}
+\newenvironment{puzzle}{\begin{quote}\normalsize}{\end{quote}}
+\def\argument{\list{}{\leftmargin3em}\item[]}
+\let\endargument=\endlist
+\usepackage{fontawesome}
+\newenvironment{warning}{\begin{itemize}\item[\faBan]}{\end{itemize}}
+\usepackage{marvosym}
+\newenvironment{info}{\begin{itemize}\item[\Info]}{\end{itemize}}
+
+%%%% Kevin Godny's code for title page and contents from https://groups.google.com/forum/#!topic/tufte-latex/ujdzrktC1BQ
+\makeatletter
+\renewcommand{\maketitlepage}{%
+\begingroup%
+\setlength{\parindent}{0pt}
+{\fontsize{18}{18}\selectfont\textit{\@author}\par}
+\vspace{1.75in}{\fontsize{36}{14}\selectfont\@title\par}
+\vspace{0.5in}{\fontsize{20}{14}\selectfont with R and Rmetrics\par}
+\vspace{0.5in}{\fontsize{14}{14}\selectfont\textsf{\smallcaps{v 2.0}}\par}
+\vfill{\fontsize{14}{14}\selectfont\textit{An Open Access Publication}\par}
+\thispagestyle{empty}
+\endgroup
+}
+\makeatother
+
+% Change shape from [display] to [block] to keep chapter numbers and titles on the same line
+\titleformat{\chapter}%
+  [block]% shape
+  {\relax\ifthenelse{\NOT\boolean{@tufte@symmetric}}{\begin{fullwidth}}{}}% format applied to label+text
+  {\itshape\huge\thechapter}% label
+  {3em}% horizontal separation between label and title body
+  {\huge\rmfamily\itshape}% before the title body
+  [\ifthenelse{\NOT\boolean{@tufte@symmetric}}{\end{fullwidth}}{}]% after the title body
+
+
+\usepackage{etoolbox}
+% Jesse Rosenthal's code from https://groups.google.com/forum/#!topic/pandoc-discuss/wCF78X6SvwY
+% Avoid new pagraph/indent after lists, quotes, etc.
+\makeatletter
+\newcommand{\gobblepars}{%
+    \@ifnextchar\par%
+        {\expandafter\gobblepars\@gobble}%
+        {}}
+\newcommand{\eatpar}{\@ifnextchar\par{\@gobble}{}}
+\newcommand{\forcepar}{\par}
+\makeatother
+\AfterEndEnvironment{quote}{\expandafter\gobblepars}
+\AfterEndEnvironment{enumerate}{\expandafter\gobblepars}
+\AfterEndEnvironment{itemize}{\expandafter\gobblepars}
+\AfterEndEnvironment{description}{\expandafter\gobblepars}
+\AfterEndEnvironment{example}{\expandafter\gobblepars}
+\AfterEndEnvironment{argument}{\expandafter\gobblepars}
+\AfterEndEnvironment{problem}{\expandafter\gobblepars}
+\AfterEndEnvironment{info}{\expandafter\gobblepars}
+\AfterEndEnvironment{warning}{\expandafter\gobblepars}
+\AfterEndEnvironment{marginfigure}{\expandafter\gobblepars}
+\AfterEndEnvironment{longtable}{\expandafter\gobblepars} % not working, why?
+\makeatletter
+\AfterEndEnvironment{longtable}{\par\@afterindentfalse\@afterheading} % this seems to work instead
+\makeatother
+
+\renewcommand*\descriptionlabel[1]{\hspace\labelsep\normalfont\em #1.}
+
+% prevent extra space when \newthought follows \section
+% see: https://tex.stackexchange.com/questions/291746/tufte-latex-newthought-after-section
+\makeatletter
+\def\tuftebreak{%
+  \if@nobreak\else
+    \par
+    \ifdim\lastskip<\tufteskipamount
+      \removelastskip \penalty -100
+      \tufteskip
+    \fi
+  \fi
+}
+\makeatother
+
+% indent lists a bit
+\usepackage{enumitem}
+\setlist[1]{leftmargin=24pt}
+
+\def\labelitemii{$\circ$}
+
+\begin{document}
+
+
+
+
+{
+\setcounter{tocdepth}{0}
+\tableofcontents
+}
+
+\hypertarget{vanna-volga-pricing-and-hedging}{%
+\chapter{Vanna-Volga Pricing and Hedging}\label{vanna-volga-pricing-and-hedging}}
+
+{\emph{If you want to know the value of a security, use the price of another\\
+security that's similar to it. All the rest is strategy.}}\\
+E. Derman
+
+This chapter presents a practical method for pricing and hedging
+derivatives, taking into account an uncertain volatility. This method is
+very popular for Foreign Exchange derivatives, but beyond that it
+illustrates an important principle of asset pricing, which is to relate
+the price of a complex derivative to the known price of simpler, liquid
+instruments.
+
+\hypertarget{principle}{%
+\section{Principle}\label{principle}}
+
+The goal is to value an arbitrary option contract \(O\) by constructing a hedged
+portfolio that is delta-neutral and vega-neutral in the Black-Scholes world (that is, in a world with a flat smile). We assume that the option price can be modeled by the Black-Scholes PDE with a flat but stochastic volatility. The hedged portfolio \(\Pi\), having a long position in \(O\), includes 4 additional assets: a short position of \(\Delta_t\) units of the underlying asset, and another short position of \(x_i\) units of three benchmark vanilla options.
+
+\[
+\Pi(t) = O(t) - \Delta_t S_t - \sum_{i=1}^3 x_i C_i(t)
+\]
+We now show that when volatility is flat but stochastic, and the options are valued with the Black-Scholes formula, we can still have a dynamic perfect hedge, with a proper choice of the replicating portfolio \(x_i, i=1, \ldots, 3\) to cancel model risk.
+
+The change in portfolio value over a small time interval \(dt\) is:
+\[
+d\Pi(t) = dO(t) - \Delta_t dS_t -\sum_{i=1}^3 x_i dC_i(t)
+\]
+
+An extended version of Ito's lemma, were terms in \(dS_td_t, dtd\sigma_t\) and \((dt)^2\) vanish, is given below:
+
+\begin{align}
+  dO(t) &= \frac{\partial O}{\partial t} dt + \frac{\partial O}{\partial S} dS_t + \frac{\partial O}{\partial \sigma} d\sigma_t \\
+  &  + \frac{\partial^2 O}{\partial S^2} (dS_t)^2 + \frac{\partial^2 O}{\partial \sigma^2} (d\sigma_t)^2 + \frac{\partial^2 O}{\partial S \partial \sigma} dS_t d\sigma_t
+  \end{align}
+
+The corresponding change in portfolio \(\Pi\) is
+
+\begin{align}
+  d\Pi & = \left[ \frac{\partial O}{\partial t} - \sum_i x_i \frac{\partial C_i}{\partial t}  \right] dt  \\
+  & + \left[ \frac{\partial O}{\partial S} - \Delta_t - \sum_i x_i \frac{\partial C_i}{\partial S}  \right] dS_t \\
+  & + \left[ \frac{\partial O}{\partial \sigma} - \sum_i x_i \frac{\partial C_i}{\partial \sigma}  \right] d\sigma_t \\
+  & + \frac{1}{2} \left[ \frac{\partial^2 O}{\partial S^2} - \sum_i x_i \frac{\partial^2 C_i}{\partial S^2}  \right] (dS_t)^2 \\
+  & + \frac{1}{2} \left[ \frac{\partial^2 O}{\partial \sigma^2} - \sum_i x_i \frac{\partial^2 C_i}{\partial \sigma^2}  \right] (d\sigma_t)^2  \\
+  & + \left[ \frac{\partial^2 O}{\partial S \partial \sigma} - \sum_i x_i \frac{\partial^2 C_i}{\partial S \partial \sigma}  \right] dS_t d\sigma_t
+ \end{align}
+
+We calculate \((dS_t)^2\), retaining the first order terms:
+
+\begin{align}
+(dS_t)^2 &= (rS_tdt + \sigma S_tdW_t) (rS_tdt + \sigma S_tdW_t) \\
+&= \sigma^2S_t^2(dW)^2 \\
+&= \sigma_t^2 S_t^2 dt
+\end{align}
+
+We also choose \(\Delta_t\) and \(x_i\) to zero out the terms
+\(dS_t, d\sigma_t, (d\sigma_t)^2\) and \(dS_t d\sigma_t\). We are left with:
+
+\[
+d\Pi = \left[\left( \frac{\partial O}{\partial t} - \sum_{i=1}^3 x_i \frac{\partial C_i}{\partial t} \right) + \frac{1}{2} \sigma^2_t S^2_t \left(\frac{\partial^2 O}{\partial S^2_t} - 3\sum_{i=1}^3 x_i \frac{\partial^2 C_i}{\partial S_i^2} \right) \right] dt 
+\]
+
+The hedged portfolio is thus riskless, and must earn the riskless rate:
+
+\begin{equation}
+  d\Pi =  r \left[ O(t) - -\Delta_t S_t - \sum_i x_i C_i(t) \right] dt
+\label{eq:vv-1}
+\end{equation}
+
+In summary, we can still have a locally perfect hedge when volatility is
+stochastic, as long as the prices \(O(t)\) and \(C_i(t)\) follow the
+Black-Scholes equation.
+
+\hypertarget{vanna-volga-option-pricing}{%
+\section{Vanna-Volga option pricing}\label{vanna-volga-option-pricing}}
+
+Up to now, we have assumed that option \(O\) as well as \(C_i\) were all priced according to the Black-Scholes model. In reality, the benchmark options have a quoted market price \(C_i^M(t)\) which is different from the flat volatility Black-Scholes price \(C_i^{BS}(t)\). We need to determine the price \(O^M(t)\) which is consistent with the market prices of the benchmark options. An approximate argument is presented below; see @Shkolnikov
+for a rigorous treatment.
+
+Discretize equation~\eqref{eq:vv-1} at time \(t=T-\delta t\), where \(T\) is the
+option expiry, noting that, at expiry, the market prices and Black-Scholes prices of the options are identical. We get:
+
+\begin{align}
+O(T) - O(t) - \Delta_t (S_T - S_t) - \sum_i x_i \left[C_i(T)-C_i^{BS}(t) \right] = \\
+r \left[O(t) - \sum_i x_i C^{BS}(t) - \Delta_t S_t \right] \delta t
+\label{eq:vv-2}
+\end{align}
+
+By setting
+\[
+O(t) = O^{BS}(t) + \sum_i x_i \left[ C^M_i(t,K_i) - C^{BS}_i(t,K_i) \right]
+\label{eq:vv-3}
+\]
+and substituting in \eqref{eq:vv-2}, we get
+\begin{align}
+O(T) &= O(t) + \Delta_t (S_T - S_0) \\
+&+ \sum_i x_i \left[C_i(T) - C^M_i(t) \right] \\
+&+ r \left(O(t) - \sum_i x_i C^M_i(t) - \Delta S_t \right) \delta t
+\end{align}
+
+In summary, if we have a wealth \(O(t)\) defined by~\eqref{eq:vv-3} at
+time \(T-\delta t\), then we can replicate the payoff \(O(T)\) at expiry,
+with a hedge at market price. The argument made on the interval
+\([T-\delta t, T]\) can be applied by backward recursion for each time
+interval until \(t=0\).
+
+We have both a hedging strategy and a process for adjusting the price of
+any derivative to account for the smile. let's now consider some
+implementation details.
+
+\hypertarget{implementation}{%
+\section{Implementation}\label{implementation}}
+
+The weights \(x_i\) are obtained by solving the system of linear
+equations:
+
+\begin{align}
+ \frac{\partial O}{\partial \sigma} &= \sum_i x_i \frac{\partial C_i}{\partial \sigma} \\
+\frac{\partial^2 O}{\partial \sigma^2} &= \sum_i x_i \frac{\partial^2 C_i}{\partial \sigma^2} \\
+\frac{\partial^2 O}{\partial S \partial \sigma} &= \sum_i x_i \frac{\partial^2 C_i}{\partial S \partial \sigma}
+\end{align}
+
+or,
+\begin{equation}
+b = Ax
+\label{eq:A-matrix}
+\end{equation}
+
+Since the result of the previous section holds for any derivative that
+verifies the Black-Scholes equation, we can choose the benchmark
+securities \(C_i\) as we see fit.
+
+To simplify notation, we denote \(C(K), P(K)\) the call
+and put of strike \(K\), maturity \(T\).
+A popular set of benchmark securities, commonly used in the FX market, is
+in fact a set of benchmark portfolios:
+
+\begin{itemize}
+\item
+  An at-the-money straddle: \[C_1 = C(S) + P(S)\]
+\item
+  A ``risk reversal'', traditionally defined as
+  \[C_2 = P(K_1) - C(K_2)\] with \(K_1\) and \(K_2\) chosen so that the
+  options have a Delta of .25 in absolute value.
+\item
+  A ``butterfly'', defined as
+  \[C_3 = \beta ( P(K_1) + C(K_2) ) -(P(S)+C(S))\] with \(\beta\)
+  determined to set the Vega of the butterfly to 0.
+\end{itemize}
+
+This system is popular because the benchmark securities are very liquid,
+and because the resulting \(A\) matrix of \eqref{eq:A-matrix} is almost
+diagonal, which allows an intuitive interpretation of the coefficients
+\(x_i\).
+
+To summarize, the calculation steps for pricing an option, taking the
+smile cost into account, are as follows:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  compute the risk indicators for the option \(O\) to be priced:
+  \[b =  \begin{pmatrix}
+            \frac{\partial O}{\partial \sigma} \\
+            \frac{\partial^2 O}{\partial \sigma^2} \\
+            \frac{\partial^2 O}{\partial \sigma \partial S}
+          \end{pmatrix}\]
+\item
+  compute the A matrix \[A =
+        \begin{pmatrix}
+            \frac{\partial C_1}{\partial \sigma} & \ldots & \frac{\partial C_3}{\partial \sigma}\\
+            \frac{\partial^2 C_1}{\partial \sigma^2} & \ldots & \frac{\partial^2 C_3}{\partial \sigma^2}  \\
+            \frac{\partial^2 C_1}{\partial \sigma \partial S}
+   & \ldots & \frac{\partial^2 C_3}{\partial \sigma \partial S}
+  \end{pmatrix}\]
+\item
+  solve for \(x\): \[b = Ax\]
+\item
+  the corrected price for \(O\) is:
+  \[O^M(t,K) = O^{BS}(t,K) + \sum_{i=2}^3 x_i \left( C_i^M(t) - C_i^{BS}(t) \right)
+          \label{eq:vv-5}\]
+  where \(C^M_i(t)\) is the market price and
+  \(C^{BS}_i(t)\) the Black-Scholes price (i.e.~with flat volatility).
+\end{enumerate}
+
+The term in \(x_1\) is omitted in \eqref{eq:vv-5} since, by definition,
+the Black-Scholes price and market price of an ATM straddle are
+identical.
+
+Neglecting the off diagonal terms in \(A\), a simplified procedure is to
+estimate \(x_i\) by:
+\begin{align}
+  x_2 &=& \frac{\frac{\partial^2 O}{\partial \sigma^2}}{\frac{\partial^2 C_2}{\partial \sigma^2}} \\
+  x_3 &=&  \frac{\frac{\partial^2 O}{\partial \sigma \partial S}}{\frac{\partial^2 C_3}{\partial \sigma \partial S}}
+\end{align}
+
+\hypertarget{volatility-interpolation}{%
+\subsection{Volatility Interpolation}\label{volatility-interpolation}}
+
+The simplest use of this method is volatility interpolation. Given the ATM
+volatility and at two other strikes, we want to determine the volatility
+at an arbitrary strike \(K\).
+
+The process is illustrated below. The volatility of the three benchmark
+instruments is provided in
+Table~\ref{tab:vv-10} for European options with maturity \(T=1\) year.
+Interest rate is set to 0 for simplicity.
+
+\label{tab:vv-10}Volatility of benchmark instruments
+
+Strike
+
+Vol
+
+80
+
+0.320
+
+100
+
+0.300
+
+120
+
+0.315
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  T }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{  Spot }\OtherTok{\textless{}{-}} \DecValTok{100}
+\NormalTok{  r }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{  b }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{  eps }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{001}
+\NormalTok{  sigma }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{3}
+
+  \CommentTok{\# Benchmark data: (strike, volatility)}
+\NormalTok{  VolData }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{80}\NormalTok{, .}\DecValTok{32}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{100}\NormalTok{, .}\DecValTok{30}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{120}\NormalTok{, .}\DecValTok{315}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Define an array of pricing functions for the three benchmark
+instruments:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(}\AttributeTok{vol =}\NormalTok{ sigma, }\AttributeTok{spot =}\NormalTok{ Spot) }\FunctionTok{GBSOption}\NormalTok{(}\AttributeTok{TypeFlag =} \StringTok{"c"}\NormalTok{,}
+    \AttributeTok{S =}\NormalTok{ spot, }\AttributeTok{X =}\NormalTok{ VolData[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{], }\AttributeTok{Time =}\NormalTok{ T, }\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{b =}\NormalTok{ b, }\AttributeTok{sigma =}\NormalTok{ vol)}\SpecialCharTok{@}\NormalTok{price,}
+    \ControlFlowTok{function}\NormalTok{(}\AttributeTok{vol =}\NormalTok{ sigma, }\AttributeTok{spot =}\NormalTok{ Spot) }\FunctionTok{GBSOption}\NormalTok{(}\AttributeTok{TypeFlag =} \StringTok{"c"}\NormalTok{,}
+        \AttributeTok{S =}\NormalTok{ spot, }\AttributeTok{X =}\NormalTok{ VolData[[}\DecValTok{2}\NormalTok{]][}\DecValTok{1}\NormalTok{], }\AttributeTok{Time =}\NormalTok{ T, }\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{b =}\NormalTok{ b,}
+        \AttributeTok{sigma =}\NormalTok{ vol)}\SpecialCharTok{@}\NormalTok{price, }\ControlFlowTok{function}\NormalTok{(}\AttributeTok{vol =}\NormalTok{ sigma, }\AttributeTok{spot =}\NormalTok{ Spot) }\FunctionTok{GBSOption}\NormalTok{(}\AttributeTok{TypeFlag =} \StringTok{"c"}\NormalTok{,}
+        \AttributeTok{S =}\NormalTok{ spot, }\AttributeTok{X =}\NormalTok{ VolData[[}\DecValTok{3}\NormalTok{]][}\DecValTok{1}\NormalTok{], }\AttributeTok{Time =}\NormalTok{ T, }\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{b =}\NormalTok{ b,}
+        \AttributeTok{sigma =}\NormalTok{ vol)}\SpecialCharTok{@}\NormalTok{price)}
+\end{Highlighting}
+\end{Shaded}
+
+Next, define utility functions to compute the risk indicators, all by
+finite difference:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  Vega }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(f, vol, }\AttributeTok{spot=}\NormalTok{Spot) (}\FunctionTok{f}\NormalTok{(vol}\SpecialCharTok{+}\NormalTok{eps, spot)}\SpecialCharTok{{-}}\FunctionTok{f}\NormalTok{(vol}\SpecialCharTok{{-}}\NormalTok{eps, spot))}\SpecialCharTok{/}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{eps)}
+
+\NormalTok{  Vanna }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(f, vol, }\AttributeTok{spot=}\NormalTok{Spot) \{}
+\NormalTok{    (}\FunctionTok{Vega}\NormalTok{(f, vol, spot}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{{-}}\FunctionTok{Vega}\NormalTok{(f, vol, spot}\DecValTok{{-}1}\NormalTok{))}\SpecialCharTok{/}\DecValTok{2}
+\NormalTok{  \}}
+
+\NormalTok{  Volga }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(f, vol) \{}
+\NormalTok{      (}\FunctionTok{Vega}\NormalTok{(f,vol}\SpecialCharTok{+}\NormalTok{eps)}\SpecialCharTok{{-}}\FunctionTok{Vega}\NormalTok{(f,vol}\SpecialCharTok{{-}}\NormalTok{eps))}\SpecialCharTok{/}\NormalTok{(eps)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, the following function computes the Vanna-Volga adjustment to
+the Black-Scholes price, and the corresponding implied volatility:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  VVVol }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(X) \{}
+
+\NormalTok{  O }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{vol=}\NormalTok{sigma, }\AttributeTok{spot=}\NormalTok{Spot) }\FunctionTok{GBSOption}\NormalTok{(}\AttributeTok{TypeFlag=}\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{, }\AttributeTok{S=}\NormalTok{spot,}
+         \AttributeTok{X=}\NormalTok{X, }\AttributeTok{Time=}\NormalTok{T, }\AttributeTok{r=}\NormalTok{r, }\AttributeTok{b=}\NormalTok{b, }\AttributeTok{sigma=}\NormalTok{vol)}\SpecialCharTok{@}\NormalTok{price}
+\NormalTok{  TV.BS }\OtherTok{\textless{}{-}} \FunctionTok{O}\NormalTok{()}
+
+  \CommentTok{\# risk indicators for benchmark instruments}
+\NormalTok{  B.vega }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(i) }\FunctionTok{Vega}\NormalTok{(C[[i]], sigma))}
+\NormalTok{  B.vanna }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(i) }\FunctionTok{Vanna}\NormalTok{(C[[i]], sigma))}
+\NormalTok{  B.volga }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(i) }\FunctionTok{Volga}\NormalTok{(C[[i]], sigma))}
+
+  \CommentTok{\# risk indicators for new option}
+\NormalTok{  O.vega }\OtherTok{\textless{}{-}} \FunctionTok{Vega}\NormalTok{(O, sigma)}
+\NormalTok{  O.vanna }\OtherTok{\textless{}{-}} \FunctionTok{Vanna}\NormalTok{(O, sigma)}
+\NormalTok{  O.volga }\OtherTok{\textless{}{-}} \FunctionTok{Volga}\NormalTok{(O, sigma)}
+
+  \CommentTok{\# Benchmark costs}
+\NormalTok{  B.cost }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(i) C[[i]](VolData[[i]][}\DecValTok{2}\NormalTok{]) }\SpecialCharTok{{-}}\NormalTok{ C[[i]](sigma))}
+
+  \CommentTok{\# calculation of price adjustment}
+\NormalTok{  A }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(B.vega, B.vanna, B.volga),  }\AttributeTok{nrow=}\DecValTok{3}\NormalTok{))}
+\NormalTok{  x }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(O.vega, O.vanna, O.volga), }\AttributeTok{nrow=}\DecValTok{3}\NormalTok{)}
+\NormalTok{  w }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(A, x)}
+\NormalTok{  CF }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(w) }\SpecialCharTok{\%*\%} \FunctionTok{matrix}\NormalTok{(B.cost, }\AttributeTok{nrow=}\DecValTok{3}\NormalTok{)}
+
+  \CommentTok{\# implied volatility}
+\NormalTok{  v }\OtherTok{\textless{}{-}} \FunctionTok{GBSVolatility}\NormalTok{(TV.BS}\SpecialCharTok{+}\NormalTok{CF, }\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{, Spot, X, T, r, b, }\DecValTok{1}\NormalTok{.e}\DecValTok{{-}5}\NormalTok{)}
+
+\NormalTok{  v\}}
+\end{Highlighting}
+\end{Shaded}
+
+We finally use the vanna-volga interpolating function to construct the
+interpolated smile curve.
+
+The result is shown in Figure~\ref{fig:vv-111}.
+
+\begin{marginfigure}
+\includegraphics{307-BS-VannaVolga_files/figure-latex/vv-111-1} \caption[Interpolated volatility curve]{Interpolated volatility curve. The three red dots represent the benchmark options.}\label{fig:vv-111}
+\end{marginfigure}
+
+\hypertarget{pricing-a-binary-option}{%
+\subsection{Pricing a Binary Option}\label{pricing-a-binary-option}}
+
+Consider a one-year binary call, struck at the money. Assume that the
+smile is quadratic. Again, we assume a null interest rate for
+simplicity.
+
+This time, we use the traditional benchmark instruments of the FX
+market: straddle, risk-reversal and butterfly, and compute the price of
+the binary option, adjusted for the smile effect.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  T }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{  Spot }\OtherTok{\textless{}{-}} \DecValTok{100}
+\NormalTok{  r }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{  d }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{  b }\OtherTok{\textless{}{-}}\NormalTok{ r}\SpecialCharTok{{-}}\NormalTok{d}
+\NormalTok{  sigma }\OtherTok{\textless{}{-}} \DecValTok{30}\SpecialCharTok{/}\DecValTok{100}
+\NormalTok{  X }\OtherTok{\textless{}{-}} \FloatTok{110.50}
+
+  \CommentTok{\# smile function}
+\NormalTok{  smile }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(X) (}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{0}\SpecialCharTok{/}\DecValTok{20}\NormalTok{)}\SpecialCharTok{*}\NormalTok{(X}\SpecialCharTok{{-}}\NormalTok{Spot) }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{/}\DecValTok{300}\NormalTok{)}\SpecialCharTok{*}\NormalTok{(X}\SpecialCharTok{{-}}\NormalTok{Spot)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+The strikes corresponding to a \(25\Delta\) call and put are computed by
+inverting the formulae for the Delta of European options. Recall that
+for a call, the Delta is given by:
+
+\[\Delta = e^{-dT} N(d_1)\]
+
+The strike corresponding to a \(25\Delta\) call is therefore:
+
+\[K_{25\Delta} = S e^{- \left( \sigma \sqrt{T} N^{-1}(e^{dT}.25) -(r-d+\frac{\sigma^2}{2})T \right)}\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \CommentTok{\# strikes at +/{-} 25 deltas}
+\NormalTok{  alpha }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(.}\DecValTok{25}\SpecialCharTok{*}\FunctionTok{exp}\NormalTok{(d}\SpecialCharTok{*}\NormalTok{T))}
+\NormalTok{  Kp }\OtherTok{\textless{}{-}}\NormalTok{ Spot}\SpecialCharTok{*}\FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{alpha }\SpecialCharTok{*}\NormalTok{ sigma }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(T)}\SpecialCharTok{+}\NormalTok{(r}\SpecialCharTok{{-}}\NormalTok{d}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{sigma}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{T)}
+\NormalTok{  Kc }\OtherTok{\textless{}{-}}\NormalTok{ Spot}\SpecialCharTok{*}\FunctionTok{exp}\NormalTok{(alpha }\SpecialCharTok{*}\NormalTok{ sigma }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(T)}\SpecialCharTok{+}\NormalTok{(r}\SpecialCharTok{{-}}\NormalTok{d}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{sigma}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+Define a wrapper function to facilitate calculations on the binary
+option:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  O }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{vol=}\NormalTok{sigma, }\AttributeTok{spot=}\NormalTok{Spot) }\FunctionTok{CashOrNothingOption}\NormalTok{(}\AttributeTok{TypeFlag=}\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{, }\AttributeTok{S=}\NormalTok{spot,}
+       \AttributeTok{X=}\NormalTok{X, }\AttributeTok{K=}\DecValTok{100}\NormalTok{, }\AttributeTok{Time=}\NormalTok{T, }\AttributeTok{r=}\NormalTok{r, }\AttributeTok{b=}\NormalTok{b, }\AttributeTok{sigma=}\NormalTok{vol)}\SpecialCharTok{@}\NormalTok{price}
+\end{Highlighting}
+\end{Shaded}
+
+The Black-Scholes value, using ATM volatility is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \CommentTok{\# Theoretical BS value}
+\NormalTok{  TV.BS }\OtherTok{\textless{}{-}} \FunctionTok{O}\NormalTok{()}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}BS value:\textquotesingle{}}\NormalTok{, }\FunctionTok{round}\NormalTok{(TV.BS,}\DecValTok{2}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "BS value: 31.46"
+\end{verbatim}
+
+For comparison, we can approximate the binary option with a call spread,
+giving a value of:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \CommentTok{\# Replication value with call spread}
+\NormalTok{  N }\OtherTok{\textless{}{-}} \DecValTok{1000}
+\NormalTok{  TV.CS }\OtherTok{\textless{}{-}}\NormalTok{ N}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{GBSOption}\NormalTok{(}\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{, Spot, X}\DecValTok{{-}100}\SpecialCharTok{/}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{N), T, r, b, sigma}\SpecialCharTok{+}\FunctionTok{smile}\NormalTok{(X}\DecValTok{{-}100}\SpecialCharTok{/}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{N)))}\SpecialCharTok{@}\NormalTok{price }\SpecialCharTok{{-}}
+              \FunctionTok{GBSOption}\NormalTok{(}\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{, Spot, X}\SpecialCharTok{+}\DecValTok{100}\SpecialCharTok{/}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{N), T, r, b, sigma}\SpecialCharTok{+}\FunctionTok{smile}\NormalTok{(X}\SpecialCharTok{+}\DecValTok{100}\SpecialCharTok{/}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{N)))}\SpecialCharTok{@}\NormalTok{price)}
+
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}Value, approximated by a call spread:\textquotesingle{}}\NormalTok{, }\FunctionTok{round}\NormalTok{(TV.BS,}\DecValTok{2}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Value, approximated by a call spread: 31.46"
+\end{verbatim}
+
+We next define the benchmark instruments:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \CommentTok{\# Put}
+\NormalTok{  P }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{vol=}\NormalTok{sigma, }\AttributeTok{spot=}\NormalTok{Spot) }\FunctionTok{GBSOption}\NormalTok{(}\AttributeTok{TypeFlag=}\StringTok{\textquotesingle{}p\textquotesingle{}}\NormalTok{, }\AttributeTok{S=}\NormalTok{spot, }\AttributeTok{X=}\NormalTok{Kp,}
+                             \AttributeTok{Time=}\NormalTok{T, }\AttributeTok{r=}\NormalTok{r, }\AttributeTok{b=}\NormalTok{b, }\AttributeTok{sigma=}\NormalTok{vol)}\SpecialCharTok{@}\NormalTok{price}
+
+  \CommentTok{\# Call}
+\NormalTok{  C }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{vol=}\NormalTok{sigma, }\AttributeTok{spot=}\NormalTok{Spot) }\FunctionTok{GBSOption}\NormalTok{(}\AttributeTok{TypeFlag=}\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{, }\AttributeTok{S=}\NormalTok{spot, }\AttributeTok{X=}\NormalTok{Kc,}
+                             \AttributeTok{Time=}\NormalTok{T, }\AttributeTok{r=}\NormalTok{r, }\AttributeTok{b=}\NormalTok{b, }\AttributeTok{sigma=}\NormalTok{vol)}\SpecialCharTok{@}\NormalTok{price}
+
+  \CommentTok{\# Straddle}
+\NormalTok{  S }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{vol=}\NormalTok{sigma, }\AttributeTok{spot=}\NormalTok{Spot) \{}
+    \FunctionTok{GBSOption}\NormalTok{(}\AttributeTok{TypeFlag=}\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{, }\AttributeTok{S=}\NormalTok{spot, }\AttributeTok{X=}\NormalTok{Spot, }\AttributeTok{Time=}\NormalTok{T, }\AttributeTok{r=}\NormalTok{r, }\AttributeTok{b=}\NormalTok{b, }\AttributeTok{sigma=}\NormalTok{vol)}\SpecialCharTok{@}\NormalTok{price }\SpecialCharTok{+}
+    \FunctionTok{GBSOption}\NormalTok{(}\AttributeTok{TypeFlag=}\StringTok{\textquotesingle{}p\textquotesingle{}}\NormalTok{, }\AttributeTok{S=}\NormalTok{spot, }\AttributeTok{X=}\NormalTok{Spot, }\AttributeTok{Time=}\NormalTok{T, }\AttributeTok{r=}\NormalTok{r, }\AttributeTok{b=}\NormalTok{b, }\AttributeTok{sigma=}\NormalTok{vol)}\SpecialCharTok{@}\NormalTok{price}
+\NormalTok{  \}}
+
+  \CommentTok{\# Risk Reversal}
+\NormalTok{  RR }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(vol, }\AttributeTok{spot=}\NormalTok{Spot) \{}
+    \FunctionTok{P}\NormalTok{(vol, spot)}\SpecialCharTok{{-}}\FunctionTok{C}\NormalTok{(vol, spot)}
+\NormalTok{  \}}
+
+  \CommentTok{\# Butterfly}
+\NormalTok{  BF }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(vol, }\AttributeTok{spot=}\NormalTok{Spot, }\AttributeTok{beta=}\DecValTok{1}\NormalTok{) \{}
+\NormalTok{    beta}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{P}\NormalTok{(vol, spot)}\SpecialCharTok{+}\FunctionTok{C}\NormalTok{(vol, spot))}\SpecialCharTok{{-}}\FunctionTok{S}\NormalTok{(vol,spot)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+The butterfly must be vega-neutral. This is obtained by solving for
+\(\beta\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  BF.V }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(vol, beta) \{}
+\NormalTok{    (}\FunctionTok{BF}\NormalTok{(vol}\SpecialCharTok{+}\NormalTok{eps, }\AttributeTok{beta=}\NormalTok{beta)}\SpecialCharTok{{-}}\FunctionTok{BF}\NormalTok{(vol}\SpecialCharTok{{-}}\NormalTok{eps, }\AttributeTok{beta=}\NormalTok{beta))}\SpecialCharTok{/}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{eps)}
+\NormalTok{  \}}
+
+\NormalTok{  beta }\OtherTok{\textless{}{-}} \FunctionTok{uniroot}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(b) }\FunctionTok{BF.V}\NormalTok{(sigma, b), }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{1.5}\NormalTok{))}\SpecialCharTok{$}\NormalTok{root}
+\end{Highlighting}
+\end{Shaded}
+
+Next, we compute the risk indicators for the binary option:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  O.vega }\OtherTok{\textless{}{-}} \FunctionTok{Vega}\NormalTok{(O, sigma)}
+\NormalTok{  O.vanna }\OtherTok{\textless{}{-}} \FunctionTok{Vanna}\NormalTok{(O, sigma)}
+\NormalTok{  O.volga }\OtherTok{\textless{}{-}} \FunctionTok{Volga}\NormalTok{(O, sigma)}
+\end{Highlighting}
+\end{Shaded}
+
+and for the benchmark instruments:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  S.vega }\OtherTok{\textless{}{-}} \FunctionTok{Vega}\NormalTok{(S, sigma)}
+\NormalTok{  S.vanna }\OtherTok{\textless{}{-}} \FunctionTok{Vanna}\NormalTok{(S, sigma)}
+\NormalTok{  S.volga }\OtherTok{\textless{}{-}} \FunctionTok{Volga}\NormalTok{(S, sigma)}
+
+\NormalTok{  RR.vega }\OtherTok{\textless{}{-}} \FunctionTok{Vega}\NormalTok{(RR, sigma)}
+\NormalTok{  RR.vanna }\OtherTok{\textless{}{-}} \FunctionTok{Vanna}\NormalTok{(RR, sigma)}
+\NormalTok{  RR.volga }\OtherTok{\textless{}{-}} \FunctionTok{Volga}\NormalTok{(RR, sigma)}
+
+\NormalTok{  BF.vega }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{  BF.vanna }\OtherTok{\textless{}{-}} \FunctionTok{Vanna}\NormalTok{(BF, sigma)}
+\NormalTok{  BF.volga }\OtherTok{\textless{}{-}} \FunctionTok{Volga}\NormalTok{(BF, sigma)}
+\end{Highlighting}
+\end{Shaded}
+
+By definition the smile cost of the straddle is zero, since it is priced
+with ATM volatility. For the other two benchmark instruments, the smile
+cost is the difference between the price with the smile effect and the
+price at the ATM volatility:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \CommentTok{\# RR and BF cost}
+\NormalTok{  RR.cost }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{P}\NormalTok{(sigma}\SpecialCharTok{+}\FunctionTok{smile}\NormalTok{(Kp))}\SpecialCharTok{{-}}\FunctionTok{C}\NormalTok{(sigma}\SpecialCharTok{+}\FunctionTok{smile}\NormalTok{(Kc)))}\SpecialCharTok{{-}}\NormalTok{(}\FunctionTok{P}\NormalTok{(sigma)}\SpecialCharTok{{-}}\FunctionTok{C}\NormalTok{(sigma))}
+\NormalTok{  BF.cost }\OtherTok{\textless{}{-}}\NormalTok{ beta}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{P}\NormalTok{(sigma}\SpecialCharTok{+}\FunctionTok{smile}\NormalTok{(Kp))}\SpecialCharTok{+}\FunctionTok{C}\NormalTok{(sigma}\SpecialCharTok{+}\FunctionTok{smile}\NormalTok{(Kc)))}\SpecialCharTok{{-}}\NormalTok{ beta}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{P}\NormalTok{(sigma)}\SpecialCharTok{+}\FunctionTok{C}\NormalTok{(sigma))}
+\end{Highlighting}
+\end{Shaded}
+
+We can now compute the price correction for the binary option. First the
+approximate method, ignoring the off-diagonal terms in matrix \(A\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \CommentTok{\# approximate method}
+\NormalTok{  CA }\OtherTok{\textless{}{-}}\NormalTok{ RR.cost }\SpecialCharTok{*}\NormalTok{ (O.vanna}\SpecialCharTok{/}\NormalTok{RR.vanna) }\SpecialCharTok{+}\NormalTok{ BF.cost}\SpecialCharTok{*}\NormalTok{(O.volga}\SpecialCharTok{/}\NormalTok{BF.volga)}
+\end{Highlighting}
+\end{Shaded}
+
+then the more accurate method, solving the \(3\times3\) linear system:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \CommentTok{\# full calculation}
+\NormalTok{  A }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(S.vega, S.vanna, S.volga,}
+\NormalTok{                RR.vega, RR.vanna, RR.volga,}
+\NormalTok{                BF.vega, BF.vanna, BF.volga), }\AttributeTok{nrow=}\DecValTok{3}\NormalTok{)}
+
+\NormalTok{  x }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(O.vega, O.vanna, O.volga), }\AttributeTok{nrow=}\DecValTok{3}\NormalTok{)}
+\NormalTok{  w }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(A, x)}
+\NormalTok{  CF }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(w) }\SpecialCharTok{\%*\%} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, RR.cost, BF.cost), }\AttributeTok{nrow=}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+In summary, we get:
+
+\begin{itemize}
+\item
+  Black-Scholes price: \(31.46\)
+\item
+  With approximate Vanna-Volga correction:
+  \(31.46 + (-4.95) = 26.51\)
+\item
+  With acurate Vanna-Volga correction:
+  \(31.46 + (-3.5) = 27.96\)
+\item
+  the approximation by a call spread is: \(28.79\)
+\end{itemize}
+
+It is worth noting that a naive calculation, where one would plug the
+ATM volatility plus smile into the binary option pricing model would
+yield a very inaccurate result:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  P.smile }\OtherTok{\textless{}{-}} \FunctionTok{O}\NormalTok{(}\AttributeTok{vol=}\NormalTok{sigma}\SpecialCharTok{+}\FunctionTok{smile}\NormalTok{(X))}
+\end{Highlighting}
+\end{Shaded}
+
+which yields a value of \(31.54\). Figure~\ref{fig:vv-6}
+compares the values of binary options for a range of strikes, computed
+with four methods. :
+
+\begin{figure}
+\includegraphics{307-BS-VannaVolga_files/figure-latex/vv-6-1} \caption[Price of a digital call in the Black-Scholes framework]{Price of a digital call in the Black-Scholes framework: (1) vanilla Black-Scholes (2) Diagonal VV adjustment (3) Full VV adjustment (4)  Approximation by a call spread}\label{fig:vv-6}
+\end{figure}
+
+
+\printindex
+
+\end{document}

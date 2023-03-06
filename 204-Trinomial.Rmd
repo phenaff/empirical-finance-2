@@ -16,17 +16,26 @@ state.
 ## The Trinomial Tree
 
 The stock price at time $t$ is $S_t$. From $t$ to $t+\Delta t$, the
-stock may move up to $S_u$ with probability $p_u$, down to $S_d$ with
-probability $p_d$, or move to a middle state $S_m$ with probability
+stock may move up to $S_u = u S_t$ with probability $p_u$, down to $S_d= d S_t$ with
+probability $p_d$, or move to a middle state $S_m = m S_t$ with probability
 $1-p_u-p_d$. The probabilities and future states must satisfy the
 following constraints:
 
 1.  The expected value of the stock at $t+\Delta t$ must be the forward
     price:
-    $$p_u S_u + p_d S_d + (1-p_u-p_d) S_m = F = S e^{(r-\delta)\Delta t}$$
+    $$\begin{align}
+    p_u S_u + p_d S_d + (1-p_u-p_d) S_m &= S e^{(r-\delta)\Delta t}\\
+    p_u + p_m + p_d &= 1
+    \end{align}
+    $$
 
 2.  Variance:
     $$p_u (S_u-F)^2 + p_d(S_d-F)^2 +(1-p_u-p_d)(S_m-F)^2 = S^2\sigma^2\Delta t$$
+3.  The paths must recombine. An "up" move followed by a "down" move must be equal to 2 consecutive "middle" moves:
+$$ud = m^2$$
+
+Alltogether, a trinomial approximation to the geometric Brownian motion imposes four constraints for six parameters, which leads to a variety of configurations.
+
 
 The first method for constructing trinomial trees is simply to combine
 two steps of any binomial tree.
@@ -52,13 +61,20 @@ aggregating two steps.
 
 
 Another geometry can be defined by setting the middle node to 
-$S$ (~\cite{Hull1997} p. 360):
+$S_t$ (~\cite{Hull1997} p. 360):
 
 \begin{eqnarray*}
-    S_m &=& S  \\
+    S_m &=& S_t  \\
     S_u &=& S_m e^{\sigma \sqrt{3 \Delta t}} \\
     S_d &=& S_m e^{-\sigma \sqrt{3 \Delta t}} \\
     p_u &=& -\sqrt{\frac{\Delta t}{12 \sigma^2}} \left(r-\frac{\sigma^2}{2} \right) + \frac{1}{6} \\
     p_d &=&  \sqrt{\frac{\Delta t}{12 \sigma^2}} \left(r-\frac{\sigma^2}{2} \right) + \frac{1}{6}
 \end{eqnarray*}
+
+A trinomial model with equal probabilities was proposed by [Tian93]. Additionally, the tree matches the third moment by enforcing the constraint:
+$$
+p_u u^3 + p_m m^3 + p_d d^3 = e^{3(r+\sigma^2) \delta t}
+$$
+
+
 

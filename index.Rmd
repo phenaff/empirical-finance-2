@@ -23,8 +23,9 @@ knitr::opts_chunk$set(
   cache = TRUE,
   dev.args = list(bg = "transparent"),
   tidy=TRUE,
-  tidy.opts=list(width.cutoff=50)
-)
+  tidy.opts=list(width.cutoff=50),
+  class.source="code_background")
+
 if (knitr:::is_latex_output()) {
   options(knitr.table.format = 'pandoc')
   knitr::opts_chunk$set(dpi = 300)
@@ -58,7 +59,7 @@ that didn't make it the first time around.
 So much has taken place since the 2011. Publishing open source
 material has become dramatically simpler with the development of the
 `r to_index("bookdown", "packages")` package and the possibility of generating an online version of the
-text.
+text, hosted on a variety of platforms. The source code of the book being now easily published, it was no longer necessary to print that same code in the text. The presentation of this second edition has therefore been modified: we continue to print in the text the code that implements the mathematical models, but skip all the utility code used for making the illustrative material. The entire source code for the book is available on GitHub.  
 
 Alas, there was also tragedy. In 2016 Diethelm Wurtz and his wife Barbara
 were involved in a fatal accident. Diethelm was the founder of the Rmetrics association,
