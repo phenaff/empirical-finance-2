@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="16 Elementary Fixed Income Calculations | Topics in Empirical Finance" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/img/frontCover.pdf" />
+<meta property="og:description" content="An open access textbook on empirical finance" />
+<meta name="github-repo" content="phenaff/empirical-finance-2" />
+
+<meta name="author" content="Patrick Hénaff" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="An open access textbook on empirical finance">
+
+<title>16 Elementary Fixed Income Calculations | Topics in Empirical Finance</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      extensions: ["color.js"]
+    }
+  });
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="toc.css" type="text/css" />
+<link rel="stylesheet" href="custom.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+<div style="display: none;">
+$$
+  \newcommand{\given}{\mid}
+  \renewcommand{\neg}{\mathbin{\sim}}
+  \renewcommand{\wedge}{\mathbin{\&}}
+  \newcommand{\p}{Pr}
+  \newcommand{\degr}{^{\circ}}
+  \newcommand{\E}{E}
+  \newcommand{\EU}{EU}
+  \newcommand{\u}{U}
+  \newcommand{\pr}{Pr}
+  \newcommand{\po}{Pr^*}
+  \definecolor{bookred}{RGB}{228,6,19}
+  \definecolor{bookblue}{RGB}{0,92,169}
+  \definecolor{bookpurple}{RGB}{114,49,94} 
+$$
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface-to-the-second-edition">Preface to the second edition</a></li>
+<li><a href="preface-to-the-first-edition.html#preface-to-the-first-edition">Preface to the first edition</a></li>
+<li class="part"><span><b>Computational Framework</b></span></li>
+<li><a href="introduction.html#introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li class="has-sub"><a href="ch:data-sources.html#ch:data-sources"><span class="toc-section-number">2</span> Data Sources</a>
+<ul>
+<li><a href="ch:data-sources.html#commodities-data"><span class="toc-section-number">2.1</span> Commodities Data</a></li>
+<li><a href="ch:data-sources.html#libor-rates"><span class="toc-section-number">2.2</span> Libor Rates</a></li>
+<li><a href="ch:data-sources.html#sovereign-yield-curves"><span class="toc-section-number">2.3</span> Sovereign Yield Curves</a></li>
+<li><a href="ch:data-sources.html#equities-data"><span class="toc-section-number">2.4</span> Equities Data</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#basic-components"><span class="toc-section-number">3</span> Basic Components</a>
+<ul>
+<li class="has-sub"><a href="basic-components.html#the-finstrument-class"><span class="toc-section-number">3.1</span> The <idx>fInstrument</idx> Class</a>
+<ul>
+<li><a href="basic-components.html#design-and-implementation"><span class="toc-section-number">3.1.1</span> Design and Implementation</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#the-dataprovider-class"><span class="toc-section-number">3.2</span> The <idx>DataProvider</idx> Class</a>
+<ul>
+<li><a href="basic-components.html#the-model-for-market-data"><span class="toc-section-number">3.2.1</span> The Model for Market Data</a></li>
+<li><a href="basic-components.html#the-search-algorithm"><span class="toc-section-number">3.2.2</span> The Search Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="sim-framework.html#sim-framework"><span class="toc-section-number">4</span> The Simulation Framework</a>
+<ul>
+<li><a href="sim-framework.html#scenario-simulator"><span class="toc-section-number">4.1</span> Scenario Simulator</a></li>
+<li class="has-sub"><a href="sim-framework.html#a-delta-hedging-experiment"><span class="toc-section-number">4.2</span> A Delta Hedging Experiment</a>
+<ul>
+<li><a href="sim-framework.html#design-considerations"><span class="toc-section-number">4.2.1</span> Design Considerations</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Discreet Models</b></span></li>
+<li class="has-sub"><a href="arb-free-pricing.html#arb-free-pricing"><span class="toc-section-number">5</span> Arbitrage-Free Pricing and Risk Neutral Valuation</a>
+<ul>
+<li class="has-sub"><a href="arb-free-pricing.html#arbitrage-free-pricing"><span class="toc-section-number">5.1</span> Arbitrage-free Pricing</a>
+<ul>
+<li><a href="arb-free-pricing.html#arrow-debreu-securities"><span class="toc-section-number">5.1.1</span> Arrow-Debreu Securities</a></li>
+<li><a href="arb-free-pricing.html#the-price-of-traded-securities"><span class="toc-section-number">5.1.2</span> The Price of Traded Securities</a></li>
+<li><a href="arb-free-pricing.html#complete-market"><span class="toc-section-number">5.1.3</span> Complete Market</a></li>
+<li><a href="arb-free-pricing.html#equivalent-probability-measures"><span class="toc-section-number">5.1.4</span> Equivalent Probability Measures</a></li>
+<li><a href="arb-free-pricing.html#the-impact-of-interest-rate"><span class="toc-section-number">5.1.5</span> The Impact of Interest Rate</a></li>
+<li><a href="arb-free-pricing.html#trading-strategy-and-dynamic-completeness"><span class="toc-section-number">5.1.6</span> Trading Strategy and Dynamic Completeness</a></li>
+<li><a href="arb-free-pricing.html#discounted-asset-prices-as-martingales"><span class="toc-section-number">5.1.7</span> Discounted Asset Prices as Martingales</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="binomial.html#binomial"><span class="toc-section-number">6</span> Risk-Neutral Pricing in a Binomial Framework</a>
+<ul>
+<li class="has-sub"><a href="binomial.html#introduction-1"><span class="toc-section-number">6.1</span> Introduction</a>
+<ul>
+<li><a href="binomial.html#subsec:binomial"><span class="toc-section-number">6.1.1</span> The Binomial Model for Stocks</a></li>
+</ul></li>
+<li><a href="binomial.html#pricing-with-arrow-debreu-securities"><span class="toc-section-number">6.2</span> Pricing With Arrow-Debreu Securities</a></li>
+<li><a href="binomial.html#multi-period-binomial-model"><span class="toc-section-number">6.3</span> Multi-Period Binomial Model</a></li>
+<li><a href="binomial.html#american-exercise"><span class="toc-section-number">6.4</span> American Exercise</a></li>
+<li class="has-sub"><a href="binomial.html#calibration-of-the-binomial-model"><span class="toc-section-number">6.5</span> Calibration of the Binomial Model</a>
+<ul>
+<li><a href="binomial.html#tree-geometry"><span class="toc-section-number">6.5.1</span> Tree Geometry</a></li>
+</ul></li>
+</ul></li>
+<li><a href="stability-of-the-binomial-model.html#stability-of-the-binomial-model"><span class="toc-section-number">7</span> Stability of the Binomial Model</a></li>
+<li class="has-sub"><a href="sec:trinomial.html#sec:trinomial"><span class="toc-section-number">8</span> Trinomial Models</a>
+<ul>
+<li><a href="sec:trinomial.html#the-trinomial-tree"><span class="toc-section-number">8.1</span> The Trinomial Tree</a></li>
+</ul></li>
+<li class="part"><span><b>Derivatives in the Black-Scholes Framework</b></span></li>
+<li class="has-sub"><a href="pricing-with-black-scholes.html#pricing-with-black-scholes"><span class="toc-section-number">9</span> Pricing with Black-Scholes</a>
+<ul>
+<li><a href="pricing-with-black-scholes.html#relationships-among-greeks"><span class="toc-section-number">9.1</span> Relationships Among Greeks</a></li>
+</ul></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#applicability-of-the-black-scholes-model"><span class="toc-section-number">10</span> Applicability of the Black-Scholes Model</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#self-financing-replicating-portfolio"><span class="toc-section-number">10.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging"><span class="toc-section-number">10.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#error-due-to-unknown-volatility"><span class="toc-section-number">10.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#second-order-hedging"><span class="toc-section-number">10.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#gamma-smoothing"><span class="toc-section-number">10.4.1</span> Gamma Smoothing</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#dynamic-delta-gamma-hedge"><span class="toc-section-number">10.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#price-and-greeks-in-the-black-scholes-model"><span class="toc-section-number">11</span> Price and Greeks in the Black-Scholes Model</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#solving-the-pricing-equation"><span class="toc-section-number">11.1</span> Solving the Pricing Equation</a></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#an-option-dashboard"><span class="toc-section-number">11.2</span> An Option Dashboard</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#vanilla-option"><span class="toc-section-number">11.2.1</span> Vanilla Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#binary-option"><span class="toc-section-number">11.2.2</span> Binary Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#barrier-option"><span class="toc-section-number">11.2.3</span> Barrier Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#asian-option"><span class="toc-section-number">11.2.4</span> Asian Option</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-hedging-with-the-black-scholes-model"><span class="toc-section-number">12</span> Dynamic Hedging with the Black-Scholes Model</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#self-financing-replicating-portfolio-1"><span class="toc-section-number">12.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging-1"><span class="toc-section-number">12.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#error-due-to-unknown-volatility-1"><span class="toc-section-number">12.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#second-order-hedging-1"><span class="toc-section-number">12.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#gamma-smoothing-1"><span class="toc-section-number">12.4.1</span> Gamma Smoothing</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-delta-gamma-hedge-1"><span class="toc-section-number">12.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#dynamic-hedging-in-the-black-scholes-framework"><span class="toc-section-number">13</span> Dynamic Hedging in the Black-Scholes Framework</a>
+<ul>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#self-financing-replicating-portfolio-2"><span class="toc-section-number">13.1</span> Self-Financing Replicating Portfolio</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#continuous-rebalancing"><span class="toc-section-number">13.1.1</span> Continuous rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#discreet-rebalancing"><span class="toc-section-number">13.1.2</span> Discreet rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#illustration"><span class="toc-section-number">13.1.3</span> Illustration</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#a-more-realistic-example"><span class="toc-section-number">13.1.4</span> A More Realistic Example</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-discrete-hedging-2"><span class="toc-section-number">13.2</span> Hedging Error due to Discrete Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test"><span class="toc-section-number">13.2.1</span> Empirical Test</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-transaction-cost"><span class="toc-section-number">13.3</span> Hedging Error due to Transaction Cost</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test-1"><span class="toc-section-number">13.3.1</span> Empirical Test</a></li>
+</ul></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-unknown-volatility"><span class="toc-section-number">13.4</span> Hedging Error due to Unknown Volatility</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#conclusion"><span class="toc-section-number">13.5</span> Conclusion</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#second-order-hedging-2"><span class="toc-section-number">13.6</span> Second-Order Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-implied-volatility.html#the-implied-volatility"><span class="toc-section-number">14</span> The implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#market-data"><span class="toc-section-number">14.1</span> Market Data</a></li>
+<li class="has-sub"><a href="the-implied-volatility.html#calculation-of-implied-volatility"><span class="toc-section-number">14.2</span> Calculation of implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#newtons-method"><span class="toc-section-number">14.2.1</span> Newton’s method</a></li>
+<li><a href="the-implied-volatility.html#implied-volatility-by-newtons-method"><span class="toc-section-number">14.2.2</span> Implied Volatility by Newton’s Method</a></li>
+<li><a href="the-implied-volatility.html#secant-method"><span class="toc-section-number">14.2.3</span> Secant Method</a></li>
+<li><a href="the-implied-volatility.html#jaeckels-method"><span class="toc-section-number">14.2.4</span> Jaeckel’s method</a></li>
+<li><a href="the-implied-volatility.html#normalized-call-price-as-a-function-of-sigma"><span class="toc-section-number">14.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></a></li>
+<li><a href="the-implied-volatility.html#transformed-objective-function"><span class="toc-section-number">14.2.6</span> Transformed objective function</a></li>
+<li><a href="the-implied-volatility.html#impact-of-dividends"><span class="toc-section-number">14.2.7</span> Impact of Dividends</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-pricing-and-hedging"><span class="toc-section-number">15</span> Vanna-Volga Pricing and Hedging</a>
+<ul>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#principle"><span class="toc-section-number">15.1</span> Principle</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging"><span class="toc-section-number">15.1.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#implementation"><span class="toc-section-number">15.2</span> Implementation</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging-1"><span class="toc-section-number">15.2.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#illustrations"><span class="toc-section-number">15.3</span> Illustrations</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#volatility-interpolation"><span class="toc-section-number">15.3.1</span> Volatility Interpolation</a></li>
+<li><a href="vanna-volga-pricing-and-hedging.html#pricing-a-binary-option"><span class="toc-section-number">15.3.2</span> Pricing a Binary Option</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Fixed Income</b></span></li>
+<li class="has-sub"><a href="fi:elementary.html#fi:elementary"><span class="toc-section-number">16</span> Elementary Fixed Income Calculations</a>
+<ul>
+<li><a href="fi:elementary.html#bond-pricing"><span class="toc-section-number">16.1</span> Bond Pricing</a></li>
+<li><a href="fi:elementary.html#the-price-yield-curves"><span class="toc-section-number">16.2</span> The Price-Yield Curves</a></li>
+<li class="has-sub"><a href="fi:elementary.html#basic-measures-of-interest-rate-risk"><span class="toc-section-number">16.3</span> Basic Measures of Interest Rate Risk</a>
+<ul>
+<li><a href="fi:elementary.html#variation"><span class="toc-section-number">16.3.1</span> Variation</a></li>
+<li><a href="fi:elementary.html#approximate-portfolio-yield"><span class="toc-section-number">16.3.2</span> Approximate Portfolio Yield</a></li>
+<li><a href="fi:elementary.html#sensitivity"><span class="toc-section-number">16.3.3</span> Sensitivity</a></li>
+<li><a href="fi:elementary.html#modified-duration-of-a-portfolio"><span class="toc-section-number">16.3.4</span> Modified Duration of a Portfolio</a></li>
+<li><a href="fi:elementary.html#duration"><span class="toc-section-number">16.3.5</span> Duration</a></li>
+<li><a href="fi:elementary.html#sec:duration-of-a-portfolio"><span class="toc-section-number">16.3.6</span> Duration of a Portfolio</a></li>
+</ul></li>
+<li><a href="fi:elementary.html#bond-clean-and-dirty-price"><span class="toc-section-number">16.4</span> Bond Clean and Dirty Price</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-term-structure-of-interest-rates.html#the-term-structure-of-interest-rates"><span class="toc-section-number">17</span> The Term Structure of Interest Rates</a>
+<ul>
+<li><a href="the-term-structure-of-interest-rates.html#term-structure-shapes"><span class="toc-section-number">17.1</span> Term Structure Shapes</a></li>
+<li><a href="the-term-structure-of-interest-rates.html#building-a-zero-coupon-bond-curve"><span class="toc-section-number">17.2</span> Building a Zero-Coupon Bond Curve</a></li>
+<li><a href="the-term-structure-of-interest-rates.html#functional-forms-for-the-zero-coupon-curve"><span class="toc-section-number">17.3</span> Functional forms for the zero-coupon curve</a></li>
+</ul></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#simple-interest-rate-derivatives"><span class="toc-section-number">18</span> Simple Interest Rate Derivatives</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#spot-and-forward-interest-rates"><span class="toc-section-number">18.1</span> Spot and Forward Interest Rates</a></li>
+<li><a href="simple-interest-rate-derivatives.html#forward-rate-agreement-fra"><span class="toc-section-number">18.2</span> Forward Rate Agreement (FRA)</a></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#t-bill-futures"><span class="toc-section-number">18.3</span> T-Bill Futures</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#arbitrage"><span class="toc-section-number">18.3.1</span> Arbitrage</a></li>
+<li><a href="simple-interest-rate-derivatives.html#quotes"><span class="toc-section-number">18.3.2</span> Quotes</a></li>
+</ul></li>
+<li><a href="simple-interest-rate-derivatives.html#euro-currency-futures"><span class="toc-section-number">18.4</span> Euro-Currency Futures</a></li>
+<li><a href="simple-interest-rate-derivatives.html#eurodollar-rate-versus-forward-rate"><span class="toc-section-number">18.5</span> Eurodollar Rate Versus Forward Rate</a></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#convexity-adjustment"><span class="toc-section-number">18.6</span> Convexity Adjustment</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#special-case-of-natural-time-lag"><span class="toc-section-number">18.6.1</span> Special Case of Natural Time Lag</a></li>
+<li><a href="simple-interest-rate-derivatives.html#convexity-adjustment-examples"><span class="toc-section-number">18.6.2</span> Convexity Adjustment Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="bond-futures.html#bond-futures"><span class="toc-section-number">19</span> Bond Futures</a>
+<ul>
+<li><a href="bond-futures.html#forward-price"><span class="toc-section-number">19.1</span> Forward Price</a></li>
+<li><a href="bond-futures.html#delivery-against-the-futures-contract"><span class="toc-section-number">19.2</span> Delivery against the Futures contract</a></li>
+<li><a href="bond-futures.html#the-conversion-factor"><span class="toc-section-number">19.3</span> The Conversion Factor</a></li>
+<li><a href="bond-futures.html#determination-of-the-cheapest-to-deliver"><span class="toc-section-number">19.4</span> Determination of the Cheapest to Deliver</a></li>
+<li><a href="bond-futures.html#implied-repo-rate"><span class="toc-section-number">19.5</span> Implied Repo Rate</a></li>
+<li><a href="bond-futures.html#the-delivery-option"><span class="toc-section-number">19.6</span> The Delivery Option</a></li>
+<li><a href="bond-futures.html#ir-sensitivity-of-bund-futures"><span class="toc-section-number">19.7</span> IR sensitivity of Bund Futures</a></li>
+<li><a href="bond-futures.html#cash-carry-arbitrage"><span class="toc-section-number">19.8</span> Cash-Carry Arbitrage</a></li>
+<li><a href="bond-futures.html#hedging-a-bond-with-a-euro-bund-contract"><span class="toc-section-number">19.9</span> Hedging a Bond with a Euro-Bund Contract</a></li>
+</ul></li>
+<li class="has-sub"><a href="libor-swaps.html#libor-swaps"><span class="toc-section-number">20</span> Libor Swaps</a>
+<ul>
+<li><a href="libor-swaps.html#ir-swap-pricing"><span class="toc-section-number">20.1</span> IR Swap Pricing</a></li>
+</ul></li>
+<li class="has-sub"><a href="fixed-income-risk-management.html#fixed-income-risk-management"><span class="toc-section-number">21</span> Fixed Income Risk Management</a>
+<ul>
+<li><a href="fixed-income-risk-management.html#immunization"><span class="toc-section-number">21.1</span> Immunization</a></li>
+<li><a href="fixed-income-risk-management.html#dedication"><span class="toc-section-number">21.2</span> Dedication</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-vasicek-model.html#the-vasicek-model"><span class="toc-section-number">22</span> The Vasicek Model</a>
+<ul>
+<li><a href="the-vasicek-model.html#derivatives-with-non-traded-underlying-asset"><span class="toc-section-number">22.1</span> Derivatives with Non Traded Underlying Asset</a></li>
+<li><a href="the-vasicek-model.html#the-market-price-of-interest-rate-risk"><span class="toc-section-number">22.2</span> The Market Price of Interest Rate Risk</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-model-of-hull-white.html#the-model-of-hull-white"><span class="toc-section-number">23</span> The Model of Hull &amp; White</a>
+<ul>
+<li><a href="the-model-of-hull-white.html#moments-of-x_t-under-a-ou-process"><span class="toc-section-number">23.1</span> Moments of <span class="math inline">\(x_t\)</span> under a OU Process</a></li>
+<li class="has-sub"><a href="the-model-of-hull-white.html#the-hull-white-trinomial-model"><span class="toc-section-number">23.2</span> The Hull &amp; White Trinomial Model</a>
+<ul>
+<li><a href="the-model-of-hull-white.html#step-1"><span class="toc-section-number">23.2.1</span> Step 1</a></li>
+<li><a href="the-model-of-hull-white.html#step-2"><span class="toc-section-number">23.2.2</span> Step 2</a></li>
+</ul></li>
+<li><a href="the-model-of-hull-white.html#generalization"><span class="toc-section-number">23.3</span> Generalization</a></li>
+</ul></li>
+<li class="has-sub"><a href="deterministic-time-varying-volatility.html#deterministic-time-varying-volatility"><span class="toc-section-number">24</span> Deterministic Time-Varying Volatility</a>
+<ul>
+<li><a href="deterministic-time-varying-volatility.html#gabillons-model"><span class="toc-section-number">24.1</span> Gabillon’s Model</a></li>
+<li><a href="deterministic-time-varying-volatility.html#deterministic-volatility-in-a-seasonal-market"><span class="toc-section-number">24.2</span> Deterministic Volatility in a Seasonal Market</a></li>
+</ul></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#pricing-under-an-objective-density"><span class="toc-section-number">25</span> Pricing under an Objective Density</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#conditional-entropy"><span class="toc-section-number">25.1</span> Conditional Entropy</a></li>
+<li><a href="pricing-under-an-objective-density.html#relative-entropy-of-uniform-densities"><span class="toc-section-number">25.2</span> Relative Entropy of Uniform Densities</a></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#computation-of-a-risk-neutral-density"><span class="toc-section-number">25.3</span> Computation of a Risk-neutral Density</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#calculation-of-risk-neutral-density-p"><span class="toc-section-number">25.3.1</span> Calculation of Risk-Neutral Density <span class="math inline">\(P\)</span></a></li>
+<li><a href="pricing-under-an-objective-density.html#matching-market-data"><span class="toc-section-number">25.3.2</span> Matching Market Data</a></li>
+<li><a href="pricing-under-an-objective-density.html#solution"><span class="toc-section-number">25.3.3</span> Solution</a></li>
+<li><a href="pricing-under-an-objective-density.html#solution-1"><span class="toc-section-number">25.3.4</span> Solution</a></li>
+<li><a href="pricing-under-an-objective-density.html#illustration-1"><span class="toc-section-number">25.3.5</span> Illustration</a></li>
+<li><a href="pricing-under-an-objective-density.html#a-lottery-ticket"><span class="toc-section-number">25.3.6</span> A Lottery Ticket…</a></li>
+</ul></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#monte-carlo-pricing-with-historical-paths"><span class="toc-section-number">25.4</span> Monte-Carlo Pricing with Historical Paths</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#sec:model"><span class="toc-section-number">25.4.1</span> The Model</a></li>
+<li><a href="pricing-under-an-objective-density.html#incorporation-of-bid-ask-spread"><span class="toc-section-number">25.4.2</span> Incorporation of bid-ask spread</a></li>
+<li><a href="pricing-under-an-objective-density.html#extension-to-arbitrary-cash-flows"><span class="toc-section-number">25.4.3</span> Extension to arbitrary cash flows</a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references">References</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="fi:elementary" class="section level1" number="16">
+<h1><span class="header-section-number">16</span> Elementary Fixed Income Calculations</h1>
+<pre><code>## Loading required package: fOptions</code></pre>
+<pre><code>## Loading required package: timeSeries</code></pre>
+<pre><code>## Loading required package: fBasics</code></pre>
+<pre><code>## Loading required package: fExoticOptions</code></pre>
+<pre><code>## Loading required package: fAsianOptions</code></pre>
+<pre><code>## Loading required package: fImport</code></pre>
+<pre><code>## Loading required package: RCurl</code></pre>
+<pre><code>## Loading required package: Hmisc</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<pre><code>## Loading required package: Formula</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Hmisc&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     format.pval, units</code></pre>
+<div class="epigraph">
+<p>
+An honest man’s word is as good as his bond — Miguel de Cervantes
+</p>
+</div>
+<p><span class="newthought">This</span> chapter provides a elementary survey of fixed income calculations,
+with the aim of developing a basic intuition regarding the relationship
+between the price and the yield of fixed income instruments.</p>
+<div id="bond-pricing" class="section level2" number="16.1">
+<h2><span class="header-section-number">16.1</span> Bond Pricing</h2>
+<p>In a simplified framework with even intervals between payments, the
+present value of a bond with coupon rate <span class="math inline">\(c\)</span> and maturing in <span class="math inline">\(n\)</span> years
+is given by <span class="math display">\[P(r) = \sum_{i=1}^n \frac{cN}{(1+r)^i} + \frac{N}{(1+r)^n}
+(\#eq:fixedinBonds-1)\]</span></p>
+<p>where:</p>
+<dl>
+<dt><span class="math inline">\(c\)</span></dt>
+<dd>
+<p>coupon rate, in decimal form</p>
+</dd>
+<dt><span class="math inline">\(N\)</span></dt>
+<dd>
+<p>nominal</p>
+</dd>
+<dt><span class="math inline">\(n\)</span></dt>
+<dd>
+<p>maturity, measured in years</p>
+</dd>
+<dt><span class="math inline">\(r\)</span></dt>
+<dd>
+<p>yield, in decimal form</p>
+</dd>
+</dl>
+<p>The formula can be implemented in one line:</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="fi:elementary.html#cb238-1" aria-hidden="true" tabindex="-1"></a>  SimpleBondPrice <span class="ot">&lt;-</span> <span class="cf">function</span>(coupon, n, <span class="at">N=</span><span class="dv">100</span>, yield) {</span>
+<span id="cb238-2"><a href="fi:elementary.html#cb238-2" aria-hidden="true" tabindex="-1"></a>    N<span class="sc">*</span>(<span class="fu">sum</span>(coupon<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> yield)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">:</span>n)) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>yield)<span class="sc">^</span>n)</span>
+<span id="cb238-3"><a href="fi:elementary.html#cb238-3" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<p>As an illustration, consider a bond with 3 years to maturity, a <span class="math inline">\(5\%\)</span>
+coupon rate. With yield at <span class="math inline">\(4\%\)</span>, price per <span class="math inline">\(100\$\)</span> nominal amount is</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="fi:elementary.html#cb239-1" aria-hidden="true" tabindex="-1"></a>  P <span class="ot">&lt;-</span> <span class="fu">SimpleBondPrice</span>(<span class="at">coupon=</span>.<span class="dv">05</span>, <span class="at">n=</span><span class="dv">3</span>, <span class="at">yield=</span>.<span class="dv">04</span>)</span></code></pre></div>
+<p>or <span class="math inline">\(P = 102.78\)</span>.</p>
+</div>
+<div id="the-price-yield-curves" class="section level2" number="16.2">
+<h2><span class="header-section-number">16.2</span> The Price-Yield Curves</h2>
+<p>Figure <a href="#fig:PY-Coupon"><strong>??</strong></a> represents the price-yield relationship for 20
+year bonds with coupons ranging from 0 to 15%. In addition to the
+obvious non-linear nature of the price-yield relationship, it is worth
+noting that the convexity of the price-yield curve increases with the
+coupon rate.</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="fi:elementary.html#cb240-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## plot price-yield as a function of coupon</span></span>
+<span id="cb240-2"><a href="fi:elementary.html#cb240-2" aria-hidden="true" tabindex="-1"></a>  cp <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">05</span>, .<span class="dv">1</span>, .<span class="dv">15</span>)</span>
+<span id="cb240-3"><a href="fi:elementary.html#cb240-3" aria-hidden="true" tabindex="-1"></a>  cl <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;red&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;blue&#39;</span>, <span class="st">&#39;black&#39;</span>)</span>
+<span id="cb240-4"><a href="fi:elementary.html#cb240-4" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, .<span class="dv">20</span>, .<span class="dv">01</span>)</span>
+<span id="cb240-5"><a href="fi:elementary.html#cb240-5" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb240-6"><a href="fi:elementary.html#cb240-6" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="fu">length</span>(cp), <span class="fu">length</span>(y))</span>
+<span id="cb240-7"><a href="fi:elementary.html#cb240-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(cp)) {</span>
+<span id="cb240-8"><a href="fi:elementary.html#cb240-8" aria-hidden="true" tabindex="-1"></a>    p[i,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(y, <span class="cf">function</span>(y) <span class="fu">SimpleBondPrice</span>(cp[i], n, <span class="at">yield=</span>y))</span>
+<span id="cb240-9"><a href="fi:elementary.html#cb240-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb240-10"><a href="fi:elementary.html#cb240-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb240-11"><a href="fi:elementary.html#cb240-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(y, p[<span class="dv">1</span>,], <span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">&#39;Yield&#39;</span>, <span class="at">ylab=</span><span class="st">&#39;Price&#39;</span>, <span class="at">col=</span>cl[<span class="dv">1</span>], <span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(p), <span class="fu">max</span>(p)))</span>
+<span id="cb240-12"><a href="fi:elementary.html#cb240-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb240-13"><a href="fi:elementary.html#cb240-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(y, p[i,], <span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span>cl[i])</span>
+<span id="cb240-14"><a href="fi:elementary.html#cb240-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb240-15"><a href="fi:elementary.html#cb240-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">&#39;topright&#39;</span>, <span class="fu">paste</span>(<span class="st">&#39;cp = &#39;</span>, cp<span class="sc">*</span><span class="dv">100</span>, <span class="at">sep=</span><span class="st">&#39;&#39;</span>), <span class="at">cex=</span>.<span class="dv">8</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">&#39;n&#39;</span>, <span class="at">col=</span>cl)</span></code></pre></div>
+<p><img src="401-FIBonds_files/figure-html/PY-Coupon-1.png" width="672"  /></p>
+<p><img src="401-FIBonds_files/figure-html/fig-PY-Coupon-1.png" width="672"  /></p>
+<p>Figure <a href="#fig:PY-Maturity"><strong>??</strong></a> represents the price-yield relationship for
+10% bonds with maturities ranging from 3 to 30 years. Regardless of
+maturity, the bonds are worth 100 when the yield is identical to the
+coupon. This can be easily established by writing equation
+(<span class="math display">\[eq:fixedinBonds-1\]</span>) as:</p>
+<p><span class="math display">\[P(r) = N \left[\frac{c}{r} \left(1-\frac{1}{(1+r)^n}\right) + \frac{1}{(1+r)^n}  \right]\]</span></p>
+<p>from which one concludes that <span class="math inline">\(P(r) = N\)</span> when <span class="math inline">\(c=r\)</span>.</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="fi:elementary.html#cb241-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## plot price-yield as a function of maturity</span></span>
+<span id="cb241-2"><a href="fi:elementary.html#cb241-2" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>)</span>
+<span id="cb241-3"><a href="fi:elementary.html#cb241-3" aria-hidden="true" tabindex="-1"></a>  cl <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;red&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;blue&#39;</span>, <span class="st">&#39;black&#39;</span>)</span>
+<span id="cb241-4"><a href="fi:elementary.html#cb241-4" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, .<span class="dv">20</span>, .<span class="dv">01</span>)</span>
+<span id="cb241-5"><a href="fi:elementary.html#cb241-5" aria-hidden="true" tabindex="-1"></a>  cp <span class="ot">&lt;-</span> .<span class="dv">1</span></span>
+<span id="cb241-6"><a href="fi:elementary.html#cb241-6" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="fu">length</span>(m), <span class="fu">length</span>(y))</span>
+<span id="cb241-7"><a href="fi:elementary.html#cb241-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(m)) {</span>
+<span id="cb241-8"><a href="fi:elementary.html#cb241-8" aria-hidden="true" tabindex="-1"></a>    p[i,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(y, <span class="cf">function</span>(y) <span class="fu">SimpleBondPrice</span>(cp, m[i], <span class="at">yield=</span>y))</span>
+<span id="cb241-9"><a href="fi:elementary.html#cb241-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb241-10"><a href="fi:elementary.html#cb241-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb241-11"><a href="fi:elementary.html#cb241-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(y, p[<span class="dv">1</span>,], <span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">&#39;Yield&#39;</span>, <span class="at">ylab=</span><span class="st">&#39;Price&#39;</span>, <span class="at">col=</span>cl[<span class="dv">1</span>], <span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(p), <span class="fu">max</span>(p)))</span>
+<span id="cb241-12"><a href="fi:elementary.html#cb241-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb241-13"><a href="fi:elementary.html#cb241-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(y, p[i,], <span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span>cl[i])</span>
+<span id="cb241-14"><a href="fi:elementary.html#cb241-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb241-15"><a href="fi:elementary.html#cb241-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">&#39;topright&#39;</span>, <span class="fu">paste</span>(<span class="st">&#39;m = &#39;</span>, m, <span class="at">sep=</span><span class="st">&#39;&#39;</span>), <span class="at">cex=</span>.<span class="dv">8</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">&#39;n&#39;</span>, <span class="at">col=</span>cl)</span></code></pre></div>
+<p><img src="401-FIBonds_files/figure-html/PY-Maturity-1.png" width="672"  /></p>
+<p><img src="401-FIBonds_files/figure-html/fig-PY-Maturity-1.png" width="672"  /></p>
+</div>
+<div id="basic-measures-of-interest-rate-risk" class="section level2" number="16.3">
+<h2><span class="header-section-number">16.3</span> Basic Measures of Interest Rate Risk</h2>
+<p>The interest rate risk of fixed income instruments is traditionally
+measured by Variation, Sensitivity and Duration.</p>
+<div id="variation" class="section level3" number="16.3.1">
+<h3><span class="header-section-number">16.3.1</span> Variation</h3>
+<p>Variation <span class="math inline">\(V\)</span> (also known as dollar duration) is the negative of the
+derivative of price with respect to yield <span class="math display">\[\begin{aligned}
+V &amp;=&amp; -\frac{\partial P(r)}{\partial r} \\
+&amp;=&amp; \sum_{i=1}^n \frac{i F_i}{(1+r)^{i+1}} \end{aligned}\]</span></p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="fi:elementary.html#cb242-1" aria-hidden="true" tabindex="-1"></a>  Variation <span class="ot">&lt;-</span> <span class="cf">function</span>(coupon, n, <span class="at">N=</span><span class="dv">100</span>, yield) {</span>
+<span id="cb242-2"><a href="fi:elementary.html#cb242-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">100</span><span class="sc">*</span><span class="fu">sum</span>(<span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="cf">function</span>(i) <span class="fu">ifelse</span>(i<span class="sc">&lt;</span>n, i<span class="sc">*</span>coupon<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> yield)<span class="sc">^</span>(i<span class="sc">+</span><span class="dv">1</span>),</span>
+<span id="cb242-3"><a href="fi:elementary.html#cb242-3" aria-hidden="true" tabindex="-1"></a>                                           n<span class="sc">*</span>(<span class="dv">1</span><span class="sc">+</span>coupon)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>yield)<span class="sc">^</span>(n<span class="sc">+</span><span class="dv">1</span>))))</span>
+<span id="cb242-4"><a href="fi:elementary.html#cb242-4" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<p>Variation is often measured by “PV01”, which is the change in bond price
+for a 1 basis point change in yield:
+<span class="math display">\[\textrm{PV01} = V \times 10^{-4}\]</span></p>
+</div>
+<div id="approximate-portfolio-yield" class="section level3" number="16.3.2">
+<h3><span class="header-section-number">16.3.2</span> Approximate Portfolio Yield</h3>
+<p>Variation is a useful tool for computing the approximate yield of a
+portfolio, given the yield of each bond. Consider two bonds with prices
+<span class="math inline">\(P_1(r_1)\)</span> and <span class="math inline">\(P_2(r_2)\)</span> and variations <span class="math inline">\(V_1(r_1)\)</span> and <span class="math inline">\(V_2(r_2)\)</span>. We
+look for the common yield <span class="math inline">\(r^*\)</span> such that:
+<span class="math display" id="eq:fixedinBonds-2">\[P = a_1 P_1(r^*) + a_2 P_2(r^*)
+\tag{16.1}\]</span></p>
+<p>Use a first-order Taylor’s expansion of price <span class="math inline">\(P_i(r)\)</span> at <span class="math inline">\(r_i\)</span>:
+<span class="math display">\[P_i(r^*) = P_i(r_i) + (r^*-r_i) V_i(r_i)\]</span></p>
+<p>Replacing <span class="math inline">\(P_i(r^*)\)</span> by this approximation in (<span class="math display">\[eq:fixedinBonds-2\]</span>)
+yields:</p>
+<p><span class="math display">\[\sum_{i=1}^2 a_i  (r^*-r_i) V_i(r_i) = 0\]</span></p>
+<p>which gives
+<span class="math display">\[r^* = \frac{\sum_{i=1}^2 a_i  r_i V_i(r_i)}{\sum_{i=1}^2 a_i V_i(r_i)}\]</span></p>
+<p>This approximation is valid when the yields <span class="math inline">\(r_i\)</span> are not too far apart,
+as illustrated by the following calculation.</p>
+<p>Consider a portfolio made of two bonds, described in
+Table <span class="math display">\[tab:fixedinBonds-1\]</span>.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Bond</th>
+<th align="left">Coupon (%)</th>
+<th align="left">Maturity</th>
+<th align="left">Quantity</th>
+<th align="left">Yield (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">2</td>
+<td align="left">5.20</td>
+</tr>
+<tr class="even">
+<td align="left">B</td>
+<td align="left">6</td>
+<td align="left">7</td>
+<td align="left">3</td>
+<td align="left">5.60</td>
+</tr>
+</tbody>
+</table>
+<p>The approximate portfolio yield is computed as follows:</p>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="fi:elementary.html#cb243-1" aria-hidden="true" tabindex="-1"></a>  cp <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">05</span>, .<span class="dv">06</span>); r <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">052</span>, .<span class="dv">056</span>); T <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">7</span>); a<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb243-2"><a href="fi:elementary.html#cb243-2" aria-hidden="true" tabindex="-1"></a>  P <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="cf">function</span>(i) <span class="fu">SimpleBondPrice</span>(cp[i], T[i], <span class="at">yield=</span>r[i]))</span>
+<span id="cb243-3"><a href="fi:elementary.html#cb243-3" aria-hidden="true" tabindex="-1"></a>  V <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="cf">function</span>(i) <span class="fu">Variation</span>(cp[i], T[i], <span class="at">yield=</span>r[i]))</span>
+<span id="cb243-4"><a href="fi:elementary.html#cb243-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb243-5"><a href="fi:elementary.html#cb243-5" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">sum</span>(r<span class="sc">*</span>V<span class="sc">*</span>a)<span class="sc">/</span><span class="fu">sum</span>(V<span class="sc">*</span>a)</span></code></pre></div>
+<p>which gives an approximate yield of <span class="math inline">\(r=5.47 \%\)</span>. An
+exact calculation involves solving for <span class="math inline">\(r^*\)</span> the non-linear equation
+<span class="math display">\[P = \sum_{i=1}^2 a_i P_i(r^*)\]</span></p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="fi:elementary.html#cb244-1" aria-hidden="true" tabindex="-1"></a>  fun <span class="ot">&lt;-</span> <span class="cf">function</span>(r) {</span>
+<span id="cb244-2"><a href="fi:elementary.html#cb244-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(P) <span class="sc">-</span> <span class="fu">sum</span>(<span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="cf">function</span>(i) <span class="fu">SimpleBondPrice</span>(cp[i], T[i], <span class="at">yield=</span>r)))}</span>
+<span id="cb244-3"><a href="fi:elementary.html#cb244-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb244-4"><a href="fi:elementary.html#cb244-4" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(fun, <span class="fu">c</span>(.<span class="dv">05</span>, .<span class="dv">06</span>))<span class="sc">$</span>root</span></code></pre></div>
+<p>which gives the exact portfolio yield <span class="math inline">\(r= 5.43 \%\)</span>.</p>
+</div>
+<div id="sensitivity" class="section level3" number="16.3.3">
+<h3><span class="header-section-number">16.3.3</span> Sensitivity</h3>
+<p>The sensitivity <span class="math inline">\(S\)</span> (also called modified duration) is the percent
+change in price per unit change in yield:
+<span class="math display">\[S = \frac{1}{P} V = \frac{1}{P(1+r)} \sum_{i=1}^n \frac{i F_i}{(1+r)^i}\]</span></p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="fi:elementary.html#cb245-1" aria-hidden="true" tabindex="-1"></a>  Sensitivity <span class="ot">&lt;-</span> <span class="cf">function</span>(coupon, n, <span class="at">N=</span><span class="dv">100</span>, yield) {</span>
+<span id="cb245-2"><a href="fi:elementary.html#cb245-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Variation</span>(coupon,n,N,yield)<span class="sc">/</span><span class="fu">SimpleBondPrice</span>(coupon, n, N, yield)</span>
+<span id="cb245-3"><a href="fi:elementary.html#cb245-3" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+</div>
+<div id="modified-duration-of-a-portfolio" class="section level3" number="16.3.4">
+<h3><span class="header-section-number">16.3.4</span> Modified Duration of a Portfolio</h3>
+<p>Consider a portfolio made of <span class="math inline">\(n\)</span> bonds, each with nominal amount <span class="math inline">\(q_i\)</span>,
+price <span class="math inline">\(P_i\)</span> and modified duration <span class="math inline">\(S_i, i=1, \ldots, n\)</span>. Let <span class="math inline">\(P\)</span> be the
+value of the portfolio, we want to determine the modified duration of
+the portfolio</p>
+<p><span class="math display">\[S = \frac{1}{P} \frac{\partial P}{\partial r}\]</span></p>
+<p><span class="math display" id="eq:mod-duration">\[\begin{aligned}
+  S &amp;=&amp; \frac{1}{P} \sum_i q_i \frac{\partial P_i}{\partial r} \nonumber \\
+  &amp;=&amp; \frac{1}{P} \sum_i q_i \frac{P_i}{P_i}\frac{\partial P_i}{\partial r} \nonumber \\
+  &amp;=&amp; \frac{1}{P} \sum_i q_i P_i S_i \nonumber \\
+  &amp;=&amp; \sum_i \frac{q_i P_i}{P}   S_i
+\tag{16.2}\end{aligned}\]</span></p>
+<p>The modified duration of a portfolio is the weighted average of the
+modified durations of the bonds. The weight associated with each bond is
+the fraction of portfolio value associated with the bond.</p>
+</div>
+<div id="duration" class="section level3" number="16.3.5">
+<h3><span class="header-section-number">16.3.5</span> Duration</h3>
+<p>The Macaulay duration <span class="math inline">\(D\)</span> (named after Frederick Macaulay who introduced
+this risk measure), can be interpreted as the average maturity, weighted
+by the present value of the cash flow at each payment date.</p>
+<p><span class="math display" id="eq:macaulay">\[D = \sum_{i=1}^n \frac{i F_i}{P (1+r)^i}
+\tag{16.3}\]</span></p>
+<p>The Macaulay Duration is closely related to Sensitivity:</p>
+<p><span class="math display">\[S =  \frac{1}{(1+r)} D\]</span></p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="fi:elementary.html#cb246-1" aria-hidden="true" tabindex="-1"></a>  SimpleDuration <span class="ot">&lt;-</span> <span class="cf">function</span>(coupon, n, yield) {</span>
+<span id="cb246-2"><a href="fi:elementary.html#cb246-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">100</span><span class="sc">*</span><span class="fu">sum</span>(<span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="cf">function</span>(i) <span class="fu">ifelse</span>(i<span class="sc">&lt;</span>n, i<span class="sc">*</span>coupon<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> yield)<span class="sc">^</span>i,</span>
+<span id="cb246-3"><a href="fi:elementary.html#cb246-3" aria-hidden="true" tabindex="-1"></a>                        n<span class="sc">*</span>(<span class="dv">1</span><span class="sc">+</span>coupon)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>yield)<span class="sc">^</span>n)))<span class="sc">/</span><span class="fu">SimpleBondPrice</span>(coupon,n,<span class="at">yield=</span>yield)</span>
+<span id="cb246-4"><a href="fi:elementary.html#cb246-4" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<p>These measures can be used to estimate the approximate impact of yield
+change on price. Using the previous example, the exact price change
+caused by a <span class="math inline">\(0.1\%\)</span> yield increase is:</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="fi:elementary.html#cb247-1" aria-hidden="true" tabindex="-1"></a>  d1 <span class="ot">&lt;-</span> <span class="fu">SimpleBondPrice</span>(<span class="at">coupon=</span>.<span class="dv">06</span>, <span class="at">n=</span><span class="dv">10</span>, <span class="at">yield=</span>.<span class="dv">051</span>) <span class="sc">-</span> <span class="fu">SimpleBondPrice</span>(<span class="at">coupon=</span>.<span class="dv">06</span>, <span class="at">n=</span><span class="dv">10</span>, <span class="at">yield=</span>.<span class="dv">05</span>)</span></code></pre></div>
+<p>or <span class="math inline">\(d_1 = -0.806\)</span>. An approximate calculation with Duration
+yields:</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="fi:elementary.html#cb248-1" aria-hidden="true" tabindex="-1"></a>  P <span class="ot">&lt;-</span> <span class="fu">SimpleBondPrice</span>(<span class="at">coupon=</span>.<span class="dv">06</span>, <span class="at">n=</span><span class="dv">10</span>, <span class="at">yield=</span>.<span class="dv">05</span>)</span>
+<span id="cb248-2"><a href="fi:elementary.html#cb248-2" aria-hidden="true" tabindex="-1"></a>  D <span class="ot">&lt;-</span> <span class="fu">SimpleDuration</span>(<span class="at">coupon=</span>.<span class="dv">06</span>, <span class="at">n=</span><span class="dv">10</span>, <span class="at">yield=</span>.<span class="dv">05</span>)</span>
+<span id="cb248-3"><a href="fi:elementary.html#cb248-3" aria-hidden="true" tabindex="-1"></a>  d2 <span class="ot">&lt;-</span> <span class="sc">-</span>P <span class="sc">*</span> D<span class="sc">/</span>(<span class="dv">1</span><span class="fl">+.05</span>) <span class="sc">*</span> .<span class="dv">001</span></span></code></pre></div>
+<p>or a change in price of <span class="math inline">\(d_2 = -0.81\)</span> for a <span class="math inline">\(.1\%\)</span>
+increase in yield. Duration is a popular measure of price sensitivity
+because of its intuitive interpretation: the price sensitivity of a bond
+with duration <span class="math inline">\(D\)</span> is the same as the one of a zero-coupon bond maturing
+in <span class="math inline">\(D\)</span> years.</p>
+<p>It is a surprising fact that the duration of coupon bonds does not
+increase indefinitely as maturity increases. The following script
+computes the duration of bonds of varying maturities and coupon rates.</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="fi:elementary.html#cb249-1" aria-hidden="true" tabindex="-1"></a>  coupon <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">1</span>, .<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">20</span>)<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb249-2"><a href="fi:elementary.html#cb249-2" aria-hidden="true" tabindex="-1"></a>  maturity <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">100</span>, <span class="at">by=</span><span class="dv">1</span>)</span>
+<span id="cb249-3"><a href="fi:elementary.html#cb249-3" aria-hidden="true" tabindex="-1"></a>  yield <span class="ot">&lt;-</span> .<span class="dv">1</span></span>
+<span id="cb249-4"><a href="fi:elementary.html#cb249-4" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb249-5"><a href="fi:elementary.html#cb249-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(c <span class="cf">in</span> coupon){</span>
+<span id="cb249-6"><a href="fi:elementary.html#cb249-6" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> <span class="fu">rbind</span>(res, <span class="fu">sapply</span>(maturity, <span class="cf">function</span>(n) <span class="fu">SimpleDuration</span>(c, n, yield)))</span>
+<span id="cb249-7"><a href="fi:elementary.html#cb249-7" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+<p>The resulting values are plotted in Figure  <a href="#fig:dur-mat"><strong>??</strong></a>. As
+expected, the duration of the zero-coupon bond is identical to its
+maturity. For all other bonds, the duration converges to a constant as
+maturity increases, regardless of coupon rate.</p>
+<p><img src="401-FIBonds_files/figure-html/fig-duration-maturity-1.png" width="672"  /></p>
+<p>This can be formally shown by first deriving an analytical formula for
+Duration. Let <span class="math inline">\(c\)</span> be the coupon rate and <span class="math inline">\(r\)</span> the bond yield. The price
+of a bond with nominal of 1 is:</p>
+<p><span class="math display">\[\begin{aligned}
+P &amp;=&amp; \frac{c}{r} (1-(1+r)^{-n}) + (1+r)^{-n} \\
+  &amp;=&amp; \frac{1}{r} \left(c(1-(1+r)^{-n}) + (1+r)^{-n} \right) \\
+  &amp;=&amp; \frac{1}{r} g(r)\end{aligned}\]</span></p>
+<p>with <span class="math inline">\(g(r) = c(1-(1+r)^{-n}) + (1+r)^{-n}\)</span>.</p>
+<p>Now, <span class="math display">\[\begin{aligned}
+  \frac{\partial \log P}{\partial r} &amp;=&amp; -\frac{1}{r} + \frac{g&#39;(r)}{g(r)} \\
+  &amp;=&amp; \frac{1}{P} \frac{\partial P}{\partial r} \end{aligned}\]</span></p>
+<p>But, <span class="math display">\[\begin{aligned}
+  D &amp;=&amp; -\frac{1+r}{P} \frac{\partial P}{\partial r} \\
+  &amp;=&amp; (1+r) \left[ \frac{1}{r} - \frac{g&#39;(r)}{g(r)} \right] \\
+  &amp;=&amp; \frac{1+r}{r} - (1+r)\frac{g&#39;(r)}{g(r)} \\
+  &amp;=&amp; \frac{1+r}{r} - (1+r)\frac{n(c-r)(1+r)^{-1}+1}{c((1+r)^n-1)+r} \\
+  &amp;=&amp; \frac{1+r}{r} - \frac{n(c-r)+1+r}{c((1+r)^n-1)+r}
+  \end{aligned}\]</span></p>
+<p>The last expression shows that duration converges towards
+<span class="math inline">\(\frac{1+r}{r}\)</span> as maturity goes to infinity.</p>
+</div>
+<div id="sec:duration-of-a-portfolio" class="section level3" number="16.3.6">
+<h3><span class="header-section-number">16.3.6</span> Duration of a Portfolio</h3>
+<p>Consider a portfolio made of <span class="math inline">\(n\)</span> bonds, each with nominal amount <span class="math inline">\(q_i\)</span>,
+price <span class="math inline">\(P_i\)</span> and duration <span class="math inline">\(D_i, i=1, \ldots, n\)</span>. Let <span class="math inline">\(P\)</span> be the value of
+the portfolio, what is its Duration? Since Duration is related to
+sensitivity by the relation <span class="math display">\[D = (1+r) S\]</span></p>
+<p>multiplying both sides of equation <span class="math display">\[eq:mod-duration\]</span> by <span class="math inline">\((1+r)\)</span>
+yields:</p>
+<p><span class="math display" id="eq:portfolio-duration">\[D =  \sum_i \frac{q_i P_i}{P} D_i
+\tag{16.4}\]</span></p>
+</div>
+</div>
+<div id="bond-clean-and-dirty-price" class="section level2" number="16.4">
+<h2><span class="header-section-number">16.4</span> Bond Clean and Dirty Price</h2>
+<p>Bonds prices are quoted in “flat” or “clean” price, and not in net
+present value. The clean price being the net present value less the
+accrued interest. Therefore, the bond quoted price is not the amount
+that the buyer disburses when she buys a bond. The reason for this
+apparent complication is illustrated in Figure <a href="#fig:cd-1"><strong>??</strong></a> which plots
+the change over time of a bond clean price and present value, with yield
+held constant. Quoting a bond by net present value would be impractical,
+because of the discontinuity around the coupon payment date. The clean
+price, however, remains steady over time, when yield is held constant.</p>
+<p>The plots are obtained as follows, using the function of package :</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="fi:elementary.html#cb250-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># define a bond</span></span>
+<span id="cb250-2"><a href="fi:elementary.html#cb250-2" aria-hidden="true" tabindex="-1"></a>  b375 <span class="ot">&lt;-</span> <span class="fu">Bond</span>(<span class="st">&#39;375&#39;</span>, <span class="fu">myDate</span>(<span class="st">&#39;01jan2000&#39;</span>), <span class="fu">myDate</span>(<span class="st">&#39;04jan2019&#39;</span>), <span class="fl">0.0375</span>, <span class="dv">100</span>, <span class="st">&#39;a&#39;</span>)</span>
+<span id="cb250-3"><a href="fi:elementary.html#cb250-3" aria-hidden="true" tabindex="-1"></a>  b300 <span class="ot">&lt;-</span> <span class="fu">Bond</span>(<span class="st">&#39;300&#39;</span>, <span class="fu">myDate</span>(<span class="st">&#39;01jan2000&#39;</span>), <span class="fu">myDate</span>(<span class="st">&#39;04jan2019&#39;</span>), <span class="fl">0.0300</span>, <span class="dv">100</span>, <span class="st">&#39;a&#39;</span>)</span>
+<span id="cb250-4"><a href="fi:elementary.html#cb250-4" aria-hidden="true" tabindex="-1"></a>  dtToday <span class="ot">&lt;-</span> <span class="fu">myDate</span>(<span class="st">&#39;25mar2010&#39;</span>)</span>
+<span id="cb250-5"><a href="fi:elementary.html#cb250-5" aria-hidden="true" tabindex="-1"></a>  dt <span class="ot">&lt;-</span> <span class="fu">timeSequence</span>(dtToday, <span class="fu">myDate</span>(<span class="st">&#39;04jan2019&#39;</span>), <span class="at">by=</span><span class="st">&#39;day&#39;</span>)</span>
+<span id="cb250-6"><a href="fi:elementary.html#cb250-6" aria-hidden="true" tabindex="-1"></a>  dt <span class="ot">&lt;-</span> dt[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(dt),<span class="at">by=</span><span class="dv">4</span>)]</span>
+<span id="cb250-7"><a href="fi:elementary.html#cb250-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb250-8"><a href="fi:elementary.html#cb250-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># compute series of clean price, accrued interest and present value</span></span>
+<span id="cb250-9"><a href="fi:elementary.html#cb250-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for given yield</span></span>
+<span id="cb250-10"><a href="fi:elementary.html#cb250-10" aria-hidden="true" tabindex="-1"></a>  bondcalc <span class="ot">&lt;-</span> <span class="cf">function</span>(bond, y) {</span>
+<span id="cb250-11"><a href="fi:elementary.html#cb250-11" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">sapply</span>(dt, <span class="cf">function</span>(d) <span class="fu">BondYield2Price</span>(bond, d, y))</span>
+<span id="cb250-12"><a href="fi:elementary.html#cb250-12" aria-hidden="true" tabindex="-1"></a>  ac <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">length</span>(p))</span>
+<span id="cb250-13"><a href="fi:elementary.html#cb250-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="fu">length</span>(p))){ac[i] <span class="ot">&lt;-</span> <span class="fu">BondAC</span>(bond, <span class="fu">as.Date</span>(dt[i]))}</span>
+<span id="cb250-14"><a href="fi:elementary.html#cb250-14" aria-hidden="true" tabindex="-1"></a>  cp <span class="ot">&lt;-</span> p<span class="sc">-</span>ac</span>
+<span id="cb250-15"><a href="fi:elementary.html#cb250-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb250-16"><a href="fi:elementary.html#cb250-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">p=</span>p, <span class="at">ac=</span>ac, <span class="at">cp=</span>cp)</span>
+<span id="cb250-17"><a href="fi:elementary.html#cb250-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb250-18"><a href="fi:elementary.html#cb250-18" aria-hidden="true" tabindex="-1"></a>  bc1 <span class="ot">&lt;-</span> <span class="fu">bondcalc</span>(b300, .<span class="dv">03</span>)</span>
+<span id="cb250-19"><a href="fi:elementary.html#cb250-19" aria-hidden="true" tabindex="-1"></a>  bc2 <span class="ot">&lt;-</span> <span class="fu">bondcalc</span>(b375, .<span class="dv">03</span>)</span></code></pre></div>
+<p><img src="401-FIBonds_files/figure-html/par-bond-1.png" width="288"  /></p>
+<p><img src="401-FIBonds_files/figure-html/premium-bond-1.png" width="288"  /></p>
+
+</div>
+</div>
+<p style="text-align: center;">
+<a href="vanna-volga-pricing-and-hedging.html"><button class="btn btn-default">Previous</button></a>
+<a href="the-term-structure-of-interest-rates.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

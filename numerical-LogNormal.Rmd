@@ -1,0 +1,25 @@
+$1
+$1
+
+Pricing an Option by Monte-Carlo Simulation
+===========================================
+
+Principle
+---------
+
+### Basic MC pricing
+
+Pricing an European Call option by simulation:
+
+1.  Simulate $N$ normal random variables $\epsilon_i, i=1, \ldots N$
+
+2.  Compute $S^i_T, i=1, \ldots, N$
+
+3.  Evaluate the payoff: $$V_i = \max ( S^i_T - K, 0)$$
+
+4.  Compute price $$P = e^{-rT} \frac{1}{N} \sum_{i=i}^N V_i$$
+
+### MC estimate of price vs. number of simulations
+
+![MCpricing of a call option,
+$S_0=K=100, \sigma=30\%$](Figures/fig-fig-mc-5)

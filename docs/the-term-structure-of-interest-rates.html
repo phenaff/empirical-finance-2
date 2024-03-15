@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="17 The Term Structure of Interest Rates | Topics in Empirical Finance" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/img/frontCover.pdf" />
+<meta property="og:description" content="An open access textbook on empirical finance" />
+<meta name="github-repo" content="phenaff/empirical-finance-2" />
+
+<meta name="author" content="Patrick Hénaff" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="An open access textbook on empirical finance">
+
+<title>17 The Term Structure of Interest Rates | Topics in Empirical Finance</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      extensions: ["color.js"]
+    }
+  });
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="toc.css" type="text/css" />
+<link rel="stylesheet" href="custom.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+<div style="display: none;">
+$$
+  \newcommand{\given}{\mid}
+  \renewcommand{\neg}{\mathbin{\sim}}
+  \renewcommand{\wedge}{\mathbin{\&}}
+  \newcommand{\p}{Pr}
+  \newcommand{\degr}{^{\circ}}
+  \newcommand{\E}{E}
+  \newcommand{\EU}{EU}
+  \newcommand{\u}{U}
+  \newcommand{\pr}{Pr}
+  \newcommand{\po}{Pr^*}
+  \definecolor{bookred}{RGB}{228,6,19}
+  \definecolor{bookblue}{RGB}{0,92,169}
+  \definecolor{bookpurple}{RGB}{114,49,94} 
+$$
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface-to-the-second-edition">Preface to the second edition</a></li>
+<li><a href="preface-to-the-first-edition.html#preface-to-the-first-edition">Preface to the first edition</a></li>
+<li class="part"><span><b>Computational Framework</b></span></li>
+<li><a href="introduction.html#introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li class="has-sub"><a href="ch:data-sources.html#ch:data-sources"><span class="toc-section-number">2</span> Data Sources</a>
+<ul>
+<li><a href="ch:data-sources.html#commodities-data"><span class="toc-section-number">2.1</span> Commodities Data</a></li>
+<li><a href="ch:data-sources.html#libor-rates"><span class="toc-section-number">2.2</span> Libor Rates</a></li>
+<li><a href="ch:data-sources.html#sovereign-yield-curves"><span class="toc-section-number">2.3</span> Sovereign Yield Curves</a></li>
+<li><a href="ch:data-sources.html#equities-data"><span class="toc-section-number">2.4</span> Equities Data</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#basic-components"><span class="toc-section-number">3</span> Basic Components</a>
+<ul>
+<li class="has-sub"><a href="basic-components.html#the-finstrument-class"><span class="toc-section-number">3.1</span> The <idx>fInstrument</idx> Class</a>
+<ul>
+<li><a href="basic-components.html#design-and-implementation"><span class="toc-section-number">3.1.1</span> Design and Implementation</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#the-dataprovider-class"><span class="toc-section-number">3.2</span> The <idx>DataProvider</idx> Class</a>
+<ul>
+<li><a href="basic-components.html#the-model-for-market-data"><span class="toc-section-number">3.2.1</span> The Model for Market Data</a></li>
+<li><a href="basic-components.html#the-search-algorithm"><span class="toc-section-number">3.2.2</span> The Search Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="sim-framework.html#sim-framework"><span class="toc-section-number">4</span> The Simulation Framework</a>
+<ul>
+<li><a href="sim-framework.html#scenario-simulator"><span class="toc-section-number">4.1</span> Scenario Simulator</a></li>
+<li class="has-sub"><a href="sim-framework.html#a-delta-hedging-experiment"><span class="toc-section-number">4.2</span> A Delta Hedging Experiment</a>
+<ul>
+<li><a href="sim-framework.html#design-considerations"><span class="toc-section-number">4.2.1</span> Design Considerations</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Discreet Models</b></span></li>
+<li class="has-sub"><a href="arb-free-pricing.html#arb-free-pricing"><span class="toc-section-number">5</span> Arbitrage-Free Pricing and Risk Neutral Valuation</a>
+<ul>
+<li class="has-sub"><a href="arb-free-pricing.html#arbitrage-free-pricing"><span class="toc-section-number">5.1</span> Arbitrage-free Pricing</a>
+<ul>
+<li><a href="arb-free-pricing.html#arrow-debreu-securities"><span class="toc-section-number">5.1.1</span> Arrow-Debreu Securities</a></li>
+<li><a href="arb-free-pricing.html#the-price-of-traded-securities"><span class="toc-section-number">5.1.2</span> The Price of Traded Securities</a></li>
+<li><a href="arb-free-pricing.html#complete-market"><span class="toc-section-number">5.1.3</span> Complete Market</a></li>
+<li><a href="arb-free-pricing.html#equivalent-probability-measures"><span class="toc-section-number">5.1.4</span> Equivalent Probability Measures</a></li>
+<li><a href="arb-free-pricing.html#the-impact-of-interest-rate"><span class="toc-section-number">5.1.5</span> The Impact of Interest Rate</a></li>
+<li><a href="arb-free-pricing.html#trading-strategy-and-dynamic-completeness"><span class="toc-section-number">5.1.6</span> Trading Strategy and Dynamic Completeness</a></li>
+<li><a href="arb-free-pricing.html#discounted-asset-prices-as-martingales"><span class="toc-section-number">5.1.7</span> Discounted Asset Prices as Martingales</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="binomial.html#binomial"><span class="toc-section-number">6</span> Risk-Neutral Pricing in a Binomial Framework</a>
+<ul>
+<li class="has-sub"><a href="binomial.html#introduction-1"><span class="toc-section-number">6.1</span> Introduction</a>
+<ul>
+<li><a href="binomial.html#subsec:binomial"><span class="toc-section-number">6.1.1</span> The Binomial Model for Stocks</a></li>
+</ul></li>
+<li><a href="binomial.html#pricing-with-arrow-debreu-securities"><span class="toc-section-number">6.2</span> Pricing With Arrow-Debreu Securities</a></li>
+<li><a href="binomial.html#multi-period-binomial-model"><span class="toc-section-number">6.3</span> Multi-Period Binomial Model</a></li>
+<li><a href="binomial.html#american-exercise"><span class="toc-section-number">6.4</span> American Exercise</a></li>
+<li class="has-sub"><a href="binomial.html#calibration-of-the-binomial-model"><span class="toc-section-number">6.5</span> Calibration of the Binomial Model</a>
+<ul>
+<li><a href="binomial.html#tree-geometry"><span class="toc-section-number">6.5.1</span> Tree Geometry</a></li>
+</ul></li>
+</ul></li>
+<li><a href="stability-of-the-binomial-model.html#stability-of-the-binomial-model"><span class="toc-section-number">7</span> Stability of the Binomial Model</a></li>
+<li class="has-sub"><a href="sec:trinomial.html#sec:trinomial"><span class="toc-section-number">8</span> Trinomial Models</a>
+<ul>
+<li><a href="sec:trinomial.html#the-trinomial-tree"><span class="toc-section-number">8.1</span> The Trinomial Tree</a></li>
+</ul></li>
+<li class="part"><span><b>Derivatives in the Black-Scholes Framework</b></span></li>
+<li class="has-sub"><a href="pricing-with-black-scholes.html#pricing-with-black-scholes"><span class="toc-section-number">9</span> Pricing with Black-Scholes</a>
+<ul>
+<li><a href="pricing-with-black-scholes.html#relationships-among-greeks"><span class="toc-section-number">9.1</span> Relationships Among Greeks</a></li>
+</ul></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#applicability-of-the-black-scholes-model"><span class="toc-section-number">10</span> Applicability of the Black-Scholes Model</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#self-financing-replicating-portfolio"><span class="toc-section-number">10.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging"><span class="toc-section-number">10.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#error-due-to-unknown-volatility"><span class="toc-section-number">10.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#second-order-hedging"><span class="toc-section-number">10.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#gamma-smoothing"><span class="toc-section-number">10.4.1</span> Gamma Smoothing</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#dynamic-delta-gamma-hedge"><span class="toc-section-number">10.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#price-and-greeks-in-the-black-scholes-model"><span class="toc-section-number">11</span> Price and Greeks in the Black-Scholes Model</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#solving-the-pricing-equation"><span class="toc-section-number">11.1</span> Solving the Pricing Equation</a></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#an-option-dashboard"><span class="toc-section-number">11.2</span> An Option Dashboard</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#vanilla-option"><span class="toc-section-number">11.2.1</span> Vanilla Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#binary-option"><span class="toc-section-number">11.2.2</span> Binary Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#barrier-option"><span class="toc-section-number">11.2.3</span> Barrier Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#asian-option"><span class="toc-section-number">11.2.4</span> Asian Option</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-hedging-with-the-black-scholes-model"><span class="toc-section-number">12</span> Dynamic Hedging with the Black-Scholes Model</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#self-financing-replicating-portfolio-1"><span class="toc-section-number">12.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging-1"><span class="toc-section-number">12.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#error-due-to-unknown-volatility-1"><span class="toc-section-number">12.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#second-order-hedging-1"><span class="toc-section-number">12.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#gamma-smoothing-1"><span class="toc-section-number">12.4.1</span> Gamma Smoothing</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-delta-gamma-hedge-1"><span class="toc-section-number">12.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#dynamic-hedging-in-the-black-scholes-framework"><span class="toc-section-number">13</span> Dynamic Hedging in the Black-Scholes Framework</a>
+<ul>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#self-financing-replicating-portfolio-2"><span class="toc-section-number">13.1</span> Self-Financing Replicating Portfolio</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#continuous-rebalancing"><span class="toc-section-number">13.1.1</span> Continuous rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#discreet-rebalancing"><span class="toc-section-number">13.1.2</span> Discreet rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#illustration"><span class="toc-section-number">13.1.3</span> Illustration</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#a-more-realistic-example"><span class="toc-section-number">13.1.4</span> A More Realistic Example</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-discrete-hedging-2"><span class="toc-section-number">13.2</span> Hedging Error due to Discrete Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test"><span class="toc-section-number">13.2.1</span> Empirical Test</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-transaction-cost"><span class="toc-section-number">13.3</span> Hedging Error due to Transaction Cost</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test-1"><span class="toc-section-number">13.3.1</span> Empirical Test</a></li>
+</ul></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-unknown-volatility"><span class="toc-section-number">13.4</span> Hedging Error due to Unknown Volatility</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#conclusion"><span class="toc-section-number">13.5</span> Conclusion</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#second-order-hedging-2"><span class="toc-section-number">13.6</span> Second-Order Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-implied-volatility.html#the-implied-volatility"><span class="toc-section-number">14</span> The implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#market-data"><span class="toc-section-number">14.1</span> Market Data</a></li>
+<li class="has-sub"><a href="the-implied-volatility.html#calculation-of-implied-volatility"><span class="toc-section-number">14.2</span> Calculation of implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#newtons-method"><span class="toc-section-number">14.2.1</span> Newton’s method</a></li>
+<li><a href="the-implied-volatility.html#implied-volatility-by-newtons-method"><span class="toc-section-number">14.2.2</span> Implied Volatility by Newton’s Method</a></li>
+<li><a href="the-implied-volatility.html#secant-method"><span class="toc-section-number">14.2.3</span> Secant Method</a></li>
+<li><a href="the-implied-volatility.html#jaeckels-method"><span class="toc-section-number">14.2.4</span> Jaeckel’s method</a></li>
+<li><a href="the-implied-volatility.html#normalized-call-price-as-a-function-of-sigma"><span class="toc-section-number">14.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></a></li>
+<li><a href="the-implied-volatility.html#transformed-objective-function"><span class="toc-section-number">14.2.6</span> Transformed objective function</a></li>
+<li><a href="the-implied-volatility.html#impact-of-dividends"><span class="toc-section-number">14.2.7</span> Impact of Dividends</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-pricing-and-hedging"><span class="toc-section-number">15</span> Vanna-Volga Pricing and Hedging</a>
+<ul>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#principle"><span class="toc-section-number">15.1</span> Principle</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging"><span class="toc-section-number">15.1.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#implementation"><span class="toc-section-number">15.2</span> Implementation</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging-1"><span class="toc-section-number">15.2.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#illustrations"><span class="toc-section-number">15.3</span> Illustrations</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#volatility-interpolation"><span class="toc-section-number">15.3.1</span> Volatility Interpolation</a></li>
+<li><a href="vanna-volga-pricing-and-hedging.html#pricing-a-binary-option"><span class="toc-section-number">15.3.2</span> Pricing a Binary Option</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Fixed Income</b></span></li>
+<li class="has-sub"><a href="fi:elementary.html#fi:elementary"><span class="toc-section-number">16</span> Elementary Fixed Income Calculations</a>
+<ul>
+<li><a href="fi:elementary.html#bond-pricing"><span class="toc-section-number">16.1</span> Bond Pricing</a></li>
+<li><a href="fi:elementary.html#the-price-yield-curves"><span class="toc-section-number">16.2</span> The Price-Yield Curves</a></li>
+<li class="has-sub"><a href="fi:elementary.html#basic-measures-of-interest-rate-risk"><span class="toc-section-number">16.3</span> Basic Measures of Interest Rate Risk</a>
+<ul>
+<li><a href="fi:elementary.html#variation"><span class="toc-section-number">16.3.1</span> Variation</a></li>
+<li><a href="fi:elementary.html#approximate-portfolio-yield"><span class="toc-section-number">16.3.2</span> Approximate Portfolio Yield</a></li>
+<li><a href="fi:elementary.html#sensitivity"><span class="toc-section-number">16.3.3</span> Sensitivity</a></li>
+<li><a href="fi:elementary.html#modified-duration-of-a-portfolio"><span class="toc-section-number">16.3.4</span> Modified Duration of a Portfolio</a></li>
+<li><a href="fi:elementary.html#duration"><span class="toc-section-number">16.3.5</span> Duration</a></li>
+<li><a href="fi:elementary.html#sec:duration-of-a-portfolio"><span class="toc-section-number">16.3.6</span> Duration of a Portfolio</a></li>
+</ul></li>
+<li><a href="fi:elementary.html#bond-clean-and-dirty-price"><span class="toc-section-number">16.4</span> Bond Clean and Dirty Price</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-term-structure-of-interest-rates.html#the-term-structure-of-interest-rates"><span class="toc-section-number">17</span> The Term Structure of Interest Rates</a>
+<ul>
+<li><a href="the-term-structure-of-interest-rates.html#term-structure-shapes"><span class="toc-section-number">17.1</span> Term Structure Shapes</a></li>
+<li><a href="the-term-structure-of-interest-rates.html#building-a-zero-coupon-bond-curve"><span class="toc-section-number">17.2</span> Building a Zero-Coupon Bond Curve</a></li>
+<li><a href="the-term-structure-of-interest-rates.html#functional-forms-for-the-zero-coupon-curve"><span class="toc-section-number">17.3</span> Functional forms for the zero-coupon curve</a></li>
+</ul></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#simple-interest-rate-derivatives"><span class="toc-section-number">18</span> Simple Interest Rate Derivatives</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#spot-and-forward-interest-rates"><span class="toc-section-number">18.1</span> Spot and Forward Interest Rates</a></li>
+<li><a href="simple-interest-rate-derivatives.html#forward-rate-agreement-fra"><span class="toc-section-number">18.2</span> Forward Rate Agreement (FRA)</a></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#t-bill-futures"><span class="toc-section-number">18.3</span> T-Bill Futures</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#arbitrage"><span class="toc-section-number">18.3.1</span> Arbitrage</a></li>
+<li><a href="simple-interest-rate-derivatives.html#quotes"><span class="toc-section-number">18.3.2</span> Quotes</a></li>
+</ul></li>
+<li><a href="simple-interest-rate-derivatives.html#euro-currency-futures"><span class="toc-section-number">18.4</span> Euro-Currency Futures</a></li>
+<li><a href="simple-interest-rate-derivatives.html#eurodollar-rate-versus-forward-rate"><span class="toc-section-number">18.5</span> Eurodollar Rate Versus Forward Rate</a></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#convexity-adjustment"><span class="toc-section-number">18.6</span> Convexity Adjustment</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#special-case-of-natural-time-lag"><span class="toc-section-number">18.6.1</span> Special Case of Natural Time Lag</a></li>
+<li><a href="simple-interest-rate-derivatives.html#convexity-adjustment-examples"><span class="toc-section-number">18.6.2</span> Convexity Adjustment Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="bond-futures.html#bond-futures"><span class="toc-section-number">19</span> Bond Futures</a>
+<ul>
+<li><a href="bond-futures.html#forward-price"><span class="toc-section-number">19.1</span> Forward Price</a></li>
+<li><a href="bond-futures.html#delivery-against-the-futures-contract"><span class="toc-section-number">19.2</span> Delivery against the Futures contract</a></li>
+<li><a href="bond-futures.html#the-conversion-factor"><span class="toc-section-number">19.3</span> The Conversion Factor</a></li>
+<li><a href="bond-futures.html#determination-of-the-cheapest-to-deliver"><span class="toc-section-number">19.4</span> Determination of the Cheapest to Deliver</a></li>
+<li><a href="bond-futures.html#implied-repo-rate"><span class="toc-section-number">19.5</span> Implied Repo Rate</a></li>
+<li><a href="bond-futures.html#the-delivery-option"><span class="toc-section-number">19.6</span> The Delivery Option</a></li>
+<li><a href="bond-futures.html#ir-sensitivity-of-bund-futures"><span class="toc-section-number">19.7</span> IR sensitivity of Bund Futures</a></li>
+<li><a href="bond-futures.html#cash-carry-arbitrage"><span class="toc-section-number">19.8</span> Cash-Carry Arbitrage</a></li>
+<li><a href="bond-futures.html#hedging-a-bond-with-a-euro-bund-contract"><span class="toc-section-number">19.9</span> Hedging a Bond with a Euro-Bund Contract</a></li>
+</ul></li>
+<li class="has-sub"><a href="libor-swaps.html#libor-swaps"><span class="toc-section-number">20</span> Libor Swaps</a>
+<ul>
+<li><a href="libor-swaps.html#ir-swap-pricing"><span class="toc-section-number">20.1</span> IR Swap Pricing</a></li>
+</ul></li>
+<li class="has-sub"><a href="fixed-income-risk-management.html#fixed-income-risk-management"><span class="toc-section-number">21</span> Fixed Income Risk Management</a>
+<ul>
+<li><a href="fixed-income-risk-management.html#immunization"><span class="toc-section-number">21.1</span> Immunization</a></li>
+<li><a href="fixed-income-risk-management.html#dedication"><span class="toc-section-number">21.2</span> Dedication</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-vasicek-model.html#the-vasicek-model"><span class="toc-section-number">22</span> The Vasicek Model</a>
+<ul>
+<li><a href="the-vasicek-model.html#derivatives-with-non-traded-underlying-asset"><span class="toc-section-number">22.1</span> Derivatives with Non Traded Underlying Asset</a></li>
+<li><a href="the-vasicek-model.html#the-market-price-of-interest-rate-risk"><span class="toc-section-number">22.2</span> The Market Price of Interest Rate Risk</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-model-of-hull-white.html#the-model-of-hull-white"><span class="toc-section-number">23</span> The Model of Hull &amp; White</a>
+<ul>
+<li><a href="the-model-of-hull-white.html#moments-of-x_t-under-a-ou-process"><span class="toc-section-number">23.1</span> Moments of <span class="math inline">\(x_t\)</span> under a OU Process</a></li>
+<li class="has-sub"><a href="the-model-of-hull-white.html#the-hull-white-trinomial-model"><span class="toc-section-number">23.2</span> The Hull &amp; White Trinomial Model</a>
+<ul>
+<li><a href="the-model-of-hull-white.html#step-1"><span class="toc-section-number">23.2.1</span> Step 1</a></li>
+<li><a href="the-model-of-hull-white.html#step-2"><span class="toc-section-number">23.2.2</span> Step 2</a></li>
+</ul></li>
+<li><a href="the-model-of-hull-white.html#generalization"><span class="toc-section-number">23.3</span> Generalization</a></li>
+</ul></li>
+<li class="has-sub"><a href="deterministic-time-varying-volatility.html#deterministic-time-varying-volatility"><span class="toc-section-number">24</span> Deterministic Time-Varying Volatility</a>
+<ul>
+<li><a href="deterministic-time-varying-volatility.html#gabillons-model"><span class="toc-section-number">24.1</span> Gabillon’s Model</a></li>
+<li><a href="deterministic-time-varying-volatility.html#deterministic-volatility-in-a-seasonal-market"><span class="toc-section-number">24.2</span> Deterministic Volatility in a Seasonal Market</a></li>
+</ul></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#pricing-under-an-objective-density"><span class="toc-section-number">25</span> Pricing under an Objective Density</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#conditional-entropy"><span class="toc-section-number">25.1</span> Conditional Entropy</a></li>
+<li><a href="pricing-under-an-objective-density.html#relative-entropy-of-uniform-densities"><span class="toc-section-number">25.2</span> Relative Entropy of Uniform Densities</a></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#computation-of-a-risk-neutral-density"><span class="toc-section-number">25.3</span> Computation of a Risk-neutral Density</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#calculation-of-risk-neutral-density-p"><span class="toc-section-number">25.3.1</span> Calculation of Risk-Neutral Density <span class="math inline">\(P\)</span></a></li>
+<li><a href="pricing-under-an-objective-density.html#matching-market-data"><span class="toc-section-number">25.3.2</span> Matching Market Data</a></li>
+<li><a href="pricing-under-an-objective-density.html#solution"><span class="toc-section-number">25.3.3</span> Solution</a></li>
+<li><a href="pricing-under-an-objective-density.html#solution-1"><span class="toc-section-number">25.3.4</span> Solution</a></li>
+<li><a href="pricing-under-an-objective-density.html#illustration-1"><span class="toc-section-number">25.3.5</span> Illustration</a></li>
+<li><a href="pricing-under-an-objective-density.html#a-lottery-ticket"><span class="toc-section-number">25.3.6</span> A Lottery Ticket…</a></li>
+</ul></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#monte-carlo-pricing-with-historical-paths"><span class="toc-section-number">25.4</span> Monte-Carlo Pricing with Historical Paths</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#sec:model"><span class="toc-section-number">25.4.1</span> The Model</a></li>
+<li><a href="pricing-under-an-objective-density.html#incorporation-of-bid-ask-spread"><span class="toc-section-number">25.4.2</span> Incorporation of bid-ask spread</a></li>
+<li><a href="pricing-under-an-objective-density.html#extension-to-arbitrary-cash-flows"><span class="toc-section-number">25.4.3</span> Extension to arbitrary cash flows</a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references">References</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="the-term-structure-of-interest-rates" class="section level1" number="17">
+<h1><span class="header-section-number">17</span> The Term Structure of Interest Rates</h1>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="the-term-structure-of-interest-rates.html#cb251-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(fBasics)</span>
+<span id="cb251-2"><a href="the-term-structure-of-interest-rates.html#cb251-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(empfin)</span></code></pre></div>
+<pre><code>## Loading required package: fOptions</code></pre>
+<pre><code>## Loading required package: timeDate</code></pre>
+<pre><code>## Loading required package: timeSeries</code></pre>
+<pre><code>## Loading required package: fExoticOptions</code></pre>
+<pre><code>## Loading required package: fAsianOptions</code></pre>
+<pre><code>## Loading required package: fImport</code></pre>
+<pre><code>## Loading required package: RCurl</code></pre>
+<pre><code>## Loading required package: Hmisc</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<pre><code>## Loading required package: Formula</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Hmisc&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     format.pval, units</code></pre>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="the-term-structure-of-interest-rates.html#cb266-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(tufte)</span>
+<span id="cb266-2"><a href="the-term-structure-of-interest-rates.html#cb266-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb266-3"><a href="the-term-structure-of-interest-rates.html#cb266-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(LiborRates)</span>
+<span id="cb266-4"><a href="the-term-structure-of-interest-rates.html#cb266-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb266-5"><a href="the-term-structure-of-interest-rates.html#cb266-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(YieldCurve)</span></code></pre></div>
+<pre><code>## Loading required package: xts</code></pre>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## 
+## Attaching package: &#39;zoo&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:timeSeries&#39;:
+## 
+##     time&lt;-</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="the-term-structure-of-interest-rates.html#cb272-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(FedYieldCurve, <span class="at">package=</span><span class="st">&#39;YieldCurve&#39;</span>)</span>
+<span id="cb272-2"><a href="the-term-structure-of-interest-rates.html#cb272-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(ECBYieldCurve, <span class="at">package=</span><span class="st">&#39;YieldCurve&#39;</span>)</span>
+<span id="cb272-3"><a href="the-term-structure-of-interest-rates.html#cb272-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(LiborRates, <span class="at">package=</span><span class="st">&#39;empfin&#39;</span>)</span></code></pre></div>
+<p><span class="newthought">The relationship</span> between yield and maturity is called the “term
+structure of interest rate”. Since there are many ways to measure yield,
+there are also many types of term structures. The term structure of
+interest rate is important because, everything else being equal,
+maturity is the main determinant of yield. In addition, investors and
+economists believe that the shape of this curve may reflect the market’s
+expectation of future rates.</p>
+<div id="term-structure-shapes" class="section level2" number="17.1">
+<h2><span class="header-section-number">17.1</span> Term Structure Shapes</h2>
+<p>The term structure of interest rates can assume a variety of shapes, as
+illustrated by the following 2 examples.</p>
+<p>Figure <span class="math display">\[fig:zc-ecb\]</span> displays a sample of yield curves, published by
+the European Central Bank (ECB). These curves represent the yield to
+maturity for AAA rated euro-zone government bonds. We show quarterly
+data from December 2006 to June 2009. Three patterns are visible:</p>
+<ul>
+<li><p>an almost flat curve (August 2007)</p></li>
+<li><p>an inverted curve at the short end, and upward sloping at the long
+end (January 2008)</p></li>
+<li><p>an evenly upward-sloping curve (December 2006, June 2009)</p></li>
+</ul>
+<p>The data is extracted from the package, data set :</p>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="the-term-structure-of-interest-rates.html#cb273-1" aria-hidden="true" tabindex="-1"></a>  tau <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span><span class="sc">/</span><span class="dv">12</span>, <span class="dv">6</span><span class="sc">/</span><span class="dv">12</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>)</span>
+<span id="cb273-2"><a href="the-term-structure-of-interest-rates.html#cb273-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb273-3"><a href="the-term-structure-of-interest-rates.html#cb273-3" aria-hidden="true" tabindex="-1"></a>  d1 <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">&#39;2006-12-29&#39;</span>)</span>
+<span id="cb273-4"><a href="the-term-structure-of-interest-rates.html#cb273-4" aria-hidden="true" tabindex="-1"></a>  d2 <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">&#39;2009-07-24&#39;</span>)</span>
+<span id="cb273-5"><a href="the-term-structure-of-interest-rates.html#cb273-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb273-6"><a href="the-term-structure-of-interest-rates.html#cb273-6" aria-hidden="true" tabindex="-1"></a>  nbObs <span class="ot">&lt;-</span> <span class="fu">dim</span>(ECBYieldCurve)[<span class="dv">1</span>]</span>
+<span id="cb273-7"><a href="the-term-structure-of-interest-rates.html#cb273-7" aria-hidden="true" tabindex="-1"></a>  dtObs <span class="ot">&lt;-</span> <span class="fu">seq</span>(d1, d2, <span class="at">length.out=</span>nbObs)</span>
+<span id="cb273-8"><a href="the-term-structure-of-interest-rates.html#cb273-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb273-9"><a href="the-term-structure-of-interest-rates.html#cb273-9" aria-hidden="true" tabindex="-1"></a>  indx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, nbObs, <span class="dv">90</span>)</span>
+<span id="cb273-10"><a href="the-term-structure-of-interest-rates.html#cb273-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb273-11"><a href="the-term-structure-of-interest-rates.html#cb273-11" aria-hidden="true" tabindex="-1"></a>  YC <span class="ot">&lt;-</span> ECBYieldCurve[indx,]</span>
+<span id="cb273-12"><a href="the-term-structure-of-interest-rates.html#cb273-12" aria-hidden="true" tabindex="-1"></a>  dtObs <span class="ot">&lt;-</span> dtObs[indx]</span>
+<span id="cb273-13"><a href="the-term-structure-of-interest-rates.html#cb273-13" aria-hidden="true" tabindex="-1"></a>  nbSample <span class="ot">&lt;-</span> <span class="fu">length</span>(indx)</span></code></pre></div>
+<p>The plot is generated by:</p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="the-term-structure-of-interest-rates.html#cb274-1" aria-hidden="true" tabindex="-1"></a>  mat <span class="ot">=</span> dtObs[<span class="dv">1</span>] <span class="sc">+</span> (tau <span class="sc">*</span><span class="dv">365</span>) </span>
+<span id="cb274-2"><a href="the-term-structure-of-interest-rates.html#cb274-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(mat, YC[<span class="dv">1</span>,],<span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>), <span class="at">ylab=</span><span class="st">&#39;Euro Sovereign Bond Yield&#39;</span>, <span class="at">col=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb274-3"><a href="the-term-structure-of-interest-rates.html#cb274-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4"><a href="the-term-structure-of-interest-rates.html#cb274-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">2</span>,nbSample)) {</span>
+<span id="cb274-5"><a href="the-term-structure-of-interest-rates.html#cb274-5" aria-hidden="true" tabindex="-1"></a>    mat <span class="ot">=</span> dtObs[i] <span class="sc">+</span> (tau <span class="sc">*</span><span class="dv">365</span>) </span>
+<span id="cb274-6"><a href="the-term-structure-of-interest-rates.html#cb274-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(mat, YC[i,],<span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">col=</span>i, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb274-7"><a href="the-term-structure-of-interest-rates.html#cb274-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb274-8"><a href="the-term-structure-of-interest-rates.html#cb274-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-9"><a href="the-term-structure-of-interest-rates.html#cb274-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>,<span class="at">legend=</span><span class="fu">as.character</span>(dtObs), <span class="at">col=</span><span class="fu">seq</span>(<span class="dv">1</span>,nbSample),<span class="at">lty=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="402-FIZeroCoupon_files/figure-html/fig-ECB-1-1.png" width="672"  /></p>
+<p>Figure <span class="math display">\[fig:zc-fed\]</span> presents a similar plot for the US Treasury yield,
+over the period 1982-2009. This illustrates the wide range of slope that
+a yield curve can assume over a long period of time. The plot uses the
+data set , and is obtained as follows:</p>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="the-term-structure-of-interest-rates.html#cb275-1" aria-hidden="true" tabindex="-1"></a>  tau <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span><span class="sc">/</span><span class="dv">12</span>, <span class="dv">6</span><span class="sc">/</span><span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>)</span>
+<span id="cb275-2"><a href="the-term-structure-of-interest-rates.html#cb275-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb275-3"><a href="the-term-structure-of-interest-rates.html#cb275-3" aria-hidden="true" tabindex="-1"></a>  dtObs <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">timeSequence</span>(<span class="at">from=</span><span class="st">&#39;1982-01-01&#39;</span>, <span class="at">to=</span><span class="st">&#39;2012-11-30&#39;</span>, <span class="at">by=</span><span class="st">&#39;month&#39;</span>))</span>
+<span id="cb275-4"><a href="the-term-structure-of-interest-rates.html#cb275-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb275-5"><a href="the-term-structure-of-interest-rates.html#cb275-5" aria-hidden="true" tabindex="-1"></a>  nbObs <span class="ot">&lt;-</span> <span class="fu">dim</span>(FedYieldCurve)[<span class="dv">1</span>]</span>
+<span id="cb275-6"><a href="the-term-structure-of-interest-rates.html#cb275-6" aria-hidden="true" tabindex="-1"></a>  indx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, nbObs, <span class="dv">12</span>)</span>
+<span id="cb275-7"><a href="the-term-structure-of-interest-rates.html#cb275-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb275-8"><a href="the-term-structure-of-interest-rates.html#cb275-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># monthly sample</span></span>
+<span id="cb275-9"><a href="the-term-structure-of-interest-rates.html#cb275-9" aria-hidden="true" tabindex="-1"></a>  YC <span class="ot">&lt;-</span> FedYieldCurve[indx,]</span>
+<span id="cb275-10"><a href="the-term-structure-of-interest-rates.html#cb275-10" aria-hidden="true" tabindex="-1"></a>  dtObs <span class="ot">&lt;-</span> dtObs[indx]</span>
+<span id="cb275-11"><a href="the-term-structure-of-interest-rates.html#cb275-11" aria-hidden="true" tabindex="-1"></a>  nbSample <span class="ot">&lt;-</span> <span class="fu">length</span>(indx)</span>
+<span id="cb275-12"><a href="the-term-structure-of-interest-rates.html#cb275-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb275-13"><a href="the-term-structure-of-interest-rates.html#cb275-13" aria-hidden="true" tabindex="-1"></a>  mat <span class="ot">=</span> dtObs[<span class="dv">1</span>] <span class="sc">+</span> (tau<span class="sc">*</span><span class="dv">365</span>) </span>
+<span id="cb275-14"><a href="the-term-structure-of-interest-rates.html#cb275-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(mat, YC[<span class="dv">1</span>,],<span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">15</span>), <span class="at">xlim=</span><span class="fu">c</span>(dtObs[<span class="dv">1</span>], dtObs[nbSample]<span class="sc">+</span><span class="dv">10</span><span class="sc">*</span><span class="dv">365</span>), <span class="at">col=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">ylab=</span><span class="st">&#39;Treasury Yield&#39;</span>, <span class="at">xlab=</span><span class="st">&#39;Maturity&#39;</span>)</span>
+<span id="cb275-15"><a href="the-term-structure-of-interest-rates.html#cb275-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb275-16"><a href="the-term-structure-of-interest-rates.html#cb275-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">2</span>,nbSample)) {</span>
+<span id="cb275-17"><a href="the-term-structure-of-interest-rates.html#cb275-17" aria-hidden="true" tabindex="-1"></a>    mat <span class="ot">=</span> dtObs[i] <span class="sc">+</span> (tau <span class="sc">*</span><span class="dv">365</span>) </span>
+<span id="cb275-18"><a href="the-term-structure-of-interest-rates.html#cb275-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(mat, YC[i,],<span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">col=</span>i, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb275-19"><a href="the-term-structure-of-interest-rates.html#cb275-19" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<p><img src="402-FIZeroCoupon_files/figure-html/fig-plot-fed-1.png" width="672"  /></p>
+</div>
+<div id="building-a-zero-coupon-bond-curve" class="section level2" number="17.2">
+<h2><span class="header-section-number">17.2</span> Building a Zero-Coupon Bond Curve</h2>
+<p>In a stylized manner, the calculation of a bond zero-coupon yield curve
+is straight-forward. Assume a set of bonds with cash flows <span class="math inline">\(F_{i,j}\)</span>
+occurring at regular intervals, where <span class="math inline">\(i\)</span> is the index of the bond and
+<span class="math inline">\(j\)</span> the index of the cash flow date. We look for an interest rate
+function <span class="math inline">\(z(t)\)</span> that prices the bonds exactly:</p>
+<p><span class="math display">\[P_i = \sum_{j=1}^{n_i} F_{i,j} e^{-z(t_j)t_j}\]</span></p>
+<p>The function <span class="math inline">\(z(t)\)</span> is called the continuously compounded zero-coupon
+yield curve, or “continuous zero curve” in short.</p>
+<p>How to perform the calculation is best explained with an example. Assume
+that we observe 4 bonds, as summarized in Table <span class="math display">\[tab:zc-bonds\]</span>.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Maturity</th>
+<th align="left">Coupon (%)</th>
+<th align="right">Bond Yield (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">9</td>
+<td align="right">5.5</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">7</td>
+<td align="right">6.0</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">5</td>
+<td align="right">7.5</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="right">8.5</td>
+</tr>
+</tbody>
+</table>
+<p>Let <span class="math inline">\(y_i\)</span> be the bond yield for bond <span class="math inline">\(i\)</span> maturing in <span class="math inline">\(i\)</span> years, and
+<span class="math inline">\(P_i\)</span> the corresponding present value.</p>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="the-term-structure-of-interest-rates.html#cb276-1" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.5</span>, <span class="fl">6.0</span>, <span class="fl">7.5</span>, <span class="fl">8.5</span>)<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb276-2"><a href="the-term-structure-of-interest-rates.html#cb276-2" aria-hidden="true" tabindex="-1"></a>  c <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">9</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">4</span>)<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb276-3"><a href="the-term-structure-of-interest-rates.html#cb276-3" aria-hidden="true" tabindex="-1"></a>  P <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq</span>(<span class="dv">4</span>), <span class="cf">function</span>(i) <span class="fu">SimpleBondPrice</span>(c[i], i, <span class="at">yield=</span>y[i]))</span>
+<span id="cb276-4"><a href="the-term-structure-of-interest-rates.html#cb276-4" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">4</span>)</span>
+<span id="cb276-5"><a href="the-term-structure-of-interest-rates.html#cb276-5" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">4</span>)</span></code></pre></div>
+<p>The zero-coupon rates <span class="math inline">\(z_i\)</span> for each maturity are computed recursively,
+one maturity at a time. The one year zero-rate is obtained by converting
+the bond yield into a continuously compounded rate:</p>
+<p><span class="math display">\[e^{-z_1} = \frac{1}{(1+y_1)}\]</span></p>
+<p>or,</p>
+<p><span class="math display">\[z_1 = \ln(1+y_1)\]</span></p>
+<p>which gives <span class="math inline">\(z_1 = 5.35\%\)</span>.</p>
+<p>The zero coupon rate for year <span class="math inline">\(i\)</span>, with the rates up to year <span class="math inline">\(i-1\)</span>
+assumed known, is obtained by solving for <span class="math inline">\(z_i\)</span>:</p>
+<p><span class="math display">\[P_i = 100 \left( \sum_{j=1}^{i-1} c e^{-j z_j} + (1+c)e^{-i z_i} \right)\]</span></p>
+<p>which yields:</p>
+<p><span class="math display">\[z_i = -\frac{1}{i} \log \left( \frac{1}{1+c} \left( \frac{P_i}{100} - c \sum_{j=1}^{i-1} e^{-j z_j} \right) \right)\]</span></p>
+<p>This recursive calculation is performed by the function :</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="the-term-structure-of-interest-rates.html#cb277-1" aria-hidden="true" tabindex="-1"></a>  ZCRate <span class="ot">&lt;-</span> <span class="cf">function</span>(c, z, i) { </span>
+<span id="cb277-2"><a href="the-term-structure-of-interest-rates.html#cb277-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute the ZC rate for maturity i, given the zero-coupon rates </span></span>
+<span id="cb277-3"><a href="the-term-structure-of-interest-rates.html#cb277-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># for prior maturities</span></span>
+<span id="cb277-4"><a href="the-term-structure-of-interest-rates.html#cb277-4" aria-hidden="true" tabindex="-1"></a>    zc <span class="ot">&lt;-</span> <span class="sc">-</span>(<span class="dv">1</span><span class="sc">/</span>i)<span class="sc">*</span><span class="fu">log</span>( <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>c[i]) <span class="sc">*</span> ( P[i]<span class="sc">/</span><span class="dv">100</span> <span class="sc">-</span> c[i] <span class="sc">*</span> <span class="fu">sum</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fu">seq</span>(i<span class="dv">-1</span>)<span class="sc">*</span>z[<span class="dv">1</span><span class="sc">:</span>(i<span class="dv">-1</span>)]))))</span>
+<span id="cb277-5"><a href="the-term-structure-of-interest-rates.html#cb277-5" aria-hidden="true" tabindex="-1"></a>    zc</span>
+<span id="cb277-6"><a href="the-term-structure-of-interest-rates.html#cb277-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb277-7"><a href="the-term-structure-of-interest-rates.html#cb277-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb277-8"><a href="the-term-structure-of-interest-rates.html#cb277-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">2</span>,<span class="dv">4</span>)) {</span>
+<span id="cb277-9"><a href="the-term-structure-of-interest-rates.html#cb277-9" aria-hidden="true" tabindex="-1"></a>    z[i] <span class="ot">&lt;-</span> <span class="fu">ZCRate</span>(c, z, i)</span>
+<span id="cb277-10"><a href="the-term-structure-of-interest-rates.html#cb277-10" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+<p>A third term structure of interest is the par yield curve. For a given
+maturity, the par yield is the coupon rate of a bond priced at par (i.e.
+priced at <span class="math inline">\(100\%\)</span>). Formally, given a zero-coupon curve, the par yield
+<span class="math inline">\(r_i\)</span> for maturity <span class="math inline">\(i\)</span> is such that:</p>
+<p><span class="math display">\[1 = r_i \sum_{j=1}^{i} e^{-j z_j} + e^{-i z_i}\]</span></p>
+<p>Back to our example, the par yields are computed by the following
+function, noting that the one year par rate is by definition the
+corresponding bond yield:</p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="the-term-structure-of-interest-rates.html#cb278-1" aria-hidden="true" tabindex="-1"></a>  ParRate <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb278-2"><a href="the-term-structure-of-interest-rates.html#cb278-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute the par rate for maturity i, given the zero-coupon rates for all maturities </span></span>
+<span id="cb278-3"><a href="the-term-structure-of-interest-rates.html#cb278-3" aria-hidden="true" tabindex="-1"></a>    r <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>i<span class="sc">*</span>z[i])) <span class="sc">/</span> <span class="fu">sum</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fu">seq</span>(i)<span class="sc">*</span>z[<span class="dv">1</span><span class="sc">:</span>i]))</span>
+<span id="cb278-4"><a href="the-term-structure-of-interest-rates.html#cb278-4" aria-hidden="true" tabindex="-1"></a>    r</span>
+<span id="cb278-5"><a href="the-term-structure-of-interest-rates.html#cb278-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb278-6"><a href="the-term-structure-of-interest-rates.html#cb278-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb278-7"><a href="the-term-structure-of-interest-rates.html#cb278-7" aria-hidden="true" tabindex="-1"></a>  r[<span class="dv">1</span>] <span class="ot">&lt;-</span> y[<span class="dv">1</span>]</span>
+<span id="cb278-8"><a href="the-term-structure-of-interest-rates.html#cb278-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">2</span>,<span class="dv">4</span>)) {</span>
+<span id="cb278-9"><a href="the-term-structure-of-interest-rates.html#cb278-9" aria-hidden="true" tabindex="-1"></a>    r[i] <span class="ot">&lt;-</span> <span class="fu">ParRate</span>(i)</span>
+<span id="cb278-10"><a href="the-term-structure-of-interest-rates.html#cb278-10" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+<p>Figure <span class="math display">\[fig:zc-11\]</span> displays the bond yield curve and the corresponding
+zero-coupon curve and par curves.</p>
+<p><img src="402-FIZeroCoupon_files/figure-html/ZC-YTM-N-1.png" width="672"  /></p>
+<p>In practice, this simple method is not realistic for several reasons:</p>
+<ul>
+<li><p>In most markets, we will not find a set a bonds with identical
+anniversary dates,</p></li>
+<li><p>the method outlined above only provides values of <span class="math inline">\(z(t)\)</span> at maturity
+dates corresponding to the cash flow dates. An interpolation method
+is needed to obtain <span class="math inline">\(z(t)\)</span> at arbitrary maturities, and finally</p></li>
+<li><p>it does not account for the fact that some bonds may trade at a
+premium or discount: for example, a bond with a small outstanding
+amount will often trade at a discount, while the current 10 year
+benchmark bond will trade at a premium.</p></li>
+</ul>
+<p>If we insist on a zero-coupon curve that prices exactly every bond in
+the sample, we will get a unnatural shape for the zero curve, and even
+more so for the forward rates.</p>
+<p>The alternative is to specify a functional form (sufficiently flexible)
+for the zero-coupon curve, and to estimate its parameters by minimizing
+the pricing error over a set of bonds.</p>
+<p>Since the term structure of interest rate can equivalently be
+represented in terms of spot rates, forward rates or discount factors,
+one has three choices for specifying the functional form of the term
+structure.</p>
+</div>
+<div id="functional-forms-for-the-zero-coupon-curve" class="section level2" number="17.3">
+<h2><span class="header-section-number">17.3</span> Functional forms for the zero-coupon curve</h2>
+<p>A popular method is to model the instantaneous forward rate, <span class="math inline">\(f(t)\)</span>.
+Integrating this function gives the zero-coupon rate. <span class="citation">Nelson and Siegel (<label for="tufte-mn-11" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-11" class="margin-toggle">1987<span class="marginnote">Nelson, C R, and A F Siegel. 1987. <span>“<span class="nocase">Parsimonious Modeling of Yield Curves</span>.”</span> <em>Journal of Business</em> 60: 473–90.</span>)</span>
+introduced the following model for the instantaneous forward rate:</p>
+<p><span class="math display">\[f(t) = \beta_0 + \beta_1 e^{-\frac{t}{\tau_1}}
++ \beta_2 \frac{t}{\tau_1} e^{-\frac{t}{\tau_1}}\]</span></p>
+<p>Integrating <span class="math inline">\(f(t)\)</span>, the corresponding zero-coupon rates are given by:</p>
+<p><span class="math display">\[z(t) = \beta_0 + \beta_1 \frac{1-e^{-\frac{t}{\tau_1}}}{\frac{t}{\tau_1}} \\
+  + \beta_2 \left( \frac{1-e^{-\frac{t}{\tau_1}}}{\frac{t}{\tau_1}} - e^{-\frac{t}{\tau_1}} \right)\]</span></p>
+<p><span class="citation">Svensson (<label for="tufte-mn-12" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-12" class="margin-toggle">1994<span class="marginnote">Svensson, Lars E O. 1994. <span>“<span class="nocase">Estimating and Interpreting Forward Interest Rates: Sweden 1992-1994.</span>”</span> <em>IMF Working Paper</em> 94/114.</span>)</span> extended this model with 2 additional parameters, defining
+the instantaneous forward rate as:</p>
+<p><span class="math display">\[f(t) = \beta_0 + \beta_1 e^{-\frac{t}{\tau_1}}
++ \beta_2 \frac{t}{\tau_1} e^{-\frac{t}{\tau_1}}
++ \beta_3 \frac{t}{\tau_2} e^{-\frac{t}{\tau_2}}\]</span></p>
+<p>The following script, taken from the package, illustrates the fitting of
+the Nelson-Siegel and Svensson models to US Treasury yields.</p>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="the-term-structure-of-interest-rates.html#cb279-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># maturities in months of FedYieldCurve data set</span></span>
+<span id="cb279-2"><a href="the-term-structure-of-interest-rates.html#cb279-2" aria-hidden="true" tabindex="-1"></a>  tau <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">12</span>, <span class="dv">24</span>, <span class="dv">36</span>, <span class="dv">60</span>, <span class="dv">84</span>, <span class="dv">120</span>)</span>
+<span id="cb279-3"><a href="the-term-structure-of-interest-rates.html#cb279-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb279-4"><a href="the-term-structure-of-interest-rates.html#cb279-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># parameter estimation</span></span>
+<span id="cb279-5"><a href="the-term-structure-of-interest-rates.html#cb279-5" aria-hidden="true" tabindex="-1"></a>  Parameters.NS <span class="ot">&lt;-</span> <span class="fu">Nelson.Siegel</span>( <span class="at">rate=</span>FedYieldCurve[<span class="dv">5</span>,], <span class="at">maturity=</span>tau)</span>
+<span id="cb279-6"><a href="the-term-structure-of-interest-rates.html#cb279-6" aria-hidden="true" tabindex="-1"></a>  Parameters.S <span class="ot">&lt;-</span> <span class="fu">Svensson</span>(<span class="at">rate=</span>FedYieldCurve[<span class="dv">5</span>,], <span class="at">maturity=</span>tau)</span>
+<span id="cb279-7"><a href="the-term-structure-of-interest-rates.html#cb279-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb279-8"><a href="the-term-structure-of-interest-rates.html#cb279-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># sample the fitted curves </span></span>
+<span id="cb279-9"><a href="the-term-structure-of-interest-rates.html#cb279-9" aria-hidden="true" tabindex="-1"></a>  tau.sim <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">120</span>,<span class="dv">2</span>)</span>
+<span id="cb279-10"><a href="the-term-structure-of-interest-rates.html#cb279-10" aria-hidden="true" tabindex="-1"></a>  y.NS <span class="ot">&lt;-</span> <span class="fu">NSrates</span>(Parameters.NS,tau.sim)</span>
+<span id="cb279-11"><a href="the-term-structure-of-interest-rates.html#cb279-11" aria-hidden="true" tabindex="-1"></a>  y.S <span class="ot">&lt;-</span> <span class="fu">Srates</span>(Parameters.S, tau.sim, <span class="at">whichRate=</span><span class="st">&#39;Spot&#39;</span>)</span></code></pre></div>
+<p>Figure <span class="math display">\[fig:zc-nss\]</span> shows a comparison of the two fitted spot curves.</p>
+
+</div>
+</div>
+<p style="text-align: center;">
+<a href="fi:elementary.html"><button class="btn btn-default">Previous</button></a>
+<a href="simple-interest-rate-derivatives.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

@@ -128,9 +128,7 @@ We start by solving equations \@ref(eq:step-10) and \@ref(eq:step-11) for $r_u$ 
 
 # step 1
 
-df <- function(r) {
-  1/(1+r)
-}
+df <- function(r) 1/(1+r)
 
 obj <- function(r.vec) {
   r.u <- r.vec[1]

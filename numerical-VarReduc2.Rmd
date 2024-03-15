@@ -1,0 +1,20 @@
+$1
+$1
+
+Control Variates Methods
+------------------------
+
+### MC with Control Variate
+
+-   We want to price an exotic option with payoff function $f(X)$ by MC
+    simulation.
+
+-   We know the exact value $g^*$ of a vanilla option with payoff
+    $g(X)$.
+
+### MC with Control Variate
+
+Solve the least-square problem:
+$$\min_{\beta} \sum_i \left( f(X^i) + \beta (g^* - g(X^i)) \right)$$
+
+$\beta$ is the regression coefficient of $f(X)$ on $g(X)$.

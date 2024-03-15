@@ -1,12 +1,27 @@
-# Pricing under an Objective Density
+---
+output:
+  pdf_document: default
+---
+
+# Pricing under an Historical Density
 
 In this chapter, we consider methods for pricing derivatives under a
 historical density for the underlying asset.
 
-The goal is to lift the Black-Scholes hypothesis that states that the
-underlying asset has a log-normal distribution, and use a distribution
-that better matches the empirical evidences.
+In order to motivate this approach, consider 
+Figure \@ref(fig:socal-basis) which represents the distribution of price for the “SoCal
+basis”. This is the difference between the price of natural gas at Henry
+Hub (the delivery point in Southern Louisiana for the NYMEX Futures
+contract), and the price in Southern California. In general, the price
+difference reflects the cost of transporting gas from East to West, say
+less than a douzen cents per unit of volume. Once in a while, however, a
+disruption in supply causes the price differential to jump to \$3 or \$5. In that context, what is the price of a call option struck at \$2?
 
+```{r socal-basis, echo = FALSE, message=FALSE, fig.align='center', fig.cap='Distribution of Natural Gas price difference between Southern California and Henry Hub in Louisiana (in $ per mmbtu).', out.width='0.5\\linewidth', fig.pos='H'}
+knitr::include_graphics("./img/lotteryTicket.pdf")
+```
+
+It is tempting to use make use of historical data, given the very specific nature of the distribution. The question then becomes:
 Can we transform an empirical density into a density that:
 
 1.  is risk-neutral,
@@ -20,25 +35,15 @@ Zou [@ZouJuly1999]. The principle of Derman’s approach is to start with
 an empirical density for the underlying asset, and to adjust this
 density in order to make it risk-neutral. Under the risk-neutral
 density, the expected value of the settlement of a futures contract must
-be the current forward price. The fair value of a derivative is the
-discounted expected value of the payoff under the risk-neutral density.
+be the current forward price, and the fair value of a derivative is the
+discounted expected value of the payoff.
 
 How do we transform an empirical density into a risk-neutral one? The
-intuition is that we would like to adjust the empirical density in a way
-that “disturbs” it as little as possible.
+intuition is to adjust the empirical density in a way
+that “disturbs” it as little as possible. The concept of entropy is
+useful to quantify the notion of closeness between distribution. 
 
-Let $P(x)$ be the historical density and $Q(x)$ be the risk-neutral
-density. The relative entropy $S(P,Q)$ between $P$ and $Q$ measures the
-increase in information introduced in $Q$, with respect to $P$.
-
-The entropy of a random variable $X$ is defined as
-
-$$H(X) = -\sum_i p(x_i) \ln(p(x_i))$$
-
-Therefore, the entropy of a uniform discrete variable with probability
-$1/N$ associated with each value $x_i, i=1, \ldots, N$ is $\ln(N)$.
-
-## Conditional Entropy
+## Entropy
 
 The entropy of a random variable $X$ is defined as
 
@@ -47,8 +52,8 @@ $$H(X) = -\sum_i p(x_i) \ln(p(x_i))$$
 Therefore, the entropy of a uniform discrete variable with probability
 $1/N$ associated with each value $x_i, i=1, \ldots, N$ is $\ln(N)$.
 
-Let $P$ and $Q$ be two random variables. The relative entropy of $P$ and
-$Q$ measures the closeness between probability distributions over the
+Let $P$ and $Q$ be two discreet random variables. The relative entropy of $P$ and
+$Q$ measures the closeness between the probability distributions over the
 same set:
 
 \begin{align}
@@ -56,7 +61,7 @@ same set:
     & =  \sum_x Q(x) \log \left(\frac{Q(x)}{P(x)}\right)
 \end{align}
 
-```{r, label=plotpq, echo=FALSE, results='hide'}
+```{r, label=plotpq, echo=FALSE, eval=FALSE, results='hide', fig.margin=TRUE}
   x <- seq(0,10,length=1000)
   u1 <- dunif(x, 0, 10)
   u2 <- dunif(x, 2, 8)
@@ -72,16 +77,8 @@ same set:
   text(5,.5, expression(Q[2]))
 ```
 
-## Relative Entropy of Uniform Densities
-
-$$M = N^\alpha \ \ S(Q,P) = \ln(N)(1-\alpha)$$
-
-```{r, label=fig-plotpq-slide,echo=FALSE}
-  <<plotpq>>
-```
-
 ```{r, label=fig-plotpq-notes,echo=FALSE, fig.width=6, fig.height=6}
-  <<plotpq>>
+<<plotpq>>
 ```
 
 Consider for example the distribution $P$, a uniform distribution over
@@ -110,14 +107,13 @@ number of elements that are common to $X_M$ and $X_N$.
 A natural procedure is to compute $Q$ so as to minimize the relative
 entropy $S(P,Q)$ under the constraint that $Q$ is risk-neutral. We
 expand upon this idea by computing $Q$ so that $Q$ satisfies an
-arbitrary number of additional constraints. Specifically, we would like
-to compute $Q$ such that it exactly prices a number of derivatives. For
-example, we would like $Q$ to exactly price the at-the-money straddle.
+arbitrary number of additional constraints. Specifically,
+such that $Q$ prices exactly a number of benchmark derivatives.
 Next section describes a method for performing this calculation.
 
 ## Computation of a Risk-neutral Density
 
-This formulation is derived from Derman and Zou. We simply expand on
+This formulation is derived from Derman and Zou and we expand on
 their approach in order to calibrate the density $Q$ on prices as well
 as on implied volatility.
 
@@ -135,16 +131,7 @@ $$\begin{array}{ll}
 & \sum_{i=1}^n p_i A_j(x_i)  =  b_j, j=i, \ldots, m  \nonumber
 \end{array}$$
 
-### Calculation of Risk-Neutral Density $P$
-
-$$\begin{array}{ll}
-\mbox{max} & -\sum_{i=1}^n p_i \log \frac{p_i}{q_i} \\
-\mbox{such that}   \nonumber \\
-& \sum_{i=1}^n p_i  =  1 \nonumber \\
-& \sum_{i=1}^n p_i A_j(x_i)  =  b_j, j=i, \ldots, m  \nonumber
-\end{array}$$
-
-The constraints of the second type may be used to calibrate the
+Constraints of a second type may be used to calibrate the
 risk-neutral density to match a variety of market information.
 
 To match a given at-the-money volatility ($\sigma$), set:
@@ -157,20 +144,6 @@ To match the price $s$ of a straddle, set:
 
 \begin{align}
     A_j(x) &= \mid x-K \mid \nonumber \\
-    b_j &= s e^{r(T-t)}\end{align}
-
-### Matching Market Data
-
-To match a given at-the-money volatility ($\sigma$), set:
-
-\begin{align}
-    A_j(x) & =  x^2 \nonumber \\
-    b_j & =  \sigma^2 + \bar{x}^2\end{align}
-
-To match the price $s$ of a straddle, set:
-
-\begin{align}
-    A_j(x) &= \mid x-K \mid \\
     b_j &= s e^{r(T-t)}\end{align}
 
 This formulation may be applied to an arbitrary set of options.
@@ -186,21 +159,6 @@ The first-order conditions are:
   \frac{\partial L}{\partial p_i} &= -\ln(\frac{p_i}{q_i}) - 1 -\sum_j \lambda_j A_j(x_i) -\mu = 0 (\#eq:foc-1) \\
   \frac{\partial L}{\partial \lambda_j} &= y_j - \sum_i p_i A_j(x_i) = 0 (\#eq:foc-2) \\
   \frac{\partial L}{\partial \mu} &= 1-\sum_i p_i = 0 (\#eq:foc-3)
-  \end{align}
-
-### Solution
-
-The Lagrangian function is
-
-$$L = - \sum_i p_i \log \frac{p_i}{q_i} + \sum_j \lambda_j (y_j - \sum_i p_i
-    A_j(x_i)) + \mu (1-\sum_i p_i)$$
-
-The first-order conditions are:
-
-\begin{align}
-  \frac{\partial L}{\partial p_i} &= -\ln(\frac{p_i}{q_i}) - 1 -\sum_j \lambda_j A_j(x_i) -\mu = 0  \\
-  \frac{\partial L}{\partial \lambda_j} &= y_j - \sum_i p_i A_j(x_i) = 0  \\
-  \frac{\partial L}{\partial \mu} &= 1-\sum_i p_i = 0
   \end{align}
 
 Using \@ref(eqn:foc-1), we obtain,
@@ -221,7 +179,7 @@ and substitute the expression for $p_i$:
 
 $$y_j = \frac{\sum_i q_i e^{(-1-\sum_j \lambda_j A_j(x_i))} A_j(x_i)}{\sum_i q_i e^{(-1-\sum_j \lambda_j A_j(x_i))}}$$
 
-To summarize, the values for adjusted probabilities $p_i$ are found to
+To summarize, the values for the adjusted probabilities $p_i$ are found to
 be:
 
 $$p_i = \frac{e^{-\sum_j \lambda_j A_j(x_k)}}{\sum_k e^{-\sum_j \lambda_j
@@ -232,33 +190,7 @@ with $\lambda_j$ solving the system:
 $$y_j = \frac{\sum_i q_i e^{-\sum_j \lambda_j A_j(x_i)} A_j(x_i)}{\sum_i q_i
 e^{-\sum_j \lambda_j A_j(x_i)}}, j=1, \ldots, m$$
 
-### Solution
 
-$$p_i = \frac{e^{-\sum_j \lambda_j A_j(x_k)}}{\sum_k e^{-\sum_j \lambda_j
-    A_j(x_k)}}$$
-
-with $\lambda_j$ solving the system:
-
-$$y_j = \frac{\sum_i q_i e^{-\sum_j \lambda_j A_j(x_i)} A_j(x_i)}{\sum_i q_i
-e^{-\sum_j \lambda_j A_j(x_i)}}, j=1, \ldots, m$$
-
-### Illustration
-
-The method outlined above is sometimes the only practical alternative.
-Figure \@ref(fig:socal) represents the distribution of price for the “SoCal
-basis”. This is the difference between the price of natural gas at Henry
-Hub (the delivery point in Southern Louisiana for the NYMEX Futures
-contract), and the price in Southern California. In general, the price
-difference reflects the cost of transporting gas from East to West, say
-50 cents per unit of volume. Once in a while, however, there is a
-disruption in supply and the price differential jumps to \$3 or \$5. In
-that context, what is the price of a call option struck at \$2?
-
-![image](img/lotteryTicket.pdf) \@ref(fig:socal)
-
-### A Lottery Ticket...
-
-![image](img/lotteryTicket){width=".7\textwidth"}
 
 The density can be further calibrated to available market information.
 Figure \@ref(fig:atm-straddle) shows the result of the minimum entropy
@@ -274,7 +206,6 @@ The idea here is to use actual historical paths in a Monte-Carlo
 simulation. In this section, we summarize the model developed by
 Potters, Bouchaud and Sestovic [@Marc2001].
 
-### The Model {#sec:model}
 
 Let’s first introduce some notation:
 
@@ -323,7 +254,6 @@ where $F_a(x)$ defined as above. At each step $t$ in the hedged
 Monte-Carlo simulation, we obtain the price function by solving for
 $\beta$ the following optimization problem (formulation for a call):
 
-<!--
 \begin{align}
 \mbox{min} & \sum_{l=1}^N  [e^{-\rho} C_{t+1}(x^l_{t+1}) - \\
         & \sum_{a=1}^M \beta_a ( F_a(x_t^l) + F'_a(x_t^l) (x^l_{t+1} e^{-\rho} - x^l_t))]^2 \\
@@ -333,13 +263,10 @@ $\beta$ the following optimization problem (formulation for a call):
         & \sum_{a=1}^M \beta_a ( F_a(x_t^l) - F_a(x_t^{l-1})) sgn(x_t^l -
         x_t^{l-1}) >= 0 \notag
 \end{align}
--->
 
 where $I(x)$ is the intrinsic value of the derivative being priced. The
 second constraint enforces the basic non-arbitrage condition that the
 value of a call must be a monotonically increasing function of the spot.
-
-### Incorporation of bid-ask spread
 
 A simple modification of the model enables us to account for the bid-ask
 spread on transactions. We assume that the price paths are mid-market
@@ -355,7 +282,7 @@ $$\delta = \left\{ \begin{array}{ll} -1 & (x_k - e^{-\rho} x_{k+1})
     >=0 \\
     1 & (x_k - e^{-\rho} x_{k+1}) < 0 \end{array} \right.$$
 
-### Extension to arbitrary cash flows
+Extension to arbitrary cash flows
 
 So far, we have only considered contracts with a single payoff at
 expiry. A simple extension of the model can accommodate arbitrary

@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="21 Fixed Income Risk Management | Topics in Empirical Finance" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/img/frontCover.pdf" />
+<meta property="og:description" content="An open access textbook on empirical finance" />
+<meta name="github-repo" content="phenaff/empirical-finance-2" />
+
+<meta name="author" content="Patrick Hénaff" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="An open access textbook on empirical finance">
+
+<title>21 Fixed Income Risk Management | Topics in Empirical Finance</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      extensions: ["color.js"]
+    }
+  });
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="toc.css" type="text/css" />
+<link rel="stylesheet" href="custom.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+<div style="display: none;">
+$$
+  \newcommand{\given}{\mid}
+  \renewcommand{\neg}{\mathbin{\sim}}
+  \renewcommand{\wedge}{\mathbin{\&}}
+  \newcommand{\p}{Pr}
+  \newcommand{\degr}{^{\circ}}
+  \newcommand{\E}{E}
+  \newcommand{\EU}{EU}
+  \newcommand{\u}{U}
+  \newcommand{\pr}{Pr}
+  \newcommand{\po}{Pr^*}
+  \definecolor{bookred}{RGB}{228,6,19}
+  \definecolor{bookblue}{RGB}{0,92,169}
+  \definecolor{bookpurple}{RGB}{114,49,94} 
+$$
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface-to-the-second-edition">Preface to the second edition</a></li>
+<li><a href="preface-to-the-first-edition.html#preface-to-the-first-edition">Preface to the first edition</a></li>
+<li class="part"><span><b>Computational Framework</b></span></li>
+<li><a href="introduction.html#introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li class="has-sub"><a href="ch:data-sources.html#ch:data-sources"><span class="toc-section-number">2</span> Data Sources</a>
+<ul>
+<li><a href="ch:data-sources.html#commodities-data"><span class="toc-section-number">2.1</span> Commodities Data</a></li>
+<li><a href="ch:data-sources.html#libor-rates"><span class="toc-section-number">2.2</span> Libor Rates</a></li>
+<li><a href="ch:data-sources.html#sovereign-yield-curves"><span class="toc-section-number">2.3</span> Sovereign Yield Curves</a></li>
+<li><a href="ch:data-sources.html#equities-data"><span class="toc-section-number">2.4</span> Equities Data</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#basic-components"><span class="toc-section-number">3</span> Basic Components</a>
+<ul>
+<li class="has-sub"><a href="basic-components.html#the-finstrument-class"><span class="toc-section-number">3.1</span> The <idx>fInstrument</idx> Class</a>
+<ul>
+<li><a href="basic-components.html#design-and-implementation"><span class="toc-section-number">3.1.1</span> Design and Implementation</a></li>
+</ul></li>
+<li class="has-sub"><a href="basic-components.html#the-dataprovider-class"><span class="toc-section-number">3.2</span> The <idx>DataProvider</idx> Class</a>
+<ul>
+<li><a href="basic-components.html#the-model-for-market-data"><span class="toc-section-number">3.2.1</span> The Model for Market Data</a></li>
+<li><a href="basic-components.html#the-search-algorithm"><span class="toc-section-number">3.2.2</span> The Search Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="sim-framework.html#sim-framework"><span class="toc-section-number">4</span> The Simulation Framework</a>
+<ul>
+<li><a href="sim-framework.html#scenario-simulator"><span class="toc-section-number">4.1</span> Scenario Simulator</a></li>
+<li class="has-sub"><a href="sim-framework.html#a-delta-hedging-experiment"><span class="toc-section-number">4.2</span> A Delta Hedging Experiment</a>
+<ul>
+<li><a href="sim-framework.html#design-considerations"><span class="toc-section-number">4.2.1</span> Design Considerations</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Discreet Models</b></span></li>
+<li class="has-sub"><a href="arb-free-pricing.html#arb-free-pricing"><span class="toc-section-number">5</span> Arbitrage-Free Pricing and Risk Neutral Valuation</a>
+<ul>
+<li class="has-sub"><a href="arb-free-pricing.html#arbitrage-free-pricing"><span class="toc-section-number">5.1</span> Arbitrage-free Pricing</a>
+<ul>
+<li><a href="arb-free-pricing.html#arrow-debreu-securities"><span class="toc-section-number">5.1.1</span> Arrow-Debreu Securities</a></li>
+<li><a href="arb-free-pricing.html#the-price-of-traded-securities"><span class="toc-section-number">5.1.2</span> The Price of Traded Securities</a></li>
+<li><a href="arb-free-pricing.html#complete-market"><span class="toc-section-number">5.1.3</span> Complete Market</a></li>
+<li><a href="arb-free-pricing.html#equivalent-probability-measures"><span class="toc-section-number">5.1.4</span> Equivalent Probability Measures</a></li>
+<li><a href="arb-free-pricing.html#the-impact-of-interest-rate"><span class="toc-section-number">5.1.5</span> The Impact of Interest Rate</a></li>
+<li><a href="arb-free-pricing.html#trading-strategy-and-dynamic-completeness"><span class="toc-section-number">5.1.6</span> Trading Strategy and Dynamic Completeness</a></li>
+<li><a href="arb-free-pricing.html#discounted-asset-prices-as-martingales"><span class="toc-section-number">5.1.7</span> Discounted Asset Prices as Martingales</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="binomial.html#binomial"><span class="toc-section-number">6</span> Risk-Neutral Pricing in a Binomial Framework</a>
+<ul>
+<li class="has-sub"><a href="binomial.html#introduction-1"><span class="toc-section-number">6.1</span> Introduction</a>
+<ul>
+<li><a href="binomial.html#subsec:binomial"><span class="toc-section-number">6.1.1</span> The Binomial Model for Stocks</a></li>
+</ul></li>
+<li><a href="binomial.html#pricing-with-arrow-debreu-securities"><span class="toc-section-number">6.2</span> Pricing With Arrow-Debreu Securities</a></li>
+<li><a href="binomial.html#multi-period-binomial-model"><span class="toc-section-number">6.3</span> Multi-Period Binomial Model</a></li>
+<li><a href="binomial.html#american-exercise"><span class="toc-section-number">6.4</span> American Exercise</a></li>
+<li class="has-sub"><a href="binomial.html#calibration-of-the-binomial-model"><span class="toc-section-number">6.5</span> Calibration of the Binomial Model</a>
+<ul>
+<li><a href="binomial.html#tree-geometry"><span class="toc-section-number">6.5.1</span> Tree Geometry</a></li>
+</ul></li>
+</ul></li>
+<li><a href="stability-of-the-binomial-model.html#stability-of-the-binomial-model"><span class="toc-section-number">7</span> Stability of the Binomial Model</a></li>
+<li class="has-sub"><a href="sec:trinomial.html#sec:trinomial"><span class="toc-section-number">8</span> Trinomial Models</a>
+<ul>
+<li><a href="sec:trinomial.html#the-trinomial-tree"><span class="toc-section-number">8.1</span> The Trinomial Tree</a></li>
+</ul></li>
+<li class="part"><span><b>Derivatives in the Black-Scholes Framework</b></span></li>
+<li class="has-sub"><a href="pricing-with-black-scholes.html#pricing-with-black-scholes"><span class="toc-section-number">9</span> Pricing with Black-Scholes</a>
+<ul>
+<li><a href="pricing-with-black-scholes.html#relationships-among-greeks"><span class="toc-section-number">9.1</span> Relationships Among Greeks</a></li>
+</ul></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#applicability-of-the-black-scholes-model"><span class="toc-section-number">10</span> Applicability of the Black-Scholes Model</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#self-financing-replicating-portfolio"><span class="toc-section-number">10.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging"><span class="toc-section-number">10.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#error-due-to-unknown-volatility"><span class="toc-section-number">10.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="applicability-of-the-black-scholes-model.html#second-order-hedging"><span class="toc-section-number">10.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="applicability-of-the-black-scholes-model.html#gamma-smoothing"><span class="toc-section-number">10.4.1</span> Gamma Smoothing</a></li>
+<li><a href="applicability-of-the-black-scholes-model.html#dynamic-delta-gamma-hedge"><span class="toc-section-number">10.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#price-and-greeks-in-the-black-scholes-model"><span class="toc-section-number">11</span> Price and Greeks in the Black-Scholes Model</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#solving-the-pricing-equation"><span class="toc-section-number">11.1</span> Solving the Pricing Equation</a></li>
+<li class="has-sub"><a href="price-and-greeks-in-the-black-scholes-model.html#an-option-dashboard"><span class="toc-section-number">11.2</span> An Option Dashboard</a>
+<ul>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#vanilla-option"><span class="toc-section-number">11.2.1</span> Vanilla Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#binary-option"><span class="toc-section-number">11.2.2</span> Binary Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#barrier-option"><span class="toc-section-number">11.2.3</span> Barrier Option</a></li>
+<li><a href="price-and-greeks-in-the-black-scholes-model.html#asian-option"><span class="toc-section-number">11.2.4</span> Asian Option</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-hedging-with-the-black-scholes-model"><span class="toc-section-number">12</span> Dynamic Hedging with the Black-Scholes Model</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#self-financing-replicating-portfolio-1"><span class="toc-section-number">12.1</span> Self-Financing Replicating Portfolio</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#hedging-error-due-to-discrete-hedging-1"><span class="toc-section-number">12.2</span> Hedging Error due to Discrete Hedging</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#error-due-to-unknown-volatility-1"><span class="toc-section-number">12.3</span> Error due to Unknown Volatility</a></li>
+<li class="has-sub"><a href="dynamic-hedging-with-the-black-scholes-model.html#second-order-hedging-1"><span class="toc-section-number">12.4</span> Second-Order Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#gamma-smoothing-1"><span class="toc-section-number">12.4.1</span> Gamma Smoothing</a></li>
+<li><a href="dynamic-hedging-with-the-black-scholes-model.html#dynamic-delta-gamma-hedge-1"><span class="toc-section-number">12.4.2</span> Dynamic Delta-Gamma hedge</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#dynamic-hedging-in-the-black-scholes-framework"><span class="toc-section-number">13</span> Dynamic Hedging in the Black-Scholes Framework</a>
+<ul>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#self-financing-replicating-portfolio-2"><span class="toc-section-number">13.1</span> Self-Financing Replicating Portfolio</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#continuous-rebalancing"><span class="toc-section-number">13.1.1</span> Continuous rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#discreet-rebalancing"><span class="toc-section-number">13.1.2</span> Discreet rebalancing</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#illustration"><span class="toc-section-number">13.1.3</span> Illustration</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#a-more-realistic-example"><span class="toc-section-number">13.1.4</span> A More Realistic Example</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-discrete-hedging-2"><span class="toc-section-number">13.2</span> Hedging Error due to Discrete Hedging</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test"><span class="toc-section-number">13.2.1</span> Empirical Test</a></li>
+</ul></li>
+<li class="has-sub"><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-transaction-cost"><span class="toc-section-number">13.3</span> Hedging Error due to Transaction Cost</a>
+<ul>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#empirical-test-1"><span class="toc-section-number">13.3.1</span> Empirical Test</a></li>
+</ul></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#hedging-error-due-to-unknown-volatility"><span class="toc-section-number">13.4</span> Hedging Error due to Unknown Volatility</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#conclusion"><span class="toc-section-number">13.5</span> Conclusion</a></li>
+<li><a href="dynamic-hedging-in-the-black-scholes-framework.html#second-order-hedging-2"><span class="toc-section-number">13.6</span> Second-Order Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-implied-volatility.html#the-implied-volatility"><span class="toc-section-number">14</span> The implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#market-data"><span class="toc-section-number">14.1</span> Market Data</a></li>
+<li class="has-sub"><a href="the-implied-volatility.html#calculation-of-implied-volatility"><span class="toc-section-number">14.2</span> Calculation of implied volatility</a>
+<ul>
+<li><a href="the-implied-volatility.html#newtons-method"><span class="toc-section-number">14.2.1</span> Newton’s method</a></li>
+<li><a href="the-implied-volatility.html#implied-volatility-by-newtons-method"><span class="toc-section-number">14.2.2</span> Implied Volatility by Newton’s Method</a></li>
+<li><a href="the-implied-volatility.html#secant-method"><span class="toc-section-number">14.2.3</span> Secant Method</a></li>
+<li><a href="the-implied-volatility.html#jaeckels-method"><span class="toc-section-number">14.2.4</span> Jaeckel’s method</a></li>
+<li><a href="the-implied-volatility.html#normalized-call-price-as-a-function-of-sigma"><span class="toc-section-number">14.2.5</span> Normalized Call price as a function of <span class="math inline">\(\sigma\)</span></a></li>
+<li><a href="the-implied-volatility.html#transformed-objective-function"><span class="toc-section-number">14.2.6</span> Transformed objective function</a></li>
+<li><a href="the-implied-volatility.html#impact-of-dividends"><span class="toc-section-number">14.2.7</span> Impact of Dividends</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-pricing-and-hedging"><span class="toc-section-number">15</span> Vanna-Volga Pricing and Hedging</a>
+<ul>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#principle"><span class="toc-section-number">15.1</span> Principle</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging"><span class="toc-section-number">15.1.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#implementation"><span class="toc-section-number">15.2</span> Implementation</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#vanna-volga-dynamic-hedging-1"><span class="toc-section-number">15.2.1</span> Vanna-Volga Dynamic Hedging</a></li>
+</ul></li>
+<li class="has-sub"><a href="vanna-volga-pricing-and-hedging.html#illustrations"><span class="toc-section-number">15.3</span> Illustrations</a>
+<ul>
+<li><a href="vanna-volga-pricing-and-hedging.html#volatility-interpolation"><span class="toc-section-number">15.3.1</span> Volatility Interpolation</a></li>
+<li><a href="vanna-volga-pricing-and-hedging.html#pricing-a-binary-option"><span class="toc-section-number">15.3.2</span> Pricing a Binary Option</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Fixed Income</b></span></li>
+<li class="has-sub"><a href="fi:elementary.html#fi:elementary"><span class="toc-section-number">16</span> Elementary Fixed Income Calculations</a>
+<ul>
+<li><a href="fi:elementary.html#bond-pricing"><span class="toc-section-number">16.1</span> Bond Pricing</a></li>
+<li><a href="fi:elementary.html#the-price-yield-curves"><span class="toc-section-number">16.2</span> The Price-Yield Curves</a></li>
+<li class="has-sub"><a href="fi:elementary.html#basic-measures-of-interest-rate-risk"><span class="toc-section-number">16.3</span> Basic Measures of Interest Rate Risk</a>
+<ul>
+<li><a href="fi:elementary.html#variation"><span class="toc-section-number">16.3.1</span> Variation</a></li>
+<li><a href="fi:elementary.html#approximate-portfolio-yield"><span class="toc-section-number">16.3.2</span> Approximate Portfolio Yield</a></li>
+<li><a href="fi:elementary.html#sensitivity"><span class="toc-section-number">16.3.3</span> Sensitivity</a></li>
+<li><a href="fi:elementary.html#modified-duration-of-a-portfolio"><span class="toc-section-number">16.3.4</span> Modified Duration of a Portfolio</a></li>
+<li><a href="fi:elementary.html#duration"><span class="toc-section-number">16.3.5</span> Duration</a></li>
+<li><a href="fi:elementary.html#sec:duration-of-a-portfolio"><span class="toc-section-number">16.3.6</span> Duration of a Portfolio</a></li>
+</ul></li>
+<li><a href="fi:elementary.html#bond-clean-and-dirty-price"><span class="toc-section-number">16.4</span> Bond Clean and Dirty Price</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-term-structure-of-interest-rates.html#the-term-structure-of-interest-rates"><span class="toc-section-number">17</span> The Term Structure of Interest Rates</a>
+<ul>
+<li><a href="the-term-structure-of-interest-rates.html#term-structure-shapes"><span class="toc-section-number">17.1</span> Term Structure Shapes</a></li>
+<li><a href="the-term-structure-of-interest-rates.html#building-a-zero-coupon-bond-curve"><span class="toc-section-number">17.2</span> Building a Zero-Coupon Bond Curve</a></li>
+<li><a href="the-term-structure-of-interest-rates.html#functional-forms-for-the-zero-coupon-curve"><span class="toc-section-number">17.3</span> Functional forms for the zero-coupon curve</a></li>
+</ul></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#simple-interest-rate-derivatives"><span class="toc-section-number">18</span> Simple Interest Rate Derivatives</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#spot-and-forward-interest-rates"><span class="toc-section-number">18.1</span> Spot and Forward Interest Rates</a></li>
+<li><a href="simple-interest-rate-derivatives.html#forward-rate-agreement-fra"><span class="toc-section-number">18.2</span> Forward Rate Agreement (FRA)</a></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#t-bill-futures"><span class="toc-section-number">18.3</span> T-Bill Futures</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#arbitrage"><span class="toc-section-number">18.3.1</span> Arbitrage</a></li>
+<li><a href="simple-interest-rate-derivatives.html#quotes"><span class="toc-section-number">18.3.2</span> Quotes</a></li>
+</ul></li>
+<li><a href="simple-interest-rate-derivatives.html#euro-currency-futures"><span class="toc-section-number">18.4</span> Euro-Currency Futures</a></li>
+<li><a href="simple-interest-rate-derivatives.html#eurodollar-rate-versus-forward-rate"><span class="toc-section-number">18.5</span> Eurodollar Rate Versus Forward Rate</a></li>
+<li class="has-sub"><a href="simple-interest-rate-derivatives.html#convexity-adjustment"><span class="toc-section-number">18.6</span> Convexity Adjustment</a>
+<ul>
+<li><a href="simple-interest-rate-derivatives.html#special-case-of-natural-time-lag"><span class="toc-section-number">18.6.1</span> Special Case of Natural Time Lag</a></li>
+<li><a href="simple-interest-rate-derivatives.html#convexity-adjustment-examples"><span class="toc-section-number">18.6.2</span> Convexity Adjustment Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="bond-futures.html#bond-futures"><span class="toc-section-number">19</span> Bond Futures</a>
+<ul>
+<li><a href="bond-futures.html#forward-price"><span class="toc-section-number">19.1</span> Forward Price</a></li>
+<li><a href="bond-futures.html#delivery-against-the-futures-contract"><span class="toc-section-number">19.2</span> Delivery against the Futures contract</a></li>
+<li><a href="bond-futures.html#the-conversion-factor"><span class="toc-section-number">19.3</span> The Conversion Factor</a></li>
+<li><a href="bond-futures.html#determination-of-the-cheapest-to-deliver"><span class="toc-section-number">19.4</span> Determination of the Cheapest to Deliver</a></li>
+<li><a href="bond-futures.html#implied-repo-rate"><span class="toc-section-number">19.5</span> Implied Repo Rate</a></li>
+<li><a href="bond-futures.html#the-delivery-option"><span class="toc-section-number">19.6</span> The Delivery Option</a></li>
+<li><a href="bond-futures.html#ir-sensitivity-of-bund-futures"><span class="toc-section-number">19.7</span> IR sensitivity of Bund Futures</a></li>
+<li><a href="bond-futures.html#cash-carry-arbitrage"><span class="toc-section-number">19.8</span> Cash-Carry Arbitrage</a></li>
+<li><a href="bond-futures.html#hedging-a-bond-with-a-euro-bund-contract"><span class="toc-section-number">19.9</span> Hedging a Bond with a Euro-Bund Contract</a></li>
+</ul></li>
+<li class="has-sub"><a href="libor-swaps.html#libor-swaps"><span class="toc-section-number">20</span> Libor Swaps</a>
+<ul>
+<li><a href="libor-swaps.html#ir-swap-pricing"><span class="toc-section-number">20.1</span> IR Swap Pricing</a></li>
+</ul></li>
+<li class="has-sub"><a href="fixed-income-risk-management.html#fixed-income-risk-management"><span class="toc-section-number">21</span> Fixed Income Risk Management</a>
+<ul>
+<li><a href="fixed-income-risk-management.html#immunization"><span class="toc-section-number">21.1</span> Immunization</a></li>
+<li><a href="fixed-income-risk-management.html#dedication"><span class="toc-section-number">21.2</span> Dedication</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-vasicek-model.html#the-vasicek-model"><span class="toc-section-number">22</span> The Vasicek Model</a>
+<ul>
+<li><a href="the-vasicek-model.html#derivatives-with-non-traded-underlying-asset"><span class="toc-section-number">22.1</span> Derivatives with Non Traded Underlying Asset</a></li>
+<li><a href="the-vasicek-model.html#the-market-price-of-interest-rate-risk"><span class="toc-section-number">22.2</span> The Market Price of Interest Rate Risk</a></li>
+</ul></li>
+<li class="has-sub"><a href="the-model-of-hull-white.html#the-model-of-hull-white"><span class="toc-section-number">23</span> The Model of Hull &amp; White</a>
+<ul>
+<li><a href="the-model-of-hull-white.html#moments-of-x_t-under-a-ou-process"><span class="toc-section-number">23.1</span> Moments of <span class="math inline">\(x_t\)</span> under a OU Process</a></li>
+<li class="has-sub"><a href="the-model-of-hull-white.html#the-hull-white-trinomial-model"><span class="toc-section-number">23.2</span> The Hull &amp; White Trinomial Model</a>
+<ul>
+<li><a href="the-model-of-hull-white.html#step-1"><span class="toc-section-number">23.2.1</span> Step 1</a></li>
+<li><a href="the-model-of-hull-white.html#step-2"><span class="toc-section-number">23.2.2</span> Step 2</a></li>
+</ul></li>
+<li><a href="the-model-of-hull-white.html#generalization"><span class="toc-section-number">23.3</span> Generalization</a></li>
+</ul></li>
+<li class="has-sub"><a href="deterministic-time-varying-volatility.html#deterministic-time-varying-volatility"><span class="toc-section-number">24</span> Deterministic Time-Varying Volatility</a>
+<ul>
+<li><a href="deterministic-time-varying-volatility.html#gabillons-model"><span class="toc-section-number">24.1</span> Gabillon’s Model</a></li>
+<li><a href="deterministic-time-varying-volatility.html#deterministic-volatility-in-a-seasonal-market"><span class="toc-section-number">24.2</span> Deterministic Volatility in a Seasonal Market</a></li>
+</ul></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#pricing-under-an-objective-density"><span class="toc-section-number">25</span> Pricing under an Objective Density</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#conditional-entropy"><span class="toc-section-number">25.1</span> Conditional Entropy</a></li>
+<li><a href="pricing-under-an-objective-density.html#relative-entropy-of-uniform-densities"><span class="toc-section-number">25.2</span> Relative Entropy of Uniform Densities</a></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#computation-of-a-risk-neutral-density"><span class="toc-section-number">25.3</span> Computation of a Risk-neutral Density</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#calculation-of-risk-neutral-density-p"><span class="toc-section-number">25.3.1</span> Calculation of Risk-Neutral Density <span class="math inline">\(P\)</span></a></li>
+<li><a href="pricing-under-an-objective-density.html#matching-market-data"><span class="toc-section-number">25.3.2</span> Matching Market Data</a></li>
+<li><a href="pricing-under-an-objective-density.html#solution"><span class="toc-section-number">25.3.3</span> Solution</a></li>
+<li><a href="pricing-under-an-objective-density.html#solution-1"><span class="toc-section-number">25.3.4</span> Solution</a></li>
+<li><a href="pricing-under-an-objective-density.html#illustration-1"><span class="toc-section-number">25.3.5</span> Illustration</a></li>
+<li><a href="pricing-under-an-objective-density.html#a-lottery-ticket"><span class="toc-section-number">25.3.6</span> A Lottery Ticket…</a></li>
+</ul></li>
+<li class="has-sub"><a href="pricing-under-an-objective-density.html#monte-carlo-pricing-with-historical-paths"><span class="toc-section-number">25.4</span> Monte-Carlo Pricing with Historical Paths</a>
+<ul>
+<li><a href="pricing-under-an-objective-density.html#sec:model"><span class="toc-section-number">25.4.1</span> The Model</a></li>
+<li><a href="pricing-under-an-objective-density.html#incorporation-of-bid-ask-spread"><span class="toc-section-number">25.4.2</span> Incorporation of bid-ask spread</a></li>
+<li><a href="pricing-under-an-objective-density.html#extension-to-arbitrary-cash-flows"><span class="toc-section-number">25.4.3</span> Extension to arbitrary cash flows</a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references">References</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="fixed-income-risk-management" class="section level1" number="21">
+<h1><span class="header-section-number">21</span> Fixed Income Risk Management</h1>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="fixed-income-risk-management.html#cb333-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(linprog)</span>
+<span id="cb333-2"><a href="fixed-income-risk-management.html#cb333-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(xtable)</span>
+<span id="cb333-3"><a href="fixed-income-risk-management.html#cb333-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(empfin)</span></code></pre></div>
+<p><span class="newthought">In</span> this chapter, we introduce the two broad categories of Fixed Income
+risk management strategies: immunization and dedication. The problem
+being addressed is simple: given a liability stream (anticipated future
+payments, certain or contingent), and given a initial budget, how should
+the funds be invested so that the proceeds from the investment portfolio
+may fund the liability, under all foreseeable interest rate scenarios?</p>
+<p>The immunization strategy is a two steps process. The manager first
+identifies the interest rate risk factors, and then constructs a
+portfolio such that assets and liabilities have the same exposure to the
+risk factors, therefore, the global position (assets - liabilities) is
+immunized against movements of the risk factors.</p>
+<p>The dedication or cash flow matching strategy takes a different
+approach, but is conceptually simple. The goal of this strategy is to
+avoid interest rate risk by constructing a portfolio that will generate
+in a timely manner the cash flow needed to meet the liability, thereby
+evacuating interest risk by construction.</p>
+<p>In practice, fund managers often use a mix of both strategies. The two
+strategies are next described and illustrated.</p>
+<div id="immunization" class="section level2" number="21.1">
+<h2><span class="header-section-number">21.1</span> Immunization</h2>
+<p>The method is best described by the following elementary example. A fund
+manager has a certain liability <span class="math inline">\(L_T\)</span> to be paid at time <span class="math inline">\(T\)</span>. The
+present value of this liability is <span class="math inline">\(L_T(1+r)^{-T}\)</span>. The manager wants to
+invest that budget in a portfolio that will provide the wealth <span class="math inline">\(L_T\)</span> at
+the required time, regardless of future interest rates.</p>
+<p>She constructs a portfolio that generates cash flows <span class="math inline">\(F_i\)</span> at time
+<span class="math inline">\(T_i\)</span>. Cash flows paid at time <span class="math inline">\(T_i&lt;T\)</span> will be reinvested till <span class="math inline">\(T\)</span>, and
+those occurring after <span class="math inline">\(T\)</span> will be sold at <span class="math inline">\(T\)</span>. The value of this
+portfolio at <span class="math inline">\(T\)</span> is thus:</p>
+<p><span class="math display">\[\begin{aligned}
+V_T &amp;=&amp; \sum_i F_i (1+r)^{T-T_i} \end{aligned}\]</span></p>
+<p>and must be equal to <span class="math inline">\(L_T\)</span>. Let’s compute the Variation of <span class="math inline">\(V_T\)</span>:</p>
+<p><span class="math display">\[\begin{align}
+  \frac{\partial V_T}{\partial r} &amp;=&amp; \sum_i F_i (T-T_i)(1+r)^{T-T_i-1} \\
+  &amp;=&amp; \left[ \sum_i F_i T (1+r)^{-T_i} - \sum_i F_i T_i (1+r)^{T_i} \right](1+r)^{T-1} \\
+  &amp;=&amp; V_T \left[ T \frac{\sum_i F_i (1+r)^{-T_i}}{V_T} - \frac{\sum_i F_i T_i (1+r)^{T_i}}{V_T} \right](1+r)^{T-1}
+\end{align}\]</span></p>
+<p>In the last expression, we recognize the definition of Duration
+(<a href="fi:elementary.html#eq:macaulay">(16.3)</a>), so that the Variation of <span class="math inline">\(V_T\)</span> is finally:</p>
+<p><span class="math display">\[\frac{\partial V_T}{\partial r} = V_T \left[ T  - D \right](1+r)^{T-1}\]</span></p>
+<p>where <span class="math inline">\(D\)</span> is the duration of the stream of cash flows <span class="math inline">\(F_i\)</span>. This
+equation shows that if the stream of cash flows <span class="math inline">\(F_i\)</span> has the same
+Duration as the investment horizon <span class="math inline">\(T\)</span>, then, in a first-order
+approximation, the wealth <span class="math inline">\(V_T\)</span> is insensitive to changes in yield. If
+yield deceases, the lower value of the reinvested cash flows will be
+offset by the higher present value of the cash flows maturing after <span class="math inline">\(T\)</span>.
+The converse is true if yield increases. This investment strategy, which
+aims at preserving wealth at a given investment horizon is called
+immunization.</p>
+<p>How to construct the assets portfolio is described next. Let the
+liability <span class="math inline">\(V_T=100\)</span>, <span class="math inline">\(T=5, V_0 = V_T (1+r)^{-T}\)</span>. Current yield is
+<span class="math inline">\(r=.05\)</span>. The investment portfolio will be made of two bonds described below:</p>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:immu-bonds">Table 21.1: </span>Bonds available for immunization</span><!--</caption>--></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Coupon</th>
+<th align="center">Maturity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A</td>
+<td align="center">0.05</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">B</td>
+<td align="center">0.06</td>
+<td align="center">7</td>
+</tr>
+</tbody>
+</table>
+<p>We next determine the quantities <span class="math inline">\(q_A\)</span> and <span class="math inline">\(q_B\)</span> of each bond in the
+investment portfolio, so that the present value and the Duration of the
+portfolio match those of the liability. Remember from section
+<span class="math display">\[sec:duration-of-a-portfolio\]</span> that the Duration of a portfolio is a
+weighted average of the Durations of the bonds in the portfolio.</p>
+<p>We express these two conditions by the following equations:</p>
+<p><span class="math display">\[\begin{align}
+V_0 &amp; = &amp; q_A P_A + q_B P_B \\
+T &amp; = &amp; q_A \frac{P_A D_A}{V_0} + q_B \frac{P_B D_B}{V_0}
+\end{align}\]</span></p>
+<p>or, using matrix notation:</p>
+<p><span class="math display">\[A Q = b\]</span></p>
+<p>with</p>
+<p><span class="math display">\[A = \begin{pmatrix} P_A &amp; P_B \\
+                    \frac{P_A D_A}{V_0}  &amp; \frac{P_B D_B}{V_0} \end{pmatrix}
+Q = \begin{pmatrix} q_A \\ q_B
+\end{pmatrix}
+b = \begin{pmatrix} V_0 \\ T
+\end{pmatrix}\]</span></p>
+<p>This system is solved for <span class="math inline">\(q_A\)</span> and <span class="math inline">\(q_B\)</span> to determine the portfolio
+composition.</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="fixed-income-risk-management.html#cb334-1" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb334-2"><a href="fixed-income-risk-management.html#cb334-2" aria-hidden="true" tabindex="-1"></a>  T <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb334-3"><a href="fixed-income-risk-management.html#cb334-3" aria-hidden="true" tabindex="-1"></a>  V_0 <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span>(<span class="dv">1</span><span class="sc">+</span>r)<span class="sc">^</span>(<span class="sc">-</span>T)</span>
+<span id="cb334-4"><a href="fixed-income-risk-management.html#cb334-4" aria-hidden="true" tabindex="-1"></a>  P_A <span class="ot">&lt;-</span> <span class="fu">SimpleBondPrice</span>(.<span class="dv">05</span>, <span class="dv">3</span>, <span class="at">yield=</span>r)</span>
+<span id="cb334-5"><a href="fixed-income-risk-management.html#cb334-5" aria-hidden="true" tabindex="-1"></a>  P_B <span class="ot">&lt;-</span> <span class="fu">SimpleBondPrice</span>(.<span class="dv">06</span>, <span class="dv">7</span>, <span class="at">yield=</span>r)</span>
+<span id="cb334-6"><a href="fixed-income-risk-management.html#cb334-6" aria-hidden="true" tabindex="-1"></a>  D_A <span class="ot">&lt;-</span> <span class="fu">SimpleDuration</span>(.<span class="dv">05</span>, <span class="dv">3</span>, <span class="at">yield=</span>r)</span>
+<span id="cb334-7"><a href="fixed-income-risk-management.html#cb334-7" aria-hidden="true" tabindex="-1"></a>  D_B <span class="ot">&lt;-</span> <span class="fu">SimpleDuration</span>(.<span class="dv">06</span>, <span class="dv">7</span>, <span class="at">yield=</span>r)</span>
+<span id="cb334-8"><a href="fixed-income-risk-management.html#cb334-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb334-9"><a href="fixed-income-risk-management.html#cb334-9" aria-hidden="true" tabindex="-1"></a>  A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(P_A, P_B, D_A<span class="sc">*</span>P_A<span class="sc">/</span>V_0, D_B<span class="sc">*</span>P_B<span class="sc">/</span>V_0), <span class="at">nrow=</span><span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb334-10"><a href="fixed-income-risk-management.html#cb334-10" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(V_0, T), <span class="at">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb334-11"><a href="fixed-income-risk-management.html#cb334-11" aria-hidden="true" tabindex="-1"></a>  Q <span class="ot">=</span> <span class="fu">solve</span>(A, b)</span>
+<span id="cb334-12"><a href="fixed-income-risk-management.html#cb334-12" aria-hidden="true" tabindex="-1"></a>  q_A <span class="ot">&lt;-</span> Q[<span class="dv">1</span>]</span>
+<span id="cb334-13"><a href="fixed-income-risk-management.html#cb334-13" aria-hidden="true" tabindex="-1"></a>  q_B <span class="ot">&lt;-</span> Q[<span class="dv">2</span>]</span></code></pre></div>
+<p>The solution is <span class="math inline">\(q_A=0.24, q_B=0.51\)</span>.
+To verify the robustness of the selected portfolio, we next simulate the
+wealth at horizon <span class="math inline">\(T\)</span>, under various scenarios for <span class="math inline">\(r\)</span>.</p>
+<p>Let <span class="math inline">\(V_A\)</span> (resp. <span class="math inline">\(V_B\)</span>) be the wealth at time <span class="math inline">\(T\)</span> generated by 1 unit of
+bond A (resp. B).</p>
+<p><span class="math display">\[V_A = \sum_i F_A(t_i) (1+r)^{(T-T_i)}\]</span></p>
+<p>where <span class="math inline">\(F_A(t)\)</span> is the cash flow generated at time <span class="math inline">\(t\)</span> by one unit of
+bond <span class="math inline">\(A\)</span>. The wealth at time <span class="math inline">\(T\)</span> is the compounded value of the cash
+flows occurring before <span class="math inline">\(T\)</span>, and the discounted value of the cash flows
+occurring after <span class="math inline">\(T\)</span>.</p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="fixed-income-risk-management.html#cb335-1" aria-hidden="true" tabindex="-1"></a>  FutureValue <span class="ot">&lt;-</span> <span class="cf">function</span>(coupon, n, yield, T) {</span>
+<span id="cb335-2"><a href="fixed-income-risk-management.html#cb335-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">100</span><span class="sc">*</span><span class="fu">sum</span>(<span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="cf">function</span>(i) <span class="fu">ifelse</span>(i<span class="sc">&lt;</span>n, coupon<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> yield)<span class="sc">^</span>(i<span class="sc">-</span>T), (<span class="dv">1</span><span class="sc">+</span>coupon)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>yield)<span class="sc">^</span>(n<span class="sc">-</span>T))))</span>
+<span id="cb335-3"><a href="fixed-income-risk-management.html#cb335-3" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb335-4"><a href="fixed-income-risk-management.html#cb335-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb335-5"><a href="fixed-income-risk-management.html#cb335-5" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">01</span>, .<span class="dv">1</span>, .<span class="dv">01</span>)</span>
+<span id="cb335-6"><a href="fixed-income-risk-management.html#cb335-6" aria-hidden="true" tabindex="-1"></a>  V_A <span class="ot">&lt;-</span> <span class="fu">sapply</span>(r, <span class="cf">function</span>(x) <span class="fu">FutureValue</span>(.<span class="dv">05</span>, <span class="dv">3</span>, x, <span class="dv">5</span>))</span>
+<span id="cb335-7"><a href="fixed-income-risk-management.html#cb335-7" aria-hidden="true" tabindex="-1"></a>  V_B <span class="ot">&lt;-</span> <span class="fu">sapply</span>(r, <span class="cf">function</span>(x) <span class="fu">FutureValue</span>(.<span class="dv">06</span>, <span class="dv">7</span>, x, <span class="dv">5</span>))</span>
+<span id="cb335-8"><a href="fixed-income-risk-management.html#cb335-8" aria-hidden="true" tabindex="-1"></a>  Hedge <span class="ot">&lt;-</span> q_A<span class="sc">*</span>V_A <span class="sc">+</span> q_B<span class="sc">*</span>V_B</span></code></pre></div>
+<p><img src="410-fixedinRiskManagement_files/figure-html/410-fig-immunization-1.png" width="672"  /></p>
+<p>Figure <a href="#fig:410-fig-immunization"><strong>??</strong></a> plots the value of the investment portfolio
+under various yield scenarios. We observe that, under the restrictive
+conditions of this experiment, the hedge has always a greater value than
+the liability at horizon <span class="math inline">\(T\)</span>. One should keep in mind, however, that
+this experiment is done under the assumption that yields for all
+maturities are identical, and that they all move up or down in parallel.
+More sophisticated methods address these limitations. The most popular
+method is to immunize separately various maturity segments. Another
+approach is to identify several yield curve risk factors, such as a
+parallel shift, a change in slope and a change in convexity, and
+immunize the liability against movements along each factor.</p>
+<p>A completely different approach is to construct a portfolio that
+generates the necessary cash flow just in time, so as to minimize the
+need to re-invest cash that becomes available too early, or sell cash
+flows that occur too late. This strategy, called Dedication or cash-flow
+matching, is now described.</p>
+</div>
+<div id="dedication" class="section level2" number="21.2">
+<h2><span class="header-section-number">21.2</span> Dedication</h2>
+<p>Assume that, over the next 5 years, you must pay the amounts
+<span class="math inline">\(L(t), t=1, \ldots, 5\)</span> summarized in Table <a href="#tab:410-liability"><strong>??</strong></a>. In order
+to meet this liability, you can invest in a portfolio of 5 bonds
+described in table <a href="fixed-income-risk-management.html#tab:410-bonds">21.3</a>.</p>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:liability">Table 21.2: </span>Liability per year</span><!--</caption>--></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Year</th>
+<th align="center">Liability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">100</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">200</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">150</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">400</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">300</td>
+</tr>
+</tbody>
+</table>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:410-bonds">Table 21.3: </span> Bonds available for dedication</span><!--</caption>--></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Bond</th>
+<th align="center">Maturity</th>
+<th align="center">Coupon</th>
+<th align="center">Yield</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">.05</td>
+<td align="center">.050</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">.07</td>
+<td align="center">.075</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">.06</td>
+<td align="center">.058</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">.05</td>
+<td align="center">.049</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">.08</td>
+<td align="center">.081</td>
+</tr>
+</tbody>
+</table>
+<p>At every period, you can re-invest excess cash flow at a rate <span class="math inline">\(r\)</span>,
+chosen conservatively, but cannot borrow. You want, of course, to
+construct the cheapest portfolio that will match the liability.</p>
+<p>To formalize the strategy, we will use the following notation:</p>
+<dl>
+<dt><span class="math inline">\(q_i\)</span></dt>
+<dd>
+quantity of bond <span class="math inline">\(i\)</span>, purchased at time <span class="math inline">\(t=0\)</span>
+</dd>
+<dt><span class="math inline">\(C(t)\)</span></dt>
+<dd>
+cash balance at time <span class="math inline">\(t\)</span>
+</dd>
+<dt><span class="math inline">\(F_i(t)\)</span></dt>
+<dd>
+cash flow from 1 unit of bond <span class="math inline">\(i\)</span> at time <span class="math inline">\(t\)</span>.
+</dd>
+<dt><span class="math inline">\(P_i\)</span></dt>
+<dd>
+current price of bond <span class="math inline">\(i\)</span>
+</dd>
+</dl>
+<p>The cash balance at each period is the compounded value of the cash
+balance from the previous period, augmented of the difference between
+the inflows and the outflows:</p>
+<p><span class="math display">\[C(t) = (1+r) C(t-1) + \sum_i q_i F_i(t) - L(t)\]</span></p>
+<p>The objective is to determine <span class="math inline">\(q_i, i=1, \ldots, 5\)</span> and the initial cash
+balance <span class="math inline">\(C(0)\)</span>, so that:</p>
+<ul>
+<li>The cost of the initial portfolio is minimized</li>
+<li>The portfolio is long assets (<span class="math inline">\(q_i &gt;= 0\)</span>)</li>
+<li>The cash balance is always positive</li>
+</ul>
+<p>The investment strategy can be determined by solving the following
+linear program:</p>
+<p><span class="math display" id="eq:cf" id="eq:objective">\[\begin{align}
+    \mbox{min} &amp; \sum_i q_i P_i \tag{21.1} \\
+    \mbox{s.t.} &amp; \notag \\
+    &amp; (1+r) C(t-1) + \sum_i q_i F_i(t) -C(t) = L(t) \tag{21.2} \\
+    &amp; q_i &gt;= 0, i=1, \ldots, n \notag \\
+    &amp; C(t) &gt;= 0, t=1, \ldots, 5 \notag
+  \end{align}\]</span></p>
+<p>There is no need to define an initial cash balance because there is
+already a one-year bond in the investment portfolio. It is convenient to
+express the problem in matrix notation:</p>
+<p><span class="math display">\[\begin{align}
+    \mbox{min} &amp; P^T x \\
+    \mbox{s.t.} &amp; \notag \\
+    &amp; A x = b \notag \\
+    &amp; x &gt;= 0 \notag
+   \end{align}\]</span></p>
+<p>where the column vector <span class="math inline">\(x\)</span> represents the variables of the problem:
+<span class="math display">\[x = (q_1, \ldots, q_5, c_1, \ldots , c_5)^T\]</span></p>
+<p>and <span class="math inline">\(P\)</span> the vector of asset prices at time <span class="math inline">\(t=0\)</span>:</p>
+<p><span class="math display">\[P = (P_1, \ldots, P_5, 0, 0, 0, 0, 0)^T\]</span></p>
+<p>The cash flow definition equations in matrix form are defined with:</p>
+<p><span class="math display">\[b = \begin{pmatrix} 100 \\ 200 \\ 150 \\ 400 \\ 300
+\end{pmatrix}\]</span></p>
+<p><span class="math display">\[A = \begin{pmatrix}
+           105 &amp;  7 &amp;   6&amp;   5&amp;   8&amp;   -1&amp;   0&amp; 0&amp; 0&amp; 0 \\
+              0&amp; 107&amp;   6&amp;   5&amp;   8&amp;  1+r&amp;  -1&amp; 0&amp; 0&amp; 0 \\
+              0&amp;   0&amp; 106&amp;   5&amp;   8&amp;    0&amp; 1+r&amp; -1&amp; 0&amp; 0 \\
+              0&amp;   0&amp;   0&amp; 105&amp;   8&amp;    0&amp;   0&amp; 1+r&amp; -1&amp; 0 \\
+              0&amp;   0&amp;   0&amp;   0&amp; 108&amp;    0&amp;   0&amp;   0&amp; 1+r&amp; -1
+\end{pmatrix}\]</span></p>
+<p>The program is set up as follows:</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="fixed-income-risk-management.html#cb336-1" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> .<span class="dv">01</span></span>
+<span id="cb336-2"><a href="fixed-income-risk-management.html#cb336-2" aria-hidden="true" tabindex="-1"></a>  Amat <span class="ot">=</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">105</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="sc">-</span><span class="dv">1</span>,   <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb336-3"><a href="fixed-income-risk-management.html#cb336-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">0</span>,  <span class="dv">107</span>,<span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">8</span>,   <span class="dv">1</span><span class="sc">+</span>r,  <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb336-4"><a href="fixed-income-risk-management.html#cb336-4" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">106</span>, <span class="dv">5</span>, <span class="dv">8</span>,   <span class="dv">0</span>, <span class="dv">1</span><span class="sc">+</span>r, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb336-5"><a href="fixed-income-risk-management.html#cb336-5" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">105</span>, <span class="dv">8</span>,   <span class="dv">0</span>,   <span class="dv">0</span>, <span class="dv">1</span><span class="sc">+</span>r, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb336-6"><a href="fixed-income-risk-management.html#cb336-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,   <span class="dv">0</span>, <span class="dv">108</span>, <span class="dv">0</span>,   <span class="dv">0</span>,   <span class="dv">0</span>, <span class="dv">1</span><span class="sc">+</span>r, <span class="sc">-</span><span class="dv">1</span>))</span></code></pre></div>
+<p>The right hand side of <a href="fixed-income-risk-management.html#eq:cf">(21.2)</a>:</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="fixed-income-risk-management.html#cb337-1" aria-hidden="true" tabindex="-1"></a>  bvec <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">150</span>, <span class="dv">400</span>, <span class="dv">300</span>)</span>
+<span id="cb337-2"><a href="fixed-income-risk-management.html#cb337-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(bvec) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;T1&#39;</span>, <span class="st">&#39;T2&#39;</span>, <span class="st">&#39;T3&#39;</span>, <span class="st">&#39;T4&#39;</span>, <span class="st">&#39;T5&#39;</span>);</span></code></pre></div>
+<p>The vector <span class="math inline">\(P\)</span>, the cost of assets at time <span class="math inline">\(t=0\)</span>:</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="fixed-income-risk-management.html#cb338-1" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> .<span class="dv">06</span></span>
+<span id="cb338-2"><a href="fixed-income-risk-management.html#cb338-2" aria-hidden="true" tabindex="-1"></a>  cvec <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">SimpleBondPrice</span>(.<span class="dv">05</span>, <span class="dv">1</span>, <span class="at">yield=</span>y),</span>
+<span id="cb338-3"><a href="fixed-income-risk-management.html#cb338-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">SimpleBondPrice</span>(.<span class="dv">07</span>, <span class="dv">2</span>, <span class="at">yield=</span>y),</span>
+<span id="cb338-4"><a href="fixed-income-risk-management.html#cb338-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">SimpleBondPrice</span>(.<span class="dv">06</span>, <span class="dv">3</span>, <span class="at">yield=</span>y),</span>
+<span id="cb338-5"><a href="fixed-income-risk-management.html#cb338-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">SimpleBondPrice</span>(.<span class="dv">05</span>, <span class="dv">4</span>, <span class="at">yield=</span>y),</span>
+<span id="cb338-6"><a href="fixed-income-risk-management.html#cb338-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">SimpleBondPrice</span>(.<span class="dv">08</span>, <span class="dv">5</span>, <span class="at">yield=</span>y),</span>
+<span id="cb338-7"><a href="fixed-income-risk-management.html#cb338-7" aria-hidden="true" tabindex="-1"></a>           <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb338-8"><a href="fixed-income-risk-management.html#cb338-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(cvec) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;B1&#39;</span>, <span class="st">&#39;B2&#39;</span>, <span class="st">&#39;B3&#39;</span>, <span class="st">&#39;B4&#39;</span>, <span class="st">&#39;B5&#39;</span>, <span class="st">&#39;C1&#39;</span>, <span class="st">&#39;C2&#39;</span>, <span class="st">&#39;C3&#39;</span>, <span class="st">&#39;C4&#39;</span>, <span class="st">&#39;C5&#39;</span>);</span></code></pre></div>
+<p>The program is solved by</p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="fixed-income-risk-management.html#cb339-1" aria-hidden="true" tabindex="-1"></a>  lp.sol <span class="ot">&lt;-</span> <span class="fu">solveLP</span>(cvec, bvec, Amat, <span class="at">const.dir=</span><span class="fu">rep</span>(<span class="st">&#39;&gt;=&#39;</span>, <span class="fu">length</span>(bvec)))</span></code></pre></div>
+<p>The optimal portfolio composition is shown in Table <a href="fixed-income-risk-management.html#tab:sol1">21.4</a>.</p>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:sol1">Table 21.4: </span>Dedicated portfolio</span><!--</caption>--></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Quantity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">B1</td>
+<td align="center">0.41</td>
+</tr>
+<tr class="even">
+<td align="left">B2</td>
+<td align="center">1.44</td>
+</tr>
+<tr class="odd">
+<td align="left">B3</td>
+<td align="center">1.04</td>
+</tr>
+<tr class="even">
+<td align="left">B4</td>
+<td align="center">3.60</td>
+</tr>
+<tr class="odd">
+<td align="left">B5</td>
+<td align="center">2.78</td>
+</tr>
+</tbody>
+</table>
+<p>Since we can have as many bonds as time period, and that the <span class="math inline">\(A\)</span> matrix
+is full row-rank, we have a perfect match between the generated cash
+flows and the liability stream, at a cost that is therefore exactly
+equal to the present value of the liability:</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="fixed-income-risk-management.html#cb340-1" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="cf">function</span>(i) <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>y)<span class="sc">^</span>i)</span>
+<span id="cb340-2"><a href="fixed-income-risk-management.html#cb340-2" aria-hidden="true" tabindex="-1"></a>  PV <span class="ot">&lt;-</span> <span class="fu">sum</span>(df<span class="sc">*</span>bvec)</span>
+<span id="cb340-3"><a href="fixed-income-risk-management.html#cb340-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&#39;dedication cost:&#39;</span>, <span class="fu">round</span>(lp.sol<span class="sc">$</span>opt,<span class="dv">2</span>), <span class="st">&#39;PV of liability:&#39;</span>, <span class="fu">round</span>(PV,<span class="dv">2</span>)))</span></code></pre></div>
+<pre><code>## [1] &quot;dedication cost: 939.3 PV of liability: 939.3&quot;</code></pre>
+<p>Any discrepancy would provide an opportunity for risk-less arbitrage.</p>
+<p>Consider now the same problem, but with fewer bonds available to
+construct the dedicated portfolio (bond 3 is deleted from the set):</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="fixed-income-risk-management.html#cb342-1" aria-hidden="true" tabindex="-1"></a>  Amat <span class="ot">=</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">105</span>, <span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="sc">-</span><span class="dv">1</span>,   <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb342-2"><a href="fixed-income-risk-management.html#cb342-2" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">0</span>,  <span class="dv">107</span>,<span class="dv">5</span>, <span class="dv">8</span>,   <span class="dv">1</span><span class="sc">+</span>r,  <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb342-3"><a href="fixed-income-risk-management.html#cb342-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">8</span>,   <span class="dv">0</span>, <span class="dv">1</span><span class="sc">+</span>r, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb342-4"><a href="fixed-income-risk-management.html#cb342-4" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">105</span>, <span class="dv">8</span>,   <span class="dv">0</span>,   <span class="dv">0</span>, <span class="dv">1</span><span class="sc">+</span>r, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb342-5"><a href="fixed-income-risk-management.html#cb342-5" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">108</span>, <span class="dv">0</span>,   <span class="dv">0</span>,   <span class="dv">0</span>, <span class="dv">1</span><span class="sc">+</span>r, <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb342-6"><a href="fixed-income-risk-management.html#cb342-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb342-7"><a href="fixed-income-risk-management.html#cb342-7" aria-hidden="true" tabindex="-1"></a>  cvec <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">SimpleBondPrice</span>(.<span class="dv">05</span>, <span class="dv">1</span>, <span class="at">yield=</span>y),</span>
+<span id="cb342-8"><a href="fixed-income-risk-management.html#cb342-8" aria-hidden="true" tabindex="-1"></a>           <span class="fu">SimpleBondPrice</span>(.<span class="dv">07</span>, <span class="dv">2</span>, <span class="at">yield=</span>y),</span>
+<span id="cb342-9"><a href="fixed-income-risk-management.html#cb342-9" aria-hidden="true" tabindex="-1"></a>           <span class="fu">SimpleBondPrice</span>(.<span class="dv">05</span>, <span class="dv">4</span>, <span class="at">yield=</span>y),</span>
+<span id="cb342-10"><a href="fixed-income-risk-management.html#cb342-10" aria-hidden="true" tabindex="-1"></a>           <span class="fu">SimpleBondPrice</span>(.<span class="dv">08</span>, <span class="dv">5</span>, <span class="at">yield=</span>y),</span>
+<span id="cb342-11"><a href="fixed-income-risk-management.html#cb342-11" aria-hidden="true" tabindex="-1"></a>           <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb342-12"><a href="fixed-income-risk-management.html#cb342-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(cvec) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;B1&#39;</span>, <span class="st">&#39;B2&#39;</span>, <span class="st">&#39;B4&#39;</span>, <span class="st">&#39;B5&#39;</span>, <span class="st">&#39;C1&#39;</span>, <span class="st">&#39;C2&#39;</span>, <span class="st">&#39;C3&#39;</span>, <span class="st">&#39;C4&#39;</span>, <span class="st">&#39;C5&#39;</span>);</span>
+<span id="cb342-13"><a href="fixed-income-risk-management.html#cb342-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb342-14"><a href="fixed-income-risk-management.html#cb342-14" aria-hidden="true" tabindex="-1"></a>  res2 <span class="ot">&lt;-</span> <span class="fu">solveLP</span>(cvec, bvec, Amat, <span class="at">const.dir=</span><span class="fu">rep</span>(<span class="st">&#39;&gt;=&#39;</span>, <span class="fu">length</span>(bvec)))</span></code></pre></div>
+<p>The optimal portfolio is displayed in table <a href="#tab:sol3"><strong>??</strong></a>. We no longer
+have a perfect match, and some cash must be reinvested from period to
+period, as shown in table <a href="fixed-income-risk-management.html#tab:sol2">21.5</a>: a cash balance is re-invested
+from period 2 to period 3.</p>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:sol2">Table 21.5: </span>Dedicated portfolio</span><!--</caption>--></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Period</th>
+<th align="center">Cash Balance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">C1</td>
+<td align="center">1</td>
+<td align="center">0.0</td>
+</tr>
+<tr class="even">
+<td align="left">C2</td>
+<td align="center">2</td>
+<td align="center">108.7</td>
+</tr>
+<tr class="odd">
+<td align="left">C3</td>
+<td align="center">3</td>
+<td align="center">0.0</td>
+</tr>
+<tr class="even">
+<td align="left">C4</td>
+<td align="center">4</td>
+<td align="center">0.0</td>
+</tr>
+<tr class="odd">
+<td align="left">C5</td>
+<td align="center">5</td>
+<td align="center">0.0</td>
+</tr>
+</tbody>
+</table>
+<p>The dedication cost ($ 943.86) is naturally higher than the present value of the
+liability ($ 939.3), since the solution involves reinvesting cash from the second
+to the third period, at a rate that is lower than the current yield.</p>
+<p>Cash-flow matching is a popular strategy for managing short-term
+liabilities, because it minimizes transactions. It would not be
+economical to use such strategy for long term liabilities, of for
+complex cash flows. There is therefore, a natural division of labor
+between the two strategies that we have sketched.</p>
+
+</div>
+</div>
+<p style="text-align: center;">
+<a href="libor-swaps.html"><button class="btn btn-default">Previous</button></a>
+<a href="the-vasicek-model.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

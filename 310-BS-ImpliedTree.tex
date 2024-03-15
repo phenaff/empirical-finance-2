@@ -1,0 +1,684 @@
+\documentclass[]{tufte-book}
+
+% ams
+\usepackage{amssymb,amsmath}
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \makeatletter
+  \@ifpackageloaded{fontspec}{}{\usepackage{fontspec}}
+  \makeatother
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \makeatletter
+  \@ifpackageloaded{soul}{
+     \renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+     \renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
+   }{}
+  \makeatother
+
+\fi
+
+% graphix
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+
+% booktabs
+\usepackage{booktabs}
+
+% url
+\usepackage{url}
+
+% hyperref
+\usepackage{hyperref}
+
+% units.
+\usepackage{units}
+
+
+\setcounter{secnumdepth}{2}
+
+% citations
+
+
+% pandoc syntax highlighting
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+
+% table with pandoc
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+
+% multiplecol
+\usepackage{multicol}
+
+% strikeout
+\usepackage[normalem]{ulem}
+
+% morefloats
+\usepackage{morefloats}
+
+
+% tightlist macro required by pandoc >= 1.14
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% title / author / date
+\date{}
+
+% Preamble from Rmetrics
+
+\usepackage{booktabs}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+% Index
+\usepackage{makeidx}
+\makeindex
+
+% binomial trees
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{shapes.multipart}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes}
+\usetikzlibrary{external}
+\usepgfplotslibrary{external}
+\usetikzlibrary{positioning}
+\pgfplotsset{compat=1.18}
+
+% R and other languages
+
+\newcommand{\RR}{\textsf{R}}
+\newcommand{\Rmetrics}{Rmetrics}
+
+%\newcommand{`r to_index("", "functions")`}[1]{\texttt{#1()}\index{R~functions@\RR~functions!#1}}
+%\newcommand{`r to_index("", "classes")`}[1]{\texttt{#1}}
+%\newcommand{`r to_index("", "classes")`}[1]{\texttt{#1}\index{R~classes@\RR~classes!#1}}
+%\newcommand{\pkg}[1]{\texttt{#1}\index{R~packages@\RR~packages!#1}}
+%\newcommand{\dataset}[1]{\texttt{#1}\index{R~data@\RR~data!#1}}
+%\newcommand{\code}[1]{\texttt{#1}\index{#1}}
+
+% Preamble from VIP
+
+\newcommand{\given}{\mid}
+\renewcommand{\neg}{\mathbin{\sim}}
+\renewcommand{\wedge}{\mathbin{\&}}
+\renewcommand{\u}{U}
+\newcommand{\gt}{>}
+\newcommand{\p}{Pr}
+\newcommand{\E}{E}
+\newcommand{\EU}{EU}
+\newcommand{\pr}{Pr}
+\newcommand{\po}{Pr^*}
+\newcommand{\degr}{^{\circ}}
+\definecolor{bookred}{RGB}{228,6,19}
+\definecolor{bookblue}{RGB}{0,92,169}
+\definecolor{bookpurple}{RGB}{114,49,94}
+
+\newenvironment{epigraph}%
+{
+\begin{flushright}
+\begin{minipage}{20em}
+\begin{flushright}
+\itshape
+}%
+{
+\end{flushright}
+\end{minipage}
+\end{flushright}
+}
+\newenvironment{problem}{\begin{quote}\normalsize}{\end{quote}}
+\newenvironment{puzzle}{\begin{quote}\normalsize}{\end{quote}}
+\def\argument{\list{}{\leftmargin3em}\item[]}
+\let\endargument=\endlist
+\usepackage{fontawesome}
+\newenvironment{warning}{\begin{itemize}\item[\faBan]}{\end{itemize}}
+\usepackage{marvosym}
+\newenvironment{info}{\begin{itemize}\item[\Info]}{\end{itemize}}
+
+%%%% Kevin Godny's code for title page and contents from https://groups.google.com/forum/#!topic/tufte-latex/ujdzrktC1BQ
+\makeatletter
+\renewcommand{\maketitlepage}{%
+\begingroup%
+\setlength{\parindent}{0pt}
+{\fontsize{18}{18}\selectfont\textit{\@author}\par}
+\vspace{1.75in}{\fontsize{36}{14}\selectfont\@title\par}
+\vspace{0.5in}{\fontsize{20}{14}\selectfont with R and Rmetrics\par}
+\vspace{0.5in}{\fontsize{14}{14}\selectfont\textsf{\smallcaps{v 2.0}}\par}
+\vfill{\fontsize{14}{14}\selectfont\textit{An Open Access Publication}\par}
+\thispagestyle{empty}
+\endgroup
+}
+\makeatother
+
+% Change shape from [display] to [block] to keep chapter numbers and titles on the same line
+\titleformat{\chapter}%
+  [block]% shape
+  {\relax\ifthenelse{\NOT\boolean{@tufte@symmetric}}{\begin{fullwidth}}{}}% format applied to label+text
+  {\itshape\huge\thechapter}% label
+  {3em}% horizontal separation between label and title body
+  {\huge\rmfamily\itshape}% before the title body
+  [\ifthenelse{\NOT\boolean{@tufte@symmetric}}{\end{fullwidth}}{}]% after the title body
+
+
+\usepackage{etoolbox}
+% Jesse Rosenthal's code from https://groups.google.com/forum/#!topic/pandoc-discuss/wCF78X6SvwY
+% Avoid new pagraph/indent after lists, quotes, etc.
+\makeatletter
+\newcommand{\gobblepars}{%
+    \@ifnextchar\par%
+        {\expandafter\gobblepars\@gobble}%
+        {}}
+\newcommand{\eatpar}{\@ifnextchar\par{\@gobble}{}}
+\newcommand{\forcepar}{\par}
+\makeatother
+\AfterEndEnvironment{quote}{\expandafter\gobblepars}
+\AfterEndEnvironment{enumerate}{\expandafter\gobblepars}
+\AfterEndEnvironment{itemize}{\expandafter\gobblepars}
+\AfterEndEnvironment{description}{\expandafter\gobblepars}
+\AfterEndEnvironment{example}{\expandafter\gobblepars}
+\AfterEndEnvironment{argument}{\expandafter\gobblepars}
+\AfterEndEnvironment{problem}{\expandafter\gobblepars}
+\AfterEndEnvironment{info}{\expandafter\gobblepars}
+\AfterEndEnvironment{warning}{\expandafter\gobblepars}
+\AfterEndEnvironment{marginfigure}{\expandafter\gobblepars}
+\AfterEndEnvironment{longtable}{\expandafter\gobblepars} % not working, why?
+\makeatletter
+\AfterEndEnvironment{longtable}{\par\@afterindentfalse\@afterheading} % this seems to work instead
+\makeatother
+
+\renewcommand*\descriptionlabel[1]{\hspace\labelsep\normalfont\em #1.}
+
+% prevent extra space when \newthought follows \section
+% see: https://tex.stackexchange.com/questions/291746/tufte-latex-newthought-after-section
+\makeatletter
+\def\tuftebreak{%
+  \if@nobreak\else
+    \par
+    \ifdim\lastskip<\tufteskipamount
+      \removelastskip \penalty -100
+      \tufteskip
+    \fi
+  \fi
+}
+\makeatother
+
+% indent lists a bit
+\usepackage{enumitem}
+\setlist[1]{leftmargin=24pt}
+
+\def\labelitemii{$\circ$}
+\usepackage{tikz}
+\usetikzlibrary{shapes.multipart}
+\usetikzlibrary{shapes}
+
+\begin{document}
+
+
+
+
+{
+\setcounter{tocdepth}{0}
+\tableofcontents
+}
+
+\hypertarget{local-volatility-and-implied-trees}{%
+\chapter{Local Volatility and Implied Trees}\label{local-volatility-and-implied-trees}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{library}\NormalTok{(fOptions)}
+  \FunctionTok{library}\NormalTok{(fExoticOptions)}
+  \FunctionTok{library}\NormalTok{(fAsianOptions)}
+  \FunctionTok{library}\NormalTok{(fInstrument)}
+  \FunctionTok{library}\NormalTok{(empfin)}
+\end{Highlighting}
+\end{Shaded}
+
+The Breeden-Litzenberger formula provides the density of the underlying
+asset at expiry as a function of the price of European options priced in the Black-Scholes
+framework. In other words, it establishes the relationship between the implied Black-Scholes
+volatility \(\Sigma(S, K, T)\) and the distribution of \(S_T\), where \(S\) is today's value of the underlying asset, and \(T\) is the time from today to expiry. In many instances, for
+pricing American options for example, it is important to know the
+density of \(S_t\) at any time \(t\) between the current time and expiry. In this
+chapter, we consider the function \(\sigma(S_t,t)\), i.e.~the
+local volatility of return, as a function of the underlying asset and time.
+
+The relationship between the Black-Scholes implied volatility \(\Sigma(S,K,T)\) and \(\sigma(S,t)\) was
+independently formalized in 1994, first by Derman and Kani in a binomial framework, then by Dupire in continuous time.
+These papers establish that there exists a unique stochastic process \(S_t\) with a variable continuous volatility \(\sigma(S,t)\) that can fit all options quotes with their corresponding implied volatilities \(\Sigma(S,K,T)\).
+
+\hypertarget{the-dupire-local-volatility-equation}{%
+\section{The Dupire local volatility equation}\label{the-dupire-local-volatility-equation}}
+
+The Dupire equation, with no interest rate nor dividend is:
+\[
+\frac{\sigma^2(K,T)}{2} = \frac{\frac{\partial C(S,K,T)}{\partial T}}{K^2 \frac{\partial^2C}{\partial K^2}}
+\]
+A few observations may help understand this formula. The numerator
+\[
+\frac{\partial C(S,K,T)}{\partial T} = \frac{C(S,K,T+dT)-C(S,K,T)}{dT}
+\]
+is proportional to a calendar spread for calls with strike \(K\). Similarly, the denominator is proportional to a butterfly centered at \(K\):
+
+\[
+\frac{\partial^2C}{\partial K^2} = \frac{C(S,K+dK,T)-2C(S,K,T)+C(S,K-dK,T)}{dK^2}
+\]
+The calendar spread has a value determined by the probability that \(S_T = K\) and the volatility at \(T\) of the call maturing at \(T+dT\):
+
+\[
+C(S,K,T+dT)-C(S,K,T) \propto p(S,K,T) \sigma^2(K,T)
+\]
+
+Recall also that according to the Breeden-Litzenberger formula, the probability \(p(S,t,K,T)\) is proportional to the value of a butterfly spread:
+
+\[
+p(S,K,T) \propto \frac{\partial^2 C}{\partial K^2} \propto \textrm{butterfly spread}
+\]
+Which tells us, broadly speaking, that the local variance is the ratio of the value of a calendar spread and a butterfly spread. Finally, rewriting Dupire's equation as:
+
+\[
+\frac{\partial C}{\partial T} - \frac{\sigma^2}{2} K^2 \frac{\partial^2 C}{\partial K^2}  = 0
+\label{eq:dupire-1}
+\]
+we see that if we have a continuous implied volatility surface \(\Sigma(S,t,K,T)\), we can (in theory) compute \(\frac{\partial C}{\partial T}\) and \(\frac{\partial^2 C}{\partial K^2}\) and derive \(\sigma(K,T)\).
+
+We next follow E. Derman in what he calls ``A poor man's derivation of the Dupire equation'', presented in
+a binomial framework. This derivation builds upon the previous observation relating the Dupire equation to the ratio of a calendar spread and a butterfly spread.
+
+To set up the stage, consider a Jarrow-Rudd binomial tree rooted in \(S_0\);
+the time increment in the tree is \(\Delta T / 2\). The relevant part of the tree is presented below.
+
+\begin{figure}
+\includegraphics[width=0.6\linewidth]{310-BS-ImpliedTree_files/figure-latex/jr-1-1} \caption[Call spread in a binomial model]{Call spread in a binomial model}\label{fig:jr-1}
+\end{figure}
+
+Let \(\phi(K)=C(S,K,T+dT)-C(S,K,T)\) be the value of the calendar call spread, and note that, in this binomial tree,
+
+\begin{align}
+S_T < K => S_{T+\Delta T} <= 0 &=> \phi(K) = 0 \\
+S_T > K => E(S_{T+ \Delta T} - K| S_T) = S_T-K &=> \phi(K) = 0 \\
+\end{align}
+
+For the call spread to expire with a positive value, we must have \(S_T = K\), and then follow two consecutive up branches of the binomial tree to reach \(K u^2\).
+The probability of this event is the probability of reaching node \((K,T)\), \(P_{K, T}\), times the probability of moving from \((K,T)\) to \((Ke^{\sigma \sqrt{2 \Delta T}}, T + \Delta T)\), which is \(\frac{1}{4}\). The price being the probability times the payoff, which is \(dK\).
+
+\[
+C(S,K,T+\Delta T) - C(S,K,T) = \frac{\partial C}{\partial T} \Delta T = \frac{1}{4} P_{K,T} \  dK
+\]
+For small \(\Delta K\), we can write \(dK \approx \Delta K \approx K \sigma \sqrt{2 \Delta T}\). Note that \(\sigma\) is the volatility at node \((K,T)\) over the time interval \([T, T+\Delta T]\).
+
+With zero interest rate, the probability of reaching node \((K,T)\) is the state price of that node, which can be evaluated as the value of a butterfly that pays \$1 at node (K,T) and zero otherwise.
+
+\[
+P_{K,T} = \frac{c(S,K+dK,T)-2C(S,K,T)+C(S,K-dK,T)}{dK}
+\]
+For small \(dK\), we can write:
+\[
+P_{K,T} \approx \frac{\partial^2 C}{\partial K^2} dK
+\]
+Substituting this expression in \eqref{eq:dupire-1}, we get Dupire's equation:
+
+\begin{align}
+\frac{\partial C}{\partial T} &= \frac{1}{4} \frac{\partial^2 C}{\partial K^2} \frac{(K\sigma\sqrt{2 \Delta T})^2}{\Delta T} \\
+\sigma^2(K,T) &= \frac{\frac{\partial C}{\partial T}}{\frac{1}{2} K^2 \frac{\partial^2 C}{\partial K^2}}
+\end{align}
+
+\hypertarget{computing-sigmakt-in-a-trinomial-tree}{%
+\section{\texorpdfstring{Computing \(\sigma(K,T)\) in a trinomial tree}{Computing \textbackslash sigma(K,T) in a trinomial tree}}\label{computing-sigmakt-in-a-trinomial-tree}}
+
+In a standard trinomial tree, the transition probabilities are
+independent of the state. By contrast, the Derman-Kani implied tree
+involves transition probabilities that are state-dependent, with a local volatility \(\sigma(K,T)\) associated with each node. With this
+extension, one obtain a model that matches the observed prices of
+vanilla options at various maturities and strikes.
+
+We start with a trinomial tree constructed with a constant volatility.
+This determines the geometry of the tree, according to the formulae
+derived in Section~\ref{sec:trinomial}. We will now modify the transition
+probabilities in order to match observed option prices.
+
+Let's focus on one node and its three children nodes. The notation is
+illustrated in Figure~\ref{fig:jr-2}.
+
+\begin{marginfigure}
+\includegraphics{310-BS-ImpliedTree_files/figure-latex/jr-2-1} \caption[Two time slices in a trinomial tree]{Two time slices in a trinomial tree. Time steps start at $t_1=0$, time step $t_n$ has $(2n-1)$ nodes.}\label{fig:jr-2}
+\end{marginfigure}
+
+States \(S_i, i=1, \ldots, 2n-1\) are associated with maturity \(T\), and states \(S'_i\) with
+maturity \(T+\Delta t\).
+
+We will also use the following notation:
+
+\begin{description}
+\tightlist
+\item[\(\lambda_i\)]
+state price for node \(i\),
+\item[\(C(S'_i)\)]
+price of a call of strike \(S'_i\) and maturity \(T+\Delta t\).
+\end{description}
+
+The call can be priced in the trinomial tree, giving:
+
+\begin{align}
+C(S'_{i+1}) &= \lambda_i e^{-r\Delta t} p_i (S'_{i+2} - S'_{i+1}) \\
+& + \sum_{j=i+1}^{2n} \lambda_j e^{-r\Delta t} \left[ p_j (S'_{j+2} -S'_{i+1}) + (1-p_j-q_j)  (S'_{j+1} -S'_{i+1}) + q_j  (S'_{j} -S'_{i+1}) \right]
+\end{align}
+
+The price process in the tree is a martingale, and thus the expected value at time \(t_{n+1}\), given \(S_j\) must be the forward price at node
+\((n,j)\):
+
+\begin{align}
+S_j e^{r \Delta t} &= F_j \\
+&= p_j S'_{j+2} + (1-p_j-q_j)  S'_{j+1} + q_j  S'_{j}
+\end{align}
+
+Using this identiy, the call price becomes:
+
+\begin{align}
+C(S'_{i+1}) &= \lambda_i e^{-r\Delta t} p_i (S'_{i+2} - S'_{i+1}) \\
+& + \sum_{j=i+1}^{2n} \lambda_j e^{-r\Delta t} \left[ F_j - S'_{i+1} \right]
+\end{align}
+
+In the equation above, all quantities except \(p_i\) are known, yielding:
+\[
+p_i = \frac{e^{r\Delta t} C(S'_{i+1}) - \sum_{j=i+1}^{2n} \lambda_j e^{-r\Delta t} \left[ F_j - S'_{i+1} \right]}{\lambda_i(S'_{i+2} - S'_{i+1})}
+\label{eq:trinomial-pi}
+\]
+
+Using again the martingale property, one can compute the probability
+\(q_i\):
+
+\[
+q_i = \frac{F_i - p_i (S'_{i+2} - S'_{i+1}) - S'_{i+1}}{S'_i - S'_{i+1}}
+\label{eq:trinomial-qi}
+\]
+
+The corresponding local volatility at node \(S'_i\) is finally obtained
+by:
+
+\begin{align}
+& \sigma(S_i, t_n) F_i^2 \Delta t = \nonumber \\
+& p_i (S'_{i+2} - F_i)^2 + (1-p_i-q_i) (S'_{i+1} - F_i)^2 + q_i (S'_{i} - F_i)^2
+\label{eq:local-vol}
+\end{align}
+
+A similar calculation can be performed with put prices.
+
+\hypertarget{illustration}{%
+\section{Illustration}\label{illustration}}
+
+For the sake of this example, we will use a simple expression for the
+Black-Scholes volatility, function of time to expiry (\(T\)) and strike (\(S\)):
+
+\[
+\sigma(S, T) = \sigma_0 (1+a(S-100)) + bT
+\label{eq:bs-vol-in-tree}
+\]
+
+We now proceed step-by-step in the calculation process. The first step
+is to construct a classical trinomial tree, with constant probabilities.
+This determines the geometry of the tree.
+
+In this example, we construct a 3-periods tree, annual volatility is
+\(30\%\). For simplicity, interest rate and dividend yield are set to 0.
+
+The resulting tree is pictured in Figure~\ref{fig:Derman-Kani-1}. This is
+a standard trinomial tree: branching probabilities are identical at each
+node, and volatility at each node is also constant at \(30\%\) annual rate.
+
+\begin{figure}
+\includegraphics{310-BS-ImpliedTree_files/figure-latex/Derman-Kani-1-1} \caption[Constant volatility tree]{Constant volatility tree.}\label{fig:Derman-Kani-1}
+\end{figure}
+
+The next step is to price calls and puts expiring at each time step, and
+struck at each node value. The volatility used to price each option is
+time and strike dependent, per equation (\eqref{eq:bs-vol-in-tree}).
+
+The volatility grid is computed by evaluating the volatility function
+for each node:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  Vol }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{data=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow=}\NormalTok{nr, }\AttributeTok{ncol=}\NormalTok{nc)}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,nr)) \{}
+    \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, nc))}
+      \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(S[i,j])) Vol[i,j] }\OtherTok{\textless{}{-}} \FunctionTok{bsvol}\NormalTok{(S[i,j], T[j])}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+and this volatility is used to compute the call and put prices expiring
+at each time step and strike level:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Call }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{data =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ nr, }\AttributeTok{ncol =}\NormalTok{ nc)}
+\NormalTok{Put }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{data =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ nr, }\AttributeTok{ncol =}\NormalTok{ nc)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, nr)) \{}
+    \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \FunctionTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{, nc)) }\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(S[i, j])) \{}
+\NormalTok{        Call[i, j] }\OtherTok{\textless{}{-}} \FunctionTok{CRRTrinomial}\NormalTok{(}\StringTok{"ce"}\NormalTok{, S[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{], S[i, j], T[j],}
+\NormalTok{            r, b, Vol[i, j], j }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{price}
+\NormalTok{        Put[i, j] }\OtherTok{\textless{}{-}} \FunctionTok{CRRTrinomial}\NormalTok{(}\StringTok{"pe"}\NormalTok{, S[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{], S[i, j], T[j],}
+\NormalTok{            r, b, Vol[i, j], j }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{price}
+\NormalTok{    \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Next, we use equations \eqref{eq:trinomial-pi} and \eqref{eq:trinomial-qi}
+to compute the transition probabilities at each node. The probability
+\(p_i\) is computed by:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  p }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(i, j) \{}
+    \CommentTok{\# S\textquotesingle{}\_\{i+1\} and S\textquotesingle{}\_\{i+2\}}
+\NormalTok{    SP1 }\OtherTok{\textless{}{-}}\NormalTok{ S[i}\SpecialCharTok{+}\DecValTok{1}\NormalTok{, j}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{    SP2 }\OtherTok{\textless{}{-}}\NormalTok{ S[i, j}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+    \CommentTok{\# vector of lambdas}
+\NormalTok{    tmp }\OtherTok{=} \DecValTok{0}
+    \ControlFlowTok{if}\NormalTok{(i}\SpecialCharTok{\textgreater{}}\DecValTok{1}\NormalTok{) \{}
+\NormalTok{      l }\OtherTok{\textless{}{-}}\NormalTok{ Lambda[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(i}\DecValTok{{-}1}\NormalTok{),j]}
+\NormalTok{      F }\OtherTok{\textless{}{-}}\NormalTok{ S[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(i}\DecValTok{{-}1}\NormalTok{),j]}\SpecialCharTok{*}\FunctionTok{exp}\NormalTok{(r}\SpecialCharTok{*}\NormalTok{dt)}
+      \CommentTok{\#print(paste(\textquotesingle{}F: \textquotesingle{}, F, \textquotesingle{} SP1: \textquotesingle{}, SP1, \textquotesingle{} SP2: \textquotesingle{}, SP2))}
+\NormalTok{      tmp }\OtherTok{=} \FunctionTok{t}\NormalTok{(l) }\SpecialCharTok{\%*\%}\NormalTok{ (F}\SpecialCharTok{{-}}\NormalTok{SP1)}
+\NormalTok{    \}}
+    \CommentTok{\# probability}
+\NormalTok{    (}\FunctionTok{exp}\NormalTok{(r}\SpecialCharTok{*}\NormalTok{dt)}\SpecialCharTok{*}\NormalTok{Call[i}\SpecialCharTok{+}\DecValTok{1}\NormalTok{,j}\SpecialCharTok{+}\DecValTok{1}\NormalTok{] }\SpecialCharTok{{-}}\NormalTok{ tmp)}\SpecialCharTok{/}\NormalTok{(Lambda[i,j]}\SpecialCharTok{*}\NormalTok{(SP2}\SpecialCharTok{{-}}\NormalTok{SP1))}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+and the probability \(q_i\) is determined by:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  q }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(i, j) \{}
+    \CommentTok{\# S\textquotesingle{}\_\{i+2\}, S\textquotesingle{}\_\{i+1\} and S\textquotesingle{}\_\{i\}}
+\NormalTok{    SP2 }\OtherTok{\textless{}{-}}\NormalTok{ S[i, j}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{    SP1 }\OtherTok{\textless{}{-}}\NormalTok{ S[i}\SpecialCharTok{+}\DecValTok{1}\NormalTok{, j}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{    SP }\OtherTok{\textless{}{-}}\NormalTok{ S[i}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, j}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{    F }\OtherTok{\textless{}{-}}\NormalTok{ S[i,j]}\SpecialCharTok{*}\FunctionTok{exp}\NormalTok{(r}\SpecialCharTok{*}\NormalTok{dt)}
+\NormalTok{    (F}\SpecialCharTok{{-}}\FunctionTok{p}\NormalTok{(i,j)}\SpecialCharTok{*}\NormalTok{(SP2}\SpecialCharTok{{-}}\NormalTok{SP1)}\SpecialCharTok{{-}}\NormalTok{SP1)}\SpecialCharTok{/}\NormalTok{(SP}\SpecialCharTok{{-}}\NormalTok{SP1)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+With these two functions, we can proceed recursively, computing the
+state prices and the transition probabilities one time step at a time.
+Note that functions \(p(i,j)\) and \(q(i,j)\) above use as input the state prices up
+to time step \((i-1)\) in order to compute the transition probabilities at
+time step \(i\). The transition probabilities for the root node are
+computed immediately:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  Lambda }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{data=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow=}\DecValTok{7}\NormalTok{, }\AttributeTok{ncol=}\DecValTok{4}\NormalTok{)}
+\NormalTok{  Lambda[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{  Pu }\OtherTok{\textless{}{-}} \FunctionTok{p}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{  Pd }\OtherTok{\textless{}{-}} \FunctionTok{q}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{  Pm }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{{-}}\NormalTok{Pu}\SpecialCharTok{{-}}\NormalTok{Pd}
+\end{Highlighting}
+\end{Shaded}
+
+and this provides the data for computing the state prices
+\(\lambda_{i,2}, i=1, \ldots, 3\) for time step \(\Delta t\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  Lambda[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ Pu }\SpecialCharTok{*} \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{r}\SpecialCharTok{*}\NormalTok{dt)}
+\NormalTok{  Lambda[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ Pm }\SpecialCharTok{*} \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{r}\SpecialCharTok{*}\NormalTok{dt)}
+\NormalTok{  Lambda[}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ Pd }\SpecialCharTok{*} \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{r}\SpecialCharTok{*}\NormalTok{dt)}
+\end{Highlighting}
+\end{Shaded}
+
+The state prices for the other time steps are computed similarly.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  Lambda[}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{p}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{  Lambda[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{p}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)}\SpecialCharTok{{-}}\FunctionTok{q}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{p}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{  Lambda[}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{q}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{p}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{)}\SpecialCharTok{{-}}\FunctionTok{q}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{p}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{  Lambda[}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{p}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{)}\SpecialCharTok{{-}}\FunctionTok{q}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{q}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{  Lambda[}\DecValTok{5}\NormalTok{,}\DecValTok{3}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{q}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+
+\NormalTok{  Lambda[}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{p}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\NormalTok{  Lambda[}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{p}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{{-}}\FunctionTok{q}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{p}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\NormalTok{  Lambda[}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{q}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{p}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{{-}}\FunctionTok{q}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{))}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{p}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\NormalTok{  Lambda[}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{q}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{p}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{{-}}\FunctionTok{q}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{))}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{p}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\NormalTok{  Lambda[}\DecValTok{5}\NormalTok{,}\DecValTok{4}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{q}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{p}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{{-}}\FunctionTok{q}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{))}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{p}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{5}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\NormalTok{  Lambda[}\DecValTok{6}\NormalTok{,}\DecValTok{4}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{p}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{{-}}\FunctionTok{q}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{3}\NormalTok{))}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{5}\NormalTok{,}\DecValTok{3}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{q}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\NormalTok{  Lambda[}\DecValTok{7}\NormalTok{,}\DecValTok{4}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{q}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{3}\NormalTok{)}\SpecialCharTok{*}\NormalTok{Lambda[}\DecValTok{5}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+Since interest rate is 0, the state prices at each time step should sum
+up to 1. This is verified by:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  z }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(Lambda, }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{sum}\NormalTok{(x[}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(x)])\})}
+  \FunctionTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 1 1 1
+\end{verbatim}
+
+Having determined the state prices, we record the transition
+probabilities in grids, in order to facilitate the display. The up and
+down probabilities associated with each node are displayed in
+Figure~\ref{fig:Derman-Kani-3}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  Pup }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{data=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow=}\NormalTok{nr, }\AttributeTok{ncol=}\NormalTok{nc)}
+\NormalTok{  Pdn }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{data=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow=}\NormalTok{nr, }\AttributeTok{ncol=}\NormalTok{nc)}
+\NormalTok{  Pmd }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{data=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow=}\NormalTok{nr, }\AttributeTok{ncol=}\NormalTok{nc)}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,nr)) \{}
+    \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, nc}\DecValTok{{-}1}\NormalTok{))}
+      \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(S[i,j])) \{}
+\NormalTok{        Pup[i,j] }\OtherTok{\textless{}{-}} \FunctionTok{p}\NormalTok{(i,j)}
+\NormalTok{        Pdn[i,j] }\OtherTok{\textless{}{-}} \FunctionTok{q}\NormalTok{(i,j)}
+\NormalTok{        Pmd[i,j] }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{{-}}\NormalTok{Pup[i,j]}\SpecialCharTok{{-}}\NormalTok{Pdn[i,j]}
+\NormalTok{      \}}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics{310-BS-ImpliedTree_files/figure-latex/Derman-Kani-3-1} \caption[Up and down probabilitites in the implied tree]{Up and down probabilitites in the implied tree.}\label{fig:Derman-Kani-3}
+\end{figure}
+
+Finally, the local volatility at each node can be computed from the
+transition probabilities:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  lvol }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(i,j) \{}
+\NormalTok{    SP2 }\OtherTok{\textless{}{-}}\NormalTok{ S[i, j}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{    SP1 }\OtherTok{\textless{}{-}}\NormalTok{ S[i}\SpecialCharTok{+}\DecValTok{1}\NormalTok{, j}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{    SP }\OtherTok{\textless{}{-}}\NormalTok{ S[i}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, j}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{    F }\OtherTok{\textless{}{-}}\NormalTok{ S[i,j]}\SpecialCharTok{*}\FunctionTok{exp}\NormalTok{(r}\SpecialCharTok{*}\NormalTok{dt)}
+    \FunctionTok{sqrt}\NormalTok{((Pup[i,j]}\SpecialCharTok{*}\NormalTok{(SP2}\SpecialCharTok{{-}}\NormalTok{F)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ Pdn[i,j]}\SpecialCharTok{*}\NormalTok{(SP}\SpecialCharTok{{-}}\NormalTok{F)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ Pmd[i,j]}\SpecialCharTok{*}\NormalTok{(SP1}\SpecialCharTok{{-}}\NormalTok{F)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(F}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{*}\NormalTok{dt))}
+\NormalTok{  \}}
+
+\NormalTok{  LVol }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{data=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow=}\NormalTok{nr, }\AttributeTok{ncol=}\NormalTok{nc)}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,nr)) \{}
+    \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, nc}\DecValTok{{-}1}\NormalTok{))}
+      \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(S[i,j])) \{}
+\NormalTok{        LVol[i,j] }\OtherTok{\textless{}{-}} \FunctionTok{lvol}\NormalTok{(i,j)}
+\NormalTok{      \}}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+Figure~\ref{fig:Derman-Kani-4} shows the local volatility associated with
+each node, and, for comparison, the Black-Scholes volatility, which is
+the average volatility from time \(0\) to expiry associated with a
+particular strike and expiry date.
+
+\begin{figure}
+\includegraphics{310-BS-ImpliedTree_files/figure-latex/Derman-Kani-4-1} \caption[Local volatility and Black-Scholes average volatility in the implied tree]{Local volatility and Black-Scholes average volatility in the implied tree.}\label{fig:Derman-Kani-4}
+\end{figure}
+
+
+\printindex
+
+\end{document}

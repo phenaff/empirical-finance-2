@@ -1,0 +1,96 @@
+---
+title: "Untitled"
+author: "P. Henaff"
+date: "2023-03-09"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=TRUE}
+dist <- function(x) sqrt(sum(x^2))
+R <- 1
+volume.sphere <- function(n) pi^(n/2) * R^n / gamma(n/2 + 1)
+volume.cube <- function(n) (2*R)^n
+
+dim <- 5
+vol.sphere.e <- volume.sphere(dim)
+vol.cube.e <- volume.cube(dim)
+N <- 100000
+in.sphere <- 0
+for(i in seq(N)) {
+  x <- runif(dim,0,1)
+  in.sphere = in.sphere + ifelse(dist(x)<=1,1,0)
+}
+
+vol.sphere.s <- vol.cube.e * in.sphere / N
+print(paste("exact:", vol.sphere.e, "sim:", vol.sphere.s))
+```
+
+```{r}
+k <- round(N^(1/dim))
+int <- 2/k
+tmp <- rep(list(seq(-1+int/2,1-int/2,by=int)), dim)
+grid <- expand.grid(tmp)
+for(i in 1:dim(grid)[1]) {
+  in.sphere = in.sphere + ifelse(dist(grid[i,])<=1,1,0)
+}
+
+vol.sphere.s <- vol.cube.e * in.sphere / N
+print(paste("exact:", vol.sphere.e, "sim:", vol.sphere.s))
+```
+
+
+```
+
+```{r, echo=FALSE, cache=TRUE}
+registerDoParallel(used.cores)
+
+calc.r <- function(N, algo="sobol") {
+  nb.trials <- N/batch.size
+  stats.in <- foreach(icount(nb.trials), .combine=rbind) %dopar% {
+    if(algo == "sobol") {
+      x <- sobol(batch.size, dim=dim, init=FALSE)
+    } else {
+      x <- runif(batch.size*dim, 0, 1)
+      x <- matrix(x, nrow=batch.size)
+    }
+    nb.inside(x)
+}
+vol.cube.e * sum(stats.in[,1]) / N
+}
+
+R <- 1
+
+dim <- 3
+vol.sphere.e <- volume.sphere(dim)
+vol.cube.e <- volume.cube(dim)
+
+n.expo <- seq(14,20)
+nb.samples <- length(n.expo)
+batch.size <- 10000
+res.d <- numeric(nb.samples)
+res.s <- numeric(nb.samples)
+for(i in seq(nb.samples)) {
+  N <- 2^n.expo[i] - 1
+  res.d[i] <- calc.r(N, "default")
+  res.s[i] <- calc.r(N, "sobol")
+}
+
+N.seq <- 2^n.expo - 1
+```
+
+```{r rand-sobol, echo=FALSE, warning=FALSE} 
+plot(N.seq, res.d, type="l", col="red", lwd=2,ylim=c(.95*vol.sphere.e, 1.05*vol.sphere.e), xlab="Number of points", ylab="Estimated volume of sphere")
+lines(N.seq, res.s, type="l", col="green", lwd=2)
+abline(h=vol.sphere.e, col="black", type="-", lwd=1)
+legend("topright", legend=c("Default", "Sobol"),
+       col=c("red", "green"), lty=c(1,1), cex=0.8)
+```
+
+
+  
+}
+```
